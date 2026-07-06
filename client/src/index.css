@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 36 18% 97%;
+  --foreground: 240 10% 3.9%;
+  --card: 36 18% 97%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 36 18% 97%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 220 84% 12%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 192 75% 35%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 41 84% 58%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 240 5.9% 10%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 220 84% 12%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 192 75% 35%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 41 84% 58%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 240 4.9% 83.9%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-raleway;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-montserrat font-bold;
+  }
+}
+
+@layer utilities {
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .font-raleway {
+    font-family: 'Raleway', sans-serif;
+  }
+
+  .bg-sand {
+    background-color: #F0E6D2;
+  }
+
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+  .gallery-img {
+    height: 250px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .gallery-img:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  @media (max-width: 768px) {
+    .gallery-img {
+      height: 200px;
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}

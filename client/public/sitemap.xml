@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Root / homepage (x-default) -->
+  <url>
+    <loc>https://javeabliss.com/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://javeabliss.com/it/"/>
+  </url>
+
+  <!-- Language homepages -->
+  <url>
+    <loc>https://javeabliss.com/en/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://javeabliss.com/it/"/>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/nl/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://javeabliss.com/it/"/>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/fr/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://javeabliss.com/it/"/>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/de/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://javeabliss.com/it/"/>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/es/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://javeabliss.com/it/"/>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/it/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://javeabliss.com/it/"/>
+  </url>
+
+  <!-- Recommendations pages -->
+  <url>
+    <loc>https://javeabliss.com/en/recommendations</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/nl/recommendations</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/fr/recommendations</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/de/recommendations</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/es/recommendations</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/it/recommendations</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- SEO landing pages (English) -->
+  <url>
+    <loc>https://javeabliss.com/en/holiday-apartment-javea-arenal-beach/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/en/2-bedroom-apartment-javea/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/en/where-to-stay-in-javea/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/en/javea-arenal-beach-guide/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/en/winter-rental-javea/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/en/javea-without-car/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/en/restaurants-near-arenal-beach-javea/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/en/best-beaches-near-javea-apartment/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://javeabliss.com/en/javea-3-day-itinerary/</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
