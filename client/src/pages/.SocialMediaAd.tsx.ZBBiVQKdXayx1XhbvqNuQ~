@@ -1,0 +1,227 @@
+import { useParams } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Clock, MapPin, Star, ArrowRight, Calendar } from "lucide-react";
+import logo from "@assets/images/logo.png";
+import { useLanguage } from "@/contexts/LanguageContext";
+import SEOHead from "@/components/SEOHead";
+import { useEffect, useState } from "react";
+import javeaBeachImg from "@assets/Xabia_playa_la_Grava_7H9A3912_20171206.jpg";
+
+interface PromotionalOffer {
+  id: number;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  originalPrice: number;
+  discountedPrice: number;
+  discountPercentage: number;
+  isActive: boolean;
+}
+
+const SocialMediaAd = () => {
+  const params = useParams();
+  const { t } = useLanguage();
+  const [timeLeft, setTimeLeft] = useState<string>("");
+
+  const { data: offer, isLoading } = useQuery<PromotionalOffer>({
+    queryKey: ['/api/promotional-offers', params.id],
+    queryFn: async () => {
+      const response = await fetch(`/api/promotional-offers/${params.id}`);
+      if (!response.ok) {
+        throw new Error('Promotional offer not found');
+      }
+      return response.json();
+    },
+    enabled: !!params.id,
+  });
+
+  useEffect(() => {
+    if (offer) {
+      const timer = setInterval(() => {
+        const now = new Date();
+        // Use GMT+2 timezone for accurate countdown
+        const gmtPlus2Offset = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+        const endDate = new Date(offer.endDate + 'T23:59:59.999Z');
+        const endDateGMTPlus2 = new Date(endDate.getTime() + gmtPlus2Offset);
+        const diff = endDateGMTPlus2.getTime() - now.getTime();
+        
+        if (diff > 0) {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          
+          setTimeLeft(`${days}d ${hours}h ${minutes}m`);
+        } else {
+          setTimeLeft("Expired");
+        }
+      }, 60000); // Update every minute
+
+      return () => clearInterval(timer);
+    }
+  }, [offer]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading special offer...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!offer) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Card className="max-w-md mx-auto">
+          <CardContent className="text-center p-8">
+            <p className="text-gray-600 mb-4">This promotional offer is no longer available.</p>
+            <Button onClick={() => window.location.href = '/'}>
+              Return to Home
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!offer.isActive) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Card className="max-w-md mx-auto">
+          <CardContent className="text-center p-8">
+            <p className="text-gray-600 mb-4">This promotional offer has expired. Prices have returned to our regular rates.</p>
+            <Button onClick={() => window.location.href = '/'}>
+              View Current Rates
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  const savings = offer.originalPrice - offer.discountedPrice;
+
+  return (
+    <div>
+      <SEOHead
+        title={`🔥 ${offer.discountPercentage}% OFF - ${offer.title} - Jávea Bliss`}
+        description={`${offer.description} - Special promotional pricing from €${offer.discountedPrice}/night (was €${offer.originalPrice}). Book now and save €${savings} per night!`}
+        url={`/ad/${offer.id}`}
+        image={javeaBeachImg}
+        keywords={`Jávea vacation rental, Costa Blanca apartment, ${offer.discountPercentage}% discount, €${offer.discountedPrice} per night, Arenal beach accommodation, special offer`}
+      />
+      
+      <div 
+        className="min-h-screen bg-cover bg-center bg-no-repeat relative"
+        style={{
+          backgroundImage: `url(${javeaBeachImg})`,
+        }}
+      >
+        {/* Overlay for better text contrast */}
+        <div className="absolute inset-0 bg-black/20"></div>
+        
+        <div className="relative z-10 min-h-screen flex items-center justify-end py-8 px-4">
+          <div className="max-w-2xl w-full mr-8">
+            <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
+              <CardContent className="p-8">
+                {/* Logo and Title */}
+                <div className="text-center mb-6">
+                  <div className="flex items-center justify-center mb-4">
+                    <span className="font-montserrat font-bold text-3xl text-gray-800 mr-2">JÁVEA BLISS</span>
+                    <img 
+                      src={logo} 
+                      alt="Jávea Bliss Logo" 
+                      className="h-8 w-auto"
+                    />
+                  </div>
+                  <p className="text-blue-600 text-lg font-medium mb-2">Affordable Luxury Coastal Apartment</p>
+                  <p className="text-white font-bold text-lg">
+                    🔥 LIMITED TIME OFFER 🔥
+                  </p>
+                </div>
+
+                {/* Discount Display */}
+                <div className="text-center mb-6">
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <p className="text-gray-600 font-semibold text-sm">WAS</p>
+                      <p className="text-2xl font-bold text-gray-600 line-through">€{offer.originalPrice}</p>
+                      <p className="text-gray-600 text-sm">per night</p>
+                    </div>
+                    <div className="bg-green-50 p-4 rounded-lg">
+                      <p className="text-green-600 font-semibold text-sm">NOW</p>
+                      <p className="text-3xl font-bold text-green-600">€{offer.discountedPrice}</p>
+                      <p className="text-green-600 text-sm">per night</p>
+                    </div>
+                    <div className="bg-blue-50 p-4 rounded-lg">
+                      <p className="text-blue-600 font-semibold text-sm">SAVE</p>
+                      <p className="text-2xl font-bold text-blue-600">€{savings}</p>
+                      <p className="text-blue-600 text-sm">per night</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Countdown Timer */}
+                <div className="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6 rounded-lg mb-6">
+                  <div className="text-center">
+                    <p className="text-lg font-semibold mb-2 flex items-center justify-center">
+                      <Clock className="mr-2" size={24} />
+                      Offer ends in:
+                    </p>
+                    <p className="text-4xl font-bold">{timeLeft}</p>
+                    <p className="text-sm opacity-90 mt-2">
+                      Offer ends July 17th at midnight (GMT+2)
+                    </p>
+                  </div>
+                </div>
+
+                {/* Apartment Details */}
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-4">{offer.title}</h2>
+                  <p className="text-gray-600 mb-4">{offer.description}</p>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center text-gray-600">
+                      <MapPin className="mr-2" size={16} />
+                      <span>250m from Arenal Beach</span>
+                    </div>
+                    <div className="flex items-center text-gray-600">
+                      <Star className="mr-2" size={16} />
+                      <span>2 bedrooms • 1 bathroom • Up to 4 guests</span>
+                    </div>
+                    <div className="flex items-center text-gray-600">
+                      <Calendar className="mr-2" size={16} />
+                      <span>Available for immediate booking</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Call to Action */}
+                <div className="text-center">
+                  <Button 
+                    size="lg" 
+                    className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-lg text-lg w-full"
+                    onClick={() => window.location.href = `/#booking`}
+                  >
+                    Book Now & Save €{savings}/night
+                    <ArrowRight className="ml-2" size={20} />
+                  </Button>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Secure booking • No hidden fees • Instant confirmation
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SocialMediaAd;
