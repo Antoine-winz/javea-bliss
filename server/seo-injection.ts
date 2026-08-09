@@ -31,21 +31,21 @@ const homepageHreflang = [
 ];
 
 const homepageTitles: Record<Language, string> = {
-  en: '2-Bedroom Holiday Apartment in Javea near Arenal Beach | Jávea Bliss',
-  nl: '2-Slaapkamer Vakantieappartement in Javea bij Arenal Beach | Jávea Bliss',
-  fr: 'Appartement de Vacances 2 Chambres à Javea près de la Plage Arenal | Jávea Bliss',
-  de: '2-Schlafzimmer Ferienwohnung in Javea nahe Arenal Beach | Jávea Bliss',
-  es: 'Apartamento Vacacional 2 Habitaciones en Jávea cerca de Playa Arenal | Jávea Bliss',
-  it: 'Appartamento Vacanze 2 Camere a Jávea vicino alla Spiaggia Arenal | Jávea Bliss',
+  en: 'Javea Holiday Apartment near Arenal Beach | Book Direct',
+  nl: 'Vakantieappartement Jávea – 250 m van het Arenal strand',
+  fr: 'Location appartement Jávea – Plage de l\'Arenal à 250 m',
+  de: 'Ferienwohnung Jávea – 250 m zum Arenal-Strand | Javea Bliss',
+  es: 'Alquiler apartamento en Jávea a 250 m de la Playa del Arenal',
+  it: 'Casa Vacanze a Jávea – Appartamento a 250 m dall\'Arenal',
 };
 
 const homepageDescriptions: Record<Language, string> = {
-  en: 'Stay 250 m from Arenal Beach in Jávea. Renovated 2-bedroom holiday apartment for up to 4 guests with air conditioning, Wi-Fi, kitchen, balcony, lift and free parking.',
-  nl: 'Verblijf op 250 m van Arenal Beach in Jávea. Gerenoveerd 2-slaapkamer vakantieappartement voor maximaal 4 gasten met airco, wifi, keuken, balkon, lift en gratis parkeren.',
-  fr: 'Séjournez à 250 m de la plage Arenal à Jávea. Appartement rénové 2 chambres pour 4 personnes avec climatisation, Wi-Fi, cuisine, balcon, ascenseur et parking gratuit.',
-  de: 'Nur 250 m vom Arenal Strand in Jávea. Renovierte 2-Zimmer Ferienwohnung für bis zu 4 Gäste mit Klimaanlage, WLAN, Küche, Balkon, Aufzug und kostenlosem Parkplatz.',
-  es: 'Alójate a 250 m de la Playa Arenal en Jávea. Apartamento renovado de 2 habitaciones para 4 personas con aire acondicionado, Wi-Fi, cocina, balcón, ascensor y parking gratuito.',
-  it: 'Soggiorna a 250 m dalla spiaggia Arenal a Jávea. Appartamento ristrutturato con 2 camere per 4 ospiti con aria condizionata, Wi-Fi, cucina, balcone, ascensore e parcheggio gratuito.',
+  en: 'Self-catering 2-bed apartment 250 m from Arenal Beach, Javea. Sleeps 4, air con, fast WiFi, lift & free parking. Book direct & save from €130/night. Winter stays welcome.',
+  nl: 'Gerenoveerd appartement voor 4 op 250 m van het Arenal strand, Jávea. Airco, snelle wifi, gratis parkeren. Boek direct bij de eigenaar – ook overwinteren.',
+  fr: 'Appartement rénové 2 chambres à 250 m de la plage de l\'Arenal à Jávea : climatisation, wifi rapide, parking gratuit. Réservez en direct, sans commission.',
+  de: 'Renovierte 2-Schlafzimmer-Ferienwohnung in Jávea, nur 250 m zum Arenal-Strand. Klimaanlage, WLAN, Parkplatz. Direkt vom Eigentümer buchen – auch Überwintern.',
+  es: 'Apartamento reformado para 4 en Jávea, a 250 m del Arenal. Aire acondicionado, wifi rápido, parking gratis. Reserva directa sin comisiones desde 130 €/noche.',
+  it: 'Appartamento a Jávea per 4 persone, a 250 m dalla spiaggia dell\'Arenal: 2 camere, aria condizionata, WiFi, parcheggio. Prenota direttamente, senza commissioni.',
 };
 
 const locales: Record<Language, string> = {
@@ -53,12 +53,12 @@ const locales: Record<Language, string> = {
 };
 
 const recommendationsTitles: Record<Language, string> = {
-  en: 'Best Restaurants Javea 2025 | Guide to La Bambula, Chabada & More',
-  nl: 'Beste Restaurants Javea 2025 | Gids La Bambula, Chabada & Meer',
-  fr: 'Meilleurs Restaurants Javea 2025 | Guide La Bambula, Chabada & Plus',
-  de: 'Beste Restaurants Javea 2025 | Guide La Bambula, Chabada & Mehr',
-  es: 'Mejores Restaurantes Javea 2025 | Guía La Bambula, Chabada y Más',
-  it: 'Migliori Ristoranti Javea 2025 | Guida La Bambula, Chabada e Altro',
+  en: 'Best Restaurants Javea | Guide to La Bambula, Chabada & More',
+  nl: 'Beste Restaurants Javea | Gids La Bambula, Chabada & Meer',
+  fr: 'Meilleurs Restaurants Javea | Guide La Bambula, Chabada & Plus',
+  de: 'Beste Restaurants Javea | Guide La Bambula, Chabada & Mehr',
+  es: 'Mejores Restaurantes Javea | Guía La Bambula, Chabada y Más',
+  it: 'Migliori Ristoranti Javea | Guida La Bambula, Chabada e Altro',
 };
 
 const recommendationsDescriptions: Record<Language, string> = {
@@ -126,7 +126,7 @@ export function getRouteSEO(urlPath: string): RouteSEO | null {
       locale: locales[lang],
       lang,
       hreflang: homepageHreflang,
-      ogImage: `${BASE_URL}/images/hero-apartment.jpg`,
+      ogImage: `${BASE_URL}/og-hero.jpg`,
     };
   }
 
@@ -144,7 +144,7 @@ export function getRouteSEO(urlPath: string): RouteSEO | null {
       locale: locales[lang],
       lang,
       hreflang,
-      ogImage: `${BASE_URL}/images/hero-apartment.jpg`,
+      ogImage: `${BASE_URL}/og-hero.jpg`,
     };
   }
 
@@ -163,7 +163,7 @@ export function getRouteSEO(urlPath: string): RouteSEO | null {
           { lang: 'en', href: `${BASE_URL}/en/${slug}/` },
           { lang: 'x-default', href: `${BASE_URL}/en/${slug}/` },
         ],
-        ogImage: `${BASE_URL}/images/hero-apartment.jpg`,
+        ogImage: `${BASE_URL}/og-hero.jpg`,
       };
     }
   }
@@ -176,7 +176,7 @@ export function injectSEOIntoHTML(html: string, seo: RouteSEO): string {
     .map(h => `<link rel="alternate" hreflang="${h.lang}" href="${h.href}" />`)
     .join('\n    ');
 
-  const ogImage = seo.ogImage || `${BASE_URL}/images/hero-apartment.jpg`;
+  const ogImage = seo.ogImage || `${BASE_URL}/og-hero.jpg`;
 
   const headInjection = `
     <title>${escapeHtml(seo.title)}</title>

@@ -9,10 +9,6 @@ import { useAnalytics } from "./hooks/use-analytics";
 import { LanguageProvider, SUPPORTED_LANGUAGES } from "@/contexts/LanguageContext";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import SEOHead from "@/components/SEOHead";
-import StructuredData from "@/components/StructuredData";
-import CountryTargetedSEO from "@/components/CountryTargetedSEO";
-import DiscountSEO from "@/components/DiscountSEO";
-import LastMinuteSEO from "@/components/LastMinuteSEO";
 
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
@@ -94,10 +90,6 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
           <SEOHead />
-          <StructuredData />
-          <CountryTargetedSEO />
-          <DiscountSEO />
-          <LastMinuteSEO />
           <Toaster />
           <Router />
         </LanguageProvider>

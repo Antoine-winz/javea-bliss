@@ -1,5 +1,4 @@
 import Navigation from "@/components/Navigation";
-import OptimizedSEOStrategy from "@/components/OptimizedSEOStrategy";
 import PromotionalHeader from "@/components/PromotionalHeader";
 import HeroSection from "@/components/HeroSection";
 import TrendingSection from "@/components/TrendingSection";
@@ -19,7 +18,6 @@ import Footer from "@/components/Footer";
 const Home = () => {
   return (
     <div className="scroll-smooth">
-      <OptimizedSEOStrategy />
       <Navigation />
       <PromotionalHeader />
       <HeroSection />
