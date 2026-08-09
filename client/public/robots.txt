@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# EXPLICITLY ALLOW AI CRAWLERS
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+Sitemap: https://javeabliss.com/sitemap.xml

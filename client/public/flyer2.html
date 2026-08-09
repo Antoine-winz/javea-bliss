@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jávea Bliss - Luxury Coastal Apartment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    @page { size: A4; margin: 0; }
+    @media print { .no-print { display: none !important; } }
+    body { font-family: 'Montserrat', sans-serif; background: #eee; }
+    
+    .flyer {
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto;
+      background: #fff;
+      padding: 8mm 10mm;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #1a3a2a, #2d5a3d);
+      color: #fff;
+      text-align: center;
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      letter-spacing: 6px;
+      font-weight: 700;
+    }
+    .header p { font-size: 10px; letter-spacing: 4px; opacity: 0.9; margin-top: 6px; text-transform: uppercase; }
+    
+    .gallery {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .gallery div { flex: 1; text-align: center; }
+    .gallery img {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .gallery span { display: block; font-size: 7px; color: #555; margin-top: 5px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
+    
+    .gold-line {
+      height: 2px;
+      background: linear-gradient(90deg, transparent 5%, #c4a35a 50%, transparent 95%);
+      margin: 16px 40px;
+    }
+    
+    .intro {
+      text-align: center;
+      padding: 0 30px;
+    }
+    .intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: #2d5a3d;
+      margin-bottom: 10px;
+    }
+    .intro p { font-size: 11px; color: #555; line-height: 1.7; }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px 20px;
+      margin-top: 20px;
+      padding: 0 10px;
+    }
+    .feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .feature-icon { font-size: 22px; margin-top: 2px; }
+    .feature-text strong { display: block; font-size: 12px; color: #1a3a2a; font-weight: 600; }
+    .feature-text span { font-size: 10px; color: #666; }
+    
+    .offer {
+      background: linear-gradient(135deg, #1a3a2a, #2d5a3d, #3d7a4d);
+      color: #fff;
+      padding: 22px 30px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 24px;
+    }
+    .offer-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #c4a35a;
+      margin-bottom: 6px;
+    }
+    .offer-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 700;
+      margin: 6px 0;
+    }
+    .offer-price span { font-size: 20px; font-weight: 400; }
+    .offer-note { font-size: 12px; opacity: 0.9; margin-bottom: 16px; }
+    .offer-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px 20px;
+      font-size: 11px;
+      text-align: left;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .offer-list div { display: flex; align-items: center; gap: 6px; }
+    .offer-list .check { color: #c4a35a; font-weight: bold; font-size: 14px; }
+    .offer-compare { font-size: 10px; opacity: 0.7; margin-top: 16px; font-style: italic; }
+    
+    .location {
+      margin-top: 28px;
+      text-align: center;
+    }
+    .location h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: #2d5a3d;
+      margin-bottom: 16px;
+    }
+    .location-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .location-item {
+      text-align: center;
+    }
+    .location-item .icon { font-size: 28px; }
+    .location-item strong { display: block; font-size: 11px; color: #1a3a2a; font-weight: 600; margin: 8px 0 3px; }
+    .location-item span { font-size: 9px; color: #666; }
+    
+    .footer {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      color: #fff;
+      padding: 18px;
+      text-align: center;
+      border-radius: 8px;
+      margin-top: auto;
+    }
+    .footer h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: #c4a35a;
+      margin-bottom: 12px;
+    }
+    .footer-contact {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      font-size: 11px;
+    }
+    .footer-contact a { color: #fff; text-decoration: none; }
+    
+    .print-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #2d5a3d;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 12px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
+  
+  <div class="flyer">
+    <div class="header">
+      <h1>JÁVEA BLISS</h1>
+      <p>Affordable Luxury Living | Costa Blanca, Spain</p>
+    </div>
+    
+    <div class="gallery">
+      <div><img src="/flyer-images/living.jpg" alt="Living"><span>Living Room</span></div>
+      <div><img src="/flyer-images/kitchen.jpg" alt="Kitchen"><span>Kitchen</span></div>
+      <div><img src="/flyer-images/bedroom.jpg" alt="Bedroom"><span>Bedroom</span></div>
+      <div><img src="/flyer-images/bathroom.jpg" alt="Bathroom"><span>Bathroom</span></div>
+      <div><img src="/flyer-images/terrace.jpg" alt="Terrace"><span>Terrace</span></div>
+    </div>
+    
+    <div class="gold-line"></div>
+    
+    <div class="intro">
+      <h2>Your Mediterranean Escape Awaits</h2>
+      <p>Expat seeking a winter base? Digital nomad needing 600Mbps fiber internet? Renovating your villa? Just 250 meters from Arenal Beach, this fully renovated apartment offers the perfect blend of luxury and convenience.</p>
+    </div>
+    
+    <div class="gold-line"></div>
+    
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">💻</span>
+        <div class="feature-text"><strong>Work Ready</strong><span>600Mbps Fiber WiFi</span></div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">❄️</span>
+        <div class="feature-text"><strong>Year-Round Comfort</strong><span>A/C & Underfloor Heating</span></div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🛏️</span>
+        <div class="feature-text"><strong>Sleeps 4 Guests</strong><span>2 Bedrooms, Quality Beds</span></div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🍳</span>
+        <div class="feature-text"><strong>Fully Equipped</strong><span>Kitchen & Nespresso</span></div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🚗</span>
+        <div class="feature-text"><strong>Private Parking</strong><span>Lift Access & Washer</span></div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">☀️</span>
+        <div class="feature-text"><strong>Outdoor Living</strong><span>Terrace & Canal Views</span></div>
+      </div>
+    </div>
+    
+    <div class="offer">
+      <div class="offer-badge">Exclusive Long-Term Offer</div>
+      <div class="offer-price">€100 <span>/ night</span></div>
+      <p class="offer-note">For stays of 35+ nights • All-inclusive pricing</p>
+      <div class="offer-list">
+        <div><span class="check">✓</span> All Utilities Included</div>
+        <div><span class="check">✓</span> Weekly Cleaning</div>
+        <div><span class="check">✓</span> Linens & Towels</div>
+        <div><span class="check">✓</span> 24/7 Support</div>
+        <div><span class="check">✓</span> High-Speed WiFi</div>
+        <div><span class="check">✓</span> No Hidden Fees</div>
+      </div>
+      <p class="offer-compare">Compare to regular seasonal rates of €130 - €210 per night</p>
+    </div>
+    
+    <div class="location">
+      <h3>Everything at Your Doorstep - No Car Needed</h3>
+      <div class="location-grid">
+        <div class="location-item">
+          <span class="icon">🏖️</span>
+          <strong>Beach</strong>
+          <span>3-min walk to Arenal</span>
+        </div>
+        <div class="location-item">
+          <span class="icon">🍽️</span>
+          <strong>Dining</strong>
+          <span>La Bambula & Chabada</span>
+        </div>
+        <div class="location-item">
+          <span class="icon">🛒</span>
+          <strong>Shopping</strong>
+          <span>Supermarket 5-min</span>
+        </div>
+        <div class="location-item">
+          <span class="icon">⛵</span>
+          <strong>Marina</strong>
+          <span>Boats & SUP rental</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <h4>Secure Your Winter Sun or Work Retreat Today</h4>
+      <div class="footer-contact">
+        <a href="tel:+41786959218">📞 +41 78 695 92 18</a>
+        <a href="mailto:admin@javeabliss.com">📧 admin@javeabliss.com</a>
+        <a href="https://www.javeabliss.com">🌐 www.javeabliss.com</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
