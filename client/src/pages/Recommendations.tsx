@@ -8,7 +8,7 @@ const Recommendations = () => {
 
   const translations = {
     en: {
-      title: "Javea Insider Guide: Best Restaurants & Beach Clubs (2025)",
+      title: "Javea Insider Guide: Best Restaurants & Beach Clubs",
       subtitle: "Stay just steps away from Javea's most famous venues. No taxi needed.",
       walkMin: "min walk from Javea Bliss",
       stayNearby: "Stay Nearby",
@@ -37,7 +37,7 @@ const Recommendations = () => {
       }
     },
     nl: {
-      title: "Javea Insider Gids: Beste Restaurants & Beachclubs (2025)",
+      title: "Javea Insider Gids: Beste Restaurants & Beachclubs",
       subtitle: "Verblijf op loopafstand van Javea's beroemdste locaties. Geen taxi nodig.",
       walkMin: "min lopen vanaf Javea Bliss",
       stayNearby: "Verblijf Dichtbij",
@@ -66,7 +66,7 @@ const Recommendations = () => {
       }
     },
     fr: {
-      title: "Guide Insider Javea: Meilleurs Restaurants & Beach Clubs (2025)",
+      title: "Guide Insider Javea: Meilleurs Restaurants & Beach Clubs",
       subtitle: "Séjournez à quelques pas des lieux les plus célèbres de Javea. Pas besoin de taxi.",
       walkMin: "min à pied de Javea Bliss",
       stayNearby: "Séjourner à Proximité",
@@ -95,7 +95,7 @@ const Recommendations = () => {
       }
     },
     de: {
-      title: "Javea Insider Guide: Beste Restaurants & Beach Clubs (2025)",
+      title: "Javea Insider Guide: Beste Restaurants & Beach Clubs",
       subtitle: "Wohnen Sie nur wenige Schritte von Javeas berühmtesten Locations entfernt. Kein Taxi nötig.",
       walkMin: "Min. zu Fuß von Javea Bliss",
       stayNearby: "In der Nähe Übernachten",
@@ -124,7 +124,7 @@ const Recommendations = () => {
       }
     },
     es: {
-      title: "Guía Insider de Javea: Mejores Restaurantes y Beach Clubs (2025)",
+      title: "Guía Insider de Javea: Mejores Restaurantes y Beach Clubs",
       subtitle: "Alójate a solo unos pasos de los locales más famosos de Javea. Sin necesidad de taxi.",
       walkMin: "min a pie desde Javea Bliss",
       stayNearby: "Alójate Cerca",
@@ -153,7 +153,7 @@ const Recommendations = () => {
       }
     },
     it: {
-      title: "Guida Insider Javea: Migliori Ristoranti e Beach Club (2025)",
+      title: "Guida Insider Javea: Migliori Ristoranti e Beach Club",
       subtitle: "Soggiorna a pochi passi dai locali più famosi di Javea. Nessun taxi necessario.",
       walkMin: "min a piedi da Javea Bliss",
       stayNearby: "Soggiorna Vicino",
