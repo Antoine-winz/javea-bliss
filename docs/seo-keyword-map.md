@@ -135,3 +135,40 @@ direction, not volume data.
   conflicting geo coordinates (4 different sets) and room counts (2 vs 3).
 - Promotional offers now render a clean localized title variant ("20% Off – …") from the real
   /api/promotional-offers data, plus a legitimate schema.org Offer.
+
+## Editorial rework (Aug 2026)
+
+Section targeting changed, not just wording:
+
+- **TrendingSection** was "Why Javea in 2026?" with generic digital-nomad copy. Now "Staying
+  Longer in Javea" — the three under-served segments (winter sun, remote work, between homes),
+  carrying each market's long-stay keyword.
+- **LongTermRentalPromo** was pitched at "executive housing / corporate relocations", which no
+  market searches for. Now the practical offer box for the wintering/remote-work/renovation
+  audience: what €100 a night actually covers. The three use-case cards moved up to
+  TrendingSection, so the two sections no longer say the same thing.
+- **FAQ** went from 6 generic questions to 10 built from search intent — airport transfer,
+  car needed, direct-booking savings, Airbnb-blocked dates, winter stays, lift access, how far
+  ahead to book. This block feeds FAQ rich results, so it is worth keeping accurate.
+- **DutchRenovationPromo** deleted: Dutch-only, duplicated the long-stay section, and carried
+  a guest testimonial that could not be verified.
+
+### Facts that were wrong and are now fixed — keep them consistent
+
+| Fact | Correct value |
+|---|---|
+| Nearest airport | Alicante (ALC), ~100 km, ~1 h 15 by road. Valencia similar. **Dénia has no airport** |
+| Winter temperature | 14–18 °C daytime, 8–10 °C overnight (not "20 °C winters") |
+| Beach distance | 250 m / 3-minute walk — use everywhere, it beats competitors' "walking distance" |
+| Sleeps | 4 in 2 bedrooms (1 double + twins); sofa converts to a single for a 5th |
+| Chabada | Beach bar, open 8am non-stop, happy hour 4–8pm, live music Thursdays — **not** a seafood restaurant |
+| La Bambula | Live-music bar, 9am–1am (3am weekends), flamenco Sun / swing Tue / rock Fri — **not** a paella restaurant |
+
+Venue descriptions live in `LanguageContext.tsx` (`rec.*` keys) and must match
+`SEOLandingPage.tsx`. "La Perla de Jávea" was removed — it is not in the owner's curated list.
+
+### Claims still to confirm with the owner
+
+`LongTermRentalPromo.tsx` promises **weekly cleaning** and **water and electricity included**
+on long stays. Both are inherited from the previous copy and were not verified. "24/7 support"
+was replaced with "direct contact with the owner", which is true and converts better anyway.
