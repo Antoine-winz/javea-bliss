@@ -1,4 +1,4 @@
-import { BedDouble, Sofa, CookingPot, ShowerHead, Sun, Wind, Building2 } from "lucide-react";
+import { BedDouble, Sofa, CookingPot, ShowerHead, Sun, Thermometer, Building2 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import apartmentImage from "@assets/Livingroom1_optimized.jpeg";
 
@@ -10,12 +10,15 @@ import apartmentImage from "@assets/Livingroom1_optimized.jpeg";
   restaurant walking times) now live in the location section where guests look for them.
 */
 const GROUPS = [
-  { icon: BedDouble, label: 'interior.group.bedrooms', lines: ['interior.bedrooms'] },
+  // The sofa bed sits here rather than in the living-room line: a fifth berth buried in a
+  // paragraph about the lounge is a well-known cause of arrival-day disappointment.
+  { icon: BedDouble, label: 'interior.group.bedrooms', lines: ['interior.bedrooms', 'interior.sofabed'] },
   { icon: Sofa, label: 'interior.group.living', lines: ['interior.lounge', 'interior.lighting'] },
   { icon: CookingPot, label: 'interior.group.kitchen', lines: ['interior.kitchen'] },
   { icon: ShowerHead, label: 'interior.group.bathroom', lines: ['interior.bathroom'] },
   { icon: Sun, label: 'interior.group.terrace', lines: ['interior.patio', 'interior.laundry'] },
-  { icon: Wind, label: 'interior.group.comfort', lines: ['interior.connectivity'] },
+  // Thermometer rather than Wind: this group covers heating as well as cooling.
+  { icon: Thermometer, label: 'interior.group.comfort', lines: ['interior.connectivity'] },
   { icon: Building2, label: 'building.title', lines: ['building.security'] },
 ] as const;
 

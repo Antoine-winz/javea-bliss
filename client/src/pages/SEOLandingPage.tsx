@@ -46,7 +46,7 @@ const pages: Record<string, PageContent> = {
     sections: [
       {
         heading: 'A Comfortable 2-Bedroom Layout',
-        body: 'Jávea Bliss offers a generous 2-bedroom layout perfect for families, couples travelling together, or groups of up to 4 guests. The main bedroom has a double bed and the second bedroom has twin beds. The living-room sofa converts to a single bed if a fifth berth is needed.',
+        body: 'Jávea Bliss offers a generous 2-bedroom layout perfect for families, couples travelling together, or groups of up to 4 guests. Both bedrooms have a double bed. The living-room sofa converts to a single bed if a fifth berth is needed.',
       },
       {
         heading: 'Fully Equipped for a Real Stay',

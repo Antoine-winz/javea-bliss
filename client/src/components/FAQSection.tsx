@@ -17,7 +17,7 @@ const faqs = {
     },
     {
       q: 'How many people can stay?',
-      a: 'Four, in two bedrooms — one double and one twin. The living-room sofa converts to a single bed if you need a fifth berth. There is one bathroom, so it works best for a family or two couples.',
+      a: 'Four, in two double bedrooms. The living-room sofa converts to a single bed if you need a fifth berth. There is one bathroom, so it works best for a family or two couples.',
     },
     {
       q: 'Is it cheaper to book direct than through Airbnb or Booking.com?',
@@ -59,7 +59,7 @@ const faqs = {
     },
     {
       q: 'Voor hoeveel personen is het appartement?',
-      a: 'Vier, in twee slaapkamers — één met een tweepersoonsbed, één met twee eenpersoonsbedden. De bank in de woonkamer is uit te klappen tot eenpersoonsbed als je een vijfde slaapplaats nodig hebt. Er is één badkamer, dus het werkt het beste voor een gezin of twee stellen.',
+      a: 'Vier, in twee slaapkamers met een tweepersoonsbed. De bank in de woonkamer is uit te klappen tot eenpersoonsbed als je een vijfde slaapplaats nodig hebt. Er is één badkamer, dus het werkt het beste voor een gezin of twee stellen.',
     },
     {
       q: 'Is direct boeken goedkoper dan via Airbnb of Booking?',
@@ -101,7 +101,7 @@ const faqs = {
     },
     {
       q: "Combien de personnes peuvent loger ?",
-      a: "Quatre, dans deux chambres — une avec lit double, une avec lits jumeaux. Le canapé du salon se transforme en lit simple pour un cinquième couchage. Il y a une salle de bain, ce qui convient bien à une famille ou à deux couples.",
+      a: "Quatre, dans deux chambres avec lit double. Le canapé du salon se transforme en lit simple pour un cinquième couchage. Il y a une salle de bain, ce qui convient bien à une famille ou à deux couples.",
     },
     {
       q: "Réserver en direct revient-il moins cher qu'Airbnb ou Booking ?",
@@ -143,7 +143,7 @@ const faqs = {
     },
     {
       q: 'Für wie viele Gäste ist die Wohnung?',
-      a: 'Für vier, in zwei Schlafzimmern — eines mit Doppelbett, eines mit zwei Einzelbetten. Das Sofa im Wohnzimmer lässt sich zu einem Einzelbett ausziehen, falls ein fünfter Schlafplatz nötig ist. Es gibt ein Bad, daher eignet sich die Wohnung am besten für eine Familie oder zwei Paare.',
+      a: 'Für vier, in zwei Schlafzimmern mit Doppelbett. Das Sofa im Wohnzimmer lässt sich zu einem Einzelbett ausziehen, falls ein fünfter Schlafplatz nötig ist. Es gibt ein Bad, daher eignet sich die Wohnung am besten für eine Familie oder zwei Paare.',
     },
     {
       q: 'Ist die Direktbuchung günstiger als über Airbnb oder Booking?',
@@ -185,7 +185,7 @@ const faqs = {
     },
     {
       q: '¿Para cuántas personas es el apartamento?',
-      a: 'Para cuatro, en dos habitaciones: una con cama de matrimonio y otra con dos camas individuales. El sofá del salón se convierte en cama individual si necesitas una quinta plaza. Hay un baño, así que funciona mejor para una familia o dos parejas.',
+      a: 'Para cuatro, en dos habitaciones con cama de matrimonio. El sofá del salón se convierte en cama individual si necesitas una quinta plaza. Hay un baño, así que funciona mejor para una familia o dos parejas.',
     },
     {
       q: '¿Sale más barato reservar directo que por Airbnb o Booking?',
@@ -227,7 +227,7 @@ const faqs = {
     },
     {
       q: 'Per quante persone è l\'appartamento?',
-      a: "Per quattro, in due camere: una matrimoniale e una con due letti singoli. Il divano del soggiorno si trasforma in letto singolo se serve un quinto posto. Il bagno è uno, quindi è ideale per una famiglia o due coppie.",
+      a: "Per quattro, in due camere matrimoniali. Il divano del soggiorno si trasforma in letto singolo se serve un quinto posto. Il bagno è uno, quindi è ideale per una famiglia o due coppie.",
     },
     {
       q: 'Conviene prenotare direttamente invece che su Airbnb o Booking?',

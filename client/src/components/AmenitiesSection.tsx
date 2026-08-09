@@ -1,16 +1,19 @@
 import {
-  Wind,
+  Car,
   Wifi,
-  Tv,
+  Wind,
+  Flame,
+  ArrowUpDown,
   CookingPot,
   Utensils,
   Coffee,
   Droplets,
   WashingMachine,
-  Car,
-  Bath,
+  Tv,
   Waves,
+  Bath,
   PawPrint,
+  Ban,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -19,22 +22,32 @@ import { useLanguage } from "@/contexts/LanguageContext";
   is the scannable list a guest checks against their own requirements, so it stays flat
   and complete rather than being folded into that narrative.
 
-  Icons here are stone, not brass: they should recede behind the apartment section's
+  Ordered differentiators first — free parking and 600 Mbps are the things this apartment
+  has that its competitors mostly do not — then commodities, then what is deliberately
+  not here. Icons are stone, not brass: they should recede behind the apartment section's
   accented ones rather than compete with them.
 */
-const AMENITIES = [
-  { icon: Wind, key: 'amenityList.airConditioning' },
+const INCLUDED = [
+  { icon: Car, key: 'amenityList.parking' },
   { icon: Wifi, key: 'amenityList.wifi' },
-  { icon: Tv, key: 'amenityList.smartTv' },
+  { icon: Wind, key: 'amenityList.airConditioning' },
+  { icon: Flame, key: 'amenityList.heating' },
+  { icon: ArrowUpDown, key: 'amenityList.lift' },
   { icon: CookingPot, key: 'amenityList.kitchen' },
   { icon: Utensils, key: 'amenityList.dishwasher' },
   { icon: Coffee, key: 'amenityList.nespresso' },
   { icon: Droplets, key: 'amenityList.waterFilter' },
   { icon: WashingMachine, key: 'amenityList.washer' },
-  { icon: Car, key: 'amenityList.parking' },
-  { icon: Bath, key: 'amenityList.showerTowels' },
+  { icon: Tv, key: 'amenityList.smartTv' },
   { icon: Waves, key: 'amenityList.beachTowels' },
-  { icon: PawPrint, key: 'amenityList.noPets', absent: true },
+  { icon: Bath, key: 'amenityList.showerTowels' },
+] as const;
+
+// Stated plainly rather than hidden. Saying what is missing reads as confidence, and it
+// stops a guest discovering it on arrival.
+const NOT_INCLUDED = [
+  { icon: PawPrint, key: 'amenityList.noPets' },
+  { icon: Ban, key: 'amenityList.noDryer' },
 ] as const;
 
 const AmenitiesSection = () => {
@@ -49,25 +62,42 @@ const AmenitiesSection = () => {
             <h2 className="display-lg">{t('amenities.title')}</h2>
           </div>
 
-          <ul className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-x-12">
-            {AMENITIES.map(({ icon: Icon, key, absent }) => (
-              <li
-                key={key}
-                className={`hairline py-4 grid grid-cols-[1.25rem_1fr] gap-x-4 items-center text-[0.95rem] ${
-                  absent ? 'text-stone' : 'text-ink-soft'
-                }`}
-              >
-                <Icon
-                  className={`w-[18px] h-[18px] ${absent ? 'text-stone/50' : 'text-stone'}`}
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
-                <span className={absent ? 'line-through decoration-stone/40' : undefined}>
-                  {t(key)}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div className="lg:col-span-8">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12">
+              {INCLUDED.map(({ icon: Icon, key }) => (
+                <li
+                  key={key}
+                  className="hairline py-4 grid grid-cols-[1.25rem_1fr] gap-x-4 items-center text-[0.95rem] text-ink-soft"
+                >
+                  <Icon
+                    className="w-[18px] h-[18px] text-stone"
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
+                  <span>{t(key)}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-12">
+              <h3 className="eyebrow mb-1">{t('amenityList.notIncluded')}</h3>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12">
+                {NOT_INCLUDED.map(({ icon: Icon, key }) => (
+                  <li
+                    key={key}
+                    className="hairline py-4 grid grid-cols-[1.25rem_1fr] gap-x-4 items-center text-[0.95rem] text-stone"
+                  >
+                    <Icon
+                      className="w-[18px] h-[18px] text-stone/50"
+                      strokeWidth={1.5}
+                      aria-hidden="true"
+                    />
+                    <span>{t(key)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
