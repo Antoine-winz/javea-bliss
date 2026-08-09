@@ -37,11 +37,11 @@ app.use((req, res, next) => {
   // Content Security Policy
   res.setHeader('Content-Security-Policy', 
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://replit.com https://cdn.emailjs.com; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://replit.com https://cdn.emailjs.com https://www.googletagmanager.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "img-src 'self' data: https:; " +
     "font-src 'self' data: https://fonts.gstatic.com; " +
-    "connect-src 'self' wss: ws: https://api.emailjs.com; " +
+    "connect-src 'self' wss: ws: https://api.emailjs.com https://www.google-analytics.com https://*.google-analytics.com https://api.open-meteo.com; " +
     "frame-src https://www.google.com; " +
     "frame-ancestors 'self' https://*.replit.com https://*.replit.dev https://*.repl.co;"
   );
@@ -123,14 +123,12 @@ app.use((req, res, next) => {
       serveStatic(app);
     }
 
-    // ALWAYS serve the app on port 5000
-    // this serves both the API and the client.
-    // It is the only port that is not firewalled.
-    const port = 5000;
+    // Default port 5000 (Replit's unfirewalled port); PORT env overrides for local dev.
+    // This serves both the API and the client.
+    const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
     server.listen({
       port,
       host: "0.0.0.0",
-      reusePort: true,
     }, () => {
       log(`serving on port ${port}`);
     });
