@@ -93,7 +93,7 @@ jobs, and content should be added to the right one:
 |---|---|
 | **At a Glance** | Eight scannable specs. The layer someone reads in five seconds. |
 | **The Apartment** | The tour: seven labelled groups, in the order you walk through the place, sleeping first. Apartment facts only. |
-| **Amenities** | The complete checklist to tick against your own requirements. Flat and exhaustive by design. |
+| **Amenities** | The complete checklist to tick against your own requirements. Flat and exhaustive by design, ordered differentiators-first (parking, 600 Mbps, climate) rather than by category, and ending with an explicit "Not included" cluster. |
 | **The Location** | Everything outside the front door: highlights, practical distances, restaurant walking times. |
 
 Facts that describe the neighbourhood do not belong in the apartment section — the marina,

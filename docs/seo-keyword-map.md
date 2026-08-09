@@ -167,6 +167,25 @@ Section targeting changed, not just wording:
 Venue descriptions live in `LanguageContext.tsx` (`rec.*` keys) and must match
 `SEOLandingPage.tsx`. "La Perla de Jávea" was removed — it is not in the owner's curated list.
 
+### Bed configuration — corrected, still worth the owner's confirmation
+
+The site asserted **both** "two double bedrooms" and "one double and one twin", in all six
+languages. Both `Bedroom2` photographs show a double (full-width headboard, two pillows,
+one duvet), so everything now says **two doubles**. If that is wrong, three places need
+changing: `interior.bedrooms`, `glance.bedrooms`, `apartment.description`, plus the FAQ
+capacity answer and the `2-bedroom-apartment-javea` guide page.
+
+A twin room would be a genuine conversion lever for the family segment, so it is worth
+being certain rather than assuming.
+
+### Two distance claims that still disagree
+
+- **Bohemians**: 6 minutes in `LocationSection.tsx`, 3 minutes in `pages/Recommendations.tsx`.
+- **Supermarket**: 5 minutes in `location.shopsDesc`, "within a 10-minute walk" for
+  everything including shops in the FAQ. Defensible, but reads as a contradiction.
+
+Neither can be resolved without local knowledge.
+
 ### Claims still to confirm with the owner
 
 `LongTermRentalPromo.tsx` promises **weekly cleaning** and **water and electricity included**
