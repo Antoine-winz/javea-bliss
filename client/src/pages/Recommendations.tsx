@@ -185,68 +185,66 @@ const Recommendations = () => {
 
   const t = translations[language as keyof typeof translations] || translations.en;
 
+  const venues = [
+    { key: 'labambula', minutes: 6, venue: t.venues.labambula, cta: t.stayNearby },
+    { key: 'chabada', minutes: 5, venue: t.venues.chabada, cta: t.checkAvailability },
+    { key: 'lasiesta', minutes: 8, venue: t.venues.lasiesta, cta: t.bookStay },
+    { key: 'bohemians', minutes: 3, venue: t.venues.bohemians, cta: t.stay3Min },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50">
+    <div className="min-h-screen bg-bone">
       <RecommendationsSEO />
       <Navigation />
-      
-      <main className="container mx-auto px-4 py-12 mt-16 md:mt-20">
-        <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center" data-testid="recommendations-title">
-          {t.title}
-        </h1>
-        <p className="text-xl text-gray-600 text-center mb-12" data-testid="recommendations-subtitle">
-          {t.subtitle}
-        </p>
 
-        <div className="grid md:grid-cols-2 gap-10">
-          
-          <article className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" data-testid="venue-labambula">
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">{t.venues.labambula.name}</h2>
-              <p className="text-emerald-600 font-bold mb-4">🚶 6 {t.walkMin}</p>
-              <p className="text-gray-600 mb-4">{t.venues.labambula.desc}</p>
-              <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                <p className="text-sm"><strong>{t.insiderTip}:</strong> {t.venues.labambula.tip}</p>
-              </div>
-              <Link href={getLocalizedPath('/')} className="block text-center bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700 transition-colors" data-testid="cta-labambula">
-                {t.stayNearby}
-              </Link>
+      <main className="section pt-32 md:pt-40">
+        <div className="shell">
+          <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-16 md:mb-20">
+            <div className="lg:col-span-7">
+              <p className="eyebrow mb-5">{t.insiderTip}</p>
+              <h1 className="display-lg" data-testid="recommendations-title">
+                {t.title}
+              </h1>
             </div>
-          </article>
-
-          <article className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" data-testid="venue-chabada">
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">{t.venues.chabada.name}</h2>
-              <p className="text-emerald-600 font-bold mb-4">🚶 5 {t.walkMin}</p>
-              <p className="text-gray-600 mb-4">{t.venues.chabada.desc}</p>
-              <Link href={getLocalizedPath('/')} className="block text-center bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700 transition-colors" data-testid="cta-chabada">
-                {t.checkAvailability}
-              </Link>
+            <div className="lg:col-span-5 flex items-end">
+              <p className="lede" data-testid="recommendations-subtitle">
+                {t.subtitle}
+              </p>
             </div>
-          </article>
+          </div>
 
-          <article className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" data-testid="venue-lasiesta">
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">{t.venues.lasiesta.name}</h2>
-              <p className="text-emerald-600 font-bold mb-4">🚶 8 {t.walkMin}</p>
-              <p className="text-gray-600 mb-4">{t.venues.lasiesta.desc}</p>
-              <Link href={getLocalizedPath('/')} className="block text-center bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700 transition-colors" data-testid="cta-lasiesta">
-                {t.bookStay}
-              </Link>
-            </div>
-          </article>
+          <div className="grid md:grid-cols-2 gap-x-16">
+            {venues.map(({ key, minutes, venue, cta }) => (
+              <article
+                key={key}
+                className="border-t border-ink/12 py-10"
+                data-testid={`venue-${key}`}
+              >
+                <div className="flex items-baseline justify-between gap-6 mb-4">
+                  <h2 className="font-display text-3xl text-ink">{venue.name}</h2>
+                  <span className="font-sans text-[0.75rem] tracking-[0.12em] uppercase text-brass whitespace-nowrap">
+                    {minutes} {t.walkMin}
+                  </span>
+                </div>
 
-          <article className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" data-testid="venue-bohemians">
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">{t.venues.bohemians.name}</h2>
-              <p className="text-emerald-600 font-bold mb-4">🚶 3 {t.walkMin}</p>
-              <p className="text-gray-600 mb-4">{t.venues.bohemians.desc}</p>
-              <Link href={getLocalizedPath('/')} className="block text-center bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700 transition-colors" data-testid="cta-bohemians">
-                {t.stay3Min}
-              </Link>
-            </div>
-          </article>
+                <p className="text-[0.95rem] text-ink-soft leading-relaxed mb-6">{venue.desc}</p>
 
+                {'tip' in venue && venue.tip && (
+                  <p className="text-[0.9rem] text-ink-soft leading-relaxed border-l border-brass pl-5 mb-6">
+                    {venue.tip}
+                  </p>
+                )}
+
+                <Link
+                  href={getLocalizedPath('/')}
+                  className="link-underline"
+                  data-testid={`cta-${key}`}
+                >
+                  {cta}
+                </Link>
+              </article>
+            ))}
+          </div>
         </div>
       </main>
     </div>

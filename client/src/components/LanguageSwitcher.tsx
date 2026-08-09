@@ -23,10 +23,19 @@ const LanguageSwitcher = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 px-2 bg-white hover:bg-gray-100 text-gray-700 border-gray-300">
-        <span className="text-lg">{currentLanguage?.flag}</span>
+      {/* Inherits colour from the nav so it works over the hero photo and on light
+          surfaces alike — hence no background or border of its own. */}
+      <DropdownMenuTrigger
+        className="inline-flex items-center gap-1.5 font-sans text-[0.8125rem] tracking-[0.12em] uppercase transition-opacity hover:opacity-70 focus-visible:outline-none"
+        aria-label="Change language"
+      >
+        <span className="text-base leading-none">{currentLanguage?.flag}</span>
+        <span className="hidden sm:inline">{currentLanguage?.code.toUpperCase()}</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-[140px]">
+      <DropdownMenuContent
+        align="end"
+        className="min-w-[160px] rounded-none border-ink/12 bg-bone p-0"
+      >
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
@@ -34,10 +43,12 @@ const LanguageSwitcher = () => {
               trackLanguageSwitch(language, lang.code);
               setLanguage(lang.code);
             }}
-            className={`cursor-pointer ${language === lang.code ? 'bg-blue-100' : ''}`}
+            className={`cursor-pointer rounded-none px-4 py-3 text-[0.875rem] focus:bg-sand ${
+              language === lang.code ? 'text-brass' : 'text-ink-soft'
+            }`}
             data-testid={`lang-switch-${lang.code}`}
           >
-            <span className="mr-2 text-lg">{lang.flag}</span>
+            <span className="mr-3 text-base leading-none">{lang.flag}</span>
             {lang.name}
           </DropdownMenuItem>
         ))}

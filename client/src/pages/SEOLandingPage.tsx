@@ -273,27 +273,18 @@ interface SEOLandingPageProps {
 }
 
 const BookingCTA = () => (
-  <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 mt-8">
-    <h3 className="text-xl font-bold text-blue-900 mb-2">Stay at Jávea Bliss</h3>
-    <p className="text-blue-800 mb-4">
-      Our{' '}
-      <Link href="/en/#booking" className="underline font-medium">
-        holiday apartment near Arenal Beach
-      </Link>{' '}
-      is a renovated 2-bedroom apartment for up to 4 guests, with air conditioning, Wi-Fi, a full
-      kitchen, balcony, lift, and free parking. Book directly from €130/night.
+  <div className="bg-ink text-bone p-8 md:p-10 mt-16">
+    <h3 className="font-display text-2xl md:text-3xl mb-4">Stay at Jávea Bliss</h3>
+    <p className="text-bone/75 font-light leading-relaxed max-w-xl mb-8">
+      A renovated two-bedroom apartment for up to four guests, 250 m from Arenal Beach, with air
+      conditioning, fast Wi-Fi, a full kitchen, terrace, lift and free parking. Book direct from
+      €130 a night — no booking fees.
     </p>
-    <div className="flex flex-wrap gap-3">
-      <Link
-        href="/en/#booking"
-        className="bg-blue-700 text-white px-5 py-2 rounded-lg font-medium hover:bg-blue-800 transition-colors"
-      >
+    <div className="flex flex-wrap gap-4">
+      <Link href="/en/#booking" className="btn-on-dark">
         Check Availability
       </Link>
-      <Link
-        href="/en/"
-        className="border border-blue-700 text-blue-700 px-5 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors"
-      >
+      <Link href="/en/" className="link-underline text-bone/85 hover:text-bone">
         View the Apartment
       </Link>
     </div>
@@ -362,48 +353,57 @@ const SEOLandingPage = ({ slug }: SEOLandingPageProps) => {
     );
   }
 
+  const relatedGuides = [
+    { href: '/en/javea-arenal-beach-guide/', label: 'Arenal Beach — Complete Visitor Guide' },
+    { href: '/en/where-to-stay-in-javea/', label: 'Where to Stay in Javea' },
+    { href: '/en/restaurants-near-arenal-beach-javea/', label: 'Best Restaurants Near Arenal Beach' },
+    { href: '/en/best-beaches-near-javea-apartment/', label: 'Best Beaches Near Javea' },
+    { href: '/en/winter-rental-javea/', label: 'Winter Rental in Javea' },
+    { href: '/en/javea-without-car/', label: 'Visiting Javea Without a Car' },
+    { href: '/en/javea-3-day-itinerary/', label: '3-Day Javea Itinerary' },
+  ].filter((g) => g.href !== page.canonical);
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-bone">
       <Navigation />
 
-      <main className="container mx-auto px-4 py-12 max-w-3xl">
-        {/* Breadcrumb */}
-        <nav className="text-sm text-gray-500 mb-6">
-          <Link href="/en/" className="hover:text-blue-600">Home</Link>
-          <span className="mx-2">›</span>
-          <span className="text-gray-800">{page.h1}</span>
-        </nav>
+      <main className="section pt-32 md:pt-40">
+        <div className="shell-narrow">
+          <nav className="font-sans text-[0.75rem] tracking-[0.1em] uppercase text-stone mb-8">
+            <Link href="/en/" className="hover:text-ink transition-colors">Home</Link>
+            <span className="mx-3 text-ink/25">/</span>
+            <span className="text-ink-soft">{page.h1}</span>
+          </nav>
 
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-          {page.h1}
-        </h1>
-        <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-          {page.description}
-        </p>
+          <h1 className="display-lg mb-7">{page.h1}</h1>
+          <p className="lede mb-16">{page.description}</p>
 
-        <div className="space-y-8">
-          {page.sections.map((section, i) => (
-            <div key={i}>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">{section.heading}</h2>
-              <p className="text-gray-600 leading-relaxed">{section.body}</p>
-            </div>
-          ))}
-        </div>
+          <div className="border-t border-ink/12">
+            {page.sections.map((section, i) => (
+              <div key={i} className="border-b border-ink/12 py-9">
+                <h2 className="font-display text-2xl text-ink mb-4">{section.heading}</h2>
+                <p className="text-[0.95rem] text-ink-soft leading-relaxed">{section.body}</p>
+              </div>
+            ))}
+          </div>
 
-        <BookingCTA />
+          <BookingCTA />
 
-        {/* Internal links */}
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <h3 className="font-semibold text-gray-900 mb-4">Related Guides</h3>
-          <ul className="space-y-2 text-blue-700">
-            <li><Link href="/en/javea-arenal-beach-guide/" className="hover:underline">Arenal Beach — Complete Visitor Guide</Link></li>
-            <li><Link href="/en/where-to-stay-in-javea/" className="hover:underline">Where to Stay in Javea</Link></li>
-            <li><Link href="/en/restaurants-near-arenal-beach-javea/" className="hover:underline">Best Restaurants Near Arenal Beach</Link></li>
-            <li><Link href="/en/best-beaches-near-javea-apartment/" className="hover:underline">Best Beaches Near Javea</Link></li>
-            <li><Link href="/en/winter-rental-javea/" className="hover:underline">Winter Rental in Javea</Link></li>
-            <li><Link href="/en/javea-without-car/" className="hover:underline">Visiting Javea Without a Car</Link></li>
-            <li><Link href="/en/javea-3-day-itinerary/" className="hover:underline">3-Day Javea Itinerary</Link></li>
-          </ul>
+          <div className="mt-16">
+            <h3 className="eyebrow mb-7">Related Guides</h3>
+            <ul>
+              {relatedGuides.map(({ href, label }) => (
+                <li key={href} className="hairline">
+                  <Link
+                    href={href}
+                    className="block py-4 text-[0.95rem] text-ink-soft hover:text-brass transition-colors"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </main>
 
