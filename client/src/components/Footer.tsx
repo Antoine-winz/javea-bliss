@@ -29,53 +29,76 @@ const Footer = () => {
     }
   };
 
-  return (
-    <footer className="bg-primary text-white py-10">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between gap-10">
-          <div className="mb-8 md:mb-0">
-            <h3 className="font-montserrat font-bold text-2xl mb-3">JÁVEA BLISS</h3>
-            <p className="max-w-md">{t('footer.tagline')}</p>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-12">
-            <div>
-              <h4 className="font-montserrat font-semibold text-lg mb-4">{t('footer.quickLinks')}</h4>
-              <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection("home")} className="hover:text-secondary transition">{t('nav.home')}</button></li>
-                <li><button onClick={() => scrollToSection("apartment")} className="hover:text-secondary transition">{t('nav.apartment')}</button></li>
-                <li><button onClick={() => scrollToSection("location")} className="hover:text-secondary transition">{t('nav.location')}</button></li>
-                <li><button onClick={() => scrollToSection("gallery")} className="hover:text-secondary transition">{t('nav.gallery')}</button></li>
-                <li><button onClick={() => scrollToSection("booking")} className="hover:text-secondary transition">{t('nav.booking')}</button></li>
-              </ul>
-            </div>
+  const quickLinks = [
+    { id: 'home', label: t('nav.home') },
+    { id: 'apartment', label: t('nav.apartment') },
+    { id: 'location', label: t('nav.location') },
+    { id: 'gallery', label: t('nav.gallery') },
+    { id: 'booking', label: t('nav.booking') },
+  ];
 
-            <div>
-              <h4 className="font-montserrat font-semibold text-lg mb-4">{t('footer.guides')}</h4>
-              <ul className="space-y-2">
-                {seoGuides.map(({ href, label }) => (
-                  <li key={href}>
-                    <Link href={href} className="hover:text-secondary transition text-sm">
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-montserrat font-semibold text-lg mb-4">{t('footer.followUs')}</h4>
-              <div className="flex space-x-4">
-                <a href="https://www.airbnb.com/rooms/1437724898890828336?location=Javea%20spaiin&search_mode=regular_search&adults=1&check_in=2025-07-12&check_out=2025-07-17&children=0&infants=0&pets=0&source_impression_id=p3_1752124817_P3RTWcRaUsEkoM5Y&previous_page_section_name=1001&federated_search_id=44f92839-24c4-4baf-90b6-63214bfbdc8c" target="_blank" rel="noopener noreferrer" className="hover:text-secondary transition">
-                  <FaAirbnb size={24} />
-                </a>
-              </div>
-            </div>
+  return (
+    <footer className="bg-ink text-bone px-6 md:px-10 pt-20 md:pt-28 pb-10">
+      <div className="shell">
+        <div className="grid lg:grid-cols-12 gap-y-14 gap-x-16">
+          <div className="lg:col-span-4">
+            <p className="font-display text-3xl mb-5">Jávea Bliss</p>
+            <p className="text-bone/65 font-light leading-relaxed max-w-sm">
+              {t('footer.tagline')}
+            </p>
+          </div>
+
+          <div className="lg:col-span-3">
+            <h4 className="eyebrow text-bone/45 mb-6">{t('footer.quickLinks')}</h4>
+            <ul className="space-y-3">
+              {quickLinks.map(({ id, label }) => (
+                <li key={id}>
+                  <button
+                    onClick={() => scrollToSection(id)}
+                    className="text-bone/75 hover:text-brass transition-colors text-[0.9375rem]"
+                  >
+                    {label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-3">
+            <h4 className="eyebrow text-bone/45 mb-6">{t('footer.guides')}</h4>
+            <ul className="space-y-3">
+              {seoGuides.map(({ href, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="text-bone/75 hover:text-brass transition-colors text-[0.9375rem]"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-2">
+            <h4 className="eyebrow text-bone/45 mb-6">{t('footer.followUs')}</h4>
+            <a
+              href="https://www.airbnb.com/rooms/1437724898890828336"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex text-bone/75 hover:text-brass transition-colors"
+              aria-label="Jávea Bliss on Airbnb"
+            >
+              <FaAirbnb size={22} />
+            </a>
           </div>
         </div>
-        
-        <div className="border-t border-gray-700 mt-8 pt-6 text-center">
-          <p>&copy; {new Date().getFullYear()} Jávea Bliss. All rights reserved.</p>
+
+        <div className="border-t border-white/12 mt-16 pt-8 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
+          <p className="text-[0.8125rem] text-bone/45">
+            &copy; {new Date().getFullYear()} Jávea Bliss. {t('footer.rights')}
+          </p>
+          <p className="text-[0.8125rem] text-bone/45">Jávea (Xàbia), Alicante, España</p>
         </div>
       </div>
     </footer>

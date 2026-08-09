@@ -11,6 +11,18 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        // Design-system palette (see index.css). Prefer these over raw Tailwind
+        // colours so sections stay on the same three surfaces.
+        bone: "hsl(var(--bone))",
+        sand: "hsl(var(--sand))",
+        ink: {
+          DEFAULT: "hsl(var(--ink))",
+          soft: "hsl(var(--ink-soft))",
+        },
+        stone: "hsl(var(--stone))",
+        brass: "hsl(var(--brass))",
+        hairline: "hsl(var(--hairline))",
+
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -61,6 +73,10 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        display: ["'Cormorant Garamond'", "Georgia", "serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {

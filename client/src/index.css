@@ -1,52 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Design system — "editorial coastal".
+  Three surfaces (bone / sand / ink) and one accent (brass). Anything outside this
+  palette is a mistake, not a decision: the old site had seven section backgrounds
+  and three competing accent colours, which is why it read as incoherent.
+*/
 :root {
-  --background: 36 18% 97%;
-  --foreground: 240 10% 3.9%;
-  --card: 36 18% 97%;
-  --card-foreground: 240 10% 3.9%;
-  --popover: 36 18% 97%;
-  --popover-foreground: 240 10% 3.9%;
-  --primary: 220 84% 12%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 192 75% 35%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 41 84% 58%;
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 5.9% 10%;
-  --radius: 0.5rem;
-}
+  /* Surfaces */
+  --bone: 36 33% 97%;        /* #FAF8F5 — default page surface */
+  --sand: 33 25% 91%;        /* #EFE9E1 — alternating sections */
+  --ink: 213 38% 13%;        /* #14202E — dark sections, headings */
+  --ink-soft: 213 20% 32%;   /* body text on light surfaces */
+  --stone: 40 6% 45%;        /* muted / secondary text */
+  --brass: 33 35% 51%;       /* #B08D57 — the single accent */
+  --hairline: 213 15% 84%;
 
-.dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 220 84% 12%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 192 75% 35%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 41 84% 58%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
+  /* shadcn/ui tokens mapped onto the palette above */
+  --background: var(--bone);
+  --foreground: var(--ink);
+  --card: 0 0% 100%;
+  --card-foreground: var(--ink);
+  --popover: 0 0% 100%;
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--bone);
+  --secondary: var(--sand);
+  --secondary-foreground: var(--ink);
+  --muted: var(--sand);
+  --muted-foreground: var(--stone);
+  --accent: var(--brass);
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 65% 45%;
   --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
+  --border: var(--hairline);
+  --input: var(--hairline);
+  --ring: var(--brass);
+  --radius: 0.125rem;
+
+  /* Height of the promotional bar, if one is showing. PromotionalHeader sets it;
+     the fixed nav offsets itself by it. */
+  --promo-h: 0px;
 }
 
 @layer base {
@@ -55,48 +53,167 @@
   }
 
   body {
-    @apply bg-background text-foreground font-raleway;
+    @apply bg-background text-ink-soft font-sans antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    font-weight: 300;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-montserrat font-bold;
+    @apply font-display text-ink;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: hsl(var(--brass) / 0.25);
+  }
+}
+
+@layer components {
+  /* Editorial display sizes. Serif at these sizes is the whole look — do not
+     substitute the body sans here. */
+  .display-xl {
+    @apply font-display text-ink;
+    font-size: clamp(2.75rem, 6.5vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+
+  .display-lg {
+    @apply font-display text-ink;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+
+  .display-md {
+    @apply font-display text-ink;
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  /* Small uppercase label that sits above a heading. */
+  .eyebrow {
+    @apply font-sans uppercase text-stone;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+  }
+
+  .lede {
+    @apply text-ink-soft;
+    font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+    line-height: 1.65;
+    font-weight: 300;
+    max-width: 60ch;
+  }
+
+  /* Buttons: filled ink for the primary action, hairline for the secondary.
+     No gradients, no drop shadows. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center bg-ink text-bone font-sans transition-colors duration-300;
+    padding: 0.9rem 2rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .btn-primary:hover { background-color: hsl(var(--brass)); }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center font-sans transition-colors duration-300;
+    padding: 0.9rem 2rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid hsl(var(--ink) / 0.28);
+    color: hsl(var(--ink));
+  }
+  .btn-outline:hover { border-color: hsl(var(--ink)); background-color: hsl(var(--ink)); color: hsl(var(--bone)); }
+
+  .btn-on-dark {
+    @apply inline-flex items-center justify-center bg-bone text-ink font-sans transition-colors duration-300;
+    padding: 0.9rem 2rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .btn-on-dark:hover { background-color: hsl(var(--brass)); color: #fff; }
+
+  /* Text link with a rule that grows on hover. */
+  .link-underline {
+    @apply relative inline-block font-sans text-ink;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-bottom: 0.35rem;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 1px;
+    background: currentColor;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .link-underline:hover::after { opacity: 1; }
+
+  /* Standard section rhythm. */
+  .section {
+    @apply px-6 md:px-10;
+    padding-top: clamp(4.5rem, 9vw, 8.5rem);
+    padding-bottom: clamp(4.5rem, 9vw, 8.5rem);
+  }
+
+  .shell {
+    @apply mx-auto w-full;
+    max-width: 78rem;
+  }
+
+  .shell-narrow {
+    @apply mx-auto w-full;
+    max-width: 52rem;
+  }
+
+  .hairline {
+    border-top: 1px solid hsl(var(--ink) / 0.12);
+  }
+
+  .hairline-dark {
+    border-top: 1px solid hsl(0 0% 100% / 0.16);
   }
 }
 
 @layer utilities {
-  .font-montserrat {
-    font-family: 'Montserrat', sans-serif;
-  }
+  .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .font-sans { font-family: 'Inter', system-ui, sans-serif; }
 
-  .font-raleway {
-    font-family: 'Raleway', sans-serif;
-  }
+  /* Legacy aliases — older components still reference these class names. */
+  .font-montserrat { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .font-raleway { font-family: 'Inter', system-ui, sans-serif; }
 
-  .bg-sand {
-    background-color: #F0E6D2;
-  }
+  .scroll-smooth { scroll-behavior: smooth; }
 
-  .scroll-smooth {
-    scroll-behavior: smooth;
-  }
+  /* Photography: fixed ratios so grids line up instead of stair-stepping. */
+  .ratio-portrait { aspect-ratio: 4 / 5; }
+  .ratio-landscape { aspect-ratio: 3 / 2; }
+  .ratio-wide { aspect-ratio: 16 / 9; }
 
-  .gallery-img {
-    height: 250px;
-    object-fit: cover;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
+  .img-cover { @apply h-full w-full object-cover; }
 
-  .gallery-img:hover {
-    opacity: 0.9;
-    transform: scale(1.02);
+  .img-zoom {
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
-
-  @media (max-width: 768px) {
-    .gallery-img {
-      height: 200px;
-    }
-  }
+  .group:hover .img-zoom { transform: scale(1.04); }
 }
 
 html {

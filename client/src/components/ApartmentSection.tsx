@@ -1,10 +1,16 @@
-import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
-import apartmentImage from "@assets/IMG_2581_optimized.jpeg";
+import apartmentImage from "@assets/Livingroom1_optimized.jpeg";
+
+const WALKING_TIMES = [
+  { name: 'La Fontana', minutes: 3 },
+  { name: 'Chabada', minutes: 5 },
+  { name: 'La Bambula', minutes: 6 },
+  { name: 'Bohemians', minutes: 6 },
+];
 
 const ApartmentSection = () => {
-  const { t, getLocalizedPath, language } = useLanguage();
-  
+  const { t, getLocalizedPath } = useLanguage();
+
   const interiorFeatures = [
     t('interior.bedrooms'),
     t('interior.bathroom'),
@@ -13,104 +19,88 @@ const ApartmentSection = () => {
     t('interior.lighting'),
     t('interior.patio'),
     t('interior.laundry'),
-    t('interior.connectivity')
+    t('interior.connectivity'),
   ];
 
   const buildingFeatures = [
     t('building.security'),
     t('building.marina'),
-    t('building.shopping')
+    t('building.shopping'),
   ];
 
   return (
-    <section id="apartment" className="pt-24 pb-16 bg-sand">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-montserrat font-bold text-3xl md:text-4xl text-primary mb-2">{t('apartment.title')}</h2>
-          <div className="w-24 h-1 bg-accent mx-auto mb-4"></div>
-          <p className="max-w-3xl mx-auto text-gray-700">
-            {t('apartment.description')}
-          </p>
-          {language === 'nl' && (
-            <p className="max-w-3xl mx-auto text-gray-700 mt-4 bg-emerald-50 p-4 rounded-lg border-l-4 border-emerald-500">
-              <strong>Ideaal voor huiseigenaren:</strong> Zoekt u een comfortabele uitvalsbasis tijdens de renovatie van uw nieuwe huis in Javea? Wij bieden speciale lange-termijn tarieven.
-            </p>
-          )}
-        </div>
-        
-        <div className="flex flex-col md:flex-row gap-12">
-          <div className="md:w-1/2">
-            <img 
-              src={apartmentImage} 
-              alt="Interior of the apartment" 
-              className="rounded-lg shadow-lg w-full h-auto object-cover"
-              width="600"
-              height="400"
-              loading="lazy"
-            />
+    <section id="apartment" className="section bg-sand">
+      <div className="shell">
+        <div className="grid lg:grid-cols-12 gap-y-14 gap-x-16 items-start">
+          {/* Image column — sticky on desktop so the long feature list scrolls past it. */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-28">
+              <div className="ratio-portrait overflow-hidden group">
+                <img
+                  src={apartmentImage}
+                  alt="Inside the apartment at Jávea Bliss"
+                  className="img-cover img-zoom"
+                  width={900}
+                  height={1125}
+                  loading="lazy"
+                />
+              </div>
+            </div>
           </div>
-          
-          <div className="md:w-1/2">
-            <h3 className="font-montserrat font-semibold text-2xl text-primary mb-6">{t('interior.title')}</h3>
-            
-            <ul className="space-y-4">
-              {interiorFeatures.map((feature, index) => (
-                <li key={index} className="flex items-start">
-                  <CheckCircle2 className="h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0" />
-                  <span>{feature}</span>
+
+          <div className="lg:col-span-7">
+            <p className="eyebrow mb-5">{t('apartment.eyebrow')}</p>
+            <h2 className="display-lg mb-7">{t('apartment.title')}</h2>
+            <p className="lede mb-14">{t('apartment.description')}</p>
+
+            <h3 className="display-md mb-6">{t('interior.title')}</h3>
+            <ul className="mb-14">
+              {interiorFeatures.map((feature) => (
+                <li key={feature} className="hairline py-4 text-[0.95rem] leading-relaxed">
+                  {feature}
                 </li>
               ))}
             </ul>
-            
-            <h3 className="font-montserrat font-semibold text-2xl text-primary mt-8 mb-6">{t('building.title')}</h3>
-            
-            <ul className="space-y-4">
-              {buildingFeatures.map((feature, index) => (
-                <li key={index} className="flex items-start">
-                  <CheckCircle2 className="h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0" />
-                  <span>{feature}</span>
+
+            <h3 className="display-md mb-6">{t('building.title')}</h3>
+            <ul>
+              {buildingFeatures.map((feature) => (
+                <li key={feature} className="hairline py-4 text-[0.95rem] leading-relaxed">
+                  {feature}
                 </li>
               ))}
             </ul>
           </div>
         </div>
-        
-        {/* Restaurant Proximity Feature */}
-        <div className="mt-12 bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
-          <h3 className="font-montserrat font-bold text-2xl text-primary mb-4 text-center">
-            🚶‍♂️ {t('apartment.restaurantProximity') || 'Walk to the Best Restaurants'}
-          </h3>
-          <p className="text-gray-600 mb-6 text-center">
-            {t('apartment.restaurantProximityDesc') || 'Your apartment is perfectly located within walking distance of Jávea\'s most popular restaurants and bars.'}
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <div className="font-semibold text-primary">Chabada</div>
-              <div className="text-sm text-gray-600">5 min walk</div>
+
+        {/* Walking times to the restaurants people actually ask about. */}
+        <div className="mt-20 md:mt-28 pt-14 border-t border-ink/12">
+          <div className="grid lg:grid-cols-12 gap-y-10 gap-x-16">
+            <div className="lg:col-span-5">
+              <h3 className="display-md mb-4">{t('apartment.restaurantProximity')}</h3>
+              <p className="text-[0.95rem] text-ink-soft max-w-md mb-7">
+                {t('apartment.restaurantProximityDesc')}
+              </p>
+              <a href={getLocalizedPath('/recommendations')} className="link-underline">
+                {t('apartment.viewAllRestaurants')}
+              </a>
             </div>
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <div className="font-semibold text-primary">La Bambula</div>
-              <div className="text-sm text-gray-600">6 min walk</div>
+
+            <div className="lg:col-span-7">
+              <ul className="grid grid-cols-2 gap-x-12">
+                {WALKING_TIMES.map(({ name, minutes }) => (
+                  <li
+                    key={name}
+                    className="hairline py-5 flex items-baseline justify-between gap-4"
+                  >
+                    <span className="font-display text-xl text-ink">{name}</span>
+                    <span className="font-sans text-[0.8125rem] tracking-[0.1em] uppercase text-stone whitespace-nowrap">
+                      {minutes} {t('rec.location.walk')}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <div className="font-semibold text-primary">Bohemians</div>
-              <div className="text-sm text-gray-600">6 min walk</div>
-            </div>
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <div className="font-semibold text-primary">La Fontana</div>
-              <div className="text-sm text-gray-600">3 min walk</div>
-            </div>
-          </div>
-          <div className="text-center mt-6">
-            <a 
-              href={getLocalizedPath('/recommendations')}
-              className="inline-flex items-center bg-secondary text-white px-6 py-3 rounded-lg hover:bg-secondary/90 transition-colors font-semibold"
-            >
-              {t('apartment.viewAllRestaurants') || 'View Complete Restaurant Guide'}
-              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </a>
           </div>
         </div>
       </div>

@@ -1,56 +1,44 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import WeatherDisplay from "./WeatherDisplay";
 import { useLanguage, getPathWithoutLanguage } from "../contexts/LanguageContext";
 import { useLocation } from "wouter";
-import logo from "../assets/images/logo.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { t, language, getLocalizedPath } = useLanguage();
+  const { t, getLocalizedPath } = useLanguage();
   const [location, setLocation] = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+  // Pages other than the homepage have a light background under the bar, so the
+  // transparent-over-photo treatment only applies on the homepage.
+  const isHomePage = (() => {
+    const p = getPathWithoutLanguage(location);
+    return p === '/' || p === '';
+  })();
+  const solid = isScrolled || !isHomePage || isOpen;
 
-    window.addEventListener("scroll", handleScroll);
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navigateToSection = (id: string) => {
-    // Check if we're on the home page (with or without language prefix)
-    const pathWithoutLang = getPathWithoutLanguage(location);
-    const isHomePage = pathWithoutLang === '/' || pathWithoutLang === '';
-    
-    if (!isHomePage) {
-      // Navigate to home first with language prefix
-      setLocation(getLocalizedPath('/'));
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          const navHeight = 136;
-          const elementPosition = element.offsetTop - navHeight;
-          window.scrollTo({
-            top: elementPosition,
-            behavior: "smooth"
-          });
-        }
-      }, 100);
-    } else {
+    const goTo = () => {
       const element = document.getElementById(id);
       if (element) {
-        const navHeight = 136;
-        const elementPosition = element.offsetTop - navHeight;
-        window.scrollTo({
-          top: elementPosition,
-          behavior: "smooth"
-        });
+        window.scrollTo({ top: element.offsetTop - 72, behavior: "smooth" });
       }
+    };
+
+    if (!isHomePage) {
+      setLocation(getLocalizedPath('/'));
+      setTimeout(goTo, 120);
+    } else {
+      goTo();
     }
     setIsOpen(false);
   };
@@ -64,111 +52,104 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md top-0' : 'bg-transparent top-14'
+      // --promo-h is set by PromotionalHeader when an offer bar is showing.
+      style={{ top: 'var(--promo-h, 0px)' }}
+      className={`fixed left-0 right-0 z-40 transition-all duration-500 ${
+        solid ? 'bg-bone/95 backdrop-blur-md border-b border-ink/10' : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <div 
-            className="flex items-center gap-3 cursor-pointer"
+      <div className="shell px-6 md:px-10">
+        <div className="flex items-center justify-between h-[72px]">
+          <button
             onClick={() => navigateToSection('home')}
+            className={`font-display text-xl md:text-2xl tracking-wide transition-colors duration-500 ${
+              solid ? 'text-ink' : 'text-bone'
+            }`}
+            aria-label="Jávea Bliss — home"
           >
-            <span 
-              className="font-montserrat font-bold text-xl md:text-2xl"
-              style={{ color: isScrolled ? '#1e3a5f' : '#ffffff' }}
-            >
-              JÁVEA BLISS
-            </span>
-            <img 
-              src={logo} 
-              alt="Jávea Bliss Logo" 
-              className="h-8 w-auto md:h-10"
-              width="40"
-              height="40"
-            />
-          </div>
+            Jávea Bliss
+          </button>
 
-          {/* Desktop Navigation - Switch to dropdown on smaller screens */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center gap-10">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => navigateToSection(item.id)}
-                className={`font-montserrat font-medium transition-colors hover:text-accent ${
-                  isScrolled ? 'text-gray-700' : 'text-white'
+                className={`font-sans text-[0.8125rem] tracking-[0.12em] uppercase transition-colors duration-300 hover:text-brass ${
+                  solid ? 'text-ink-soft' : 'text-bone/90'
                 }`}
               >
                 {t(item.key)}
               </button>
             ))}
-            <Button
-              onClick={() => navigateToSection('booking')}
-              className="bg-accent hover:bg-secondary transition text-white font-montserrat font-semibold px-6 py-2 rounded-md"
-            >
-              {t('nav.booking')}
-            </Button>
-            <div className={`px-3 py-2 rounded-md ${isScrolled ? 'bg-gray-50' : 'bg-white/20 backdrop-blur-sm'}`}>
-              <WeatherDisplay />
-            </div>
-            <LanguageSwitcher />
-          </div>
 
-          {/* Tablet and Mobile Navigation - Dropdown menu for smaller screens */}
-          <div className="flex lg:hidden items-center space-x-2">
-            <div className={`px-2 py-1 rounded-md ${isScrolled ? 'bg-gray-50' : 'bg-white/20 backdrop-blur-sm'}`}>
-              <WeatherDisplay />
-            </div>
-            <LanguageSwitcher />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(!isOpen)}
-              className={isScrolled ? 'text-gray-700' : 'text-white'}
-              aria-expanded={isOpen}
-              aria-controls="mobile-menu"
-              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              data-testid="mobile-menu-toggle"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
-          </div>
-        </div>
-
-        {/* Mobile and Tablet Navigation Menu with ARIA and focus management */}
-        {isOpen && (
-          <div 
-            className="md:bg-white md:border-t md:shadow-lg lg:hidden"
-            role="navigation"
-            aria-label="Mobile navigation menu"
-          >
-            <div className="py-4 space-y-2 bg-white" role="menu">
-              {navItems.map((item, index) => (
-                <button
-                  key={item.id}
-                  onClick={() => navigateToSection(item.id)}
-                  className="block w-full text-left px-4 py-2 font-montserrat font-medium text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent transition-colors"
-                  role="menuitem"
-                  tabIndex={0}
-                  data-testid={`mobile-nav-${item.id}`}
-                >
-                  {t(item.key)}
-                </button>
-              ))}
+            <div className={`flex items-center gap-5 pl-8 border-l ${solid ? 'border-ink/12' : 'border-bone/25'}`}>
+              <div className={solid ? 'text-ink-soft' : 'text-bone/85'}>
+                <WeatherDisplay />
+              </div>
+              <LanguageSwitcher />
               <button
                 onClick={() => navigateToSection('booking')}
-                className="block w-full text-left px-4 py-2 font-montserrat font-semibold text-accent hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent transition-colors"
-                role="menuitem"
-                tabIndex={0}
-                data-testid="mobile-nav-booking"
+                className={`font-sans text-[0.8125rem] tracking-[0.12em] uppercase px-6 py-3 transition-colors duration-300 ${
+                  solid
+                    ? 'bg-ink text-bone hover:bg-brass'
+                    : 'bg-bone/95 text-ink hover:bg-brass hover:text-white'
+                }`}
               >
                 {t('nav.booking')}
               </button>
             </div>
           </div>
-        )}
+
+          <div className="flex lg:hidden items-center gap-3">
+            <div className={solid ? 'text-ink-soft' : 'text-bone/85'}>
+              <WeatherDisplay />
+            </div>
+            <LanguageSwitcher />
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`p-2 -mr-2 transition-colors ${solid ? 'text-ink' : 'text-bone'}`}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
+              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              data-testid="mobile-menu-toggle"
+            >
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
       </div>
+
+      {isOpen && (
+        <div
+          id="mobile-menu"
+          className="lg:hidden bg-bone border-t border-ink/10"
+          role="navigation"
+          aria-label="Mobile navigation menu"
+        >
+          <div className="shell px-6 py-4" role="menu">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => navigateToSection(item.id)}
+                className="block w-full text-left py-4 font-sans text-[0.8125rem] tracking-[0.12em] uppercase text-ink-soft border-b border-ink/10 hover:text-brass transition-colors"
+                role="menuitem"
+                data-testid={`mobile-nav-${item.id}`}
+              >
+                {t(item.key)}
+              </button>
+            ))}
+            <button
+              onClick={() => navigateToSection('booking')}
+              className="mt-6 mb-2 w-full btn-primary"
+              role="menuitem"
+              data-testid="mobile-nav-booking"
+            >
+              {t('nav.booking')}
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

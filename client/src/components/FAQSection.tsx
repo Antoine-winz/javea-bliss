@@ -265,10 +265,20 @@ const titles: Record<string, string> = {
   it: 'Domande Frequenti',
 };
 
+const eyebrows: Record<string, string> = {
+  en: 'Good to know',
+  nl: 'Goed om te weten',
+  fr: 'Bon à savoir',
+  de: 'Gut zu wissen',
+  es: 'Conviene saber',
+  it: 'Da sapere',
+};
+
 const FAQSection = () => {
   const { language } = useLanguage();
   const items = faqs[language as keyof typeof faqs] || faqs.en;
   const title = titles[language] || titles.en;
+  const eyebrow = eyebrows[language] || eyebrows.en;
 
   useEffect(() => {
     const faqSchema = {
@@ -295,29 +305,40 @@ const FAQSection = () => {
   }, [language, items]);
 
   return (
-    <section className="py-16 bg-gray-50" id="faq" data-testid="section-faq">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-10 text-navy-900">{title}</h2>
-
-        <div itemScope itemType="https://schema.org/FAQPage" className="max-w-3xl mx-auto space-y-6">
-          {items.map((item, i) => (
-            <div
-              key={i}
-              itemScope
-              itemProp="mainEntity"
-              itemType="https://schema.org/Question"
-              className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
-            >
-              <h3 itemProp="name" className="font-semibold text-lg text-gray-900 mb-3">
-                {item.q}
-              </h3>
-              <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                <p itemProp="text" className="text-gray-600 leading-relaxed">
-                  {item.a}
-                </p>
-              </div>
+    <section className="section bg-bone" id="faq" data-testid="section-faq">
+      <div className="shell">
+        <div className="grid lg:grid-cols-12 gap-y-10 gap-x-16">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <p className="eyebrow mb-5">{eyebrow}</p>
+              <h2 className="display-lg">{title}</h2>
             </div>
-          ))}
+          </div>
+
+          <div
+            itemScope
+            itemType="https://schema.org/FAQPage"
+            className="lg:col-span-8 border-t border-ink/12"
+          >
+            {items.map((item, i) => (
+              <div
+                key={i}
+                itemScope
+                itemProp="mainEntity"
+                itemType="https://schema.org/Question"
+                className="border-b border-ink/12 py-8"
+              >
+                <h3 itemProp="name" className="font-display text-xl md:text-[1.4rem] text-ink mb-3">
+                  {item.q}
+                </h3>
+                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <p itemProp="text" className="text-[0.95rem] text-ink-soft leading-relaxed max-w-2xl">
+                    {item.a}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

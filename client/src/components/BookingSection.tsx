@@ -559,25 +559,29 @@ This inquiry was submitted through the Jávea Bliss website.
   };
 
   return (
-    <section id="booking" className="pt-24 pb-16" style={{ backgroundColor: '#faf7f2' }}>
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-montserrat font-bold text-3xl md:text-4xl text-primary mb-2">{t('booking.title')}</h2>
-          <div className="w-24 h-1 bg-accent mx-auto mb-4"></div>
-          <p className="max-w-3xl mx-auto text-gray-700">{t('booking.description')}</p>
+    <section id="booking" className="section bg-sand">
+      <div className="shell">
+        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-16">
+          <div className="lg:col-span-5">
+            <p className="eyebrow mb-5">{t('booking.eyebrow')}</p>
+            <h2 className="display-lg">{t('booking.title')}</h2>
+          </div>
+          <div className="lg:col-span-7 flex items-end">
+            <p className="lede">{t('booking.description')}</p>
+          </div>
         </div>
-        
-        <div className="flex flex-col lg:flex-row gap-12">
+
+        <div className="flex flex-col lg:flex-row gap-10">
           <div className="lg:w-1/2">
-            <div className="bg-white p-3 sm:p-6 rounded-lg border shadow-md mb-6">
-              <h3 className="font-montserrat font-semibold text-xl sm:text-2xl mb-3 sm:mb-6 text-primary text-center">{t('checkAvailability')}</h3>
+            <div className="bg-bone border border-ink/12 p-3 sm:p-6 mb-6">
+              <h3 className="font-display text-2xl mb-5 text-ink text-center">{t('checkAvailability')}</h3>
               <div className="flex justify-center">
                 <OptimizedCalendar />
               </div>
             </div>
-            
+
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="bg-muted p-8 rounded-lg shadow-md">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="bg-bone border border-ink/12 p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
@@ -904,7 +908,7 @@ This inquiry was submitted through the Jávea Bliss website.
                 
                 <Button 
                   type="submit" 
-                  className="mt-6 bg-secondary hover:bg-primary transition text-white font-montserrat font-semibold py-3 px-8 rounded-md w-full"
+                  className="mt-8 btn-primary w-full rounded-none"
                   disabled={bookingMutation.isPending}
                 >
                   {bookingMutation.isPending ? t('booking.submitting') : t('booking.submit')}
@@ -914,35 +918,35 @@ This inquiry was submitted through the Jávea Bliss website.
           </div>
           
           <div className="lg:w-1/2">
-            <div className="bg-primary text-white p-8 rounded-lg h-full">
-              <h3 className="font-montserrat font-semibold text-2xl mb-6">{t('booking.information')}</h3>
+            <div className="bg-ink text-bone p-8 md:p-10 h-full">
+              <h3 className="font-display text-2xl md:text-3xl mb-8">{t('booking.information')}</h3>
               
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-medium text-lg mb-2">{t('booking.rates')}</h4>
+                  <h4 className="eyebrow text-bone/45 mb-3">{t('booking.rates')}</h4>
                   <p className="mb-1">{t('booking.highSeason')}</p>
                   <p className="mb-1">{t('booking.midSeason')}</p>
                   <p>{t('booking.lowSeason')}</p>
                 </div>
                 
                 <div>
-                  <h4 className="font-medium text-lg mb-2">{t('booking.minimumStay')}</h4>
+                  <h4 className="eyebrow text-bone/45 mb-3">{t('booking.minimumStay')}</h4>
                   <p>{t('booking.minimumStayText')}</p>
                 </div>
                 
                 <div>
-                  <h4 className="font-medium text-lg mb-2">{t('booking.checkInOut')}</h4>
+                  <h4 className="eyebrow text-bone/45 mb-3">{t('booking.checkInOut')}</h4>
                   <p className="mb-1">{t('booking.checkInTime')}</p>
                   <p>{t('booking.checkOutTime')}</p>
                 </div>
                 
                 <div>
-                  <h4 className="font-medium text-lg mb-2">{t('booking.cancellation')}</h4>
+                  <h4 className="eyebrow text-bone/45 mb-3">{t('booking.cancellation')}</h4>
                   <p>{t('booking.cancellationText')}</p>
                 </div>
                 
                 <div>
-                  <h4 className="font-medium text-lg mb-2">{t('booking.directContact')}</h4>
+                  <h4 className="eyebrow text-bone/45 mb-3">{t('booking.directContact')}</h4>
                   <p className="flex items-center mb-2">
                     <Mail className="mr-3" />
                     <a href="mailto:admin@javeabliss.com" className="hover:underline">admin@javeabliss.com</a>

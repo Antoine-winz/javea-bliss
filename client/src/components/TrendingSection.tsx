@@ -68,32 +68,34 @@ const TrendingSection = () => {
 
   const t = translations[language as keyof typeof translations] || translations.en;
 
+  const cards = [
+    { key: 'winter-sun', title: t.winterSun, body: t.winterSunDesc },
+    { key: 'remote-work', title: t.remoteWork, body: t.remoteWorkDesc },
+    { key: 'renovation', title: t.renovation, body: t.renovationDesc },
+  ];
+
   return (
-    <section className="py-12 bg-emerald-50" data-testid="section-long-stays">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-8 max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800">{t.title}</h2>
-          <p className="text-gray-600 mt-2">{t.subtitle}</p>
+    <section className="section bg-bone" data-testid="section-long-stays">
+      <div className="shell">
+        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-20">
+          <div className="lg:col-span-5">
+            <h2 className="display-lg">{t.title}</h2>
+          </div>
+          <div className="lg:col-span-7 flex items-end">
+            <p className="lede">{t.subtitle}</p>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-xl shadow-md" data-testid="card-winter-sun">
-            <div className="text-4xl mb-4">☀️</div>
-            <h3 className="text-xl font-bold mb-2">{t.winterSun}</h3>
-            <p className="text-gray-600">{t.winterSunDesc}</p>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl shadow-md" data-testid="card-remote-work">
-            <div className="text-4xl mb-4">💻</div>
-            <h3 className="text-xl font-bold mb-2">{t.remoteWork}</h3>
-            <p className="text-gray-600">{t.remoteWorkDesc}</p>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl shadow-md" data-testid="card-renovation">
-            <div className="text-4xl mb-4">🏠</div>
-            <h3 className="text-xl font-bold mb-2">{t.renovation}</h3>
-            <p className="text-gray-600">{t.renovationDesc}</p>
-          </div>
+        <div className="grid md:grid-cols-3 gap-x-14">
+          {cards.map(({ key, title, body }, i) => (
+            <div key={key} className="hairline pt-8" data-testid={`card-${key}`}>
+              <span className="font-sans text-[0.6875rem] tracking-[0.2em] text-brass block mb-4">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 className="font-display text-2xl text-ink mb-3">{title}</h3>
+              <p className="text-[0.9375rem] text-ink-soft leading-relaxed">{body}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

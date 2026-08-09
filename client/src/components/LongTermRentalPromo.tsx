@@ -152,65 +152,62 @@ const LongTermRentalPromo = () => {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-green-50 to-blue-50" data-testid="section-long-term">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-white rounded-xl shadow-lg p-8 border-2 border-green-200">
-            <div className="mb-6">
-              <button
-                onClick={() => window.open('/flyer2.html', 'flyerPopup', 'width=800,height=1000,scrollbars=yes,resizable=yes')}
-                className="inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wide cursor-pointer transition-colors"
-              >
-                {t.badge}
-              </button>
-            </div>
+    <section className="section bg-ink text-bone" data-testid="section-long-term">
+      <div className="shell">
+        <div className="grid lg:grid-cols-12 gap-y-12 gap-x-16">
+          <div className="lg:col-span-6">
+            <button
+              onClick={() => window.open('/flyer2.html', 'flyerPopup', 'width=800,height=1000,scrollbars=yes,resizable=yes')}
+              className="eyebrow text-brass mb-5 hover:text-bone transition-colors"
+            >
+              {t.badge}
+            </button>
 
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              {t.title}
-            </h2>
+            <h2 className="display-lg text-bone mb-7">{t.title}</h2>
 
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-bone/75 font-light leading-relaxed max-w-xl mb-10">
               {t.subtitle}
             </p>
 
-            <div className="bg-gray-50 p-6 rounded-lg mb-8 text-left">
-              <h3 className="font-semibold text-lg text-gray-800 mb-4 text-center">
-                {t.whatsIncluded}
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
-                {included.map((item) => (
-                  <div key={item} className="flex items-start gap-2">
-                    <span className="text-green-600 mt-0.5">✓</span>
-                    <span>{item}</span>
-                  </div>
-                ))}
+            {/* Price comparison, set as figures rather than a coloured badge. */}
+            <div className="flex flex-wrap items-end gap-x-10 gap-y-4 mb-10">
+              <div>
+                <div className="font-display text-5xl text-bone leading-none">
+                  €100<span className="text-2xl text-bone/60">{t.perDay}</span>
+                </div>
+                <div className="font-sans text-[0.75rem] tracking-[0.1em] uppercase text-brass mt-3">
+                  {t.forStays}
+                </div>
+              </div>
+              <div className="pb-1">
+                <div className="font-display text-2xl text-bone/35 line-through leading-none">
+                  €130–€210{t.perDay}
+                </div>
+                <div className="font-sans text-[0.75rem] tracking-[0.1em] uppercase text-bone/40 mt-3">
+                  {t.vs} {t.regularRates}
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-green-600">€100{t.perDay}</div>
-                <div className="text-sm text-gray-500">{t.forStays}</div>
-              </div>
-              <div className="text-center text-gray-400">
-                <div className="text-sm">{t.vs}</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-gray-400 line-through">€130–€210{t.perDay}</div>
-                <div className="text-sm text-gray-500">{t.regularRates}</div>
-              </div>
-            </div>
+            <a href="#booking" className="btn-on-dark">{t.bookLongTerm}</a>
+          </div>
 
-            <div className="mt-8">
-              <a
-                href="#booking"
-                className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
-              >
-                {t.bookLongTerm}
-              </a>
-            </div>
-
-            <p className="text-xs text-gray-500 mt-4 max-w-xl mx-auto">
+          <div className="lg:col-span-6 lg:pl-8">
+            <h3 className="font-sans text-[0.6875rem] tracking-[0.2em] uppercase text-bone/50 mb-2">
+              {t.whatsIncluded}
+            </h3>
+            <ul>
+              {included.map((item) => (
+                <li
+                  key={item}
+                  className="hairline-dark py-4 flex items-baseline gap-3 text-[0.9375rem] text-bone/80"
+                >
+                  <span aria-hidden="true" className="text-brass text-xs leading-none">+</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="text-[0.8125rem] text-bone/45 mt-8 leading-relaxed">
               {t.minimumStay}
             </p>
           </div>

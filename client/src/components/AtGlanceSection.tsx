@@ -1,50 +1,44 @@
-import { Bed, MapPin, Snowflake, Car } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const AtGlanceSection = () => {
   const { t } = useLanguage();
-  
-  const features = [
-    {
-      icon: <Bed className="h-10 w-10 text-secondary mb-4" />,
-      title: t('glance.sleeps'),
-      description: t('glance.bedrooms')
-    },
-    {
-      icon: <MapPin className="h-10 w-10 text-secondary mb-4" />,
-      title: t('glance.beach'),
-      description: t('glance.bathroom')
-    },
-    {
-      icon: <Snowflake className="h-10 w-10 text-secondary mb-4" />,
-      title: t('glance.ac'),
-      description: t('glance.wifi')
-    },
-    {
-      icon: <Car className="h-10 w-10 text-secondary mb-4" />,
-      title: t('glance.parking'),
-      description: t('glance.terrace')
-    }
+
+  // A spec sheet, not four decorated cards. The facts are the selling point, so
+  // they are set as type rather than dressed up with icons.
+  const specs = [
+    t('glance.sleeps'),
+    t('glance.bedrooms'),
+    t('glance.bathroom'),
+    t('glance.beach'),
+    t('glance.ac'),
+    t('glance.wifi'),
+    t('glance.parking'),
+    t('glance.terrace'),
   ];
 
   return (
-    <section className="py-16" style={{ backgroundColor: '#faf7f2' }}>
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-montserrat font-bold text-3xl md:text-4xl text-primary mb-2">{t('glance.title')}</h2>
-          <div className="w-24 h-1 bg-accent mx-auto"></div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <div key={index} className="bg-muted p-6 rounded-lg shadow-md text-center hover:shadow-lg transition">
-              <div className="flex justify-center">
-                {feature.icon}
-              </div>
-              <h3 className="font-montserrat font-semibold text-xl mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </div>
-          ))}
+    <section className="section bg-bone">
+      <div className="shell">
+        <div className="grid lg:grid-cols-12 gap-y-12 gap-x-16">
+          <div className="lg:col-span-5">
+            <p className="eyebrow mb-5">{t('glance.eyebrow')}</p>
+            <h2 className="display-lg">{t('glance.title')}</h2>
+          </div>
+
+          <div className="lg:col-span-7">
+            <p className="lede mb-12">{t('hero.description')}</p>
+
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12">
+              {specs.map((spec) => (
+                <li
+                  key={spec}
+                  className="hairline py-4 font-sans text-[0.95rem] text-ink-soft"
+                >
+                  {spec}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

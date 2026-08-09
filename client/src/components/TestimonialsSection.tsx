@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Star, ChevronLeft, ChevronRight, Globe } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import useEmblaCarousel from 'embla-carousel-react';
@@ -50,24 +49,12 @@ const TestimonialsSection = () => {
   // Show all visible reviews regardless of language
   const displayReviews = reviews.filter(review => review.isVisible);
 
-  // Function to get avatar color based on name
-  const getAvatarColor = (name: string, index: number) => {
-    const colors = ["bg-primary", "bg-secondary", "bg-accent", "bg-blue-500", "bg-green-500", "bg-purple-500"];
-    return colors[index % colors.length];
-  };
-
-  // Function to get initials from name
-  const getInitials = (name: string) => {
-    return name.split(' ').map(word => word.charAt(0).toUpperCase()).join('').slice(0, 2);
-  };
-
-  // Function to render star rating
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, i) => (
-      <Star 
-        key={i} 
-        className={`${i < rating ? "fill-current text-secondary" : "text-gray-300"}`} 
-        size={16} 
+      <Star
+        key={i}
+        className={i < rating ? "fill-current" : "text-ink/15"}
+        size={13}
       />
     ));
   };
@@ -248,121 +235,79 @@ const TestimonialsSection = () => {
 
   if (displayReviews.length === 0) {
     return (
-      <section className="py-16 bg-sand">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="font-montserrat font-bold text-3xl md:text-4xl text-primary mb-2">{t('testimonials.title')}</h2>
-            <div className="w-24 h-1 bg-accent mx-auto mb-4"></div>
-            <p className="max-w-3xl mx-auto text-gray-700">{t('testimonials.description')}</p>
-          </div>
-          <div className="text-center py-8">
-            <p className="text-gray-600">No guest reviews available at the moment.</p>
-          </div>
+      <section className="section bg-sand">
+        <div className="shell">
+          <p className="eyebrow mb-5">{t('testimonials.eyebrow')}</p>
+          <h2 className="display-lg mb-6">{t('testimonials.title')}</h2>
+          <p className="lede">{t('testimonials.description')}</p>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="py-16 bg-sand">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-montserrat font-bold text-3xl md:text-4xl text-primary mb-2">{t('testimonials.title')}</h2>
-          <div className="w-24 h-1 bg-accent mx-auto mb-4"></div>
-          <p className="max-w-3xl mx-auto text-gray-700">{t('testimonials.description')}</p>
-        </div>
-        
-        <div className="relative">
-          {/* Navigation buttons */}
-          <button 
-            onClick={scrollPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-gray-50"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="w-6 h-6 text-primary" />
-          </button>
-          
-          <button 
-            onClick={scrollNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow duration-300 hover:bg-gray-50"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="w-6 h-6 text-primary" />
-          </button>
-          
-          {/* Carousel */}
-          <div className="overflow-hidden mx-8" ref={emblaRef}>
-            <div className="flex">
-              {displayReviews.map((review, index) => (
-                <div key={review.id} className="flex-none w-full md:w-1/2 lg:w-1/3 px-4">
-                  <Card className="bg-white p-6 rounded-lg shadow-md h-full">
-                    <CardContent className="p-0">
-                      <div className="flex items-center mb-4">
-                        <div className="flex">
-                          {renderStars(review.rating)}
-                        </div>
-                      </div>
-                      <div className="mb-4">
-                        <p className="italic text-sm leading-relaxed mb-2">
-                          {showOriginal[review.id] 
-                            ? review.reviewText 
-                            : translateText(review.reviewText, review.language, language)
-                          }
-                        </p>
-                        <button
-                          onClick={() => toggleOriginal(review.id)}
-                          className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors"
-                          data-testid={`button-toggle-original-${review.id}`}
-                        >
-                          <Globe className="w-3 h-3" />
-                          {showOriginal[review.id] 
-                            ? t('reviews.hideOriginal').replace('{lang}', review.language.toUpperCase())
-                            : t('reviews.showOriginal').replace('{lang}', review.language.toUpperCase())
-                          }
-                        </button>
-                      </div>
-                      <div className="flex items-center">
-                        <div className={`w-10 h-10 ${getAvatarColor(review.guestName, index)} rounded-full flex items-center justify-center text-white mr-3 flex-shrink-0`}>
-                          <span className="font-semibold text-xs">{getInitials(review.guestName)}</span>
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2">
-                            <p className="font-medium">{review.guestName}</p>
-                            {review.isVerified && (
-                              <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                                <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>
-                              </div>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
-                            {review.country && <span>{review.country}</span>}
-                            {review.stayDate && review.country && <span>•</span>}
-                            {review.stayDate && <span>{review.stayDate}</span>}
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
-            </div>
+    <section className="section bg-sand">
+      <div className="shell">
+        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-16 items-end">
+          <div className="lg:col-span-7">
+            <p className="eyebrow mb-5">{t('testimonials.eyebrow')}</p>
+            <h2 className="display-lg">{t('testimonials.title')}</h2>
           </div>
-          
-          {/* Carousel indicators */}
-          {displayReviews.length > 1 && (
-            <div className="flex justify-center mt-8 space-x-2">
-              {displayReviews.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => emblaApi?.scrollTo(index)}
-                  className="w-3 h-3 rounded-full bg-gray-300 hover:bg-primary transition-colors duration-200"
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
-              ))}
-            </div>
-          )}
+
+          <div className="lg:col-span-5 flex lg:justify-end gap-3">
+            <button
+              onClick={scrollPrev}
+              className="w-12 h-12 border border-ink/20 flex items-center justify-center text-ink hover:bg-ink hover:text-bone transition-colors"
+              aria-label="Previous review"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={scrollNext}
+              className="w-12 h-12 border border-ink/20 flex items-center justify-center text-ink hover:bg-ink hover:text-bone transition-colors"
+              aria-label="Next review"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
+            {displayReviews.map((review) => (
+              <div key={review.id} className="flex-none w-full md:w-1/2 lg:w-1/3 pr-6 md:pr-10">
+                <figure className="h-full flex flex-col border-t border-ink/12 pt-8">
+                  <div className="flex gap-1 mb-6 text-brass">{renderStars(review.rating)}</div>
+
+                  <blockquote className="flex-1">
+                    <p className="font-display text-[1.375rem] leading-[1.45] text-ink">
+                      {showOriginal[review.id]
+                        ? review.reviewText
+                        : translateText(review.reviewText, review.language, language)}
+                    </p>
+                  </blockquote>
+
+                  <button
+                    onClick={() => toggleOriginal(review.id)}
+                    className="mt-5 self-start inline-flex items-center gap-1.5 text-[0.75rem] tracking-[0.08em] uppercase text-stone hover:text-ink transition-colors"
+                    data-testid={`button-toggle-original-${review.id}`}
+                  >
+                    <Globe className="w-3 h-3" />
+                    {showOriginal[review.id]
+                      ? t('reviews.hideOriginal').replace('{lang}', review.language.toUpperCase())
+                      : t('reviews.showOriginal').replace('{lang}', review.language.toUpperCase())}
+                  </button>
+
+                  <figcaption className="mt-8 pt-5 border-t border-ink/10">
+                    <p className="font-sans text-[0.9375rem] text-ink">{review.guestName}</p>
+                    <p className="font-sans text-[0.8125rem] text-stone mt-0.5">
+                      {[review.country, review.stayDate].filter(Boolean).join(' · ')}
+                    </p>
+                  </figcaption>
+                </figure>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

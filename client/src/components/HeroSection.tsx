@@ -1,54 +1,64 @@
-import { Button } from "@/components/ui/button";
 import { useLanguage } from "../contexts/LanguageContext";
 import heroImage from "@assets/Xabia_playa_la_Grava_7H9A3912_20171206.jpg";
 
 const HeroSection = () => {
   const { t } = useLanguage();
-  
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const navHeight = 80; // Height of the navigation bar
-      const elementPosition = element.offsetTop - navHeight;
-      window.scrollTo({
-        top: elementPosition,
-        behavior: "smooth"
-      });
+      window.scrollTo({ top: element.offsetTop - 80, behavior: "smooth" });
     }
   };
 
   return (
-    <section 
-      id="home" 
-      className="pt-32 md:pt-28 relative h-screen flex items-center" 
-      style={{
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)), url(${heroImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center 70%"
-      }}
-    >
-      <div className="container mx-auto px-4 text-center md:text-left">
-        <div className="max-w-2xl bg-opacity-90 p-8 md:p-12 rounded-lg" style={{ backgroundColor: 'rgba(250, 247, 242, 0.9)' }}>
-          <h1 className="font-montserrat font-bold text-4xl md:text-5xl text-primary mb-2">{t('hero.title')}</h1>
-          <p className="text-xl md:text-2xl mb-2 text-secondary">{t('hero.subtitle')}</p>
-          <p className="text-lg md:text-xl mb-8 text-accent">{t('hero.tagline')}</p>
-          <p className="mb-8 text-gray-700">
-            {t('hero.description')}
+    <section id="home" className="relative min-h-[92vh] flex items-end overflow-hidden">
+      <img
+        src={heroImage}
+        alt="Arenal Beach and the Montgó above Jávea on the Costa Blanca"
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ objectPosition: "center 65%" }}
+        fetchPriority="high"
+        width={2000}
+        height={1333}
+      />
+      {/* Two scrims: one lifting off the bottom edge, one from the left. Together they
+          darken only the corner the type occupies, so the photograph keeps its light. */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to top, hsl(213 38% 8% / 0.85) 0%, hsl(213 38% 8% / 0.5) 32%, hsl(213 38% 8% / 0.15) 62%, transparent 100%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 hidden md:block"
+        style={{
+          background:
+            "linear-gradient(to right, hsl(213 38% 8% / 0.6) 0%, hsl(213 38% 8% / 0.3) 38%, transparent 68%)",
+        }}
+      />
+
+      <div className="relative shell px-6 md:px-10 pb-16 md:pb-24 w-full">
+        <div className="max-w-3xl">
+          <p className="eyebrow text-bone/70 mb-5">{t('hero.eyebrow')}</p>
+
+          <h1 className="display-xl text-bone mb-6">{t('hero.subtitle')}</h1>
+
+          <p className="text-bone/85 font-light text-lg md:text-xl max-w-xl leading-relaxed mb-10">
+            {t('hero.tagline')}
           </p>
-          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-            <Button 
-              onClick={() => scrollToSection("booking")} 
-              className="bg-accent hover:bg-secondary transition text-white font-montserrat font-semibold py-3 px-8 rounded-md"
-            >
+
+          <div className="flex flex-wrap items-center gap-4">
+            <button onClick={() => scrollToSection("booking")} className="btn-on-dark">
               {t('hero.bookButton')}
-            </Button>
-            <Button 
-              onClick={() => scrollToSection("apartment")} 
-              variant="outline"
-              className="bg-transparent border-2 border-secondary hover:bg-secondary hover:text-white transition text-secondary font-montserrat font-semibold py-3 px-8 rounded-md"
+            </button>
+            <button
+              onClick={() => scrollToSection("apartment")}
+              className="link-underline text-bone/90 hover:text-bone"
             >
               {t('hero.exploreButton')}
-            </Button>
+            </button>
           </div>
         </div>
       </div>
