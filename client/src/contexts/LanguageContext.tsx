@@ -232,6 +232,9 @@ const translations = {
     // Footer
     'footer.tagline': 'A renovated holiday apartment 250 m from Arenal Beach, Jávea.',
     'footer.rights': 'All rights reserved.',
+    'footer.quickLinks': 'Quick Links',
+    'footer.guides': 'Javea Guides',
+    'footer.followUs': 'Follow Us',
 
     // Form validation
     'form.nameRequired': 'Name must be at least 2 characters',
@@ -567,6 +570,9 @@ const translations = {
     // Footer
     'footer.tagline': 'Gerenoveerd vakantieappartement op 250 m van het Arenal strand, Jávea.',
     'footer.rights': 'Alle rechten voorbehouden.',
+    'footer.quickLinks': 'Snelle Links',
+    'footer.guides': 'Jávea-gidsen (in het Engels)',
+    'footer.followUs': 'Volg Ons',
 
     // Form validation
     'form.nameRequired': 'Naam moet minimaal 2 tekens bevatten',
@@ -902,6 +908,9 @@ const translations = {
     // Footer
     'footer.tagline': 'Appartement de vacances rénové à 250 m de la plage de l\'Arenal, Jávea.',
     'footer.rights': 'Tous droits réservés.',
+    'footer.quickLinks': 'Liens Rapides',
+    'footer.guides': 'Guides Jávea (en anglais)',
+    'footer.followUs': 'Suivez-nous',
 
     // Form validation
     'form.nameRequired': 'Le nom doit contenir au moins 2 caractères',
@@ -1237,6 +1246,9 @@ const translations = {
     // Footer
     'footer.tagline': 'Casa vacanze ristrutturata a 250 m dalla spiaggia dell\'Arenal, Jávea.',
     'footer.rights': 'Tutti i diritti riservati.',
+    'footer.quickLinks': 'Link Rapidi',
+    'footer.guides': 'Guide su Jávea (in inglese)',
+    'footer.followUs': 'Seguici',
 
     // Form validation
     'form.nameRequired': 'Il nome deve contenere almeno 2 caratteri',
@@ -1572,6 +1584,9 @@ const translations = {
     // Footer
     'footer.tagline': 'Renovierte Ferienwohnung, 250 m vom Arenal-Strand, Jávea.',
     'footer.rights': 'Alle Rechte vorbehalten.',
+    'footer.quickLinks': 'Schnellzugriff',
+    'footer.guides': 'Jávea-Guides (auf Englisch)',
+    'footer.followUs': 'Folgen Sie Uns',
 
     // Form validation
     'form.nameRequired': 'Der Name muss mindestens 2 Zeichen lang sein',
@@ -1907,6 +1922,9 @@ const translations = {
     // Footer
     'footer.tagline': 'Apartamento vacacional reformado a 250 m de la Playa del Arenal, Jávea.',
     'footer.rights': 'Todos los derechos reservados.',
+    'footer.quickLinks': 'Enlaces Rápidos',
+    'footer.guides': 'Guías de Jávea (en inglés)',
+    'footer.followUs': 'Síguenos',
 
     // Form validation
     'form.nameRequired': 'El nombre debe tener al menos 2 caracteres',

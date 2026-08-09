@@ -40,7 +40,7 @@ const Footer = () => {
           
           <div className="flex flex-col md:flex-row gap-12">
             <div>
-              <h4 className="font-montserrat font-semibold text-lg mb-4">Quick Links</h4>
+              <h4 className="font-montserrat font-semibold text-lg mb-4">{t('footer.quickLinks')}</h4>
               <ul className="space-y-2">
                 <li><button onClick={() => scrollToSection("home")} className="hover:text-secondary transition">{t('nav.home')}</button></li>
                 <li><button onClick={() => scrollToSection("apartment")} className="hover:text-secondary transition">{t('nav.apartment')}</button></li>
@@ -51,7 +51,7 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-montserrat font-semibold text-lg mb-4">Javea Guides</h4>
+              <h4 className="font-montserrat font-semibold text-lg mb-4">{t('footer.guides')}</h4>
               <ul className="space-y-2">
                 {seoGuides.map(({ href, label }) => (
                   <li key={href}>
@@ -64,7 +64,7 @@ const Footer = () => {
             </div>
             
             <div>
-              <h4 className="font-montserrat font-semibold text-lg mb-4">Follow Us</h4>
+              <h4 className="font-montserrat font-semibold text-lg mb-4">{t('footer.followUs')}</h4>
               <div className="flex space-x-4">
                 <a href="https://www.airbnb.com/rooms/1437724898890828336?location=Javea%20spaiin&search_mode=regular_search&adults=1&check_in=2025-07-12&check_out=2025-07-17&children=0&infants=0&pets=0&source_impression_id=p3_1752124817_P3RTWcRaUsEkoM5Y&previous_page_section_name=1001&federated_search_id=44f92839-24c4-4baf-90b6-63214bfbdc8c" target="_blank" rel="noopener noreferrer" className="hover:text-secondary transition">
                   <FaAirbnb size={24} />
