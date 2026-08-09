@@ -1,44 +1,38 @@
+import { BedDouble, Sofa, CookingPot, ShowerHead, Sun, Wind, Building2 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import apartmentImage from "@assets/Livingroom1_optimized.jpeg";
 
-const WALKING_TIMES = [
-  { name: 'La Fontana', minutes: 3 },
-  { name: 'Chabada', minutes: 5 },
-  { name: 'La Bambula', minutes: 6 },
-  { name: 'Bohemians', minutes: 6 },
-];
+/*
+  Ordered as a walk through the apartment — where you sleep first, since capacity and bed
+  configuration are what a guest checks before anything else, then the rooms in the order
+  you meet them, then the things that make a long stay work (climate, Wi-Fi) and finally
+  the building. Neighbourhood facts that used to sit here (the marina, the shops, the
+  restaurant walking times) now live in the location section where guests look for them.
+*/
+const GROUPS = [
+  { icon: BedDouble, label: 'interior.group.bedrooms', lines: ['interior.bedrooms'] },
+  { icon: Sofa, label: 'interior.group.living', lines: ['interior.lounge', 'interior.lighting'] },
+  { icon: CookingPot, label: 'interior.group.kitchen', lines: ['interior.kitchen'] },
+  { icon: ShowerHead, label: 'interior.group.bathroom', lines: ['interior.bathroom'] },
+  { icon: Sun, label: 'interior.group.terrace', lines: ['interior.patio', 'interior.laundry'] },
+  { icon: Wind, label: 'interior.group.comfort', lines: ['interior.connectivity'] },
+  { icon: Building2, label: 'building.title', lines: ['building.security'] },
+] as const;
 
 const ApartmentSection = () => {
-  const { t, getLocalizedPath } = useLanguage();
-
-  const interiorFeatures = [
-    t('interior.bedrooms'),
-    t('interior.bathroom'),
-    t('interior.kitchen'),
-    t('interior.lounge'),
-    t('interior.lighting'),
-    t('interior.patio'),
-    t('interior.laundry'),
-    t('interior.connectivity'),
-  ];
-
-  const buildingFeatures = [
-    t('building.security'),
-    t('building.marina'),
-    t('building.shopping'),
-  ];
+  const { t } = useLanguage();
 
   return (
     <section id="apartment" className="section bg-sand">
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-14 gap-x-16 items-start">
-          {/* Image column — sticky on desktop so the long feature list scrolls past it. */}
+          {/* Sticky on desktop so the photograph stays with the description it belongs to. */}
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-28">
               <div className="ratio-portrait overflow-hidden group">
                 <img
                   src={apartmentImage}
-                  alt="Inside the apartment at Jávea Bliss"
+                  alt="The living room of the apartment at Jávea Bliss"
                   className="img-cover img-zoom"
                   width={900}
                   height={1125}
@@ -51,55 +45,34 @@ const ApartmentSection = () => {
           <div className="lg:col-span-7">
             <p className="eyebrow mb-5">{t('apartment.eyebrow')}</p>
             <h2 className="display-lg mb-7">{t('apartment.title')}</h2>
-            <p className="lede mb-14">{t('apartment.description')}</p>
+            <p className="lede mb-12">{t('apartment.description')}</p>
 
-            <h3 className="display-md mb-6">{t('interior.title')}</h3>
-            <ul className="mb-14">
-              {interiorFeatures.map((feature) => (
-                <li key={feature} className="hairline py-4 text-[0.95rem] leading-relaxed">
-                  {feature}
-                </li>
+            <div className="border-t border-ink/12">
+              {GROUPS.map(({ icon: Icon, label, lines }) => (
+                <div
+                  key={label}
+                  className="border-b border-ink/12 py-7 grid grid-cols-[1.5rem_1fr] gap-x-5"
+                >
+                  <Icon
+                    className="w-5 h-5 text-brass mt-[2px]"
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <h3 className="font-sans text-[0.7rem] tracking-[0.18em] uppercase text-ink mb-2.5">
+                      {t(label)}
+                    </h3>
+                    {lines.map((line) => (
+                      <p
+                        key={line}
+                        className="text-[0.95rem] text-ink-soft leading-relaxed [&+p]:mt-2"
+                      >
+                        {t(line)}
+                      </p>
+                    ))}
+                  </div>
+                </div>
               ))}
-            </ul>
-
-            <h3 className="display-md mb-6">{t('building.title')}</h3>
-            <ul>
-              {buildingFeatures.map((feature) => (
-                <li key={feature} className="hairline py-4 text-[0.95rem] leading-relaxed">
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Walking times to the restaurants people actually ask about. */}
-        <div className="mt-20 md:mt-28 pt-14 border-t border-ink/12">
-          <div className="grid lg:grid-cols-12 gap-y-10 gap-x-16">
-            <div className="lg:col-span-5">
-              <h3 className="display-md mb-4">{t('apartment.restaurantProximity')}</h3>
-              <p className="text-[0.95rem] text-ink-soft max-w-md mb-7">
-                {t('apartment.restaurantProximityDesc')}
-              </p>
-              <a href={getLocalizedPath('/recommendations')} className="link-underline">
-                {t('apartment.viewAllRestaurants')}
-              </a>
-            </div>
-
-            <div className="lg:col-span-7">
-              <ul className="grid grid-cols-2 gap-x-12">
-                {WALKING_TIMES.map(({ name, minutes }) => (
-                  <li
-                    key={name}
-                    className="hairline py-5 flex items-baseline justify-between gap-4"
-                  >
-                    <span className="font-display text-xl text-ink">{name}</span>
-                    <span className="font-sans text-[0.8125rem] tracking-[0.1em] uppercase text-stone whitespace-nowrap">
-                      {minutes} {t('rec.location.walk')}
-                    </span>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>

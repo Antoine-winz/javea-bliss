@@ -1,7 +1,26 @@
+import { ShoppingBasket, Car, Sailboat } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+// Walking times guests ask about most. These used to sit at the end of the apartment
+// section; they belong with the neighbourhood.
+const WALKING_TIMES = [
+  { name: 'La Fontana', minutes: 3 },
+  { name: 'Chabada', minutes: 5 },
+  { name: 'La Bambula', minutes: 6 },
+  { name: 'Bohemians', minutes: 6 },
+];
 
 const LocationSection = () => {
   const { t, getLocalizedPath } = useLanguage();
+
+  // Deliberately only the practical facts the numbered highlights above do not already
+  // give. The beach and the restaurants are covered there, and repeating them here was
+  // the kind of duplication this restructure exists to remove.
+  const practical = [
+    { icon: ShoppingBasket, label: t('location.shops'), body: t('location.shopsDesc') },
+    { icon: Car, label: t('location.transport'), body: t('location.transportDesc') },
+    { icon: Sailboat, label: 'Marina Nou Fontana', body: t('building.marina') },
+  ];
 
   const highlights = [
     { title: t('paradise.beach.title'), description: t('paradise.beach.description') },
@@ -47,19 +66,48 @@ const LocationSection = () => {
           ))}
         </ul>
 
-        <div className="mt-20 pt-14 border-t border-white/16 grid lg:grid-cols-12 gap-y-8 gap-x-16 items-end">
-          <div className="lg:col-span-7">
+        {/* Practical distances — what guests check once they like the look of the place. */}
+        <ul className="mt-20 pt-14 border-t border-white/16 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-14">
+          {practical.map(({ icon: Icon, label, body }) => (
+            <li key={label} className="hairline-dark py-6 grid grid-cols-[1.5rem_1fr] gap-x-4">
+              <Icon className="w-[18px] h-[18px] text-brass mt-[3px]" strokeWidth={1.25} aria-hidden="true" />
+              <div>
+                <h3 className="font-sans text-[0.7rem] tracking-[0.18em] uppercase text-bone mb-2">
+                  {label}
+                </h3>
+                <p className="text-bone/65 text-[0.9rem] font-light leading-relaxed">{body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-20 pt-14 border-t border-white/16 grid lg:grid-cols-12 gap-y-10 gap-x-16">
+          <div className="lg:col-span-5">
             <h3 className="font-display text-2xl md:text-3xl text-bone mb-4">
               {t('location.restaurantTitle')}
             </h3>
-            <p className="text-bone/70 font-light leading-relaxed max-w-2xl">
+            <p className="text-bone/70 font-light leading-relaxed mb-8">
               {t('location.restaurantDesc')}
             </p>
-          </div>
-          <div className="lg:col-span-5 lg:text-right">
             <a href={getLocalizedPath('/recommendations')} className="btn-on-dark">
               {t('location.viewRecommendations')}
             </a>
+          </div>
+
+          <div className="lg:col-span-7">
+            <ul className="grid grid-cols-2 gap-x-12">
+              {WALKING_TIMES.map(({ name, minutes }) => (
+                <li
+                  key={name}
+                  className="hairline-dark py-5 flex items-baseline justify-between gap-4"
+                >
+                  <span className="font-display text-xl text-bone">{name}</span>
+                  <span className="font-sans text-[0.75rem] tracking-[0.1em] uppercase text-bone/50 whitespace-nowrap">
+                    {minutes} {t('rec.location.walk')}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

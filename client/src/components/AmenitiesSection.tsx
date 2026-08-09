@@ -1,22 +1,44 @@
+import {
+  Wind,
+  Wifi,
+  Tv,
+  CookingPot,
+  Utensils,
+  Coffee,
+  Droplets,
+  WashingMachine,
+  Car,
+  Bath,
+  Waves,
+  PawPrint,
+} from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+/*
+  The complete checklist. The apartment section above describes the place in prose; this
+  is the scannable list a guest checks against their own requirements, so it stays flat
+  and complete rather than being folded into that narrative.
+
+  Icons here are stone, not brass: they should recede behind the apartment section's
+  accented ones rather than compete with them.
+*/
+const AMENITIES = [
+  { icon: Wind, key: 'amenityList.airConditioning' },
+  { icon: Wifi, key: 'amenityList.wifi' },
+  { icon: Tv, key: 'amenityList.smartTv' },
+  { icon: CookingPot, key: 'amenityList.kitchen' },
+  { icon: Utensils, key: 'amenityList.dishwasher' },
+  { icon: Coffee, key: 'amenityList.nespresso' },
+  { icon: Droplets, key: 'amenityList.waterFilter' },
+  { icon: WashingMachine, key: 'amenityList.washer' },
+  { icon: Car, key: 'amenityList.parking' },
+  { icon: Bath, key: 'amenityList.showerTowels' },
+  { icon: Waves, key: 'amenityList.beachTowels' },
+  { icon: PawPrint, key: 'amenityList.noPets', absent: true },
+] as const;
 
 const AmenitiesSection = () => {
   const { t } = useLanguage();
-
-  const amenities = [
-    { label: t('amenityList.airConditioning') },
-    { label: t('amenityList.wifi') },
-    { label: t('amenityList.smartTv') },
-    { label: t('amenityList.kitchen') },
-    { label: t('amenityList.dishwasher') },
-    { label: t('amenityList.nespresso') },
-    { label: t('amenityList.waterFilter') },
-    { label: t('amenityList.washer') },
-    { label: t('amenityList.parking') },
-    { label: t('amenityList.showerTowels') },
-    { label: t('amenityList.beachTowels') },
-    { label: t('amenityList.noPets'), absent: true },
-  ];
 
   return (
     <section className="section bg-bone">
@@ -28,20 +50,21 @@ const AmenitiesSection = () => {
           </div>
 
           <ul className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-x-12">
-            {amenities.map(({ label, absent }) => (
+            {AMENITIES.map(({ icon: Icon, key, absent }) => (
               <li
-                key={label}
-                className={`hairline py-4 flex items-baseline gap-3 text-[0.95rem] ${
+                key={key}
+                className={`hairline py-4 grid grid-cols-[1.25rem_1fr] gap-x-4 items-center text-[0.95rem] ${
                   absent ? 'text-stone' : 'text-ink-soft'
                 }`}
               >
-                <span
+                <Icon
+                  className={`w-[18px] h-[18px] ${absent ? 'text-stone/50' : 'text-stone'}`}
+                  strokeWidth={1.5}
                   aria-hidden="true"
-                  className={`text-xs leading-none ${absent ? 'text-stone/60' : 'text-brass'}`}
-                >
-                  {absent ? '—' : '+'}
+                />
+                <span className={absent ? 'line-through decoration-stone/40' : undefined}>
+                  {t(key)}
                 </span>
-                {label}
               </li>
             ))}
           </ul>

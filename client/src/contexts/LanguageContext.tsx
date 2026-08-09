@@ -155,9 +155,6 @@ const translations = {
     // Apartment Section
     'apartment.title': 'The Apartment',
     'apartment.description': 'A fully renovated first-floor apartment on the quiet Nou Fontana canal, one street back from Arenal Beach. Two double bedrooms, a modern bathroom, an equipped kitchen and a private terrace over the water — plus a lift and your own parking space.',
-    'apartment.restaurantProximity': 'Restaurants on Your Doorstep',
-    'apartment.restaurantProximityDesc': 'Chabada, La Bambula, Masena and the rest of the Arenal promenade are a short walk away.',
-    'apartment.viewAllRestaurants': 'See the Restaurant Guide',
 
     // At Glance Section
     'glance.title': 'At a Glance',
@@ -204,12 +201,6 @@ const translations = {
     'rates.policy4': 'Check-out by 12:00 noon',
 
     // Location Section (original entries)
-    'location.title': 'The Location',
-    'location.description': 'Marina Nou Fontana, the canal quarter of the Arenal — Jávea\'s liveliest neighbourhood, one street back from the beach.',
-    'location.beach': 'Arenal Beach',
-    'location.beachDesc': '250 m away — sandy, shallow and family-friendly',
-    'location.restaurants': 'Restaurants',
-    'location.restaurantsDesc': 'The promenade\'s bars and restaurants, 2–5 minutes on foot',
     'location.shops': 'Shops',
     'location.shopsDesc': 'Supermarkets and a pharmacy within a 5-minute walk',
     'location.transport': 'Getting Here',
@@ -329,7 +320,12 @@ const translations = {
     'reviews.hideOriginal': 'Hide original ({lang})',
 
     // Interior Section
-    'interior.title': 'Interior',
+    'interior.group.bedrooms': "Bedrooms",
+    'interior.group.living': "Living room",
+    'interior.group.kitchen': "Kitchen",
+    'interior.group.bathroom': "Bathroom",
+    'interior.group.terrace': "Terrace",
+    'interior.group.comfort': "Climate & Wi-Fi",
     'interior.bedrooms': 'Two double bedrooms, each with a hotel-quality mattress, blackout curtains and built-in wardrobes.',
     'interior.bathroom': 'Micro-cement bathroom with rainfall shower, wall-hung WC and soft indirect lighting.',
     'interior.kitchen': 'Forest-green fitted kitchen: induction hob, multifunction oven, dishwasher, Nespresso machine and LED task lighting.',
@@ -343,7 +339,6 @@ const translations = {
     'building.title': 'The Building',
     'building.security': 'Secure entrance, lift, and an allocated parking space — rare this close to the beach.',
     'building.marina': 'Moorings, SUP boards and small motorboats can be hired at Marina Nou Fontana, 150 m away.',
-    'building.shopping': 'Supermarkets and a pharmacy are a five-minute walk away.',
 
     // Availability Calendar
     'checkAvailability': 'Check Availability',
@@ -503,9 +498,6 @@ const translations = {
     // Apartment Section
     'apartment.title': 'Het Appartement',
     'apartment.description': 'Volledig gerenoveerd appartement op de eerste verdieping aan het rustige Nou Fontana-kanaal, één straat van het Arenal strand. Twee slaapkamers met tweepersoonsbedden, een moderne badkamer, een complete keuken en een eigen terras aan het water — plus een lift en een eigen parkeerplek.',
-    'apartment.restaurantProximity': 'Restaurants om de hoek',
-    'apartment.restaurantProximityDesc': 'Chabada, La Bambula, Masena en de rest van de Arenal-boulevard liggen op loopafstand.',
-    'apartment.viewAllRestaurants': 'Bekijk de Restaurantgids',
 
     // At Glance Section
     'glance.title': 'In het kort',
@@ -552,12 +544,6 @@ const translations = {
     'rates.policy4': 'Uitchecken vóór 12:00 uur',
 
     // Location Section (original entries)
-    'location.title': 'De Locatie',
-    'location.description': 'Marina Nou Fontana, de kanaalwijk van het Arenal — de gezelligste buurt van Jávea, één straat van het strand.',
-    'location.beach': 'Arenal strand',
-    'location.beachDesc': 'Op 250 m — zandstrand, ondiep en kindvriendelijk',
-    'location.restaurants': 'Restaurants',
-    'location.restaurantsDesc': 'De bars en restaurants van de boulevard, 2 tot 5 minuten lopen',
     'location.shops': 'Winkels',
     'location.shopsDesc': 'Supermarkten en een apotheek op 5 minuten lopen',
     'location.transport': 'Bereikbaarheid',
@@ -677,7 +663,12 @@ const translations = {
     'reviews.hideOriginal': 'Verberg origineel ({lang})',
 
     // Interior Section
-    'interior.title': 'Interieur',
+    'interior.group.bedrooms': "Slaapkamers",
+    'interior.group.living': "Woonkamer",
+    'interior.group.kitchen': "Keuken",
+    'interior.group.bathroom': "Badkamer",
+    'interior.group.terrace': "Terras",
+    'interior.group.comfort': "Klimaat & wifi",
     'interior.bedrooms': 'Twee slaapkamers met tweepersoonsbedden, hotelkwaliteit matrassen, verduisterende gordijnen en inbouwkasten.',
     'interior.bathroom': 'Badkamer in microcement met regendouche, zwevend toilet en zachte indirecte verlichting.',
     'interior.kitchen': 'Flessengroene keuken: inductiekookplaat, multifunctionele oven, vaatwasser, Nespresso-apparaat en LED-werkverlichting.',
@@ -691,7 +682,6 @@ const translations = {
     'building.title': 'Het Gebouw',
     'building.security': 'Beveiligde entree, lift en een eigen parkeerplek — zeldzaam zo dicht bij het strand.',
     'building.marina': 'Aanlegplaatsen, supboards en motorbootjes huur je bij Marina Nou Fontana, 150 m verderop.',
-    'building.shopping': 'Supermarkten en een apotheek liggen op vijf minuten lopen.',
 
     // Availability Calendar
     'checkAvailability': 'Check Beschikbaarheid',
@@ -851,9 +841,6 @@ const translations = {
     // Apartment Section
     'apartment.title': 'L\'Appartement',
     'apartment.description': 'Appartement entièrement rénové au premier étage, au bord du paisible canal Nou Fontana, à une rue de la plage de l\'Arenal. Deux chambres doubles, une salle de bain moderne, une cuisine équipée et une terrasse privée au-dessus de l\'eau — avec ascenseur et place de parking privée.',
-    'apartment.restaurantProximity': 'Les restaurants à deux pas',
-    'apartment.restaurantProximityDesc': 'Chabada, La Bambula, Masena et toute la promenade de l\'Arenal sont accessibles à pied.',
-    'apartment.viewAllRestaurants': 'Voir le Guide des Restaurants',
 
     // At Glance Section
     'glance.title': 'En un coup d\'œil',
@@ -900,12 +887,6 @@ const translations = {
     'rates.policy4': 'Départ avant 12 h',
 
     // Location Section (original entries)
-    'location.title': 'L\'Emplacement',
-    'location.description': 'Marina Nou Fontana, le quartier des canaux de l\'Arenal — le quartier le plus vivant de Jávea, à une rue de la plage.',
-    'location.beach': 'Plage de l\'Arenal',
-    'location.beachDesc': 'À 250 m — sable fin, eau peu profonde, parfaite en famille',
-    'location.restaurants': 'Restaurants',
-    'location.restaurantsDesc': 'Les bars et restaurants de la promenade, à 2–5 minutes à pied',
     'location.shops': 'Commerces',
     'location.shopsDesc': 'Supermarchés et pharmacie à 5 minutes à pied',
     'location.transport': 'Accès',
@@ -1025,7 +1006,12 @@ const translations = {
     'reviews.hideOriginal': 'Masquer l\'original ({lang})',
 
     // Interior Section
-    'interior.title': 'Intérieur',
+    'interior.group.bedrooms': "Chambres",
+    'interior.group.living': "Séjour",
+    'interior.group.kitchen': "Cuisine",
+    'interior.group.bathroom': "Salle de bain",
+    'interior.group.terrace': "Terrasse",
+    'interior.group.comfort': "Climatisation & wifi",
     'interior.bedrooms': 'Deux chambres doubles, chacune avec matelas de qualité hôtelière, rideaux occultants et placards intégrés.',
     'interior.bathroom': 'Salle de bain en béton ciré avec douche à effet pluie, WC suspendu et éclairage indirect doux.',
     'interior.kitchen': 'Cuisine vert forêt : plaque à induction, four multifonction, lave-vaisselle, machine Nespresso et éclairage LED.',
@@ -1039,7 +1025,6 @@ const translations = {
     'building.title': 'La Résidence',
     'building.security': 'Entrée sécurisée, ascenseur et place de parking attitrée — rare si près de la plage.',
     'building.marina': 'Anneaux d\'amarrage, paddles et petits bateaux à moteur se louent à la Marina Nou Fontana, à 150 m.',
-    'building.shopping': 'Supermarchés et pharmacie à cinq minutes à pied.',
 
     // Availability Calendar
     'checkAvailability': 'Vérifier les Disponibilités',
@@ -1199,9 +1184,6 @@ const translations = {
     // Apartment Section
     'apartment.title': 'L\'Appartamento',
     'apartment.description': 'Appartamento completamente ristrutturato al primo piano, lungo il tranquillo canale Nou Fontana, a una strada dalla spiaggia dell\'Arenal. Due camere matrimoniali, un bagno moderno, cucina attrezzata e terrazza privata sull\'acqua — con ascensore e posto auto riservato.',
-    'apartment.restaurantProximity': 'Ristoranti a due passi',
-    'apartment.restaurantProximityDesc': 'Chabada, La Bambula, Masena e tutto il lungomare dell\'Arenal sono raggiungibili a piedi.',
-    'apartment.viewAllRestaurants': 'Vedi la Guida ai Ristoranti',
 
     // At Glance Section
     'glance.title': 'In breve',
@@ -1248,12 +1230,6 @@ const translations = {
     'rates.policy4': 'Check-out entro le 12:00',
 
     // Location Section (original entries)
-    'location.title': 'La Posizione',
-    'location.description': 'Marina Nou Fontana, il quartiere dei canali dell\'Arenal — la zona più viva di Jávea, a una strada dalla spiaggia.',
-    'location.beach': 'Spiaggia dell\'Arenal',
-    'location.beachDesc': 'A 250 m — sabbia fine, acqua bassa, perfetta per le famiglie',
-    'location.restaurants': 'Ristoranti',
-    'location.restaurantsDesc': 'I bar e i ristoranti del lungomare, a 2–5 minuti a piedi',
     'location.shops': 'Negozi',
     'location.shopsDesc': 'Supermercati e farmacia a 5 minuti a piedi',
     'location.transport': 'Come Arrivare',
@@ -1373,7 +1349,12 @@ const translations = {
     'reviews.hideOriginal': 'Nascondi originale ({lang})',
 
     // Interior Section
-    'interior.title': 'Interni',
+    'interior.group.bedrooms': "Camere",
+    'interior.group.living': "Soggiorno",
+    'interior.group.kitchen': "Cucina",
+    'interior.group.bathroom': "Bagno",
+    'interior.group.terrace': "Terrazza",
+    'interior.group.comfort': "Clima e WiFi",
     'interior.bedrooms': 'Due camere matrimoniali, ognuna con materasso di qualità alberghiera, tende oscuranti e armadi a muro.',
     'interior.bathroom': 'Bagno in microcemento con doccia a pioggia, WC sospeso e luce indiretta soffusa.',
     'interior.kitchen': 'Cucina verde bosco: piano a induzione, forno multifunzione, lavastoviglie, macchina Nespresso e luci LED.',
@@ -1387,7 +1368,6 @@ const translations = {
     'building.title': 'Il Palazzo',
     'building.security': 'Ingresso sicuro, ascensore e posto auto riservato — raro così vicino alla spiaggia.',
     'building.marina': 'Ormeggi, SUP e barchette a motore si noleggiano alla Marina Nou Fontana, a 150 m.',
-    'building.shopping': 'Supermercati e farmacia a cinque minuti a piedi.',
 
     // Availability Calendar
     'checkAvailability': 'Verifica Disponibilità',
@@ -1547,9 +1527,6 @@ const translations = {
     // Apartment Section
     'apartment.title': 'Die Wohnung',
     'apartment.description': 'Komplett renovierte Wohnung im ersten Stock am ruhigen Nou-Fontana-Kanal, eine Straße vom Arenal-Strand. Zwei Schlafzimmer mit Doppelbetten, ein modernes Bad, eine voll ausgestattete Küche und eine eigene Terrasse über dem Wasser — dazu Aufzug und eigener Parkplatz.',
-    'apartment.restaurantProximity': 'Restaurants vor der Tür',
-    'apartment.restaurantProximityDesc': 'Chabada, La Bambula, Masena und die gesamte Arenal-Promenade sind bequem zu Fuß erreichbar.',
-    'apartment.viewAllRestaurants': 'Zum Restaurantführer',
 
     // At Glance Section
     'glance.title': 'Auf einen Blick',
@@ -1596,12 +1573,6 @@ const translations = {
     'rates.policy4': 'Check-out bis 12:00 Uhr',
 
     // Location Section (original entries)
-    'location.title': 'Die Lage',
-    'location.description': 'Marina Nou Fontana, das Kanalviertel am Arenal — Jáveas lebendigstes Viertel, eine Straße vom Strand.',
-    'location.beach': 'Arenal-Strand',
-    'location.beachDesc': '250 m entfernt — Sandstrand, flaches Wasser, ideal für Familien',
-    'location.restaurants': 'Restaurants',
-    'location.restaurantsDesc': 'Die Bars und Restaurants der Promenade, 2–5 Gehminuten',
     'location.shops': 'Einkaufen',
     'location.shopsDesc': 'Supermärkte und Apotheke in 5 Gehminuten',
     'location.transport': 'Anreise',
@@ -1721,7 +1692,12 @@ const translations = {
     'reviews.hideOriginal': 'Original ausblenden ({lang})',
 
     // Interior Section
-    'interior.title': 'Innenausstattung',
+    'interior.group.bedrooms': "Schlafzimmer",
+    'interior.group.living': "Wohnbereich",
+    'interior.group.kitchen': "Küche",
+    'interior.group.bathroom': "Bad",
+    'interior.group.terrace': "Terrasse",
+    'interior.group.comfort': "Klima & WLAN",
     'interior.bedrooms': 'Zwei Schlafzimmer mit Doppelbetten, jeweils mit Matratzen in Hotelqualität, Verdunkelungsvorhängen und Einbauschränken.',
     'interior.bathroom': 'Bad in Mikrozement mit Regendusche, wandhängendem WC und sanfter indirekter Beleuchtung.',
     'interior.kitchen': 'Waldgrüne Einbauküche: Induktionskochfeld, Multifunktionsofen, Geschirrspüler, Nespresso-Maschine und LED-Arbeitslicht.',
@@ -1735,7 +1711,6 @@ const translations = {
     'building.title': 'Das Gebäude',
     'building.security': 'Sicherer Eingang, Aufzug und ein zugewiesener Stellplatz — selten so nah am Strand.',
     'building.marina': 'Liegeplätze, SUP-Boards und kleine Motorboote können an der Marina Nou Fontana gemietet werden, 150 m entfernt.',
-    'building.shopping': 'Supermärkte und eine Apotheke sind in fünf Gehminuten erreichbar.',
 
     // Availability Calendar
     'checkAvailability': 'Verfügbarkeit Prüfen',
@@ -1895,9 +1870,6 @@ const translations = {
     // Apartment Section
     'apartment.title': 'El Apartamento',
     'apartment.description': 'Apartamento totalmente reformado en primera planta, junto al tranquilo canal de la Fontana, a una calle de la Playa del Arenal. Dos habitaciones dobles, un baño moderno, cocina equipada y terraza privada sobre el agua — con ascensor y plaza de parking propia.',
-    'apartment.restaurantProximity': 'Restaurantes a un paso',
-    'apartment.restaurantProximityDesc': 'Chabada, La Bambula, Masena y todo el paseo del Arenal están a un paseo a pie.',
-    'apartment.viewAllRestaurants': 'Ver la Guía de Restaurantes',
 
     // At Glance Section
     'glance.title': 'De un vistazo',
@@ -1944,12 +1916,6 @@ const translations = {
     'rates.policy4': 'Salida antes de las 12:00',
 
     // Location Section (original entries)
-    'location.title': 'La Ubicación',
-    'location.description': 'Marina Nou Fontana, el barrio del canal del Arenal — la zona con más vida de Jávea, a una calle de la playa.',
-    'location.beach': 'Playa del Arenal',
-    'location.beachDesc': 'A 250 m — arena fina, agua poco profunda, perfecta con niños',
-    'location.restaurants': 'Restaurantes',
-    'location.restaurantsDesc': 'Los bares y restaurantes del paseo, a 2–5 minutos andando',
     'location.shops': 'Comercios',
     'location.shopsDesc': 'Supermercados y farmacia a 5 minutos a pie',
     'location.transport': 'Cómo Llegar',
@@ -2069,7 +2035,12 @@ const translations = {
     'reviews.hideOriginal': 'Ocultar original ({lang})',
 
     // Interior Section
-    'interior.title': 'Interior',
+    'interior.group.bedrooms': "Habitaciones",
+    'interior.group.living': "Salón",
+    'interior.group.kitchen': "Cocina",
+    'interior.group.bathroom': "Baño",
+    'interior.group.terrace': "Terraza",
+    'interior.group.comfort': "Clima y wifi",
     'interior.bedrooms': 'Dos habitaciones dobles, cada una con colchón de calidad hotelera, cortinas opacas y armarios empotrados.',
     'interior.bathroom': 'Baño de microcemento con ducha de lluvia, inodoro suspendido y luz indirecta suave.',
     'interior.kitchen': 'Cocina verde bosque: placa de inducción, horno multifunción, lavavajillas, cafetera Nespresso e iluminación LED.',
@@ -2083,7 +2054,6 @@ const translations = {
     'building.title': 'El Edificio',
     'building.security': 'Portal seguro, ascensor y plaza de parking asignada — algo poco habitual tan cerca de la playa.',
     'building.marina': 'Amarres, tablas de paddle y barquitas de motor se alquilan en la Marina Nou Fontana, a 150 m.',
-    'building.shopping': 'Supermercados y farmacia a cinco minutos a pie.',
 
     // Availability Calendar
     'checkAvailability': 'Consultar Disponibilidad',
