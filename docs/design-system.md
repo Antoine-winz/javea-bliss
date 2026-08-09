@@ -57,16 +57,54 @@ Both families cover the accented characters all six languages need.
 
 ## Iconography
 
-Prefer type and hairlines to icons. The old site used emoji (☀️ 💻 🏠) as section icons and
-several hand-drawn SVGs (a "water filter", a "dishwasher") that looked improvised. Where a
-marker is needed, use a brass `+` / `—` or a two-digit numeral. Lucide icons are fine for
-genuine UI affordances (chevrons, close, menu).
+Never emoji, and never hand-drawn SVG — the old site used ☀️ 💻 🏠 as section icons and
+improvised paths for a "water filter" and a "dishwasher", which is most of why it looked
+homemade. Use **lucide-react** only, and verify a name exists in the installed version
+before importing it: several plausible names do not exist and a wrong import breaks the
+build (`node -e "console.log(Object.keys(require('lucide-react')).includes('Sofa'))"`).
+
+Icons are set at two weights, and the difference carries meaning:
+
+| Context | Colour | Size | Stroke |
+|---|---|---|---|
+| Apartment groups, location practicals | `text-brass` | 20px | 1.5 |
+| Amenity checklist | `text-stone` | 18px | 1.5 |
+
+The brass set marks the narrative sections; the stone set recedes so the checklist stays
+subordinate to them. Icons sit in a fixed-width grid column so the text edge aligns
+regardless of glyph width, and always carry `aria-hidden="true"` — they repeat the label
+beside them, so announcing them twice is noise.
+
+Keep the page to roughly a dozen distinct icons. Elsewhere a brass `+` / `—` or a
+two-digit numeral does the job with less furniture.
 
 ## Page weight
 
 The homepage was 21,133px tall. It is now ~14,450px. The gallery shows an edited set with a
 "view all" expansion rather than 18 thumbnails at once. If a section grows past a screen and
 a half, edit it rather than letting it run.
+
+## Where each fact lives
+
+Three sections sit close together and used to repeat each other. They now have distinct
+jobs, and content should be added to the right one:
+
+| Section | Job |
+|---|---|
+| **At a Glance** | Eight scannable specs. The layer someone reads in five seconds. |
+| **The Apartment** | The tour: seven labelled groups, in the order you walk through the place, sleeping first. Apartment facts only. |
+| **Amenities** | The complete checklist to tick against your own requirements. Flat and exhaustive by design. |
+| **The Location** | Everything outside the front door: highlights, practical distances, restaurant walking times. |
+
+Facts that describe the neighbourhood do not belong in the apartment section — the marina,
+the shops and the restaurant walking times were all moved out for this reason.
+
+Eleven translation keys were retired in that move (`location.title`, `location.description`,
+`location.beach*`, `location.restaurants*`, `interior.title`, `apartment.restaurantProximity*`,
+`apartment.viewAllRestaurants`, `building.shopping`). Their information all still appears —
+via `paradise.*`, `location.shopsDesc` and the per-group labels. Check for orphans after any
+restructure; several keys are referenced indirectly through arrays, so grep the whole of
+`client/src` for the quoted key rather than only for `t('key')`.
 
 ## Photography notes
 
