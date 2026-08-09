@@ -5,230 +5,212 @@ const LongTermRentalPromo = () => {
 
   const translations = {
     en: {
-      specialRate: "Special Long-Term Rate",
-      title: "€100/Day for Extended Stays",
-      subtitle: "Perfect for business travelers, executives, and temporary housing needs",
-      executiveHousing: "Executive Housing",
-      executiveDesc: "Fully furnished apartment perfect for work assignments and corporate relocations",
-      houseRenovations: "House Renovations", 
-      renovationsDesc: "Temporary luxury accommodation while your home is being renovated",
-      extendedHolidays: "Extended Holidays",
-      holidaysDesc: "Long-term vacation stays with significant savings for 5+ weeks",
-      whatsIncluded: "What's Included at €100/Day",
-      fullyFurnished: "Fully Furnished",
-      allUtilities: "All Utilities",
-      highSpeedWifi: "High-Speed WiFi",
-      weeklyCleaning: "Weekly Cleaning",
-      kitchenEquipped: "Kitchen Equipped",
-      linensAndTowels: "Linens & Towels",
-      primeLocation: "Prime Location",
-      support247: "24/7 Support",
-      perDay: "/day",
-      forStays: "for stays 35+ nights",
-      vs: "vs",
-      regularRates: "regular rates",
-      bookLongTerm: "Book Long-Term Stay",
-      minimumStay: "* Minimum stay 35 nights (5 weeks). Rate applies to entire stay duration."
-    },
-    es: {
-      specialRate: "Tarifa Especial a Largo Plazo",
-      title: "€100/Día para Estancias Prolongadas",
-      subtitle: "Perfecto para viajeros de negocios, ejecutivos y necesidades de alojamiento temporal",
-      executiveHousing: "Alojamiento Ejecutivo",
-      executiveDesc: "Apartamento completamente amueblado perfecto para asignaciones de trabajo y reubicaciones corporativas",
-      houseRenovations: "Renovaciones de Casa",
-      renovationsDesc: "Alojamiento de lujo temporal mientras su hogar está siendo renovado",
-      extendedHolidays: "Vacaciones Prolongadas",
-      holidaysDesc: "Estancias vacacionales a largo plazo con ahorros significativos por 5+ semanas",
-      whatsIncluded: "Qué Está Incluido a €100/Día",
-      fullyFurnished: "Completamente Amueblado",
-      allUtilities: "Todos los Servicios",
-      highSpeedWifi: "WiFi de Alta Velocidad",
-      weeklyCleaning: "Limpieza Semanal",
-      kitchenEquipped: "Cocina Equipada",
-      linensAndTowels: "Sábanas y Toallas",
-      primeLocation: "Ubicación Privilegiada",
-      support247: "Soporte 24/7",
-      perDay: "/día",
-      forStays: "para estancias de 35+ noches",
-      vs: "vs",
-      regularRates: "tarifas regulares",
-      bookLongTerm: "Reservar Estancia a Largo Plazo",
-      minimumStay: "* Estancia mínima 35 noches (5 semanas). La tarifa se aplica a toda la duración de la estancia."
-    },
-    fr: {
-      specialRate: "Tarif Spécial Long Terme",
-      title: "€100/Jour pour Séjours Prolongés",
-      subtitle: "Parfait pour les voyageurs d'affaires, cadres et besoins de logement temporaire",
-      executiveHousing: "Logement Exécutif",
-      executiveDesc: "Appartement entièrement meublé parfait pour les missions de travail et relocalisations d'entreprise",
-      houseRenovations: "Rénovations de Maison",
-      renovationsDesc: "Hébergement de luxe temporaire pendant que votre maison est en rénovation",
-      extendedHolidays: "Vacances Prolongées",
-      holidaysDesc: "Séjours de vacances à long terme avec économies significatives pour 5+ semaines",
-      whatsIncluded: "Ce qui est Inclus à €100/Jour",
-      fullyFurnished: "Entièrement Meublé",
-      allUtilities: "Tous les Services",
-      highSpeedWifi: "WiFi Haut Débit",
-      weeklyCleaning: "Nettoyage Hebdomadaire",
-      kitchenEquipped: "Cuisine Équipée",
-      linensAndTowels: "Draps et Serviettes",
-      primeLocation: "Emplacement de Choix",
-      support247: "Support 24/7",
-      perDay: "/jour",
-      forStays: "pour séjours de 35+ nuits",
-      vs: "vs",
-      regularRates: "tarifs réguliers",
-      bookLongTerm: "Réserver Séjour Long Terme",
-      minimumStay: "* Séjour minimum 35 nuits (5 semaines). Le tarif s'applique à toute la durée du séjour."
+      badge: 'Long-stay rate',
+      title: 'Winter Lets & Long Stays — €100 a Night',
+      subtitle:
+        'Stay 35 nights or more and the rate drops to €100 a night for the whole stay, whatever the season. Popular with people overwintering on the Costa Blanca, working remotely, or living here while a house is being renovated.',
+      whatsIncluded: 'What the €100 a night covers',
+      furnished: 'Furnished, with linens and towels',
+      utilities: 'Water and electricity included',
+      wifi: '600 Mbps fibre Wi-Fi',
+      cleaning: 'Weekly cleaning',
+      kitchen: 'Full kitchen and washing machine',
+      climate: 'Heating and air conditioning',
+      access: 'Lift and free private parking',
+      owner: 'Direct contact with the owner',
+      perDay: '/night',
+      forStays: 'from 35 nights',
+      vs: 'instead of',
+      regularRates: 'the usual seasonal rates',
+      bookLongTerm: 'Ask About a Long Stay',
+      minimumStay:
+        '* Minimum 35 nights (5 weeks). The rate applies to the whole stay. Tell us your dates and we will send a quote.',
     },
     nl: {
-      specialRate: "Speciaal Langetermijn Tarief",
-      title: "€100/Dag voor Verlengde Verblijven",
-      subtitle: "Perfect voor zakenreizigers, executives en tijdelijke huisvestingsbehoeften",
-      executiveHousing: "Executive Huisvesting",
-      executiveDesc: "Volledig gemeubileerd appartement perfect voor werkopdrachten en bedrijfsverhuizingen",
-      houseRenovations: "Huisrenovaties",
-      renovationsDesc: "Tijdelijke luxe accommodatie terwijl uw huis wordt gerenoveerd",
-      extendedHolidays: "Verlengde Vakanties",
-      holidaysDesc: "Langetermijn vakantieverblijven met aanzienlijke besparingen voor 5+ weken",
-      whatsIncluded: "Wat is Inbegrepen voor €100/Dag",
-      fullyFurnished: "Volledig Gemeubileerd",
-      allUtilities: "Alle Voorzieningen",
-      highSpeedWifi: "Snelle WiFi",
-      weeklyCleaning: "Wekelijkse Schoonmaak",
-      kitchenEquipped: "Keuken Uitgerust",
-      linensAndTowels: "Lakens & Handdoeken",
-      primeLocation: "Toplocatie",
-      support247: "24/7 Ondersteuning",
-      perDay: "/dag",
-      forStays: "voor verblijven van 35+ nachten",
-      vs: "vs",
-      regularRates: "reguliere tarieven",
-      bookLongTerm: "Boek Langetermijn Verblijf",
-      minimumStay: "* Minimum verblijf 35 nachten (5 weken). Tarief geldt voor hele verblijfsduur."
+      badge: 'Langverblijftarief',
+      title: 'Overwinteren & Langere Verblijven — €100 per Nacht',
+      subtitle:
+        'Blijf je 35 nachten of langer, dan geldt €100 per nacht voor het hele verblijf, in welk seizoen dan ook. Populair bij overwinteraars aan de Costa Blanca, mensen die op afstand werken, en wie hier woont terwijl het huis verbouwd wordt.',
+      whatsIncluded: 'Wat je krijgt voor €100 per nacht',
+      furnished: 'Gemeubileerd, met beddengoed en handdoeken',
+      utilities: 'Water en elektriciteit inbegrepen',
+      wifi: '600 Mbps glasvezel-wifi',
+      cleaning: 'Wekelijkse schoonmaak',
+      kitchen: 'Complete keuken en wasmachine',
+      climate: 'Verwarming en airconditioning',
+      access: 'Lift en gratis eigen parkeerplek',
+      owner: 'Direct contact met de eigenaar',
+      perDay: '/nacht',
+      forStays: 'vanaf 35 nachten',
+      vs: 'in plaats van',
+      regularRates: 'de normale seizoenstarieven',
+      bookLongTerm: 'Vraag naar een Lang Verblijf',
+      minimumStay:
+        '* Minimaal 35 nachten (5 weken). Het tarief geldt voor het hele verblijf. Geef je data door en we sturen een voorstel.',
+    },
+    fr: {
+      badge: 'Tarif longue durée',
+      title: 'Hivernage & Séjours Longue Durée — 100 € la Nuit',
+      subtitle:
+        'À partir de 35 nuits, le tarif passe à 100 € la nuit pour tout le séjour, quelle que soit la saison. Apprécié de ceux qui hivernent sur la Costa Blanca, travaillent à distance, ou logent ici pendant des travaux.',
+      whatsIncluded: 'Ce que comprennent les 100 € la nuit',
+      furnished: 'Meublé, linge de lit et serviettes fournis',
+      utilities: 'Eau et électricité incluses',
+      wifi: 'Wifi fibre 600 Mbps',
+      cleaning: 'Ménage hebdomadaire',
+      kitchen: 'Cuisine complète et lave-linge',
+      climate: 'Chauffage et climatisation',
+      access: 'Ascenseur et parking privé gratuit',
+      owner: 'Contact direct avec le propriétaire',
+      perDay: '/nuit',
+      forStays: 'à partir de 35 nuits',
+      vs: 'au lieu de',
+      regularRates: 'les tarifs saisonniers habituels',
+      bookLongTerm: 'Demander un Séjour Longue Durée',
+      minimumStay:
+        '* Minimum 35 nuits (5 semaines). Le tarif s\'applique à tout le séjour. Indiquez vos dates et nous vous envoyons un devis.',
     },
     de: {
-      specialRate: "Spezieller Langzeit-Tarif",
-      title: "€100/Tag für Verlängerte Aufenthalte",
-      subtitle: "Perfekt für Geschäftsreisende, Führungskräfte und temporäre Wohnbedürfnisse",
-      executiveHousing: "Executive Unterbringung",
-      executiveDesc: "Vollständig möblierte Wohnung perfekt für Arbeitsaufträge und Firmenumzüge",
-      houseRenovations: "Hausrenovierungen",
-      renovationsDesc: "Temporäre Luxusunterkunft während Ihr Zuhause renoviert wird",
-      extendedHolidays: "Verlängerte Ferien",
-      holidaysDesc: "Langzeit-Urlaubsaufenthalte mit erheblichen Einsparungen für 5+ Wochen",
-      whatsIncluded: "Was ist bei €100/Tag enthalten",
-      fullyFurnished: "Vollständig Möbliert",
-      allUtilities: "Alle Nebenkosten",
-      highSpeedWifi: "Hochgeschwindigkeits-WiFi",
-      weeklyCleaning: "Wöchentliche Reinigung",
-      kitchenEquipped: "Küchenausstattung",
-      linensAndTowels: "Bettwäsche & Handtücher",
-      primeLocation: "Erstklassige Lage",
-      support247: "24/7 Support",
-      perDay: "/Tag",
-      forStays: "für Aufenthalte von 35+ Nächten",
-      vs: "vs",
-      regularRates: "reguläre Tarife",
-      bookLongTerm: "Langzeit-Aufenthalt Buchen",
-      minimumStay: "* Mindestaufenthalt 35 Nächte (5 Wochen). Tarif gilt für gesamte Aufenthaltsdauer."
-    }
+      badge: 'Langzeittarif',
+      title: 'Überwintern & Langzeitmiete — 100 € pro Nacht',
+      subtitle:
+        'Ab 35 Nächten gilt für den gesamten Aufenthalt ein Preis von 100 € pro Nacht, in jeder Saison. Beliebt bei Überwinterern an der Costa Blanca, bei Gästen im Homeoffice und bei allen, die während einer Renovierung hier wohnen.',
+      whatsIncluded: 'Darin sind die 100 € pro Nacht enthalten',
+      furnished: 'Möbliert, mit Bettwäsche und Handtüchern',
+      utilities: 'Wasser und Strom inklusive',
+      wifi: '600 Mbit/s Glasfaser-WLAN',
+      cleaning: 'Wöchentliche Reinigung',
+      kitchen: 'Komplette Küche und Waschmaschine',
+      climate: 'Heizung und Klimaanlage',
+      access: 'Aufzug und kostenloser Privatparkplatz',
+      owner: 'Direkter Kontakt zum Eigentümer',
+      perDay: '/Nacht',
+      forStays: 'ab 35 Nächten',
+      vs: 'statt',
+      regularRates: 'der üblichen Saisonpreise',
+      bookLongTerm: 'Langzeitaufenthalt Anfragen',
+      minimumStay:
+        '* Mindestens 35 Nächte (5 Wochen). Der Preis gilt für den gesamten Aufenthalt. Nennen Sie uns Ihre Daten, wir senden Ihnen ein Angebot.',
+    },
+    es: {
+      badge: 'Tarifa larga estancia',
+      title: 'Larga Temporada e Invierno — 100 € la Noche',
+      subtitle:
+        'A partir de 35 noches, la tarifa baja a 100 € por noche durante toda la estancia, sea la temporada que sea. Habitual entre quienes pasan el invierno en la Costa Blanca, teletrabajan, o viven aquí mientras reforman su casa.',
+      whatsIncluded: 'Qué incluyen los 100 € por noche',
+      furnished: 'Amueblado, con sábanas y toallas',
+      utilities: 'Agua y luz incluidas',
+      wifi: 'Wifi de fibra de 600 Mb',
+      cleaning: 'Limpieza semanal',
+      kitchen: 'Cocina completa y lavadora',
+      climate: 'Calefacción y aire acondicionado',
+      access: 'Ascensor y parking privado gratis',
+      owner: 'Trato directo con el propietario',
+      perDay: '/noche',
+      forStays: 'desde 35 noches',
+      vs: 'en lugar de',
+      regularRates: 'las tarifas normales por temporada',
+      bookLongTerm: 'Consultar Larga Estancia',
+      minimumStay:
+        '* Mínimo 35 noches (5 semanas). La tarifa se aplica a toda la estancia. Dinos tus fechas y te enviamos un presupuesto.',
+    },
+    it: {
+      badge: 'Tariffa soggiorni lunghi',
+      title: 'Soggiorni Lunghi e Inverno — 100 € a Notte',
+      subtitle:
+        'Da 35 notti in su la tariffa scende a 100 € a notte per tutto il soggiorno, in qualsiasi stagione. Scelta da chi passa l\'inverno sulla Costa Blanca, da chi lavora da remoto e da chi abita qui mentre ristruttura casa.',
+      whatsIncluded: 'Cosa comprendono i 100 € a notte',
+      furnished: 'Arredato, con lenzuola e asciugamani',
+      utilities: 'Acqua e luce incluse',
+      wifi: 'WiFi in fibra da 600 Mbps',
+      cleaning: 'Pulizia settimanale',
+      kitchen: 'Cucina completa e lavatrice',
+      climate: 'Riscaldamento e aria condizionata',
+      access: 'Ascensore e parcheggio privato gratuito',
+      owner: 'Contatto diretto con il proprietario',
+      perDay: '/notte',
+      forStays: 'da 35 notti',
+      vs: 'invece di',
+      regularRates: 'le normali tariffe stagionali',
+      bookLongTerm: 'Chiedi per un Soggiorno Lungo',
+      minimumStay:
+        '* Minimo 35 notti (5 settimane). La tariffa vale per tutto il soggiorno. Dicci le tue date e ti mandiamo un preventivo.',
+    },
   };
 
   const t = translations[language as keyof typeof translations] || translations.en;
-  
+
+  const included = [
+    t.furnished,
+    t.utilities,
+    t.wifi,
+    t.cleaning,
+    t.kitchen,
+    t.climate,
+    t.access,
+    t.owner,
+  ];
+
   return (
-    <section className="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+    <section className="py-16 bg-gradient-to-br from-green-50 to-blue-50" data-testid="section-long-term">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="bg-white rounded-xl shadow-lg p-8 border-2 border-green-200">
             <div className="mb-6">
-              <button 
+              <button
                 onClick={() => window.open('/flyer2.html', 'flyerPopup', 'width=800,height=1000,scrollbars=yes,resizable=yes')}
                 className="inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wide cursor-pointer transition-colors"
               >
-                {t.specialRate}
+                {t.badge}
               </button>
             </div>
-            
+
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t.title}
             </h2>
-            
-            <p className="text-xl text-gray-600 mb-6">
+
+            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
               {t.subtitle}
             </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-green-50 p-6 rounded-lg">
-                <h3 className="font-semibold text-lg text-green-800 mb-2">
-                  {t.executiveHousing}
-                </h3>
-                <p className="text-green-700 text-sm">
-                  {t.executiveDesc}
-                </p>
-              </div>
-              
-              <div className="bg-blue-50 p-6 rounded-lg">
-                <h3 className="font-semibold text-lg text-blue-800 mb-2">
-                  {t.houseRenovations}
-                </h3>
-                <p className="text-blue-700 text-sm">
-                  {t.renovationsDesc}
-                </p>
-              </div>
-              
-              <div className="bg-purple-50 p-6 rounded-lg">
-                <h3 className="font-semibold text-lg text-purple-800 mb-2">
-                  {t.extendedHolidays}
-                </h3>
-                <p className="text-purple-700 text-sm">
-                  {t.holidaysDesc}
-                </p>
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 p-6 rounded-lg mb-6">
-              <h3 className="font-semibold text-lg text-gray-800 mb-3">
+
+            <div className="bg-gray-50 p-6 rounded-lg mb-8 text-left">
+              <h3 className="font-semibold text-lg text-gray-800 mb-4 text-center">
                 {t.whatsIncluded}
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">
-                <div>✓ {t.fullyFurnished}</div>
-                <div>✓ {t.allUtilities}</div>
-                <div>✓ {t.highSpeedWifi}</div>
-                <div>✓ {t.weeklyCleaning}</div>
-                <div>✓ {t.kitchenEquipped}</div>
-                <div>✓ {t.linensAndTowels}</div>
-                <div>✓ {t.primeLocation}</div>
-                <div>✓ {t.support247}</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
+                {included.map((item) => (
+                  <div key={item} className="flex items-start gap-2">
+                    <span className="text-green-600 mt-0.5">✓</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
               </div>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">€100{t.perDay}</div>
+                <div className="text-3xl font-bold text-green-600">€100{t.perDay}</div>
                 <div className="text-sm text-gray-500">{t.forStays}</div>
               </div>
               <div className="text-center text-gray-400">
-                <div className="text-lg">{t.vs}</div>
+                <div className="text-sm">{t.vs}</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-400 line-through">€130-€210{t.perDay}</div>
+                <div className="text-2xl font-bold text-gray-400 line-through">€130–€210{t.perDay}</div>
                 <div className="text-sm text-gray-500">{t.regularRates}</div>
               </div>
             </div>
-            
+
             <div className="mt-8">
-              <a 
-                href="#booking" 
+              <a
+                href="#booking"
                 className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
               >
                 {t.bookLongTerm}
               </a>
             </div>
-            
-            <p className="text-xs text-gray-500 mt-4">
+
+            <p className="text-xs text-gray-500 mt-4 max-w-xl mx-auto">
               {t.minimumStay}
             </p>
           </div>

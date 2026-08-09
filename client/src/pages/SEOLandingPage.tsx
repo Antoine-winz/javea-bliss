@@ -30,7 +30,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Perfect for Beach Holidays',
-        body: 'Arenal Beach is one of the finest beaches on the Costa Blanca — a 480-metre Blue Flag sandy beach with lifeguards, beach bars, and water sports. From your apartment, you can walk to the beach before breakfast and stroll back for lunch. La Bambula and Chabada restaurants are both within 5 minutes on foot.',
+        body: 'Arenal Beach is one of the finest beaches on the Costa Blanca — a 480-metre Blue Flag sandy beach with lifeguards, beach bars, and water sports. From your apartment, you can walk to the beach before breakfast and stroll back for lunch. Chabada and La Bambula are both within 5 minutes on foot.',
       },
       {
         heading: 'Rates & Availability',
@@ -46,7 +46,7 @@ const pages: Record<string, PageContent> = {
     sections: [
       {
         heading: 'A Comfortable 2-Bedroom Layout',
-        body: 'Jávea Bliss offers a generous 2-bedroom layout perfect for families, couples travelling together, or groups of up to 4 guests. The main bedroom features a double bed, and the second bedroom has twin beds that can be arranged as a double on request.',
+        body: 'Jávea Bliss offers a generous 2-bedroom layout perfect for families, couples travelling together, or groups of up to 4 guests. The main bedroom has a double bed and the second bedroom has twin beds. The living-room sofa converts to a single bed if a fifth berth is needed.',
       },
       {
         heading: 'Fully Equipped for a Real Stay',
@@ -102,7 +102,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Best Restaurants Near Arenal',
-        body: "La Bambula and Chabada are the two most popular waterfront restaurants at Arenal — both just steps from the sand. For fresh fish and rice dishes, Masena and La Perla de Jávea are local favourites a short walk away.",
+        body: "Chabada and La Bambula are the two best-known spots on the promenade — Chabada for a drink from breakfast onwards, La Bambula for live music into the night. For paella by the sand there is La Fontana, and for a proper dinner, La Masena or Bohemians a short walk back from the seafront.",
       },
       {
         heading: 'Best Time to Visit',
@@ -122,7 +122,7 @@ const pages: Record<string, PageContent> = {
     sections: [
       {
         heading: "Why Javea for Winter?",
-        body: "Jávea enjoys one of the mildest climates in Spain — protected by the Montgó mountain from cold northern winds, the town records over 300 sunny days a year. Average winter temperatures sit between 10°C and 18°C. It's a world away from the grey skies of northern Europe.",
+        body: "Jávea enjoys one of the mildest climates in Spain — sheltered by the Montgó from cold northern winds, the town records over 300 sunny days a year. Winter daytime temperatures typically sit between 14°C and 18°C, dropping to around 8–10°C overnight. It's a world away from the grey skies of northern Europe.",
       },
       {
         heading: 'Long-Stay Rates at Jávea Bliss',
@@ -154,11 +154,11 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Restaurants Within Walking Distance',
-        body: "La Bambula, Chabada, Masena, Bohemians, La Perla de Jávea — some of the best-known restaurants in Jávea are all within a 10-minute walk of Arenal Beach. You'll be spoilt for choice without ever needing a taxi.",
+        body: "Chabada, La Bambula, La Fontana, La Masena, L'Oasis, Bohemians, Casa Lili, Carnaval — around twenty places to eat and drink sit within a 10-minute walk of Arenal Beach. You will be spoilt for choice without ever calling a taxi.",
       },
       {
         heading: 'Getting to Javea Without a Car',
-        body: "Javea is served by bus from Dénia (which has a railway station connecting to Valencia in under 2 hours). Alicante Airport is the closest airport (~80 km); a taxi costs around €90, or shared shuttles are available. Denia Airport has seasonal connections. Buses also connect Javea's Old Town, Port, and Arenal.",
+        body: "Alicante Airport is the nearest airport at around 100 km — roughly an hour and a quarter by road. Valencia Airport is a similar distance. Both are served by airport taxis and shared shuttle services to Javea, and coaches run from Alicante and Valencia to Dénia and Javea. Locally, buses connect Javea's Old Town, Port, and Arenal.",
       },
       {
         heading: 'When a Car is Useful',
@@ -177,24 +177,40 @@ const pages: Record<string, PageContent> = {
     h1: 'Best Restaurants Near Arenal Beach in Javea',
     sections: [
       {
-        heading: 'La Bambula',
-        body: "La Bambula is one of the most famous beachside restaurants in Javea — right on the Arenal seafront, just 250 metres from Jávea Bliss. Known for its paella, fresh fish, and rice dishes cooked in the traditional Valencian style. Perfect for a long lunch with your feet in the sand.",
+        heading: 'Chabada — drinks by the sand',
+        body: "Chabada sits right on the Arenal promenade and opens from 8am straight through, which makes it as good for a morning coffee as for a sundowner. Happy hour runs 4–8pm and there is live music on Thursday evenings. About 300 metres from the apartment.",
       },
       {
-        heading: 'Chabada',
-        body: "Chabada is a beloved local institution at Arenal Beach, known for fresh seafood, grilled fish, and its relaxed atmosphere. Popular with families and regular visitors alike. Book in advance in July and August.",
+        heading: 'La Bambula — live music and dancing',
+        body: "The liveliest spot on this stretch: open 9am to 1am, and until 3am at weekends, with flamenco on Sundays, swing on Tuesdays and rock on Fridays. Come for a drink and stay for the music. Roughly 250 metres away — near enough to walk home.",
       },
       {
-        heading: 'Masena',
-        body: 'A slightly more refined option a short walk from the beach, Masena serves creative Mediterranean cuisine with excellent local wine. Great for a special evening out.',
+        heading: 'La Fontana — paella and pizza',
+        body: "Right by the beach and open non-stop every day, La Fontana does both authentic paella and Italian pizza. A safe bet with children, or when half the group wants rice and the other half doesn't.",
       },
       {
-        heading: 'Bohemians',
-        body: "Bohemians is a relaxed bar-restaurant near Arenal that's popular with expats and tourists year-round. Good international menu, weekly quiz nights, and a friendly atmosphere.",
+        heading: 'La Masena — a proper dinner',
+        body: "The choice for a longer, more refined meal. Open Monday lunchtime, then Wednesday to Sunday for lunch and dinner (until 11pm at weekends); closed Tuesdays. Worth booking ahead in summer.",
+      },
+      {
+        heading: "L'Oasis — steaks and grilled meat",
+        body: "The place locals name for a good steak. Open 12:30pm to 11pm daily, a short walk from the Arenal seafront.",
+      },
+      {
+        heading: 'Bohemians — elegant and central',
+        body: "Elegant dining in a polished setting, open from midday to midnight every day. Good for a dressed-up evening without leaving the neighbourhood.",
+      },
+      {
+        heading: 'Casa Lili and Carnaval — Asian and fusion',
+        body: "Casa Lili serves fresh, authentic Asian cooking (12:30–4pm and 6:30–11pm daily). Carnaval covers modern fusion — sushi, burgers and poke bowls — non-stop every day. Both are useful when you have had enough Mediterranean food for one week.",
+      },
+      {
+        heading: 'Caramel — breakfast and pastries',
+        body: "A French-style bakery open 7:30am to 7:30pm daily, for croissants and proper coffee before the beach.",
       },
       {
         heading: 'Local Tips',
-        body: "In summer, restaurants fill up quickly — book ahead for La Bambula and Chabada. In low season (November–March), some seasonal restaurants close; check ahead. The Arenal area has several excellent takeaway options if you prefer to cook at home in the apartment's full kitchen.",
+        body: "In July and August, book ahead for dinner — the Arenal fills up. In low season some places cut their hours, so it is worth checking before you walk down. And with a full kitchen in the apartment, cooking in with something from the local market is always an option.",
       },
     ],
   },
@@ -234,7 +250,7 @@ const pages: Record<string, PageContent> = {
     sections: [
       {
         heading: 'Day 1 — Arenal Beach & Local Restaurants',
-        body: 'Start your first morning with a walk to Arenal Beach — just 250 metres from Jávea Bliss. Hire a sunbed, swim in the clear Mediterranean water, and take a stroll along the promenade. For lunch, try La Bambula or Chabada for fresh seafood and paella. In the evening, explore the Arenal neighbourhood and end the day with tapas at one of the local bars.',
+        body: 'Start your first morning with a walk to Arenal Beach — just 250 metres from Jávea Bliss. Hire a sunbed, swim in the clear Mediterranean water, and take a stroll along the promenade. For lunch, La Fontana does paella a few steps from the sand. In the evening, work along the promenade: a drink at Chabada as the sun goes down, then La Bambula, where there is live music most nights.',
       },
       {
         heading: 'Day 2 — Cala Granadella & Old Town',
@@ -246,7 +262,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Practical Tips',
-        body: 'A hire car is helpful for Day 2 and Day 3 but not required for Day 1 (Arenal is walkable). Book La Bambula and Chabada in advance in summer. The free private parking at Jávea Bliss means you can come and go without hassle.',
+        body: 'A hire car is helpful for Day 2 and Day 3 but not required for Day 1 — the Arenal is walkable. Book dinner ahead in July and August. The free private parking at Jávea Bliss means you can come and go without hunting for a space.',
       },
     ],
   },
@@ -318,17 +334,19 @@ const SEOLandingPage = ({ slug }: SEOLandingPageProps) => {
     }
     canonical.href = `${BASE_URL}${page.canonical}`;
 
-    // hreflang — English only for these pages
-    const langs = ['en', 'nl', 'fr', 'de', 'es', 'it'];
-    langs.forEach(lang => {
-      let link = document.querySelector(`link[hreflang="${lang}"]`) as HTMLLinkElement;
-      if (!link) {
-        link = document.createElement('link');
-        link.rel = 'alternate';
-        link.setAttribute('hreflang', lang);
-        document.head.appendChild(link);
-      }
-      link.href = `${BASE_URL}/${lang}/`;
+    // These guides exist in English only. Advertising the other languages here would
+    // point hreflang at pages that are not translations of this one, so drop any
+    // alternates left in the document by the homepage and self-reference instead.
+    document
+      .querySelectorAll('link[rel="alternate"][hreflang]')
+      .forEach(link => link.remove());
+
+    ['en', 'x-default'].forEach(hreflang => {
+      const link = document.createElement('link');
+      link.rel = 'alternate';
+      link.setAttribute('hreflang', hreflang);
+      link.href = `${BASE_URL}${page.canonical}`;
+      document.head.appendChild(link);
     });
   }, [page]);
 

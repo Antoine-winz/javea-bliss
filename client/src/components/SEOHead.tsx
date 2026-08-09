@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -39,6 +40,9 @@ const SEOHead = ({
   noindex = false,
 }: SEOHeadProps) => {
   const { language } = useLanguage();
+  // Pages with their own head tags (the English guides) strip the alternates they do not
+  // have; re-assert on every route change so returning to a shared page restores them.
+  const [location] = useLocation();
 
   // Active promotional offer feeds a clean, factual title variant — no urgency spam
   const { data: promotionalOffers } = useQuery<PromotionalOffer[]>({
@@ -263,7 +267,7 @@ const SEOHead = ({
       document.head.appendChild(schemaScript);
     }
     schemaScript.textContent = JSON.stringify(schema);
-  }, [language, canonicalUrl, noindex, effectiveTitle, effectiveDescription, image, bestOffer]);
+  }, [language, location, canonicalUrl, noindex, effectiveTitle, effectiveDescription, image, bestOffer]);
 
   return null;
 };

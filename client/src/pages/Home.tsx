@@ -10,7 +10,6 @@ import GallerySection from "@/components/GallerySection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import RatesSection from "@/components/RatesSection";
 import LongTermRentalPromo from "@/components/LongTermRentalPromo";
-import DutchRenovationPromo from "@/components/DutchRenovationPromo";
 import BookingSection from "@/components/BookingSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
@@ -30,7 +29,6 @@ const Home = () => {
       <TestimonialsSection />
       <RatesSection />
       <LongTermRentalPromo />
-      <DutchRenovationPromo />
       <BookingSection />
       <FAQSection />
       <Footer />
