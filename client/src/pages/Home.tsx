@@ -5,6 +5,7 @@ import TrendingSection from "@/components/TrendingSection";
 import AtGlanceSection from "@/components/AtGlanceSection";
 import ApartmentSection from "@/components/ApartmentSection";
 import AmenitiesSection from "@/components/AmenitiesSection";
+import ImageBand from "@/components/ImageBand";
 import LocationSection from "@/components/LocationSection";
 import GallerySection from "@/components/GallerySection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -24,6 +25,7 @@ const Home = () => {
       <AtGlanceSection />
       <ApartmentSection />
       <AmenitiesSection />
+      <ImageBand />
       <LocationSection />
       <GallerySection />
       <TestimonialsSection />

@@ -81,7 +81,7 @@ const PromotionalHeader = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 bg-ink text-bone"
+      className="fixed top-0 left-0 right-0 z-50 bg-ink text-bone bar-drop"
       style={{ height: BAR_HEIGHT }}
       data-testid="promotional-header"
     >

@@ -57,13 +57,13 @@ const AmenitiesSection = () => {
     <section className="section bg-bone">
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-10 gap-x-16">
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4" data-reveal>
             <p className="eyebrow mb-5">{t('amenities.eyebrow')}</p>
             <h2 className="display-lg">{t('amenities.title')}</h2>
           </div>
 
           <div className="lg:col-span-8">
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12" data-reveal-stagger>
               {INCLUDED.map(({ icon: Icon, key }) => (
                 <li
                   key={key}
@@ -79,7 +79,7 @@ const AmenitiesSection = () => {
               ))}
             </ul>
 
-            <div className="mt-12">
+            <div className="mt-12" data-reveal>
               <h3 className="eyebrow mb-1">{t('amenityList.notIncluded')}</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12">
                 {NOT_INCLUDED.map(({ icon: Icon, key }) => (

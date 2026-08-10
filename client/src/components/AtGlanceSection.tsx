@@ -20,15 +20,15 @@ const AtGlanceSection = () => {
     <section className="section bg-bone">
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-12 gap-x-16">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5" data-reveal>
             <p className="eyebrow mb-5">{t('glance.eyebrow')}</p>
             <h2 className="display-lg">{t('glance.title')}</h2>
           </div>
 
           <div className="lg:col-span-7">
-            <p className="lede mb-12">{t('hero.description')}</p>
+            <p className="lede mb-12" data-reveal>{t('hero.description')}</p>
 
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12" data-reveal-stagger>
               {specs.map((spec) => (
                 <li
                   key={spec}

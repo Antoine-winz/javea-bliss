@@ -561,7 +561,7 @@ This inquiry was submitted through the Jávea Bliss website.
   return (
     <section id="booking" className="section bg-sand">
       <div className="shell">
-        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-16">
+        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-16" data-reveal>
           <div className="lg:col-span-5">
             <p className="eyebrow mb-5">{t('booking.eyebrow')}</p>
             <h2 className="display-lg">{t('booking.title')}</h2>

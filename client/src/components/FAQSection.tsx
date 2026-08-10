@@ -309,7 +309,7 @@ const FAQSection = () => {
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-10 gap-x-16">
           <div className="lg:col-span-4">
-            <div className="lg:sticky lg:top-28">
+            <div className="lg:sticky lg:top-28" data-reveal>
               <p className="eyebrow mb-5">{eyebrow}</p>
               <h2 className="display-lg">{title}</h2>
             </div>
@@ -319,6 +319,7 @@ const FAQSection = () => {
             itemScope
             itemType="https://schema.org/FAQPage"
             className="lg:col-span-8 border-t border-ink/12"
+            data-reveal-stagger
           >
             {items.map((item, i) => (
               <div

@@ -75,7 +75,7 @@ const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => navigateToSection(item.id)}
-                className={`font-sans text-[0.8125rem] tracking-[0.12em] uppercase transition-colors duration-300 hover:text-brass ${
+                className={`nav-link font-sans text-[0.8125rem] tracking-[0.12em] uppercase transition-colors duration-300 ${
                   solid ? 'text-ink-soft' : 'text-bone/90'
                 }`}
               >

@@ -1,6 +1,7 @@
 import { BedDouble, Sofa, CookingPot, ShowerHead, Sun, Thermometer, Building2 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import apartmentImage from "@assets/Livingroom1_optimized.jpeg";
+import kitchenImage from "@assets/Kitchen1_optimized.jpeg";
 
 /*
   Ordered as a walk through the apartment — where you sleep first, since capacity and bed
@@ -29,10 +30,12 @@ const ApartmentSection = () => {
     <section id="apartment" className="section bg-sand">
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-14 gap-x-16 items-start">
-          {/* Sticky on desktop so the photograph stays with the description it belongs to. */}
+          {/* Sticky on desktop so the photographs stay with the description they belong to.
+              Two frames, offset — the living room carries the column, the signature
+              forest-green kitchen overlaps its corner. */}
           <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-28">
-              <div className="ratio-portrait overflow-hidden group">
+            <div className="relative lg:sticky lg:top-28 pb-16 md:pb-24" data-reveal>
+              <div className="ratio-portrait overflow-hidden group w-[88%]">
                 <img
                   src={apartmentImage}
                   alt="The living room of the apartment at Jávea Bliss"
@@ -42,15 +45,25 @@ const ApartmentSection = () => {
                   loading="lazy"
                 />
               </div>
+              <div className="absolute right-0 bottom-0 w-[52%] aspect-square overflow-hidden group border-[6px] border-sand">
+                <img
+                  src={kitchenImage}
+                  alt="The forest-green fitted kitchen"
+                  className="img-cover img-zoom"
+                  width={600}
+                  height={600}
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
 
           <div className="lg:col-span-7">
-            <p className="eyebrow mb-5">{t('apartment.eyebrow')}</p>
+            <p className="eyebrow mb-5" data-reveal>{t('apartment.eyebrow')}</p>
             <h2 className="display-lg mb-7">{t('apartment.title')}</h2>
             <p className="lede mb-12">{t('apartment.description')}</p>
 
-            <div className="border-t border-ink/12">
+            <div className="border-t border-ink/12" data-reveal-stagger>
               {GROUPS.map(({ icon: Icon, label, lines }) => (
                 <div
                   key={label}

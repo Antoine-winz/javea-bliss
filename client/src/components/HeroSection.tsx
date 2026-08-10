@@ -16,7 +16,7 @@ const HeroSection = () => {
       <img
         src={heroImage}
         alt="Arenal Beach and the Montgó above Jávea on the Costa Blanca"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover hero-drift"
         style={{ objectPosition: "center 65%" }}
         fetchPriority="high"
         width={2000}
@@ -41,15 +41,23 @@ const HeroSection = () => {
 
       <div className="relative shell px-6 md:px-10 pb-16 md:pb-24 w-full">
         <div className="max-w-3xl">
-          <p className="eyebrow text-bone/70 mb-5">{t('hero.eyebrow')}</p>
+          <p className="eyebrow text-bone/70 mb-5 hero-rise">{t('hero.eyebrow')}</p>
 
-          <h1 className="display-xl text-bone mb-6">{t('hero.subtitle')}</h1>
+          <h1 className="display-xl text-bone mb-6 hero-rise" style={{ '--rise-delay': '0.15s' } as React.CSSProperties}>
+            {t('hero.subtitle')}
+          </h1>
 
-          <p className="text-bone/85 font-light text-lg md:text-xl max-w-xl leading-relaxed mb-10">
+          <p
+            className="text-bone/85 font-light text-lg md:text-xl max-w-xl leading-relaxed mb-10 hero-rise"
+            style={{ '--rise-delay': '0.3s' } as React.CSSProperties}
+          >
             {t('hero.tagline')}
           </p>
 
-          <div className="flex flex-wrap items-center gap-4">
+          <div
+            className="flex flex-wrap items-center gap-4 hero-rise"
+            style={{ '--rise-delay': '0.45s' } as React.CSSProperties}
+          >
             <button onClick={() => scrollToSection("booking")} className="btn-on-dark">
               {t('hero.bookButton')}
             </button>

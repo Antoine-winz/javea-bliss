@@ -34,12 +34,12 @@ const LocationSection = () => {
     <section id="location" className="section bg-ink text-bone">
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-12 gap-x-16 mb-20 md:mb-28">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5" data-reveal>
             <p className="eyebrow text-bone/50 mb-5">{t('paradise.eyebrow')}</p>
             <h2 className="display-lg text-bone">{t('paradise.title')}</h2>
           </div>
 
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-6" data-reveal>
             <p className="text-bone/80 font-light text-lg leading-relaxed">
               {t('paradise.description1')}
             </p>
@@ -49,7 +49,7 @@ const LocationSection = () => {
           </div>
         </div>
 
-        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-14">
+        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-14" data-reveal-stagger>
           {highlights.map(({ title, description }, i) => (
             <li
               key={title}
@@ -67,7 +67,7 @@ const LocationSection = () => {
         </ul>
 
         {/* Practical distances — what guests check once they like the look of the place. */}
-        <ul className="mt-20 pt-14 border-t border-white/16 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-14">
+        <ul className="mt-20 pt-14 border-t border-white/16 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-14" data-reveal-stagger>
           {practical.map(({ icon: Icon, label, body }) => (
             <li key={label} className="hairline-dark py-6 grid grid-cols-[1.5rem_1fr] gap-x-4">
               <Icon className="w-[18px] h-[18px] text-brass mt-[3px]" strokeWidth={1.25} aria-hidden="true" />
@@ -81,7 +81,7 @@ const LocationSection = () => {
           ))}
         </ul>
 
-        <div className="mt-20 pt-14 border-t border-white/16 grid lg:grid-cols-12 gap-y-10 gap-x-16">
+        <div className="mt-20 pt-14 border-t border-white/16 grid lg:grid-cols-12 gap-y-10 gap-x-16" data-reveal>
           <div className="lg:col-span-5">
             <h3 className="font-display text-2xl md:text-3xl text-bone mb-4">
               {t('location.restaurantTitle')}

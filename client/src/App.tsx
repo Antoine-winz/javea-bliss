@@ -9,6 +9,7 @@ import { useAnalytics } from "./hooks/use-analytics";
 import { LanguageProvider, SUPPORTED_LANGUAGES } from "@/contexts/LanguageContext";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import SEOHead from "@/components/SEOHead";
+import MotionProvider from "@/components/MotionProvider";
 
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
@@ -90,6 +91,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
           <SEOHead />
+          <MotionProvider />
           <Toaster />
           <Router />
         </LanguageProvider>

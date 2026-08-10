@@ -248,7 +248,7 @@ const TestimonialsSection = () => {
   return (
     <section className="section bg-sand">
       <div className="shell">
-        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-16 items-end">
+        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-16 items-end" data-reveal>
           <div className="lg:col-span-7">
             <p className="eyebrow mb-5">{t('testimonials.eyebrow')}</p>
             <h2 className="display-lg">{t('testimonials.title')}</h2>
@@ -272,7 +272,7 @@ const TestimonialsSection = () => {
           </div>
         </div>
 
-        <div className="overflow-hidden" ref={emblaRef}>
+        <div className="overflow-hidden" ref={emblaRef} data-reveal>
           <div className="flex">
             {displayReviews.map((review) => (
               <div key={review.id} className="flex-none w-full md:w-1/2 lg:w-1/3 pr-6 md:pr-10">

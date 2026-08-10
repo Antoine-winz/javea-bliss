@@ -147,6 +147,27 @@
   }
   .btn-on-dark:hover { background-color: hsl(var(--brass)); color: #fff; }
 
+  /* Nav link: a hairline that draws in from the left on hover. */
+  .nav-link {
+    position: relative;
+    padding-bottom: 0.3rem;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out-soft);
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
   /* Text link with a rule that grows on hover. */
   .link-underline {
     @apply relative inline-block font-sans text-ink;
@@ -191,6 +212,88 @@
   .hairline-dark {
     border-top: 1px solid hsl(0 0% 100% / 0.16);
   }
+}
+
+/*
+  Motion. One easing, two patterns:
+  - [data-reveal] fades and rises once when it enters the viewport
+  - [data-reveal-stagger] does the same for its children, cascading
+  The `js-reveal` class is added by MotionProvider only when JS is running AND the
+  visitor has not asked for reduced motion — without it nothing is ever hidden,
+  so content can never be lost to a script failure.
+*/
+:root {
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s var(--ease-out-soft),
+    transform 0.9s var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0s);
+}
+html.js-reveal [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+html.js-reveal [data-reveal-stagger] > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s var(--ease-out-soft),
+    transform 0.8s var(--ease-out-soft);
+}
+html.js-reveal [data-reveal-stagger].is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(2) { transition-delay: 0.07s; }
+html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(3) { transition-delay: 0.14s; }
+html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(4) { transition-delay: 0.21s; }
+html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(5) { transition-delay: 0.28s; }
+html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(6) { transition-delay: 0.35s; }
+html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(7) { transition-delay: 0.42s; }
+html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(8) { transition-delay: 0.49s; }
+html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(n + 9) { transition-delay: 0.56s; }
+
+/* Hero entrance — above the fold, so keyframes on load rather than an observer. */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes hero-drift {
+  from { transform: scale(1.07); }
+  to { transform: scale(1); }
+}
+html.js-reveal .hero-rise {
+  opacity: 0;
+  animation: hero-rise 1s var(--ease-out-soft) forwards;
+  animation-delay: var(--rise-delay, 0s);
+}
+html.js-reveal .hero-drift {
+  animation: hero-drift 12s ease-out forwards;
+  transform-origin: center 65%;
+}
+
+@keyframes bar-drop {
+  from { transform: translateY(-100%); }
+  to { transform: none; }
+}
+html.js-reveal .bar-drop { animation: bar-drop 0.5s var(--ease-out-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js-reveal [data-reveal],
+  html.js-reveal [data-reveal-stagger] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html.js-reveal .hero-rise { opacity: 1; animation: none; }
+  html.js-reveal .hero-drift,
+  html.js-reveal .bar-drop { animation: none; }
 }
 
 @layer utilities {

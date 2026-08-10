@@ -19,7 +19,7 @@ const RatesSection = () => {
   return (
     <section id="rates" className="section bg-sand">
       <div className="shell">
-        <div className="grid lg:grid-cols-12 gap-y-10 gap-x-16 mb-16 md:mb-20">
+        <div className="grid lg:grid-cols-12 gap-y-10 gap-x-16 mb-16 md:mb-20" data-reveal>
           <div className="lg:col-span-5">
             <p className="eyebrow mb-5">{t('rates.eyebrow')}</p>
             <h2 className="display-lg">{t('rates.title')}</h2>
@@ -31,7 +31,7 @@ const RatesSection = () => {
 
         {/* A rate table rather than three coloured cards — this is price information,
             and it reads faster as rows. */}
-        <div className="border-t border-ink/12">
+        <div className="border-t border-ink/12" data-reveal-stagger>
           {rates.map(({ season, period, rate }) => (
             <div
               key={season}
@@ -48,7 +48,7 @@ const RatesSection = () => {
           ))}
         </div>
 
-        <div className="mt-16 grid lg:grid-cols-12 gap-y-8 gap-x-16">
+        <div className="mt-16 grid lg:grid-cols-12 gap-y-8 gap-x-16" data-reveal>
           <div className="lg:col-span-4">
             <h3 className="display-md">{t('rates.policies')}</h3>
           </div>

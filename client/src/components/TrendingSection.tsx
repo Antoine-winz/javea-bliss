@@ -1,4 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import winterImg from '@assets/Bedroom1_optimized.jpeg';
+import remoteImg from '@assets/TV1_1749116725138.jpeg';
+import betweenImg from '@assets/Kitchen1.2_1749116725138.jpeg';
 
 const TrendingSection = () => {
   const { language } = useLanguage();
@@ -69,15 +72,15 @@ const TrendingSection = () => {
   const t = translations[language as keyof typeof translations] || translations.en;
 
   const cards = [
-    { key: 'winter-sun', title: t.winterSun, body: t.winterSunDesc },
-    { key: 'remote-work', title: t.remoteWork, body: t.remoteWorkDesc },
-    { key: 'renovation', title: t.renovation, body: t.renovationDesc },
+    { key: 'winter-sun', title: t.winterSun, body: t.winterSunDesc, img: winterImg },
+    { key: 'remote-work', title: t.remoteWork, body: t.remoteWorkDesc, img: remoteImg },
+    { key: 'renovation', title: t.renovation, body: t.renovationDesc, img: betweenImg },
   ];
 
   return (
     <section className="section bg-bone" data-testid="section-long-stays">
       <div className="shell">
-        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-20">
+        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-20" data-reveal>
           <div className="lg:col-span-5">
             <h2 className="display-lg">{t.title}</h2>
           </div>
@@ -86,9 +89,19 @@ const TrendingSection = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-x-14">
-          {cards.map(({ key, title, body }, i) => (
-            <div key={key} className="hairline pt-8" data-testid={`card-${key}`}>
+        <div className="grid md:grid-cols-3 gap-x-14 gap-y-12" data-reveal-stagger>
+          {cards.map(({ key, title, body, img }, i) => (
+            <div key={key} className="group" data-testid={`card-${key}`}>
+              <div className="ratio-landscape overflow-hidden mb-7">
+                <img
+                  src={img}
+                  alt=""
+                  className="img-cover img-zoom"
+                  loading="lazy"
+                  width={800}
+                  height={533}
+                />
+              </div>
               <span className="font-sans text-[0.6875rem] tracking-[0.2em] text-brass block mb-4">
                 {String(i + 1).padStart(2, '0')}
               </span>

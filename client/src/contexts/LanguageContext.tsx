@@ -138,6 +138,7 @@ const translations = {
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spain",
+    'band.caption': "The quiet side of the Arenal.",
     'glance.eyebrow': "The essentials",
     'apartment.eyebrow': "Where you stay",
     'amenities.eyebrow': "Inside",
@@ -486,6 +487,7 @@ const translations = {
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spanje",
+    'band.caption': "De rustige kant van het Arenal.",
     'glance.eyebrow': "De essentie",
     'apartment.eyebrow': "Waar je verblijft",
     'amenities.eyebrow': "Binnen",
@@ -834,6 +836,7 @@ const translations = {
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Espagne",
+    'band.caption': "Le côté calme de l'Arenal.",
     'glance.eyebrow': "L'essentiel",
     'apartment.eyebrow': "Votre logement",
     'amenities.eyebrow': "À l'intérieur",
@@ -1182,6 +1185,7 @@ const translations = {
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spagna",
+    'band.caption': "Il lato tranquillo dell'Arenal.",
     'glance.eyebrow': "L'essenziale",
     'apartment.eyebrow': "Dove alloggi",
     'amenities.eyebrow': "Dentro",
@@ -1530,6 +1534,7 @@ const translations = {
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spanien",
+    'band.caption': "Die ruhige Seite des Arenal.",
     'glance.eyebrow': "Das Wichtigste",
     'apartment.eyebrow': "Ihr Zuhause auf Zeit",
     'amenities.eyebrow': "Innen",
@@ -1878,6 +1883,7 @@ const translations = {
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, España",
+    'band.caption': "El lado tranquilo del Arenal.",
     'glance.eyebrow': "Lo esencial",
     'apartment.eyebrow': "Dónde te alojas",
     'amenities.eyebrow': "Dentro",

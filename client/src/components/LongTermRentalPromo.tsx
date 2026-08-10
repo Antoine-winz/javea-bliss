@@ -155,7 +155,7 @@ const LongTermRentalPromo = () => {
     <section className="section bg-ink text-bone" data-testid="section-long-term">
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-12 gap-x-16">
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6" data-reveal>
             <button
               onClick={() => window.open('/flyer2.html', 'flyerPopup', 'width=800,height=1000,scrollbars=yes,resizable=yes')}
               className="eyebrow text-brass mb-5 hover:text-bone transition-colors"
@@ -192,7 +192,7 @@ const LongTermRentalPromo = () => {
             <a href="#booking" className="btn-on-dark">{t.bookLongTerm}</a>
           </div>
 
-          <div className="lg:col-span-6 lg:pl-8">
+          <div className="lg:col-span-6 lg:pl-8" data-reveal>
             <h3 className="font-sans text-[0.6875rem] tracking-[0.2em] uppercase text-bone/50 mb-2">
               {t.whatsIncluded}
             </h3>

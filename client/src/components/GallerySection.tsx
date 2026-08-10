@@ -69,7 +69,7 @@ const GallerySection = () => {
   return (
     <section id="gallery" className="section bg-bone">
       <div className="shell">
-        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-12 md:mb-16">
+        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-12 md:mb-16" data-reveal>
           <div className="lg:col-span-5">
             <p className="eyebrow mb-5">{t('gallery.eyebrow')}</p>
             <h2 className="display-lg">{t('gallery.title')}</h2>
@@ -82,7 +82,7 @@ const GallerySection = () => {
         {/* Lead image, full width. */}
         <button
           onClick={() => openImageModal(0)}
-          className="group block w-full ratio-wide overflow-hidden mb-4 md:mb-6"
+          className="group block w-full ratio-wide overflow-hidden mb-4 md:mb-6" data-reveal
           aria-label={lead.alt}
         >
           <LazyImage
@@ -94,7 +94,7 @@ const GallerySection = () => {
           />
         </button>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6" data-reveal-stagger>
           {visible.map((image, i) => (
             <button
               key={image.src}
