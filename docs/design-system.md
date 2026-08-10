@@ -78,6 +78,25 @@ beside them, so announcing them twice is noise.
 Keep the page to roughly a dozen distinct icons. Elsewhere a brass `+` / `—` or a
 two-digit numeral does the job with less furniture.
 
+## Motion
+
+One easing (`--ease-out-soft`), used everywhere. Two scroll patterns: `data-reveal`
+(fade-and-rise, once) and `data-reveal-stagger` (the same for children, cascading ~70ms
+per row, capped at the 9th child). `MotionProvider` drives both with an
+IntersectionObserver; a MutationObserver catches nodes that mount late.
+
+Rules that keep it tasteful and safe:
+
+- Elements are hidden **only when `html.js-reveal` is present**, which MotionProvider sets
+  only when JS runs and `prefers-reduced-motion` is off. Content can never be lost to a
+  script failure, and reduced-motion visitors get a fully static page.
+- Everything animates **once**. Nothing loops, pulses, or bounces; the only continuous
+  movements are the hero's 12-second settle and the image band's ±5% scroll parallax.
+- New sections: put `data-reveal` on the header block and `data-reveal-stagger` on the
+  list/grid. Do not nest one inside the other — the child transform wins and they fight.
+- Hover: `.img-zoom` for photographs, `.nav-link` underline for nav, colour shifts for
+  buttons. Nothing else.
+
 ## Page weight
 
 The homepage was 21,133px tall. It is now ~14,450px. The gallery shows an edited set with a
