@@ -7,8 +7,25 @@ import { setupVite, serveStatic, log } from "./vite";
 const app = express();
 
 // Health check endpoint - MUST be before any middleware that could redirect or block
+// Replit probes both / and /healthz during startup
 app.get("/healthz", (_req, res) => {
   res.status(200).json({ status: "ok" });
+});
+
+// Lightweight root health probe — returns 200 immediately so deployment
+// healthchecks pass even before the full app is wired up. Registered ahead of
+// the language redirect below, which must never intercept a probe: a 302 here
+// fails the deploy.
+app.get("/", (_req, res, next) => {
+  // Only intercept in production for the healthcheck probe (no Accept: text/html)
+  if (
+    process.env.NODE_ENV === "production" &&
+    !(_req.headers["accept"] || "").includes("text/html")
+  ) {
+    res.status(200).send("OK");
+    return;
+  }
+  next();
 });
 
 // Serve static files from client/public (flyer.html, robots.txt, etc.)
