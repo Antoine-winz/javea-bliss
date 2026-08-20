@@ -89,7 +89,10 @@ export function serveStatic(app: Express) {
   // Catch-all: serve SPA shell for all routes, injecting SEO where known
   app.use("*", (req, res) => {
     const indexPath = path.resolve(distPath, "index.html");
-    const urlPath = req.path;
+    // Inside a middleware mounted at "*", Express rewrites req.path to "/", so it
+    // can never identify the route. originalUrl keeps the real path — without this
+    // no SEO was ever injected in production and every route returned 200.
+    const urlPath = req.originalUrl.split("?")[0];
 
     try {
       let html = fs.readFileSync(indexPath, "utf-8");
