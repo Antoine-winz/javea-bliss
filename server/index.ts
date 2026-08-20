@@ -58,7 +58,7 @@ app.use((req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "img-src 'self' data: https:; " +
     "font-src 'self' data: https://fonts.gstatic.com; " +
-    "connect-src 'self' wss: ws: https://api.emailjs.com https://www.google-analytics.com https://*.google-analytics.com https://api.open-meteo.com; " +
+    "connect-src 'self' wss: ws: https://api.emailjs.com https://www.google.com https://www.google-analytics.com https://*.google-analytics.com https://api.open-meteo.com; " +
     "frame-src https://www.google.com; " +
     "frame-ancestors 'self' https://*.replit.com https://*.replit.dev https://*.repl.co;"
   );

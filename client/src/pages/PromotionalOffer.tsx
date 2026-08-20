@@ -11,7 +11,6 @@ import { Calendar, Clock, MapPin, Star, ArrowRight, Users, Waves, Heart, Wifi, C
 import { useLanguage } from "@/contexts/LanguageContext";
 import SEOHead from "@/components/SEOHead";
 import PromotionalCalendar from "@/components/PromotionalCalendar";
-import DynamicPromotionalSEO from "@/components/DynamicPromotionalSEO";
 import { useEffect, useState, useMemo } from "react";
 import logo from "../assets/images/logo.png";
 import javeaBeachImg from "@assets/Xabia_playa_la_Grava_7H9A3912_20171206.jpg";
@@ -517,7 +516,6 @@ const PromotionalOffer = () => {
           </div>
         </div>
       </div>
-      <DynamicPromotionalSEO />
     </>
   );
 };

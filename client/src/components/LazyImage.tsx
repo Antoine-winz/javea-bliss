@@ -93,7 +93,7 @@ const LazyImage = memo(function LazyImage({
       loading={priority ? 'eager' : loading}
       decoding="async"
       sizes={sizes}
-      fetchPriority={priority ? 'high' : 'auto'}
+      fetchpriority={priority ? 'high' : 'auto'}
     />
   );
 });

@@ -1,16 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "wouter";
 import { useState, useEffect } from "react";
-import { useLanguage } from '@/contexts/LanguageContext';
 import { Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "../assets/images/logo.png";
 import { PromotionalOffer, calculateTimeLeft, getPromotionalTranslations } from "@/utils/promotionalUtils";
-import DynamicPromotionalSEO from "@/components/DynamicPromotionalSEO";
 import { trackPromoInteraction } from "@/lib/analytics";
 
 export function SocialMedia() {
-  const { currentLanguage } = useLanguage();
   const params = useParams();
   const offerId = params.id;
   const [timeLeft, setTimeLeft] = useState<string>('');
@@ -194,13 +191,13 @@ export function SocialMedia() {
               <span>{translations.bedroomsBathrooms}</span>
             </div>
             <div className="flex items-center">
-              <span>{translations.availableBooking}</span>
+              <span>{translations.immediateBooking}</span>
             </div>
           </div>
           
           <div className="text-center">
             <p className="text-sm text-gray-500">
-              {translations.secureBooking}
+              {translations.secureBookingFooter}
             </p>
           </div>
           </div>

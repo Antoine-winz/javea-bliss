@@ -51,14 +51,9 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Serve static flyer HTML file
+  // Keep old printed-flyer links working without presenting a 404.
   app.get("/flyer.html", (req, res) => {
-    const flyerPath = path.resolve(process.cwd(), "client", "public", "flyer.html");
-    if (fs.existsSync(flyerPath)) {
-      res.sendFile(flyerPath);
-    } else {
-      res.status(404).send("Flyer not found");
-    }
+    res.redirect(301, "/flyer2.html");
   });
 
   // Add visitor tracking middleware
