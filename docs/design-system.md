@@ -110,12 +110,12 @@ jobs, and content should be added to the right one:
 
 | Section | Job |
 |---|---|
-| **At a Glance** | Eight scannable specs. The layer someone reads in five seconds. |
+| **Essentials strip** | Eight facts in a thin sand band under the hero — the five-second read. No heading, no prose: it must never grow back into a full section. |
 | **The Apartment** | The tour: seven labelled groups, in the order you walk through the place, sleeping first. Apartment facts only. |
 | **Amenities** | The complete checklist to tick against your own requirements. Flat and exhaustive by design, ordered differentiators-first (parking, 600 Mbps, climate) rather than by category, and ending with an explicit "Not included" cluster. |
 | **The Location** | Everything outside the front door: highlights, practical distances, restaurant walking times. |
 
-Facts that describe the neighbourhood do not belong in the apartment section — the marina,
+The long-stay offer lives in ONE section (the ink panel before booking) — its three audiences are named in the subtitle, so no separate cards section. Facts that describe the neighbourhood do not belong in the apartment section — the marina,
 the shops and the restaurant walking times were all moved out for this reason.
 
 Eleven translation keys were retired in that move (`location.title`, `location.description`,
