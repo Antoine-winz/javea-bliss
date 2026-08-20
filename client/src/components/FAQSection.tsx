@@ -275,10 +275,12 @@ const eyebrows: Record<string, string> = {
 };
 
 const FAQSection = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const items = faqs[language as keyof typeof faqs] || faqs.en;
   const title = titles[language] || titles.en;
   const eyebrow = eyebrows[language] || eyebrows.en;
+  // Something not answered here? — reuses the booking section's contact line.
+  const contact = t('booking.contactDesc');
 
   useEffect(() => {
     const faqSchema = {
@@ -311,7 +313,10 @@ const FAQSection = () => {
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-28" data-reveal>
               <p className="eyebrow mb-5">{eyebrow}</p>
-              <h2 className="display-lg">{title}</h2>
+              <h2 className="display-lg mb-6">{title}</h2>
+              <p className="text-[0.9rem] text-stone leading-relaxed max-w-xs">
+                {contact}
+              </p>
             </div>
           </div>
 

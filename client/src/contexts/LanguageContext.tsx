@@ -139,7 +139,9 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spain",
     'band.caption': "The quiet side of the Arenal.",
-    'glance.eyebrow': "The essentials",
+    'host.eyebrow': "From the owner",
+    'host.text': "I renovated this apartment room by room, and I look after it the same way. Book direct and it's me you'll deal with — before you arrive, and whenever you need something during your stay.",
+    'host.name': "Laurent",
     'apartment.eyebrow': "Where you stay",
     'amenities.eyebrow': "Inside",
     'paradise.eyebrow': "The neighbourhood",
@@ -148,17 +150,15 @@ const translations = {
     'rates.eyebrow': "Rates",
     'booking.eyebrow': "Enquire",
     'hero.subtitle': 'Holiday Apartment near Arenal Beach',
-    'hero.tagline': "Renovated two-bedroom apartment for four, 250 m from Arenal Beach. Book direct from €130 a night.",
-    'hero.description': 'Stay 250 metres from Arenal Beach, Jávea\'s sandy beach with its restaurant-lined promenade. The apartment is fully renovated, with air conditioning, fast fibre Wi-Fi and free parking. Alicante Airport is 75 minutes away, with direct flights from most UK and European cities.',
+    'hero.tagline': "Two double bedrooms, a terrace over the canal, and the beach at the end of the street. Book direct from €130 a night.",
     'hero.bookButton': 'Book Your Stay',
     'hero.exploreButton': 'Explore the Apartment',
 
     // Apartment Section
     'apartment.title': 'The Apartment',
-    'apartment.description': 'A fully renovated first-floor apartment on the quiet Nou Fontana canal, one street back from Arenal Beach. Two double bedrooms, a modern bathroom, an equipped kitchen and a private terrace over the water — plus a lift and your own parking space.',
+    'apartment.description': "A first-floor apartment on the quiet Nou Fontana canal, renovated from the walls out — micro-cement, oak slats and forest green against clean white. Two double bedrooms sleep four, and the terrace hangs right over the water.",
 
     // At Glance Section
-    'glance.title': 'At a Glance',
     'glance.sleeps': 'Sleeps 4 guests',
     'glance.bedrooms': '2 double bedrooms',
     'glance.bathroom': '1 modern bathroom',
@@ -185,7 +185,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Rates & Policies',
-    'rates.description': 'Straightforward seasonal pricing, and no platform fees when you book direct. Stays of 5 weeks or more get our €100/night long-stay rate — popular for wintering in Spain.',
+    'rates.description': "Three seasons, one straightforward price for each — and no platform fees when you book direct.",
     'rates.highSeason': 'High Season',
     'rates.highPeriod': 'June – September & holidays',
     'rates.highRate': 'From €210 per night',
@@ -212,7 +212,7 @@ const translations = {
 
     // Booking Section
     'booking.title': 'Check Availability & Book Direct',
-    'booking.description': 'Send an enquiry with your dates and we\'ll reply within 24 hours. You book directly with the owner — no platform fees, no commission.',
+    'booking.description': "Send your dates and you will have an answer within a day. From first enquiry to key handover you deal with the owner — no call centre, no commission.",
     'booking.name': 'Full Name',
     'booking.email': 'Email Address',
     'booking.phone': 'Phone Number',
@@ -231,7 +231,7 @@ const translations = {
     'booking.responseTime': 'We typically respond within 24 hours',
 
     // Footer
-    'footer.tagline': 'A renovated holiday apartment 250 m from Arenal Beach, Jávea.',
+    'footer.tagline': "A renovated two-bedroom holiday apartment on the Nou Fontana canal, one street back from Arenal Beach, Jávea.",
     'footer.rights': 'All rights reserved.',
     'footer.quickLinks': 'Quick Links',
     'footer.guides': 'Javea Guides',
@@ -269,7 +269,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'The Apartment in Photos',
-    'gallery.description': 'Have a look around — living room, bedrooms, kitchen, bathroom and the terrace.',
+    'gallery.description': "Living room, bedrooms, kitchen, bathroom, terrace — as they are, no wide-angle tricks.",
     'gallery.showAll': "View all photographs",
     'gallery.livingAreas': 'Living Areas',
     'gallery.bedrooms': 'Bedrooms',
@@ -305,7 +305,7 @@ const translations = {
 
     // Testimonials Section
     'testimonials.title': 'What Our Guests Say',
-    'testimonials.description': 'Real reviews from recent stays.',
+    'testimonials.description': "What recent guests made of it.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, July 2025',
     'testimonials.guest1Text': 'One of the most complete holiday apartments I have stayed in — renovated, with full kitchen equipment, sheets, towels, even cooking basics. Very happy with our family weekend. Ideal location near the beach and restaurants, and unbeatable attention from Laurent.',
@@ -377,9 +377,9 @@ const translations = {
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Why Stay at the Arenal',
     'paradise.description1': 'The Arenal is Jávea\'s sandy beach: calm, shallow water, a long promenade of restaurants and bars, and everything you need within walking distance. It\'s the easiest base in town — you won\'t need the car.',
-    'paradise.description2': 'Mornings on the beach, lunch on the promenade, an evening walk along the canal. And when you want more: coves, the old town and the Montgó Natural Park are minutes away. The neighbourhood stays open and alive all year, high season or deep winter.',
+    'paradise.description2': "Mornings on the sand, lunch on the promenade, an evening walk along the canal — and the coves, the old town and the Montgó whenever you want more. The Arenal keeps its restaurants and shops open all year round.",
     'paradise.beach.title': 'Arenal Beach',
-    'paradise.beach.description': 'Jávea\'s only sandy beach, 250 m from the door — shallow, family-friendly water, with the promenade\'s restaurants right behind it.',
+    'paradise.beach.description': "Sand, shallow water and lifeguards through the season, with the promenade's restaurants directly behind it.",
     'paradise.watersports.title': 'Water Sports',
     'paradise.watersports.description': 'Kayak, paddle-board, jet-ski and diving operators cluster around the canal mouth, a few steps away.',
     'paradise.dining.title': 'Eating Out',
@@ -488,7 +488,9 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spanje",
     'band.caption': "De rustige kant van het Arenal.",
-    'glance.eyebrow': "De essentie",
+    'host.eyebrow': "Van de eigenaar",
+    'host.text': "Ik heb dit appartement kamer voor kamer gerenoveerd en onderhoud het met dezelfde aandacht. Boek je direct, dan regel je alles met mij persoonlijk — vóór je aankomst, en wanneer je tijdens je verblijf iets nodig hebt.",
+    'host.name': "Laurent",
     'apartment.eyebrow': "Waar je verblijft",
     'amenities.eyebrow': "Binnen",
     'paradise.eyebrow': "De buurt",
@@ -497,17 +499,15 @@ const translations = {
     'rates.eyebrow': "Tarieven",
     'booking.eyebrow': "Aanvraag",
     'hero.subtitle': 'Vakantieappartement bij het Arenal strand',
-    'hero.tagline': "Gerenoveerd appartement met twee slaapkamers voor vier, op 250 m van het Arenal strand. Boek direct vanaf €130 per nacht.",
-    'hero.description': 'Verblijf op 250 meter van het Arenal strand, het enige zandstrand van Jávea, met een boulevard vol restaurants. Het appartement is volledig gerenoveerd, met airco, snelle wifi en gratis parkeren. Directe vluchten vanaf Amsterdam, Eindhoven en Rotterdam naar Alicante — vandaar is het nog ruim een uur rijden. Kom je met de auto? Er staat een eigen parkeerplek voor je klaar.',
+    'hero.tagline': "Twee slaapkamers met tweepersoonsbedden, een terras boven het kanaal en het strand aan het eind van de straat. Boek direct bij de eigenaar vanaf €130 per nacht.",
     'hero.bookButton': 'Boek Je Verblijf',
     'hero.exploreButton': 'Bekijk het Appartement',
 
     // Apartment Section
     'apartment.title': 'Het Appartement',
-    'apartment.description': 'Volledig gerenoveerd appartement op de eerste verdieping aan het rustige Nou Fontana-kanaal, één straat van het Arenal strand. Twee slaapkamers met tweepersoonsbedden, een moderne badkamer, een complete keuken en een eigen terras aan het water — plus een lift en een eigen parkeerplek.',
+    'apartment.description': "Een appartement op de eerste verdieping aan het rustige Nou Fontana-kanaal, tot op het casco gerenoveerd: microcement, eiken lamellen en dennengroen tegen strak wit. In de twee slaapkamers — elk met een tweepersoonsbed — slaap je met z'n vieren, en het terras hangt pal boven het water.",
 
     // At Glance Section
-    'glance.title': 'In het kort',
     'glance.sleeps': 'Voor 4 personen',
     'glance.bedrooms': '2 slaapkamers',
     'glance.bathroom': '1 moderne badkamer',
@@ -534,7 +534,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Tarieven & Voorwaarden',
-    'rates.description': 'Heldere seizoensprijzen, zonder platformkosten als je direct boekt. Verblijf je 5 weken of langer? Dan geldt ons langverblijftarief van €100 per nacht — ideaal om te overwinteren aan de Costa Blanca.',
+    'rates.description': "Drie seizoenen, elk met één duidelijke prijs — en geen servicekosten als je direct bij de eigenaar boekt.",
     'rates.highSeason': 'Hoogseizoen',
     'rates.highPeriod': 'Juni – september & feestdagen',
     'rates.highRate': 'Vanaf €210 per nacht',
@@ -561,7 +561,7 @@ const translations = {
 
     // Booking Section
     'booking.title': 'Check Beschikbaarheid & Boek Direct',
-    'booking.description': 'Stuur een aanvraag met je data en je hoort binnen 24 uur van ons. Je boekt rechtstreeks bij de eigenaar — zonder platformkosten of commissie.',
+    'booking.description': "Stuur je reisdata en je krijgt binnen een dag antwoord. Van eerste aanvraag tot sleuteloverdracht heb je rechtstreeks contact met de eigenaar — geen callcenter, geen commissie.",
     'booking.name': 'Volledige Naam',
     'booking.email': 'E-mailadres',
     'booking.phone': 'Telefoonnummer',
@@ -580,7 +580,7 @@ const translations = {
     'booking.responseTime': 'We reageren meestal binnen 24 uur',
 
     // Footer
-    'footer.tagline': 'Gerenoveerd vakantieappartement op 250 m van het Arenal strand, Jávea.',
+    'footer.tagline': "Een gerenoveerd vakantieappartement met twee slaapkamers aan het Nou Fontana-kanaal, één straat achter het Arenal strand, Jávea.",
     'footer.rights': 'Alle rechten voorbehouden.',
     'footer.quickLinks': 'Snelle Links',
     'footer.guides': 'Jávea-gidsen (in het Engels)',
@@ -618,7 +618,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'Het Appartement in Beeld',
-    'gallery.description': 'Kijk rustig rond — woonkamer, slaapkamers, keuken, badkamer en het terras.',
+    'gallery.description': "Woonkamer, slaapkamers, keuken, badkamer, terras — zoals ze echt zijn, zonder trucjes met de groothoeklens.",
     'gallery.showAll': "Bekijk alle foto's",
     'gallery.livingAreas': 'Woonruimtes',
     'gallery.bedrooms': 'Slaapkamers',
@@ -654,7 +654,7 @@ const translations = {
 
     // Testimonials Section
     'testimonials.title': 'Wat Onze Gasten Zeggen',
-    'testimonials.description': 'Echte beoordelingen van recente verblijven.',
+    'testimonials.description': "Wat recente gasten ervan vonden.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, juli 2025',
     'testimonials.guest1Text': 'Een van de meest complete vakantieappartementen waar ik ooit heb gelogeerd — gerenoveerd, met volledig uitgeruste keuken, lakens, handdoeken en zelfs basisingrediënten. Heel blij met ons familieweekend. Ideale ligging bij het strand en de restaurants, en geweldige service van Laurent.',
@@ -726,9 +726,9 @@ const translations = {
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Waarom het Arenal',
     'paradise.description1': 'Het Arenal is het zandstrand van Jávea: rustig, ondiep water, een lange boulevard vol restaurants en bars, en alles wat je nodig hebt op loopafstand. De makkelijkste uitvalsbasis van de stad — de auto kan blijven staan.',
-    'paradise.description2': 'Ochtenden op het strand, lunchen op de boulevard, \'s avonds een wandeling langs het kanaal. En als je meer wilt: de baaitjes, de oude stad en natuurpark Montgó liggen op een paar minuten. De buurt leeft het hele jaar door — ook in de winter, ideaal voor overwinteraars.',
+    'paradise.description2': "'s Ochtends op het strand, 's middags lunchen op de boulevard, 's avonds een wandeling langs het kanaal — en de baaitjes, het oude centrum en de Montgó voor wanneer je meer wilt. De restaurants en winkels aan het Arenal strand zijn het hele jaar open — fijn als je hier overwintert.",
     'paradise.beach.title': 'Arenal strand',
-    'paradise.beach.description': 'Het enige zandstrand van Jávea, op 250 m van de deur — ondiep, kindvriendelijk water met de restaurants van de boulevard er direct achter.',
+    'paradise.beach.description': "Zand, ondiep water en strandbewaking in het seizoen, met de restaurants van de boulevard er direct achter.",
     'paradise.watersports.title': 'Watersport',
     'paradise.watersports.description': 'Kajak-, sup-, jetski- en duikverhuur zitten allemaal rond de monding van het kanaal, op een paar stappen afstand.',
     'paradise.dining.title': 'Uit Eten',
@@ -837,7 +837,9 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Espagne",
     'band.caption': "Le côté calme de l'Arenal.",
-    'glance.eyebrow': "L'essentiel",
+    'host.eyebrow': "Le mot du propriétaire",
+    'host.text': "J'ai rénové cet appartement pièce par pièce, et je m'en occupe avec le même soin. Réservez en direct : c'est moi qui vous réponds — avant votre arrivée, et dès que vous avez besoin de quelque chose pendant votre séjour.",
+    'host.name': "Laurent",
     'apartment.eyebrow': "Votre logement",
     'amenities.eyebrow': "À l'intérieur",
     'paradise.eyebrow': "Le quartier",
@@ -846,17 +848,15 @@ const translations = {
     'rates.eyebrow': "Tarifs",
     'booking.eyebrow': "Demande",
     'hero.subtitle': 'Appartement de vacances près de la plage de l\'Arenal',
-    'hero.tagline': "Appartement rénové de deux chambres pour quatre, à 250 m de la plage de l'Arenal. Réservez en direct dès 130 € la nuit.",
-    'hero.description': 'Séjournez à 250 mètres de la plage de l\'Arenal, la plage de sable de Jávea, bordée d\'une promenade pleine de restaurants. L\'appartement est entièrement rénové, avec climatisation, wifi fibre et parking gratuit. Depuis la France, comptez environ 7 h de route depuis Toulouse par l\'AP-7 — ou un vol pour Alicante, puis 1 h 15 de trajet. Une place de parking privée vous attend à l\'arrivée.',
+    'hero.tagline': "Deux chambres doubles, une terrasse sur le canal et la plage à deux pas, au bout de la rue. Réservez en direct dès 130 € la nuit.",
     'hero.bookButton': 'Réserver Votre Séjour',
     'hero.exploreButton': 'Découvrir l\'Appartement',
 
     // Apartment Section
     'apartment.title': 'L\'Appartement',
-    'apartment.description': 'Appartement entièrement rénové au premier étage, au bord du paisible canal Nou Fontana, à une rue de la plage de l\'Arenal. Deux chambres doubles, une salle de bain moderne, une cuisine équipée et une terrasse privée au-dessus de l\'eau — avec ascenseur et place de parking privée.',
+    'apartment.description': "Un appartement au premier étage, au bord du paisible canal Nou Fontana, rénové de fond en comble — béton ciré, tasseaux de chêne et vert forêt sur blanc immaculé. Deux chambres doubles offrent quatre couchages, et la terrasse surplombe directement l'eau.",
 
     // At Glance Section
-    'glance.title': 'En un coup d\'œil',
     'glance.sleeps': 'Pour 4 personnes',
     'glance.bedrooms': '2 chambres doubles',
     'glance.bathroom': '1 salle de bain moderne',
@@ -883,7 +883,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Tarifs & Conditions',
-    'rates.description': 'Des prix saisonniers clairs, sans frais de plateforme en réservation directe. À partir de 5 semaines, profitez de notre tarif longue durée à 100 € la nuit — idéal pour hiverner au soleil de la Costa Blanca.',
+    'rates.description': "Trois saisons, un tarif clair pour chacune — et pas de frais de plateforme quand vous réservez en direct.",
     'rates.highSeason': 'Haute Saison',
     'rates.highPeriod': 'Juin – septembre & jours fériés',
     'rates.highRate': 'Dès 210 € la nuit',
@@ -910,7 +910,7 @@ const translations = {
 
     // Booking Section
     'booking.title': 'Vérifier les Disponibilités & Réserver en Direct',
-    'booking.description': 'Envoyez une demande avec vos dates : réponse sous 24 h. Vous réservez directement auprès du propriétaire — sans frais de plateforme ni commission.',
+    'booking.description': "Envoyez vos dates : réponse sous 24 h. De la première demande à la remise des clés, vous échangez directement avec le propriétaire — sans centre d'appels, sans commission.",
     'booking.name': 'Nom Complet',
     'booking.email': 'Adresse E-mail',
     'booking.phone': 'Numéro de Téléphone',
@@ -929,7 +929,7 @@ const translations = {
     'booking.responseTime': 'Nous répondons généralement sous 24 h',
 
     // Footer
-    'footer.tagline': 'Appartement de vacances rénové à 250 m de la plage de l\'Arenal, Jávea.',
+    'footer.tagline': "Appartement de vacances rénové de deux chambres, sur le canal Nou Fontana, à une rue de la plage de l'Arenal, Jávea.",
     'footer.rights': 'Tous droits réservés.',
     'footer.quickLinks': 'Liens Rapides',
     'footer.guides': 'Guides Jávea (en anglais)',
@@ -967,7 +967,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'L\'Appartement en Photos',
-    'gallery.description': 'Faites le tour — salon, chambres, cuisine, salle de bain et terrasse.',
+    'gallery.description': "Salon, chambres, cuisine, salle de bain, terrasse — le tout tel quel, sans grand angle flatteur.",
     'gallery.showAll': "Voir toutes les photos",
     'gallery.livingAreas': 'Pièces à Vivre',
     'gallery.bedrooms': 'Chambres',
@@ -1003,7 +1003,7 @@ const translations = {
 
     // Testimonials Section
     'testimonials.title': 'Ce que Disent Nos Voyageurs',
-    'testimonials.description': 'Avis réels de séjours récents.',
+    'testimonials.description': "Ce qu'en ont pensé nos derniers voyageurs.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, juillet 2025',
     'testimonials.guest1Text': 'L\'un des appartements de vacances les plus complets où j\'ai séjourné — rénové, avec cuisine entièrement équipée, draps, serviettes et même des ingrédients de base. Très contents de notre week-end en famille. Emplacement idéal près de la plage et des restaurants, et un accueil irréprochable de Laurent.',
@@ -1075,9 +1075,9 @@ const translations = {
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Pourquoi l\'Arenal',
     'paradise.description1': 'L\'Arenal, c\'est la plage de sable de Jávea : une eau calme et peu profonde, une longue promenade de restaurants et de bars, et tout le nécessaire accessible à pied. La base la plus pratique de la ville — la voiture peut rester au parking.',
-    'paradise.description2': 'Le matin à la plage, le déjeuner sur la promenade, la balade du soir le long du canal. Et quand vous voulez plus : les criques, la vieille ville et le parc naturel du Montgó sont à quelques minutes. Le quartier vit toute l\'année — même en plein hiver, parfait pour un long séjour au soleil.',
+    'paradise.description2': "Le matin sur le sable, le déjeuner sur la promenade, la balade du soir le long du canal — et les criques, la vieille ville et le Montgó quand vous avez envie d'en voir plus. À l'Arenal, restaurants et commerces restent ouverts toute l'année.",
     'paradise.beach.title': 'Plage de l\'Arenal',
-    'paradise.beach.description': 'La seule plage de sable de Jávea, à 250 m de la porte — eau peu profonde, idéale en famille, avec les restaurants de la promenade juste derrière.',
+    'paradise.beach.description': "Du sable, une eau peu profonde, une baignade surveillée en saison — et les restaurants de la promenade juste derrière.",
     'paradise.watersports.title': 'Sports Nautiques',
     'paradise.watersports.description': 'Kayak, paddle, jet-ski et clubs de plongée sont regroupés à l\'embouchure du canal, à quelques pas.',
     'paradise.dining.title': 'Bien Manger',
@@ -1186,7 +1186,9 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spagna",
     'band.caption': "Il lato tranquillo dell'Arenal.",
-    'glance.eyebrow': "L'essenziale",
+    'host.eyebrow': "Dal proprietario",
+    'host.text': "Ho ristrutturato questo appartamento stanza per stanza e me ne prendo cura allo stesso modo. Prenota direttamente e dall'altra parte ci sono io — prima del tuo arrivo e ogni volta che ti serve qualcosa durante il soggiorno.",
+    'host.name': "Laurent",
     'apartment.eyebrow': "Dove alloggi",
     'amenities.eyebrow': "Dentro",
     'paradise.eyebrow': "Il quartiere",
@@ -1195,17 +1197,15 @@ const translations = {
     'rates.eyebrow': "Tariffe",
     'booking.eyebrow': "Richiesta",
     'hero.subtitle': 'Casa vacanze vicino alla spiaggia dell\'Arenal',
-    'hero.tagline': "Appartamento ristrutturato con due camere per quattro, a 250 m dalla spiaggia dell'Arenal. Prenota diretto da 130 € a notte.",
-    'hero.description': 'Soggiorna a 250 metri dalla spiaggia dell\'Arenal, la spiaggia di sabbia di Jávea sulla Costa Blanca, con il suo lungomare pieno di ristoranti. L\'appartamento è completamente ristrutturato, con aria condizionata, WiFi in fibra e parcheggio gratuito. Voli diretti da Milano, Bergamo e Roma per Alicante (circa 2 ore), poi un\'ora e mezza d\'auto.',
+    'hero.tagline': "Due camere matrimoniali, una terrazza sul canale e la spiaggia in fondo alla strada. Prenota direttamente da 130 € a notte.",
     'hero.bookButton': 'Prenota il Tuo Soggiorno',
     'hero.exploreButton': 'Scopri l\'Appartamento',
 
     // Apartment Section
     'apartment.title': 'L\'Appartamento',
-    'apartment.description': 'Appartamento completamente ristrutturato al primo piano, lungo il tranquillo canale Nou Fontana, a una strada dalla spiaggia dell\'Arenal. Due camere matrimoniali, un bagno moderno, cucina attrezzata e terrazza privata sull\'acqua — con ascensore e posto auto riservato.',
+    'apartment.description': "Un appartamento al primo piano sul tranquillo canale Nou Fontana, ristrutturato da cima a fondo: microcemento, listelli in rovere e verde bosco su bianco candido. Due camere matrimoniali per dormire in quattro, e la terrazza è sospesa proprio sull'acqua.",
 
     // At Glance Section
-    'glance.title': 'In breve',
     'glance.sleeps': 'Per 4 persone',
     'glance.bedrooms': '2 camere matrimoniali',
     'glance.bathroom': '1 bagno moderno',
@@ -1232,7 +1232,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Tariffe & Condizioni',
-    'rates.description': 'Prezzi stagionali chiari, senza costi di piattaforma se prenoti direttamente. Dai 35 giorni in su vale la tariffa soggiorni lunghi di 100 € a notte — perfetta per svernare al caldo della Costa Blanca.',
+    'rates.description': "Tre stagioni, un prezzo chiaro per ciascuna — e senza le commissioni dei portali se prenoti direttamente.",
     'rates.highSeason': 'Alta Stagione',
     'rates.highPeriod': 'Giugno – settembre & festività',
     'rates.highRate': 'Da 210 € a notte',
@@ -1259,7 +1259,7 @@ const translations = {
 
     // Booking Section
     'booking.title': 'Verifica Disponibilità & Prenota Direttamente',
-    'booking.description': 'Invia una richiesta con le tue date: ti rispondiamo entro 24 ore. Prenoti direttamente dal proprietario — senza costi di piattaforma né commissioni.',
+    'booking.description': "Invia le tue date e avrai una risposta entro 24 ore. Dalla prima richiesta alla consegna delle chiavi parli direttamente con il proprietario — niente call center, niente commissioni.",
     'booking.name': 'Nome Completo',
     'booking.email': 'Indirizzo Email',
     'booking.phone': 'Numero di Telefono',
@@ -1278,7 +1278,7 @@ const translations = {
     'booking.responseTime': 'Rispondiamo di solito entro 24 ore',
 
     // Footer
-    'footer.tagline': 'Casa vacanze ristrutturata a 250 m dalla spiaggia dell\'Arenal, Jávea.',
+    'footer.tagline': "Casa vacanze a Jávea: un appartamento ristrutturato con due camere da letto sul canale Nou Fontana, a una strada dalla spiaggia dell'Arenal.",
     'footer.rights': 'Tutti i diritti riservati.',
     'footer.quickLinks': 'Link Rapidi',
     'footer.guides': 'Guide su Jávea (in inglese)',
@@ -1316,7 +1316,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'L\'Appartamento in Foto',
-    'gallery.description': 'Dai un\'occhiata — soggiorno, camere, cucina, bagno e terrazza.',
+    'gallery.description': "Soggiorno, camere, cucina, bagno, terrazza — così come sono, senza trucchi col grandangolo.",
     'gallery.showAll': "Vedi tutte le foto",
     'gallery.livingAreas': 'Zona Giorno',
     'gallery.bedrooms': 'Camere',
@@ -1352,7 +1352,7 @@ const translations = {
 
     // Testimonials Section
     'testimonials.title': 'Cosa Dicono i Nostri Ospiti',
-    'testimonials.description': 'Recensioni vere di soggiorni recenti.',
+    'testimonials.description': "Cosa ne dicono gli ultimi ospiti.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, luglio 2025',
     'testimonials.guest1Text': 'Una delle case vacanze più complete in cui abbia mai soggiornato — ristrutturata, con cucina attrezzatissima, lenzuola, asciugamani e persino gli ingredienti di base. Molto contenti del nostro weekend in famiglia. Posizione ideale vicino a spiaggia e ristoranti, e un\'attenzione impeccabile da parte di Laurent.',
@@ -1424,9 +1424,9 @@ const translations = {
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Perché l\'Arenal',
     'paradise.description1': 'L\'Arenal è la spiaggia di sabbia di Jávea: acqua calma e bassa, un lungo lungomare di ristoranti e bar, e tutto quello che serve raggiungibile a piedi. La base più comoda della città — l\'auto può restare parcheggiata.',
-    'paradise.description2': 'La mattina in spiaggia, il pranzo sul lungomare, la passeggiata serale lungo il canale. E quando vuoi di più: le calette, il centro storico e il parco naturale del Montgó sono a pochi minuti. Il quartiere vive tutto l\'anno, in alta stagione come in pieno inverno.',
+    'paradise.description2': "Mattine sulla sabbia, pranzi sul lungomare, due passi la sera lungo il canale — e le calette, il centro storico e il Montgó per quando vuoi di più. All'Arenal, ristoranti e negozi restano aperti tutto l'anno.",
     'paradise.beach.title': 'Spiaggia dell\'Arenal',
-    'paradise.beach.description': 'L\'unica spiaggia di sabbia di Jávea, a 250 m dalla porta — acqua bassa, perfetta per le famiglie, con i ristoranti del lungomare subito dietro.',
+    'paradise.beach.description': "Sabbia, fondale basso e bagnini per tutta la stagione, con i ristoranti del lungomare subito alle spalle.",
     'paradise.watersports.title': 'Sport Acquatici',
     'paradise.watersports.description': 'Kayak, SUP, moto d\'acqua e diving si concentrano alla foce del canale, a pochi passi.',
     'paradise.dining.title': 'Mangiare Fuori',
@@ -1535,7 +1535,9 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spanien",
     'band.caption': "Die ruhige Seite des Arenal.",
-    'glance.eyebrow': "Das Wichtigste",
+    'host.eyebrow': "Vom Eigentümer",
+    'host.text': "Ich habe diese Wohnung Zimmer für Zimmer renoviert — und genauso kümmere ich mich um sie. Wenn Sie direkt buchen, haben Sie es mit mir zu tun: vor Ihrer Anreise und wann immer Sie während Ihres Aufenthalts etwas brauchen.",
+    'host.name': "Laurent",
     'apartment.eyebrow': "Ihr Zuhause auf Zeit",
     'amenities.eyebrow': "Innen",
     'paradise.eyebrow': "Die Umgebung",
@@ -1544,17 +1546,15 @@ const translations = {
     'rates.eyebrow': "Preise",
     'booking.eyebrow': "Anfrage",
     'hero.subtitle': 'Ferienwohnung am Arenal-Strand',
-    'hero.tagline': "Renovierte Zwei-Zimmer-Wohnung für vier Gäste, 250 m vom Arenal-Strand. Direkt buchen ab 130 € pro Nacht.",
-    'hero.description': 'Wohnen Sie nur 250 Meter vom Arenal-Strand, Jáveas Sandstrand mit seiner restaurantgesäumten Promenade. Die Wohnung ist frisch renoviert, mit Klimaanlage, schnellem WLAN und kostenlosem Parkplatz — ruhig am Kanal gelegen und trotzdem mitten im Geschehen. Direktflüge nach Alicante ab Frankfurt, München, Düsseldorf, Zürich und Wien (ca. 2,5 Std.), danach etwa 1 Stunde Fahrt.',
+    'hero.tagline': "Zwei Schlafzimmer mit Doppelbett, eine Terrasse über dem Kanal, der Strand am Ende der Straße. Direkt buchen ab 130 € pro Nacht.",
     'hero.bookButton': 'Jetzt Buchen',
     'hero.exploreButton': 'Wohnung Ansehen',
 
     // Apartment Section
     'apartment.title': 'Die Wohnung',
-    'apartment.description': 'Komplett renovierte Wohnung im ersten Stock am ruhigen Nou-Fontana-Kanal, eine Straße vom Arenal-Strand. Zwei Schlafzimmer mit Doppelbetten, ein modernes Bad, eine voll ausgestattete Küche und eine eigene Terrasse über dem Wasser — dazu Aufzug und eigener Parkplatz.',
+    'apartment.description': "Eine Ferienwohnung im ersten Stock am ruhigen Nou-Fontana-Kanal, von Grund auf renoviert — Mikrozement, Eichenlamellen und Waldgrün vor klarem Weiß. Zwei Schlafzimmer mit Doppelbett bieten Platz für vier Gäste, und die Terrasse liegt direkt über dem Wasser.",
 
     // At Glance Section
-    'glance.title': 'Auf einen Blick',
     'glance.sleeps': 'Für 4 Gäste',
     'glance.bedrooms': '2 Schlafzimmer',
     'glance.bathroom': '1 modernes Bad',
@@ -1581,7 +1581,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Preise & Bedingungen',
-    'rates.description': 'Klare Saisonpreise, ohne Plattformgebühren bei Direktbuchung. Ab 5 Wochen gilt unser Langzeittarif von 100 € pro Nacht — beliebt zum Überwintern an der Costa Blanca.',
+    'rates.description': "Drei Saisons, für jede ein klarer Preis — und keine Plattformgebühren, wenn Sie direkt buchen.",
     'rates.highSeason': 'Hochsaison',
     'rates.highPeriod': 'Juni – September & Feiertage',
     'rates.highRate': 'Ab 210 € pro Nacht',
@@ -1608,7 +1608,7 @@ const translations = {
 
     // Booking Section
     'booking.title': 'Verfügbarkeit Prüfen & Direkt Buchen',
-    'booking.description': 'Senden Sie eine Anfrage mit Ihren Daten — wir antworten innerhalb von 24 Stunden. Sie buchen direkt beim Eigentümer, ohne Plattformgebühren und ohne Provision.',
+    'booking.description': "Senden Sie uns Ihre Reisedaten — die Antwort kommt innerhalb eines Tages. Von der ersten Anfrage bis zur Schlüsselübergabe sprechen Sie direkt mit dem Eigentümer: kein Callcenter, keine Provision.",
     'booking.name': 'Vollständiger Name',
     'booking.email': 'E-Mail-Adresse',
     'booking.phone': 'Telefonnummer',
@@ -1627,7 +1627,7 @@ const translations = {
     'booking.responseTime': 'Wir antworten in der Regel innerhalb von 24 Stunden',
 
     // Footer
-    'footer.tagline': 'Renovierte Ferienwohnung, 250 m vom Arenal-Strand, Jávea.',
+    'footer.tagline': "Renovierte Ferienwohnung mit zwei Schlafzimmern am Nou-Fontana-Kanal, eine Straße hinter dem Arenal-Strand, Jávea.",
     'footer.rights': 'Alle Rechte vorbehalten.',
     'footer.quickLinks': 'Schnellzugriff',
     'footer.guides': 'Jávea-Guides (auf Englisch)',
@@ -1665,7 +1665,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'Die Wohnung in Bildern',
-    'gallery.description': 'Sehen Sie sich um — Wohnzimmer, Schlafzimmer, Küche, Bad und Terrasse.',
+    'gallery.description': "Wohnzimmer, Schlafzimmer, Küche, Bad, Terrasse — so wie sie sind, keine Weitwinkel-Tricks.",
     'gallery.showAll': "Alle Fotos ansehen",
     'gallery.livingAreas': 'Wohnbereiche',
     'gallery.bedrooms': 'Schlafzimmer',
@@ -1701,7 +1701,7 @@ const translations = {
 
     // Testimonials Section
     'testimonials.title': 'Was Unsere Gäste Sagen',
-    'testimonials.description': 'Echte Bewertungen aus jüngsten Aufenthalten.',
+    'testimonials.description': "Das sagen Gäste, die zuletzt hier waren.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, Juli 2025',
     'testimonials.guest1Text': 'Eine der am besten ausgestatteten Ferienwohnungen, in denen ich je übernachtet habe — renoviert, mit komplett eingerichteter Küche, Bettwäsche, Handtüchern und sogar Grundzutaten. Sehr zufrieden mit unserem Familienwochenende. Ideale Lage nahe Strand und Restaurants, und eine tadellose Betreuung durch Laurent.',
@@ -1773,9 +1773,9 @@ const translations = {
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Warum der Arenal',
     'paradise.description1': 'Der Arenal ist Jáveas Sandstrand: ruhiges, flaches Wasser, eine lange Promenade voller Restaurants und Bars, und alles Nötige zu Fuß erreichbar. Die bequemste Basis der Stadt — das Auto kann stehen bleiben.',
-    'paradise.description2': 'Morgens am Strand, mittags auf der Promenade, abends ein Spaziergang am Kanal. Und wenn Sie mehr wollen: Buchten, Altstadt und der Naturpark Montgó sind nur Minuten entfernt. Das Viertel lebt das ganze Jahr — in der Hochsaison wie im tiefsten Winter, ideal zum Überwintern.',
+    'paradise.description2': "Morgens am Strand, mittags auf der Promenade, abends ein Spaziergang am Kanal — und wenn Sie mehr wollen: die Buchten, die Altstadt und der Montgó. Die Restaurants und Geschäfte am Arenal haben das ganze Jahr über geöffnet.",
     'paradise.beach.title': 'Arenal-Strand',
-    'paradise.beach.description': 'Jáveas einziger Sandstrand, 250 m von der Tür — flaches, familienfreundliches Wasser, mit den Restaurants der Promenade direkt dahinter.',
+    'paradise.beach.description': "Sand, flaches Wasser, Rettungsschwimmer in der Saison — und die Restaurants der Promenade direkt dahinter.",
     'paradise.watersports.title': 'Wassersport',
     'paradise.watersports.description': 'Kajak-, SUP-, Jetski- und Tauchanbieter konzentrieren sich an der Kanalmündung, wenige Schritte entfernt.',
     'paradise.dining.title': 'Essen Gehen',
@@ -1884,7 +1884,9 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, España",
     'band.caption': "El lado tranquilo del Arenal.",
-    'glance.eyebrow': "Lo esencial",
+    'host.eyebrow': "Del propietario",
+    'host.text': "Reformé este apartamento habitación por habitación y lo sigo cuidando con el mismo mimo. Si reservas directo, soy yo quien te atiende — antes de tu llegada y siempre que necesites algo durante la estancia.",
+    'host.name': "Laurent",
     'apartment.eyebrow': "Dónde te alojas",
     'amenities.eyebrow': "Dentro",
     'paradise.eyebrow': "El barrio",
@@ -1893,17 +1895,15 @@ const translations = {
     'rates.eyebrow': "Tarifas",
     'booking.eyebrow': "Consulta",
     'hero.subtitle': 'Apartamento junto a la Playa del Arenal',
-    'hero.tagline': "Apartamento reformado de dos habitaciones para cuatro, a 250 m de la Playa del Arenal. Reserva directa desde 130 € la noche.",
-    'hero.description': 'Alójate a 250 metros de la Playa del Arenal, la playa de arena de Jávea (Xàbia), con su paseo lleno de restaurantes. El apartamento está totalmente reformado, con aire acondicionado, wifi rápido y parking gratis. La escapada perfecta: a 1 hora y media de Valencia por la AP-7, a 4 horas de Madrid por la A-3.',
+    'hero.tagline': "Dos habitaciones de matrimonio, una terraza sobre el canal y la playa a un paso, al final de la calle. Reserva directa desde 130 € la noche.",
     'hero.bookButton': 'Reserva Tu Estancia',
     'hero.exploreButton': 'Descubre el Apartamento',
 
     // Apartment Section
     'apartment.title': 'El Apartamento',
-    'apartment.description': 'Apartamento totalmente reformado en primera planta, junto al tranquilo canal de la Fontana, a una calle de la Playa del Arenal. Dos habitaciones dobles, un baño moderno, cocina equipada y terraza privada sobre el agua — con ascensor y plaza de parking propia.',
+    'apartment.description': "Un apartamento en primera planta junto al tranquilo canal de la Fontana, reformado de arriba abajo — microcemento, lamas de roble y verde bosque sobre un blanco impoluto. Dos habitaciones con cama de matrimonio para cuatro personas, y la terraza se asoma directamente al agua.",
 
     // At Glance Section
-    'glance.title': 'De un vistazo',
     'glance.sleeps': 'Para 4 personas',
     'glance.bedrooms': '2 habitaciones dobles',
     'glance.bathroom': '1 baño moderno',
@@ -1930,7 +1930,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Tarifas y Condiciones',
-    'rates.description': 'Precios por temporada, claros y sin costes de plataforma al reservar directo. A partir de 5 semanas se aplica la tarifa de larga estancia: 100 € la noche — ideal para teletrabajar o pasar el invierno junto al mar.',
+    'rates.description': "Tres temporadas, un precio claro para cada una — y sin comisiones si reservas directo.",
     'rates.highSeason': 'Temporada Alta',
     'rates.highPeriod': 'Junio – septiembre y festivos',
     'rates.highRate': 'Desde 210 € la noche',
@@ -1957,7 +1957,7 @@ const translations = {
 
     // Booking Section
     'booking.title': 'Consulta Disponibilidad y Reserva Directo',
-    'booking.description': 'Envíanos una solicitud con tus fechas y te respondemos en menos de 24 horas. Reservas directamente con el propietario — sin costes de plataforma ni comisiones.',
+    'booking.description': "Envíanos tus fechas y tendrás respuesta en menos de 24 horas. De la primera consulta a la entrega de llaves tratas con el propietario — nada de centralitas ni comisiones.",
     'booking.name': 'Nombre Completo',
     'booking.email': 'Correo Electrónico',
     'booking.phone': 'Teléfono',
@@ -1976,7 +1976,7 @@ const translations = {
     'booking.responseTime': 'Solemos responder en menos de 24 horas',
 
     // Footer
-    'footer.tagline': 'Apartamento vacacional reformado a 250 m de la Playa del Arenal, Jávea.',
+    'footer.tagline': "Apartamento vacacional reformado de dos habitaciones, junto al canal de la Fontana y a una calle de la Playa del Arenal, en Jávea.",
     'footer.rights': 'Todos los derechos reservados.',
     'footer.quickLinks': 'Enlaces Rápidos',
     'footer.guides': 'Guías de Jávea (en inglés)',
@@ -2014,7 +2014,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'El Apartamento en Fotos',
-    'gallery.description': 'Echa un vistazo — salón, habitaciones, cocina, baño y terraza.',
+    'gallery.description': "Salón, habitaciones, cocina, baño, terraza — tal y como son, sin trampa ni cartón.",
     'gallery.showAll': "Ver todas las fotos",
     'gallery.livingAreas': 'Zonas de Estar',
     'gallery.bedrooms': 'Habitaciones',
@@ -2050,7 +2050,7 @@ const translations = {
 
     // Testimonials Section
     'testimonials.title': 'Lo que Dicen Nuestros Huéspedes',
-    'testimonials.description': 'Opiniones reales de estancias recientes.',
+    'testimonials.description': "La impresión que se llevaron los últimos huéspedes.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, julio 2025',
     'testimonials.guest1Text': 'Uno de los alojamientos más completos en los que he estado — reformado, con la cocina totalmente equipada, sábanas, toallas e incluso ingredientes básicos. Muy contentos con nuestro fin de semana en familia. Ubicación ideal cerca de la playa y los restaurantes, y una atención inmejorable de Laurent.',
@@ -2122,9 +2122,9 @@ const translations = {
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Por qué el Arenal',
     'paradise.description1': 'El Arenal es la playa de arena de Jávea: agua tranquila y poco profunda, un paseo largo lleno de restaurantes y bares, y todo lo necesario a un paso. La base más cómoda de la ciudad — el coche se queda aparcado.',
-    'paradise.description2': 'Mañanas de playa, comida en el paseo, y por la tarde un paseo junto al canal. Y cuando quieras más: las calas, el casco antiguo y el parque natural del Montgó están a pocos minutos. El barrio tiene vida todo el año, en agosto y en pleno invierno.',
+    'paradise.description2': "Mañanas de playa, comida en el paseo, una vuelta por el canal al caer la tarde — y las calas, el casco antiguo y el Montgó para cuando quieras más. En el Arenal, los restaurantes y las tiendas abren todo el año.",
     'paradise.beach.title': 'Playa del Arenal',
-    'paradise.beach.description': 'La única playa de arena de Jávea, a 250 m de la puerta — agua poco profunda, perfecta con niños, con los restaurantes del paseo justo detrás.',
+    'paradise.beach.description': "Arena, agua poco profunda y socorristas toda la temporada, con los restaurantes del paseo justo detrás.",
     'paradise.watersports.title': 'Deportes Acuáticos',
     'paradise.watersports.description': 'Kayak, paddle surf, motos de agua y buceo se concentran en la bocana del canal, a unos pasos.',
     'paradise.dining.title': 'Comer Fuera',

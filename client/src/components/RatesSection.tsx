@@ -19,46 +19,43 @@ const RatesSection = () => {
   return (
     <section id="rates" className="section bg-sand">
       <div className="shell">
-        <div className="grid lg:grid-cols-12 gap-y-10 gap-x-16 mb-16 md:mb-20" data-reveal>
-          <div className="lg:col-span-5">
+        <div className="grid lg:grid-cols-12 gap-y-12 gap-x-16">
+          {/* Heading, description and the booking policies share the left column,
+              beside the season table — one screen, no stranded space. */}
+          <div className="lg:col-span-5" data-reveal>
             <p className="eyebrow mb-5">{t('rates.eyebrow')}</p>
-            <h2 className="display-lg">{t('rates.title')}</h2>
+            <h2 className="display-lg mb-6">{t('rates.title')}</h2>
+            <p className="text-[0.95rem] text-ink-soft leading-relaxed max-w-md mb-10">
+              {t('rates.description')}
+            </p>
+
+            <h3 className="eyebrow mb-1">{t('rates.policies')}</h3>
+            <ul>
+              {policies.map((policy) => (
+                <li key={policy} className="hairline py-3.5 text-[0.9rem] text-ink-soft">
+                  {policy}
+                </li>
+              ))}
+            </ul>
           </div>
+
           <div className="lg:col-span-7">
-            <p className="lede">{t('rates.description')}</p>
-          </div>
-        </div>
-
-        {/* A rate table rather than three coloured cards — this is price information,
-            and it reads faster as rows. */}
-        <div className="border-t border-ink/12" data-reveal-stagger>
-          {rates.map(({ season, period, rate }) => (
-            <div
-              key={season}
-              className="border-b border-ink/12 py-7 grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 md:items-baseline"
-            >
-              <h3 className="md:col-span-4 font-display text-2xl md:text-[1.75rem] text-ink">
-                {season}
-              </h3>
-              <p className="md:col-span-5 text-[0.95rem] text-stone">{period}</p>
-              <p className="md:col-span-3 font-sans text-[0.95rem] text-ink md:text-right">
-                {rate}
-              </p>
+            <div className="border-t border-ink/12" data-reveal-stagger>
+              {rates.map(({ season, period, rate }) => (
+                <div key={season} className="border-b border-ink/12 py-8">
+                  <div className="flex items-baseline justify-between gap-6 mb-1.5">
+                    <h3 className="font-display text-2xl md:text-[1.75rem] text-ink">
+                      {season}
+                    </h3>
+                    <p className="font-sans text-[0.95rem] text-ink whitespace-nowrap">
+                      {rate}
+                    </p>
+                  </div>
+                  <p className="text-[0.9rem] text-stone">{period}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-
-        <div className="mt-16 grid lg:grid-cols-12 gap-y-8 gap-x-16" data-reveal>
-          <div className="lg:col-span-4">
-            <h3 className="display-md">{t('rates.policies')}</h3>
           </div>
-          <ul className="lg:col-span-8 grid sm:grid-cols-2 gap-x-12">
-            {policies.map((policy) => (
-              <li key={policy} className="hairline py-4 text-[0.95rem] text-ink-soft">
-                {policy}
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>

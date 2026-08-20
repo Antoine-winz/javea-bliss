@@ -1,10 +1,13 @@
 import { useLanguage } from "../contexts/LanguageContext";
 
+/*
+  A thin band of the eight facts guests check first, directly under the hero.
+  Replaces the old full-height "At a Glance" section, which repeated the hero
+  paragraph and left most of a screen empty around eight short lines.
+*/
 const AtGlanceSection = () => {
   const { t } = useLanguage();
 
-  // A spec sheet, not four decorated cards. The facts are the selling point, so
-  // they are set as type rather than dressed up with icons.
   const specs = [
     t('glance.sleeps'),
     t('glance.bedrooms'),
@@ -17,29 +20,21 @@ const AtGlanceSection = () => {
   ];
 
   return (
-    <section className="section bg-bone">
-      <div className="shell">
-        <div className="grid lg:grid-cols-12 gap-y-12 gap-x-16">
-          <div className="lg:col-span-5" data-reveal>
-            <p className="eyebrow mb-5">{t('glance.eyebrow')}</p>
-            <h2 className="display-lg">{t('glance.title')}</h2>
-          </div>
-
-          <div className="lg:col-span-7">
-            <p className="lede mb-12" data-reveal>{t('hero.description')}</p>
-
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12" data-reveal-stagger>
-              {specs.map((spec) => (
-                <li
-                  key={spec}
-                  className="hairline py-4 font-sans text-[0.95rem] text-ink-soft"
-                >
-                  {spec}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+    <section className="bg-sand border-b border-ink/10">
+      <div className="shell px-6 md:px-10">
+        <ul
+          className="flex flex-wrap justify-center gap-x-10 gap-y-3 py-7 md:py-8"
+          data-reveal
+        >
+          {specs.map((spec) => (
+            <li
+              key={spec}
+              className="font-sans text-[0.75rem] tracking-[0.14em] uppercase text-ink-soft whitespace-nowrap"
+            >
+              {spec}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
