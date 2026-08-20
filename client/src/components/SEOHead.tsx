@@ -233,7 +233,7 @@ const SEOHead = ({
         maxValue: 4,
       },
       checkinTime: '16:00',
-      checkoutTime: '12:00',
+      checkoutTime: '13:00',
       petsAllowed: false,
       amenityFeature: [
         { '@type': 'LocationFeatureSpecification', name: 'Air Conditioning', value: true },
@@ -241,7 +241,7 @@ const SEOHead = ({
         { '@type': 'LocationFeatureSpecification', name: 'Fully Equipped Kitchen', value: true },
         { '@type': 'LocationFeatureSpecification', name: 'Terrace', value: true },
         { '@type': 'LocationFeatureSpecification', name: 'Lift / Elevator', value: true },
-        { '@type': 'LocationFeatureSpecification', name: 'Free Parking', value: true },
+        { '@type': 'LocationFeatureSpecification', name: 'Free street parking', value: true },
         { '@type': 'LocationFeatureSpecification', name: 'Washing Machine', value: true },
       ],
       priceRange: '€100-€210',

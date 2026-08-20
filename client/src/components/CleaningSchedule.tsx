@@ -78,7 +78,7 @@ export default function CleaningSchedule() {
 
       schedule += `🏠 *Reserva ${index + 1}*\n`;
       schedule += `📅 Llegada: ${arrivalDay} a las 16:00 (4:00 PM)\n`;
-      schedule += `📅 Salida: ${departureDay} a las 12:00 (12:00 PM)\n`;
+      schedule += `📅 Salida: ${departureDay} a las 13:00 (1:00 PM)\n`;
       
       // Calculate cleaning deadline for NEXT booking (if exists)
       if (index < sortedEvents.length - 1) {

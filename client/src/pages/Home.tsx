@@ -8,7 +8,6 @@ import AmenitiesSection from "@/components/AmenitiesSection";
 import ImageBand from "@/components/ImageBand";
 import LocationSection from "@/components/LocationSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import HostNote from "@/components/HostNote";
 import RatesSection from "@/components/RatesSection";
 import LongTermRentalPromo from "@/components/LongTermRentalPromo";
 import BookingSection from "@/components/BookingSection";
@@ -33,7 +32,6 @@ const Home = () => {
       <ImageBand />
       <LocationSection />
       <TestimonialsSection />
-      <HostNote />
       <RatesSection />
       <LongTermRentalPromo />
       <BookingSection />

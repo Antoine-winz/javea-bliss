@@ -147,9 +147,6 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spain",
     'band.caption': "The quiet side of the Arenal.",
-    'host.eyebrow': "From the owner",
-    'host.text': "I renovated this apartment room by room, and I look after it the same way. Book direct and it's me you'll deal with — before you arrive, and whenever you need something during your stay.",
-    'host.name': "Laurent",
     'apartment.eyebrow': "Where you stay",
     'amenities.eyebrow': "Inside",
     'paradise.eyebrow': "The neighbourhood",
@@ -171,25 +168,13 @@ const translations = {
     'glance.bedrooms': '2 double bedrooms',
     'glance.bathroom': '1 modern bathroom',
     'glance.beach': '250 m to Arenal Beach',
-    'glance.parking': 'Free private parking',
+    'glance.parking': "Free street parking",
     'glance.wifi': 'Fast fibre Wi-Fi',
     'glance.ac': 'Air conditioning',
     'glance.terrace': 'Private terrace',
 
     // Amenities Section
     'amenities.title': 'Amenities',
-    'amenities.kitchen': 'Fully Equipped Kitchen',
-    'amenities.kitchenDesc': 'Induction hob, oven, dishwasher, microwave and a Nespresso machine — everything you need to cook at home.',
-    'amenities.comfort': 'Heating & Air Conditioning',
-    'amenities.comfortDesc': 'Zoned air conditioning and heating keep the apartment comfortable in August and in January alike.',
-    'amenities.entertainment': 'Smart TV & Streaming',
-    'amenities.entertainmentDesc': '55-inch smart TV and fibre Wi-Fi fast enough for streaming — or for a day of remote work.',
-    'amenities.laundry': 'Washing Machine',
-    'amenities.laundryDesc': 'Washing machine on the patio (no dryer).',
-    'amenities.outdoor': 'Private Terrace',
-    'amenities.outdoorDesc': 'A canal-side terrace for breakfast outside or an evening drink.',
-    'amenities.parking': 'Free Parking',
-    'amenities.parkingDesc': 'Your own allocated space — genuinely rare this close to Arenal Beach.',
 
     // Rates Section
     'rates.title': 'Rates & Policies',
@@ -207,7 +192,7 @@ const translations = {
     'rates.policy1': 'Minimum 5 nights in high season',
     'rates.policy2': 'Minimum 3 nights the rest of the year',
     'rates.policy3': 'Check-in from 4:00 PM',
-    'rates.policy4': 'Check-out by 12:00 noon',
+    'rates.policy4': "Check-out by 1:00 PM",
 
     // Location Section (original entries)
     'location.shops': 'Shops',
@@ -339,7 +324,6 @@ const translations = {
     'interior.bathroom': 'Micro-cement bathroom with rainfall shower, wall-hung WC and soft indirect lighting.',
     'interior.kitchen': 'Forest-green fitted kitchen: induction hob, multifunction oven, dishwasher, Nespresso machine and LED task lighting.',
     'interior.lounge': "Open-plan lounge with an oak-slat media wall and a 55-inch smart TV.",
-    'interior.sofabed': "The living-room sofa converts to a single bed if you need a fifth berth.",
     'interior.lighting': 'Dimmable LED lighting throughout for easy evenings.',
     'interior.patio': 'Private patio for slow breakfasts — or rinsing off sandy flip-flops.',
     'interior.laundry': 'Washing machine on the patio, with room to store a bike or windsurf gear.',
@@ -347,7 +331,7 @@ const translations = {
 
     // Building & Amenities Section
     'building.title': 'The Building',
-    'building.security': 'Secure entrance, lift, and an allocated parking space — rare this close to the beach.',
+    'building.security': "Secure entrance and a lift, with free street parking outside.",
     'building.marina': 'Moorings, SUP boards and small motorboats can be hired at Marina Nou Fontana, 150 m away.',
 
     // Availability Calendar
@@ -375,7 +359,7 @@ const translations = {
     'amenityList.lift': "Lift",
     'amenityList.notIncluded': "Not included",
     'amenityList.noDryer': "No dryer",
-    'amenityList.parking': 'Free Private Parking',
+    'amenityList.parking': "Free Street Parking",
     'amenityList.nespresso': 'Nespresso Machine',
     'amenityList.dishwasher': 'Dishwasher',
     'amenityList.showerTowels': 'Bath Towels',
@@ -422,7 +406,7 @@ const translations = {
     'booking.minimumStayText': '5 nights in high season, 3 nights the rest of the year',
     'booking.checkInOut': 'Check-in & Check-out',
     'booking.checkInTime': '• Check-in: from 4:00 PM',
-    'booking.checkOutTime': '• Check-out: by 12:00 noon',
+    'booking.checkOutTime': "• Check-out: by 1:00 PM",
     'booking.cancellation': 'Cancellation Policy',
     'booking.cancellationText': 'Free cancellation up to 30 days before check-in. Within 30 days, our cancellation policy applies.',
     'booking.directContact': 'Direct Contact',
@@ -496,9 +480,6 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spanje",
     'band.caption': "De rustige kant van het Arenal.",
-    'host.eyebrow': "Van de eigenaar",
-    'host.text': "Ik heb dit appartement kamer voor kamer gerenoveerd en onderhoud het met dezelfde aandacht. Boek je direct, dan regel je alles met mij persoonlijk — vóór je aankomst, en wanneer je tijdens je verblijf iets nodig hebt.",
-    'host.name': "Laurent",
     'apartment.eyebrow': "Waar je verblijft",
     'amenities.eyebrow': "Binnen",
     'paradise.eyebrow': "De buurt",
@@ -520,25 +501,13 @@ const translations = {
     'glance.bedrooms': '2 slaapkamers',
     'glance.bathroom': '1 moderne badkamer',
     'glance.beach': '250 m van het Arenal strand',
-    'glance.parking': 'Gratis eigen parkeerplek',
+    'glance.parking': "Gratis parkeren op straat",
     'glance.wifi': 'Snelle glasvezel-wifi',
     'glance.ac': 'Airconditioning',
     'glance.terrace': 'Eigen terras',
 
     // Amenities Section
     'amenities.title': 'Voorzieningen',
-    'amenities.kitchen': 'Complete Keuken',
-    'amenities.kitchenDesc': 'Inductiekookplaat, oven, vaatwasser, magnetron en een Nespresso-apparaat — alles om zelf te koken.',
-    'amenities.comfort': 'Verwarming & Airco',
-    'amenities.comfortDesc': 'Airco én verwarming per zone — comfortabel in augustus, maar net zo goed in januari.',
-    'amenities.entertainment': 'Smart TV & Streaming',
-    'amenities.entertainmentDesc': '55-inch smart TV en glasvezel-wifi, snel genoeg om te streamen — of een dag thuis te werken.',
-    'amenities.laundry': 'Wasmachine',
-    'amenities.laundryDesc': 'Wasmachine op de patio (geen droger).',
-    'amenities.outdoor': 'Eigen Terras',
-    'amenities.outdoorDesc': 'Terras aan het kanaal — voor het ontbijt buiten of een borrel in de avond.',
-    'amenities.parking': 'Gratis Parkeren',
-    'amenities.parkingDesc': 'Een eigen parkeerplek — zeldzaam zo dicht bij het Arenal strand.',
 
     // Rates Section
     'rates.title': 'Tarieven & Voorwaarden',
@@ -556,7 +525,7 @@ const translations = {
     'rates.policy1': 'Minimaal 5 nachten in het hoogseizoen',
     'rates.policy2': 'Minimaal 3 nachten in de rest van het jaar',
     'rates.policy3': 'Inchecken vanaf 16:00 uur',
-    'rates.policy4': 'Uitchecken vóór 12:00 uur',
+    'rates.policy4': "Uitchecken vóór 13:00 uur",
 
     // Location Section (original entries)
     'location.shops': 'Winkels',
@@ -688,7 +657,6 @@ const translations = {
     'interior.bathroom': 'Badkamer in microcement met regendouche, zwevend toilet en zachte indirecte verlichting.',
     'interior.kitchen': 'Flessengroene keuken: inductiekookplaat, multifunctionele oven, vaatwasser, Nespresso-apparaat en LED-werkverlichting.',
     'interior.lounge': "Open woonkamer met eikenhouten lattenwand en een 55-inch smart TV.",
-    'interior.sofabed': "De bank in de woonkamer klapt uit tot eenpersoonsbed als je een vijfde slaapplaats nodig hebt.",
     'interior.lighting': 'Dimbare LED-verlichting voor ontspannen avonden.',
     'interior.patio': 'Eigen patio voor een rustig ontbijt — of om zanderige slippers af te spoelen.',
     'interior.laundry': 'Wasmachine op de patio, met ruimte voor een fiets of surfspullen.',
@@ -696,7 +664,7 @@ const translations = {
 
     // Building & Amenities Section
     'building.title': 'Het Gebouw',
-    'building.security': 'Beveiligde entree, lift en een eigen parkeerplek — zeldzaam zo dicht bij het strand.',
+    'building.security': "Beveiligde entree en een lift, met gratis parkeren op straat.",
     'building.marina': 'Aanlegplaatsen, supboards en motorbootjes huur je bij Marina Nou Fontana, 150 m verderop.',
 
     // Availability Calendar
@@ -724,7 +692,7 @@ const translations = {
     'amenityList.lift': "Lift",
     'amenityList.notIncluded': "Niet inbegrepen",
     'amenityList.noDryer': "Geen droger",
-    'amenityList.parking': 'Gratis Eigen Parkeerplek',
+    'amenityList.parking': "Gratis Parkeren op Straat",
     'amenityList.nespresso': 'Nespresso-apparaat',
     'amenityList.dishwasher': 'Vaatwasser',
     'amenityList.showerTowels': 'Badhanddoeken',
@@ -771,7 +739,7 @@ const translations = {
     'booking.minimumStayText': '5 nachten in het hoogseizoen, 3 nachten in de rest van het jaar',
     'booking.checkInOut': 'In- & Uitchecken',
     'booking.checkInTime': '• Inchecken: vanaf 16:00 uur',
-    'booking.checkOutTime': '• Uitchecken: vóór 12:00 uur',
+    'booking.checkOutTime': "• Uitchecken: vóór 13:00 uur",
     'booking.cancellation': 'Annuleringsvoorwaarden',
     'booking.cancellationText': 'Gratis annuleren tot 30 dagen voor aankomst. Binnen 30 dagen gelden onze annuleringsvoorwaarden.',
     'booking.directContact': 'Direct Contact',
@@ -845,9 +813,6 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Espagne",
     'band.caption': "Le côté calme de l'Arenal.",
-    'host.eyebrow': "Le mot du propriétaire",
-    'host.text': "J'ai rénové cet appartement pièce par pièce, et je m'en occupe avec le même soin. Réservez en direct : c'est moi qui vous réponds — avant votre arrivée, et dès que vous avez besoin de quelque chose pendant votre séjour.",
-    'host.name': "Laurent",
     'apartment.eyebrow': "Votre logement",
     'amenities.eyebrow': "À l'intérieur",
     'paradise.eyebrow': "Le quartier",
@@ -869,25 +834,13 @@ const translations = {
     'glance.bedrooms': '2 chambres doubles',
     'glance.bathroom': '1 salle de bain moderne',
     'glance.beach': 'À 250 m de la plage de l\'Arenal',
-    'glance.parking': 'Parking privé gratuit',
+    'glance.parking': "Stationnement gratuit dans la rue",
     'glance.wifi': 'Wifi fibre rapide',
     'glance.ac': 'Climatisation',
     'glance.terrace': 'Terrasse privée',
 
     // Amenities Section
     'amenities.title': 'Équipements',
-    'amenities.kitchen': 'Cuisine Équipée',
-    'amenities.kitchenDesc': 'Plaque à induction, four, lave-vaisselle, micro-ondes et machine Nespresso — tout pour cuisiner comme à la maison.',
-    'amenities.comfort': 'Chauffage & Climatisation',
-    'amenities.comfortDesc': 'Climatisation et chauffage par zones : l\'appartement reste agréable en août comme en janvier.',
-    'amenities.entertainment': 'Smart TV & Streaming',
-    'amenities.entertainmentDesc': 'Smart TV 55 pouces et wifi fibre, assez rapide pour le streaming — ou une journée de télétravail.',
-    'amenities.laundry': 'Lave-linge',
-    'amenities.laundryDesc': 'Lave-linge sur le patio (pas de sèche-linge).',
-    'amenities.outdoor': 'Terrasse Privée',
-    'amenities.outdoorDesc': 'Une terrasse au bord du canal, pour le petit-déjeuner dehors ou l\'apéritif du soir.',
-    'amenities.parking': 'Parking Gratuit',
-    'amenities.parkingDesc': 'Votre propre place attitrée — un vrai luxe si près de la plage de l\'Arenal.',
 
     // Rates Section
     'rates.title': 'Tarifs & Conditions',
@@ -905,7 +858,7 @@ const translations = {
     'rates.policy1': '5 nuits minimum en haute saison',
     'rates.policy2': '3 nuits minimum le reste de l\'année',
     'rates.policy3': 'Arrivée à partir de 16 h',
-    'rates.policy4': 'Départ avant 12 h',
+    'rates.policy4': "Départ avant 13 h",
 
     // Location Section (original entries)
     'location.shops': 'Commerces',
@@ -1037,7 +990,6 @@ const translations = {
     'interior.bathroom': 'Salle de bain en béton ciré avec douche à effet pluie, WC suspendu et éclairage indirect doux.',
     'interior.kitchen': 'Cuisine vert forêt : plaque à induction, four multifonction, lave-vaisselle, machine Nespresso et éclairage LED.',
     'interior.lounge': "Salon ouvert avec mur TV en lattes de chêne et smart TV 55 pouces.",
-    'interior.sofabed': "Le canapé du salon se transforme en lit simple pour un cinquième couchage.",
     'interior.lighting': 'Éclairage LED à intensité variable pour des soirées tranquilles.',
     'interior.patio': 'Patio privé pour les petits-déjeuners au calme — ou rincer les tongs pleines de sable.',
     'interior.laundry': 'Lave-linge sur le patio, avec de la place pour ranger un vélo ou une planche.',
@@ -1045,7 +997,7 @@ const translations = {
 
     // Building & Amenities Section
     'building.title': 'La Résidence',
-    'building.security': 'Entrée sécurisée, ascenseur et place de parking attitrée — rare si près de la plage.',
+    'building.security': "Entrée sécurisée et ascenseur, avec stationnement gratuit dans la rue.",
     'building.marina': 'Anneaux d\'amarrage, paddles et petits bateaux à moteur se louent à la Marina Nou Fontana, à 150 m.',
 
     // Availability Calendar
@@ -1073,7 +1025,7 @@ const translations = {
     'amenityList.lift': "Ascenseur",
     'amenityList.notIncluded': "Non inclus",
     'amenityList.noDryer': "Pas de sèche-linge",
-    'amenityList.parking': 'Parking Privé Gratuit',
+    'amenityList.parking': "Stationnement Gratuit dans la Rue",
     'amenityList.nespresso': 'Machine Nespresso',
     'amenityList.dishwasher': 'Lave-vaisselle',
     'amenityList.showerTowels': 'Serviettes de Bain',
@@ -1120,7 +1072,7 @@ const translations = {
     'booking.minimumStayText': '5 nuits en haute saison, 3 nuits le reste de l\'année',
     'booking.checkInOut': 'Arrivée & Départ',
     'booking.checkInTime': '• Arrivée : à partir de 16 h',
-    'booking.checkOutTime': '• Départ : avant 12 h',
+    'booking.checkOutTime': "• Départ : avant 13 h",
     'booking.cancellation': 'Conditions d\'Annulation',
     'booking.cancellationText': 'Annulation gratuite jusqu\'à 30 jours avant l\'arrivée. En deçà, nos conditions d\'annulation s\'appliquent.',
     'booking.directContact': 'Contact Direct',
@@ -1194,9 +1146,6 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spagna",
     'band.caption': "Il lato tranquillo dell'Arenal.",
-    'host.eyebrow': "Dal proprietario",
-    'host.text': "Ho ristrutturato questo appartamento stanza per stanza e me ne prendo cura allo stesso modo. Prenota direttamente e dall'altra parte ci sono io — prima del tuo arrivo e ogni volta che ti serve qualcosa durante il soggiorno.",
-    'host.name': "Laurent",
     'apartment.eyebrow': "Dove alloggi",
     'amenities.eyebrow': "Dentro",
     'paradise.eyebrow': "Il quartiere",
@@ -1218,25 +1167,13 @@ const translations = {
     'glance.bedrooms': '2 camere matrimoniali',
     'glance.bathroom': '1 bagno moderno',
     'glance.beach': 'A 250 m dalla spiaggia dell\'Arenal',
-    'glance.parking': 'Parcheggio privato gratuito',
+    'glance.parking': "Parcheggio gratuito in strada",
     'glance.wifi': 'WiFi veloce in fibra',
     'glance.ac': 'Aria condizionata',
     'glance.terrace': 'Terrazza privata',
 
     // Amenities Section
     'amenities.title': 'Servizi',
-    'amenities.kitchen': 'Cucina Attrezzata',
-    'amenities.kitchenDesc': 'Piano a induzione, forno, lavastoviglie, microonde e macchina Nespresso — tutto per cucinare come a casa.',
-    'amenities.comfort': 'Riscaldamento & Aria Condizionata',
-    'amenities.comfortDesc': 'Aria condizionata e riscaldamento a zone: l\'appartamento è confortevole ad agosto come a gennaio.',
-    'amenities.entertainment': 'Smart TV & Streaming',
-    'amenities.entertainmentDesc': 'Smart TV da 55 pollici e WiFi in fibra, veloce per lo streaming — o per una giornata di smart working.',
-    'amenities.laundry': 'Lavatrice',
-    'amenities.laundryDesc': 'Lavatrice nel patio (senza asciugatrice).',
-    'amenities.outdoor': 'Terrazza Privata',
-    'amenities.outdoorDesc': 'Una terrazza sul canale, per la colazione all\'aperto o un aperitivo la sera.',
-    'amenities.parking': 'Parcheggio Gratuito',
-    'amenities.parkingDesc': 'Un posto auto tutto tuo — una rarità così vicino alla spiaggia dell\'Arenal.',
 
     // Rates Section
     'rates.title': 'Tariffe & Condizioni',
@@ -1254,7 +1191,7 @@ const translations = {
     'rates.policy1': 'Minimo 5 notti in alta stagione',
     'rates.policy2': 'Minimo 3 notti nel resto dell\'anno',
     'rates.policy3': 'Check-in dalle 16:00',
-    'rates.policy4': 'Check-out entro le 12:00',
+    'rates.policy4': "Check-out entro le 13:00",
 
     // Location Section (original entries)
     'location.shops': 'Negozi',
@@ -1386,7 +1323,6 @@ const translations = {
     'interior.bathroom': 'Bagno in microcemento con doccia a pioggia, WC sospeso e luce indiretta soffusa.',
     'interior.kitchen': 'Cucina verde bosco: piano a induzione, forno multifunzione, lavastoviglie, macchina Nespresso e luci LED.',
     'interior.lounge': "Soggiorno open space con parete TV in doghe di rovere e smart TV da 55 pollici.",
-    'interior.sofabed': "Il divano del soggiorno si trasforma in letto singolo se serve un quinto posto.",
     'interior.lighting': 'Illuminazione LED dimmerabile per serate rilassate.',
     'interior.patio': 'Patio privato per colazioni con calma — o per sciacquare le infradito piene di sabbia.',
     'interior.laundry': 'Lavatrice nel patio, con spazio per una bici o l\'attrezzatura da surf.',
@@ -1394,7 +1330,7 @@ const translations = {
 
     // Building & Amenities Section
     'building.title': 'Il Palazzo',
-    'building.security': 'Ingresso sicuro, ascensore e posto auto riservato — raro così vicino alla spiaggia.',
+    'building.security': "Ingresso sicuro e ascensore, con parcheggio gratuito in strada.",
     'building.marina': 'Ormeggi, SUP e barchette a motore si noleggiano alla Marina Nou Fontana, a 150 m.',
 
     // Availability Calendar
@@ -1422,7 +1358,7 @@ const translations = {
     'amenityList.lift': "Ascensore",
     'amenityList.notIncluded': "Non inclusi",
     'amenityList.noDryer': "Niente asciugatrice",
-    'amenityList.parking': 'Parcheggio Privato Gratuito',
+    'amenityList.parking': "Parcheggio Gratuito in Strada",
     'amenityList.nespresso': 'Macchina Nespresso',
     'amenityList.dishwasher': 'Lavastoviglie',
     'amenityList.showerTowels': 'Asciugamani da Bagno',
@@ -1469,7 +1405,7 @@ const translations = {
     'booking.minimumStayText': '5 notti in alta stagione, 3 notti nel resto dell\'anno',
     'booking.checkInOut': 'Check-in & Check-out',
     'booking.checkInTime': '• Check-in: dalle 16:00',
-    'booking.checkOutTime': '• Check-out: entro le 12:00',
+    'booking.checkOutTime': "• Check-out: entro le 13:00",
     'booking.cancellation': 'Politica di Cancellazione',
     'booking.cancellationText': 'Cancellazione gratuita fino a 30 giorni prima dell\'arrivo. Entro i 30 giorni si applicano le nostre condizioni.',
     'booking.directContact': 'Contatto Diretto',
@@ -1543,9 +1479,6 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, Spanien",
     'band.caption': "Die ruhige Seite des Arenal.",
-    'host.eyebrow': "Vom Eigentümer",
-    'host.text': "Ich habe diese Wohnung Zimmer für Zimmer renoviert — und genauso kümmere ich mich um sie. Wenn Sie direkt buchen, haben Sie es mit mir zu tun: vor Ihrer Anreise und wann immer Sie während Ihres Aufenthalts etwas brauchen.",
-    'host.name': "Laurent",
     'apartment.eyebrow': "Ihr Zuhause auf Zeit",
     'amenities.eyebrow': "Innen",
     'paradise.eyebrow': "Die Umgebung",
@@ -1567,25 +1500,13 @@ const translations = {
     'glance.bedrooms': '2 Schlafzimmer',
     'glance.bathroom': '1 modernes Bad',
     'glance.beach': '250 m zum Arenal-Strand',
-    'glance.parking': 'Kostenloser eigener Parkplatz',
+    'glance.parking': "Kostenloses Parken auf der Straße",
     'glance.wifi': 'Schnelles Glasfaser-WLAN',
     'glance.ac': 'Klimaanlage',
     'glance.terrace': 'Eigene Terrasse',
 
     // Amenities Section
     'amenities.title': 'Ausstattung',
-    'amenities.kitchen': 'Voll Ausgestattete Küche',
-    'amenities.kitchenDesc': 'Induktionskochfeld, Backofen, Geschirrspüler, Mikrowelle und Nespresso-Maschine — alles zum Selberkochen.',
-    'amenities.comfort': 'Heizung & Klimaanlage',
-    'amenities.comfortDesc': 'Klimaanlage und Heizung nach Zonen — angenehm im August wie im Januar.',
-    'amenities.entertainment': 'Smart-TV & Streaming',
-    'amenities.entertainmentDesc': '55-Zoll-Smart-TV und Glasfaser-WLAN, schnell genug zum Streamen — oder für einen Tag Homeoffice.',
-    'amenities.laundry': 'Waschmaschine',
-    'amenities.laundryDesc': 'Waschmaschine auf dem Patio (kein Trockner).',
-    'amenities.outdoor': 'Eigene Terrasse',
-    'amenities.outdoorDesc': 'Terrasse am Kanal — für das Frühstück draußen oder ein Glas Wein am Abend.',
-    'amenities.parking': 'Kostenloser Parkplatz',
-    'amenities.parkingDesc': 'Ein eigener Stellplatz — echte Seltenheit so nah am Arenal-Strand.',
 
     // Rates Section
     'rates.title': 'Preise & Bedingungen',
@@ -1603,7 +1524,7 @@ const translations = {
     'rates.policy1': 'Mindestens 5 Nächte in der Hochsaison',
     'rates.policy2': 'Mindestens 3 Nächte im Rest des Jahres',
     'rates.policy3': 'Check-in ab 16:00 Uhr',
-    'rates.policy4': 'Check-out bis 12:00 Uhr',
+    'rates.policy4': "Check-out bis 13:00 Uhr",
 
     // Location Section (original entries)
     'location.shops': 'Einkaufen',
@@ -1735,7 +1656,6 @@ const translations = {
     'interior.bathroom': 'Bad in Mikrozement mit Regendusche, wandhängendem WC und sanfter indirekter Beleuchtung.',
     'interior.kitchen': 'Waldgrüne Einbauküche: Induktionskochfeld, Multifunktionsofen, Geschirrspüler, Nespresso-Maschine und LED-Arbeitslicht.',
     'interior.lounge': "Offener Wohnbereich mit TV-Wand aus Eichenlamellen und 55-Zoll-Smart-TV.",
-    'interior.sofabed': "Das Sofa im Wohnzimmer lässt sich zu einem Einzelbett ausziehen, falls ein fünfter Schlafplatz nötig ist.",
     'interior.lighting': 'Dimmbare LED-Beleuchtung für entspannte Abende.',
     'interior.patio': 'Eigener Patio für ein ruhiges Frühstück — oder zum Abspülen sandiger Badelatschen.',
     'interior.laundry': 'Waschmaschine auf dem Patio, mit Platz für Fahrrad oder Surfausrüstung.',
@@ -1743,7 +1663,7 @@ const translations = {
 
     // Building & Amenities Section
     'building.title': 'Das Gebäude',
-    'building.security': 'Sicherer Eingang, Aufzug und ein zugewiesener Stellplatz — selten so nah am Strand.',
+    'building.security': "Sicherer Eingang und Aufzug, mit kostenlosem Parken auf der Straße.",
     'building.marina': 'Liegeplätze, SUP-Boards und kleine Motorboote können an der Marina Nou Fontana gemietet werden, 150 m entfernt.',
 
     // Availability Calendar
@@ -1771,7 +1691,7 @@ const translations = {
     'amenityList.lift': "Aufzug",
     'amenityList.notIncluded': "Nicht enthalten",
     'amenityList.noDryer': "Kein Trockner",
-    'amenityList.parking': 'Kostenloser Eigener Parkplatz',
+    'amenityList.parking': "Kostenloses Parken auf der Straße",
     'amenityList.nespresso': 'Nespresso-Maschine',
     'amenityList.dishwasher': 'Geschirrspüler',
     'amenityList.showerTowels': 'Badetücher',
@@ -1818,7 +1738,7 @@ const translations = {
     'booking.minimumStayText': '5 Nächte in der Hochsaison, 3 Nächte im Rest des Jahres',
     'booking.checkInOut': 'Check-in & Check-out',
     'booking.checkInTime': '• Check-in: ab 16:00 Uhr',
-    'booking.checkOutTime': '• Check-out: bis 12:00 Uhr',
+    'booking.checkOutTime': "• Check-out: bis 13:00 Uhr",
     'booking.cancellation': 'Stornierungsbedingungen',
     'booking.cancellationText': 'Kostenlose Stornierung bis 30 Tage vor Anreise. Innerhalb von 30 Tagen gelten unsere Stornierungsbedingungen.',
     'booking.directContact': 'Direkter Kontakt',
@@ -1892,9 +1812,6 @@ const translations = {
     'hero.title': 'JÁVEA BLISS',
     'hero.eyebrow': "Jávea · Costa Blanca, España",
     'band.caption': "El lado tranquilo del Arenal.",
-    'host.eyebrow': "Del propietario",
-    'host.text': "Reformé este apartamento habitación por habitación y lo sigo cuidando con el mismo mimo. Si reservas directo, soy yo quien te atiende — antes de tu llegada y siempre que necesites algo durante la estancia.",
-    'host.name': "Laurent",
     'apartment.eyebrow': "Dónde te alojas",
     'amenities.eyebrow': "Dentro",
     'paradise.eyebrow': "El barrio",
@@ -1916,25 +1833,13 @@ const translations = {
     'glance.bedrooms': '2 habitaciones dobles',
     'glance.bathroom': '1 baño moderno',
     'glance.beach': 'A 250 m de la Playa del Arenal',
-    'glance.parking': 'Parking privado gratis',
+    'glance.parking': "Aparcamiento gratis en la calle",
     'glance.wifi': 'Wifi rápido de fibra',
     'glance.ac': 'Aire acondicionado',
     'glance.terrace': 'Terraza privada',
 
     // Amenities Section
     'amenities.title': 'Equipamiento',
-    'amenities.kitchen': 'Cocina Equipada',
-    'amenities.kitchenDesc': 'Placa de inducción, horno, lavavajillas, microondas y cafetera Nespresso — todo para cocinar como en casa.',
-    'amenities.comfort': 'Calefacción y Aire Acondicionado',
-    'amenities.comfortDesc': 'Aire acondicionado y calefacción por zonas: el apartamento está a gusto en agosto y en enero.',
-    'amenities.entertainment': 'Smart TV y Streaming',
-    'amenities.entertainmentDesc': 'Smart TV de 55 pulgadas y wifi de fibra, rápido para hacer streaming — o teletrabajar frente al mar.',
-    'amenities.laundry': 'Lavadora',
-    'amenities.laundryDesc': 'Lavadora en el patio (sin secadora).',
-    'amenities.outdoor': 'Terraza Privada',
-    'amenities.outdoorDesc': 'Una terraza al canal para desayunar fuera o tomar algo por la tarde.',
-    'amenities.parking': 'Parking Gratis',
-    'amenities.parkingDesc': 'Tu propia plaza — un lujo tan cerca del Arenal, sobre todo en verano.',
 
     // Rates Section
     'rates.title': 'Tarifas y Condiciones',
@@ -1952,7 +1857,7 @@ const translations = {
     'rates.policy1': 'Mínimo 5 noches en temporada alta',
     'rates.policy2': 'Mínimo 3 noches el resto del año',
     'rates.policy3': 'Entrada a partir de las 16:00',
-    'rates.policy4': 'Salida antes de las 12:00',
+    'rates.policy4': "Salida antes de las 13:00",
 
     // Location Section (original entries)
     'location.shops': 'Comercios',
@@ -2084,7 +1989,6 @@ const translations = {
     'interior.bathroom': 'Baño de microcemento con ducha de lluvia, inodoro suspendido y luz indirecta suave.',
     'interior.kitchen': 'Cocina verde bosque: placa de inducción, horno multifunción, lavavajillas, cafetera Nespresso e iluminación LED.',
     'interior.lounge': "Salón abierto con mueble de TV en lamas de roble y smart TV de 55 pulgadas.",
-    'interior.sofabed': "El sofá del salón se convierte en cama individual si necesitas una quinta plaza.",
     'interior.lighting': 'Iluminación LED regulable para tardes tranquilas.',
     'interior.patio': 'Patio privado para desayunar con calma — o aclarar las chanclas llenas de arena.',
     'interior.laundry': 'Lavadora en el patio, con sitio para guardar una bici o el equipo de surf.',
@@ -2092,7 +1996,7 @@ const translations = {
 
     // Building & Amenities Section
     'building.title': 'El Edificio',
-    'building.security': 'Portal seguro, ascensor y plaza de parking asignada — algo poco habitual tan cerca de la playa.',
+    'building.security': "Portal seguro y ascensor, con aparcamiento gratuito en la calle.",
     'building.marina': 'Amarres, tablas de paddle y barquitas de motor se alquilan en la Marina Nou Fontana, a 150 m.',
 
     // Availability Calendar
@@ -2120,7 +2024,7 @@ const translations = {
     'amenityList.lift': "Ascensor",
     'amenityList.notIncluded': "No incluido",
     'amenityList.noDryer': "Sin secadora",
-    'amenityList.parking': 'Parking Privado Gratis',
+    'amenityList.parking': "Aparcamiento Gratis en la Calle",
     'amenityList.nespresso': 'Cafetera Nespresso',
     'amenityList.dishwasher': 'Lavavajillas',
     'amenityList.showerTowels': 'Toallas de Baño',
@@ -2167,7 +2071,7 @@ const translations = {
     'booking.minimumStayText': '5 noches en temporada alta, 3 noches el resto del año',
     'booking.checkInOut': 'Entrada y Salida',
     'booking.checkInTime': '• Entrada: a partir de las 16:00',
-    'booking.checkOutTime': '• Salida: antes de las 12:00',
+    'booking.checkOutTime': "• Salida: antes de las 13:00",
     'booking.cancellation': 'Política de Cancelación',
     'booking.cancellationText': 'Cancelación gratuita hasta 30 días antes de la entrada. Dentro de los 30 días se aplican nuestras condiciones.',
     'booking.directContact': 'Contacto Directo',

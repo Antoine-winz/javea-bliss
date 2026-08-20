@@ -11,9 +11,7 @@ import kitchenImage from "@assets/Kitchen1_optimized.jpeg";
   restaurant walking times) now live in the location section where guests look for them.
 */
 const GROUPS = [
-  // The sofa bed sits here rather than in the living-room line: a fifth berth buried in a
-  // paragraph about the lounge is a well-known cause of arrival-day disappointment.
-  { icon: BedDouble, label: 'interior.group.bedrooms', lines: ['interior.bedrooms', 'interior.sofabed'] },
+  { icon: BedDouble, label: 'interior.group.bedrooms', lines: ['interior.bedrooms'] },
   { icon: Sofa, label: 'interior.group.living', lines: ['interior.lounge', 'interior.lighting'] },
   { icon: CookingPot, label: 'interior.group.kitchen', lines: ['interior.kitchen'] },
   { icon: ShowerHead, label: 'interior.group.bathroom', lines: ['interior.bathroom'] },

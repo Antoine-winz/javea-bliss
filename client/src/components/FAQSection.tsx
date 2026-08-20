@@ -13,11 +13,11 @@ const faqs = {
     },
     {
       q: 'Do I need a car in Jávea?',
-      a: 'Not for a beach holiday. The beach, supermarkets, a pharmacy and around twenty restaurants are all within a 10-minute walk. A car is useful for day trips — Cala Granadella, the Old Town, Dénia or Calpe — and if you bring one, your own free parking space is included, which is genuinely hard to find this close to the Arenal.',
+      a: 'Not for a beach holiday. The beach, supermarkets, a pharmacy and around twenty restaurants are all within a 10-minute walk. A car is useful for day trips — Cala Granadella, the Old Town, Dénia or Calpe — and if you bring one, parking on the street outside is free.',
     },
     {
       q: 'How many people can stay?',
-      a: 'Four, in two double bedrooms. The living-room sofa converts to a single bed if you need a fifth berth. There is one bathroom, so it works best for a family or two couples.',
+      a: 'Four, in two double bedrooms. There is one bathroom, so it works best for a family or two couples.',
     },
     {
       q: 'Is it cheaper to book direct than through Airbnb or Booking.com?',
@@ -41,7 +41,7 @@ const faqs = {
     },
     {
       q: 'Are pets allowed?',
-      a: 'No, we are not able to accept pets. Check-in is from 4:00 PM and check-out is by 12:00 noon; if your flight times make that awkward, ask us and we will do what we can.',
+      a: 'No, we are not able to accept pets. Check-in is from 4:00 PM and check-out is by 1:00 PM; if your flight times make that awkward, ask us and we will do what we can.',
     },
   ],
   nl: [
@@ -55,11 +55,11 @@ const faqs = {
     },
     {
       q: 'Heb ik een auto nodig in Jávea?',
-      a: 'Voor een strandvakantie niet. Het strand, supermarkten, een apotheek en een stuk of twintig restaurants liggen binnen 10 minuten lopen. Handig is een auto voor uitstapjes — Cala Granadella, de oude stad, Dénia of Calpe. Kom je met de auto, dan hoort er een eigen gratis parkeerplek bij; zo dicht bij het Arenal is dat echt zeldzaam.',
+      a: 'Voor een strandvakantie niet. Het strand, supermarkten, een apotheek en een stuk of twintig restaurants liggen binnen 10 minuten lopen. Handig is een auto voor uitstapjes — Cala Granadella, de oude stad, Dénia of Calpe. Kom je met de auto, dan parkeer je gratis in de straat.',
     },
     {
       q: 'Voor hoeveel personen is het appartement?',
-      a: 'Vier, in twee slaapkamers met een tweepersoonsbed. De bank in de woonkamer is uit te klappen tot eenpersoonsbed als je een vijfde slaapplaats nodig hebt. Er is één badkamer, dus het werkt het beste voor een gezin of twee stellen.',
+      a: 'Vier, in twee slaapkamers met een tweepersoonsbed. Er is één badkamer, dus het werkt het beste voor een gezin of twee stellen.',
     },
     {
       q: 'Is direct boeken goedkoper dan via Airbnb of Booking?',
@@ -83,7 +83,7 @@ const faqs = {
     },
     {
       q: 'Zijn huisdieren toegestaan?',
-      a: 'Nee, huisdieren kunnen we helaas niet ontvangen. Inchecken kan vanaf 16:00 uur en uitchecken is vóór 12:00 uur; komt dat slecht uit met je vlucht, laat het weten dan kijken we wat mogelijk is.',
+      a: 'Nee, huisdieren kunnen we helaas niet ontvangen. Inchecken kan vanaf 16:00 uur en uitchecken is vóór 13:00 uur; komt dat slecht uit met je vlucht, laat het weten dan kijken we wat mogelijk is.',
     },
   ],
   fr: [
@@ -97,11 +97,11 @@ const faqs = {
     },
     {
       q: "Faut-il une voiture à Jávea ?",
-      a: "Pas pour des vacances à la plage. La plage, les supermarchés, une pharmacie et une vingtaine de restaurants sont à moins de 10 minutes à pied. La voiture est utile pour les excursions — Cala Granadella, la vieille ville, Dénia ou Calpe — et si vous venez avec, une place de parking gratuite est incluse : une vraie rareté si près de l'Arenal.",
+      a: "Pas pour des vacances à la plage. La plage, les supermarchés, une pharmacie et une vingtaine de restaurants sont à moins de 10 minutes à pied. La voiture est utile pour les excursions — Cala Granadella, la vieille ville, Dénia ou Calpe — et si vous venez avec, le stationnement est gratuit dans la rue.",
     },
     {
       q: "Combien de personnes peuvent loger ?",
-      a: "Quatre, dans deux chambres avec lit double. Le canapé du salon se transforme en lit simple pour un cinquième couchage. Il y a une salle de bain, ce qui convient bien à une famille ou à deux couples.",
+      a: "Quatre, dans deux chambres avec lit double. Il y a une salle de bain, ce qui convient bien à une famille ou à deux couples.",
     },
     {
       q: "Réserver en direct revient-il moins cher qu'Airbnb ou Booking ?",
@@ -125,7 +125,7 @@ const faqs = {
     },
     {
       q: "Les animaux sont-ils acceptés ?",
-      a: "Non, nous ne pouvons pas accueillir d'animaux. L'arrivée se fait à partir de 16 h et le départ avant 12 h ; si vos horaires de vol compliquent les choses, dites-le-nous et nous ferons au mieux.",
+      a: "Non, nous ne pouvons pas accueillir d'animaux. L'arrivée se fait à partir de 16 h et le départ avant 13 h ; si vos horaires de vol compliquent les choses, dites-le-nous et nous ferons au mieux.",
     },
   ],
   de: [
@@ -139,11 +139,11 @@ const faqs = {
     },
     {
       q: 'Braucht man in Jávea ein Auto?',
-      a: 'Für einen Strandurlaub nicht. Strand, Supermärkte, Apotheke und rund zwanzig Restaurants liegen innerhalb von 10 Gehminuten. Für Ausflüge — Cala Granadella, Altstadt, Dénia oder Calpe — ist ein Auto praktisch, und wenn Sie eines mitbringen, gehört ein eigener kostenloser Stellplatz dazu. So nah am Arenal ist das eine Seltenheit.',
+      a: 'Für einen Strandurlaub nicht. Strand, Supermärkte, Apotheke und rund zwanzig Restaurants liegen innerhalb von 10 Gehminuten. Für Ausflüge — Cala Granadella, Altstadt, Dénia oder Calpe — ist ein Auto praktisch, und wenn Sie eines mitbringen, parken Sie kostenlos auf der Straße.',
     },
     {
       q: 'Für wie viele Gäste ist die Wohnung?',
-      a: 'Für vier, in zwei Schlafzimmern mit Doppelbett. Das Sofa im Wohnzimmer lässt sich zu einem Einzelbett ausziehen, falls ein fünfter Schlafplatz nötig ist. Es gibt ein Bad, daher eignet sich die Wohnung am besten für eine Familie oder zwei Paare.',
+      a: 'Für vier, in zwei Schlafzimmern mit Doppelbett. Es gibt ein Bad, daher eignet sich die Wohnung am besten für eine Familie oder zwei Paare.',
     },
     {
       q: 'Ist die Direktbuchung günstiger als über Airbnb oder Booking?',
@@ -167,7 +167,7 @@ const faqs = {
     },
     {
       q: 'Sind Haustiere erlaubt?',
-      a: 'Nein, Haustiere können wir leider nicht aufnehmen. Check-in ist ab 16:00 Uhr, Check-out bis 12:00 Uhr; wenn Ihre Flugzeiten das schwierig machen, sagen Sie Bescheid, wir finden meist eine Lösung.',
+      a: 'Nein, Haustiere können wir leider nicht aufnehmen. Check-in ist ab 16:00 Uhr, Check-out bis 13:00 Uhr; wenn Ihre Flugzeiten das schwierig machen, sagen Sie Bescheid, wir finden meist eine Lösung.',
     },
   ],
   es: [
@@ -181,11 +181,11 @@ const faqs = {
     },
     {
       q: '¿Hace falta coche en Jávea?',
-      a: 'Para unas vacaciones de playa, no. La playa, supermercados, farmacia y una veintena de restaurantes están a menos de 10 minutos andando. El coche va bien para excursiones — Cala Granadella, el casco antiguo, Dénia o Calpe — y si vienes con él, se incluye plaza de parking gratis: algo poco habitual tan cerca del Arenal, sobre todo en agosto.',
+      a: 'Para unas vacaciones de playa, no. La playa, supermercados, farmacia y una veintena de restaurantes están a menos de 10 minutos andando. El coche va bien para excursiones — Cala Granadella, el casco antiguo, Dénia o Calpe — y si vienes con él, se aparca gratis en la calle.',
     },
     {
       q: '¿Para cuántas personas es el apartamento?',
-      a: 'Para cuatro, en dos habitaciones con cama de matrimonio. El sofá del salón se convierte en cama individual si necesitas una quinta plaza. Hay un baño, así que funciona mejor para una familia o dos parejas.',
+      a: 'Para cuatro, en dos habitaciones con cama de matrimonio. Hay un baño, así que funciona mejor para una familia o dos parejas.',
     },
     {
       q: '¿Sale más barato reservar directo que por Airbnb o Booking?',
@@ -209,7 +209,7 @@ const faqs = {
     },
     {
       q: '¿Se admiten mascotas?',
-      a: 'No, no podemos admitir mascotas. La entrada es a partir de las 16:00 y la salida antes de las 12:00; si tus horarios de vuelo lo complican, dínoslo y vemos qué se puede hacer.',
+      a: 'No, no podemos admitir mascotas. La entrada es a partir de las 16:00 y la salida antes de las 13:00; si tus horarios de vuelo lo complican, dínoslo y vemos qué se puede hacer.',
     },
   ],
   it: [
@@ -223,11 +223,11 @@ const faqs = {
     },
     {
       q: 'Serve la macchina a Jávea?',
-      a: "Per una vacanza al mare no. Spiaggia, supermercati, farmacia e una ventina di ristoranti sono entro 10 minuti a piedi. L'auto è utile per le gite — Cala Granadella, il centro storico, Dénia o Calpe — e se la porti è incluso un posto auto gratuito: una vera rarità così vicino all'Arenal.",
+      a: "Per una vacanza al mare no. Spiaggia, supermercati, farmacia e una ventina di ristoranti sono entro 10 minuti a piedi. L'auto è utile per le gite — Cala Granadella, il centro storico, Dénia o Calpe — e se la porti, il parcheggio in strada è gratuito.",
     },
     {
       q: 'Per quante persone è l\'appartamento?',
-      a: "Per quattro, in due camere matrimoniali. Il divano del soggiorno si trasforma in letto singolo se serve un quinto posto. Il bagno è uno, quindi è ideale per una famiglia o due coppie.",
+      a: "Per quattro, in due camere matrimoniali. Il bagno è uno, quindi è ideale per una famiglia o due coppie.",
     },
     {
       q: 'Conviene prenotare direttamente invece che su Airbnb o Booking?',
@@ -251,7 +251,7 @@ const faqs = {
     },
     {
       q: 'Sono ammessi animali?',
-      a: "No, non possiamo accogliere animali. Il check-in è dalle 16:00 e il check-out entro le 12:00; se gli orari dei voli complicano le cose, dicci pure e vediamo cosa possiamo fare.",
+      a: "No, non possiamo accogliere animali. Il check-in è dalle 16:00 e il check-out entro le 13:00; se gli orari dei voli complicano le cose, dicci pure e vediamo cosa possiamo fare.",
     },
   ],
 };

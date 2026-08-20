@@ -26,7 +26,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: "What's Included",
-        body: 'The apartment includes 2 bedrooms sleeping up to 4 guests, a fully equipped kitchen, air conditioning in every room, 600 Mbps fibre Wi-Fi, a balcony, a lift, and free private parking. Check-in is from 16:00, check-out by 12:00.',
+        body: 'The apartment includes 2 bedrooms sleeping up to 4 guests, a fully equipped kitchen, air conditioning in every room, 600 Mbps fibre Wi-Fi, a balcony, a lift, and free street parking. Check-in is from 16:00, check-out by 13:00.',
       },
       {
         heading: 'Perfect for Beach Holidays',
@@ -46,7 +46,7 @@ const pages: Record<string, PageContent> = {
     sections: [
       {
         heading: 'A Comfortable 2-Bedroom Layout',
-        body: 'Jávea Bliss offers a generous 2-bedroom layout perfect for families, couples travelling together, or groups of up to 4 guests. Both bedrooms have a double bed. The living-room sofa converts to a single bed if a fifth berth is needed.',
+        body: 'Jávea Bliss offers a generous 2-bedroom layout perfect for families, couples travelling together, or groups of up to 4 guests. Both bedrooms have a double bed.',
       },
       {
         heading: 'Fully Equipped for a Real Stay',
@@ -54,7 +54,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Amenities at a Glance',
-        body: '2 bedrooms, up to 4 guests, air conditioning, 600 Mbps fibre Wi-Fi, fully equipped kitchen, balcony, lift to every floor, free private parking, TV with international channels. Check-in from 16:00.',
+        body: '2 bedrooms, up to 4 guests, air conditioning, 600 Mbps fibre Wi-Fi, fully equipped kitchen, balcony, lift to every floor, free street parking, TV with international channels. Check-in from 16:00.',
       },
       {
         heading: 'Location',
@@ -166,7 +166,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Stay at Jávea Bliss — Free Parking Included',
-        body: "If you do bring a car, our 2-bedroom holiday apartment near Arenal Beach includes free private parking. And if you're arriving by public transport, you'll be perfectly placed to enjoy Javea car-free.",
+        body: "If you do bring a car, our 2-bedroom holiday apartment near Arenal Beach has free street parking outside. And if you're arriving by public transport, you'll be perfectly placed to enjoy Javea car-free.",
       },
     ],
   },
@@ -258,11 +258,11 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Day 3 — Montgó, Cabo de la Nao & Departure',
-        body: "On your final morning, hike part of the Montgó Natural Park trail for panoramic views over Javea and the sea. If you prefer a gentler start, drive to Cabo de la Nao — the famous headland with a lighthouse and dramatic coastal views. Stop at Cala Sardinera for a final swim. Return to the apartment, pack up, and check out by 12:00.",
+        body: "On your final morning, hike part of the Montgó Natural Park trail for panoramic views over Javea and the sea. If you prefer a gentler start, drive to Cabo de la Nao — the famous headland with a lighthouse and dramatic coastal views. Stop at Cala Sardinera for a final swim. Return to the apartment, pack up, and check out by 13:00.",
       },
       {
         heading: 'Practical Tips',
-        body: 'A hire car is helpful for Day 2 and Day 3 but not required for Day 1 — the Arenal is walkable. Book dinner ahead in July and August. The free private parking at Jávea Bliss means you can come and go without hunting for a space.',
+        body: 'A hire car is helpful for Day 2 and Day 3 but not required for Day 1 — the Arenal is walkable. Book dinner ahead in July and August. Street parking outside is free, though it is busiest in July and August.',
       },
     ],
   },
@@ -277,7 +277,7 @@ const BookingCTA = () => (
     <h3 className="font-display text-2xl md:text-3xl mb-4">Stay at Jávea Bliss</h3>
     <p className="text-bone/75 font-light leading-relaxed max-w-xl mb-8">
       A renovated two-bedroom apartment for up to four guests, 250 m from Arenal Beach, with air
-      conditioning, fast Wi-Fi, a full kitchen, terrace, lift and free parking. Book direct from
+      conditioning, fast Wi-Fi, a full kitchen, terrace, lift and free street parking. Book direct from
       €130 a night — no booking fees.
     </p>
     <div className="flex flex-wrap gap-4">
