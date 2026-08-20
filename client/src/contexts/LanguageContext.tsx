@@ -124,6 +124,14 @@ const detectUserLanguage = (): Language => {
   return 'en';
 };
 
+// Remember the resolved language in localStorage (client-side detection) AND a
+// cookie — the cookie is what lets the server answer the bare "/" in the right
+// language on the first response, before any JS has run.
+const persistLanguage = (lang: Language) => {
+  localStorage.setItem('preferredLanguage', lang);
+  document.cookie = `preferredLanguage=${lang}; path=/; max-age=31536000; SameSite=Lax`;
+};
+
 const translations = {
   en: {
     // Navigation
@@ -2232,7 +2240,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (urlLanguage) {
       // URL has language prefix - use it
       setLanguageState(urlLanguage);
-      localStorage.setItem('preferredLanguage', urlLanguage);
+      persistLanguage(urlLanguage);
     } else if (location === '/' || location === '') {
       // Root path - redirect to detected/saved language
       const detectedLanguage = detectUserLanguage();
@@ -2244,7 +2252,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const handleSetLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('preferredLanguage', lang);
+    persistLanguage(lang);
     
     // Navigate to the new language URL
     const currentPath = getPathWithoutLanguage(location);

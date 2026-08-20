@@ -68,6 +68,48 @@ app.use((req, res, next) => {
   next();
 });
 
+// Language negotiation for the bare root. A visitor's explicit choice (cookie,
+// set by the language switcher) wins over the OS/browser preference
+// (Accept-Language). No match at all → fall through and serve the x-default
+// English page exactly as before, which is also what header-less crawlers get.
+const SUPPORTED_LANGS = ['en', 'nl', 'fr', 'it', 'de', 'es'];
+
+function negotiateLanguage(req: Request): string | null {
+  const cookieMatch = /(?:^|;\s*)preferredLanguage=([a-z]{2})(?:;|$)/.exec(req.headers.cookie || '');
+  if (cookieMatch && SUPPORTED_LANGS.includes(cookieMatch[1])) {
+    return cookieMatch[1];
+  }
+
+  const header = req.headers['accept-language'];
+  if (!header || typeof header !== 'string') return null;
+
+  // "nl-NL,nl;q=0.9,en;q=0.8" → tags ranked by quality, matched on the primary subtag
+  const ranked = header
+    .split(',')
+    .map((part) => {
+      const [tag, ...params] = part.trim().split(';');
+      const qParam = params.find((p) => p.trim().startsWith('q='));
+      const q = qParam ? parseFloat(qParam.split('=')[1]) : 1;
+      return { tag: tag.trim().toLowerCase(), q: Number.isFinite(q) ? q : 0 };
+    })
+    .filter((entry) => entry.tag && entry.q > 0)
+    .sort((a, b) => b.q - a.q);
+
+  for (const { tag } of ranked) {
+    const primary = tag.split('-')[0];
+    if (SUPPORTED_LANGS.includes(primary)) return primary;
+  }
+  return null;
+}
+
+app.get('/', (req, res, next) => {
+  const lang = negotiateLanguage(req);
+  if (!lang) return next();
+  const query = req.originalUrl.slice(req.path.length);
+  res.setHeader('Vary', 'Accept-Language, Cookie');
+  res.redirect(302, `/${lang}/${query}`);
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
