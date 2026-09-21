@@ -6,7 +6,7 @@ const LongTermRentalPromo = () => {
   const translations = {
     en: {
       badge: 'Long-stay rate',
-      title: 'Winter Lets & Long Stays — €100 a Night',
+      title: 'Winter Lets & Long Stays, €100 a Night',
       subtitle:
         'Stay 35 nights or more and the rate drops to €100 a night for the whole stay, whatever the season. Popular with people overwintering on the Costa Blanca, working remotely, or living here while a house is being renovated.',
       whatsIncluded: 'What the €100 a night covers',
@@ -27,7 +27,7 @@ const LongTermRentalPromo = () => {
     },
     nl: {
       badge: 'Langverblijftarief',
-      title: 'Overwinteren & Langere Verblijven — €100 per Nacht',
+      title: 'Overwinteren & Langere Verblijven, €100 per Nacht',
       subtitle:
         'Blijf je 35 nachten of langer, dan geldt €100 per nacht voor het hele verblijf, in welk seizoen dan ook. Populair bij overwinteraars aan de Costa Blanca, mensen die op afstand werken, en wie hier woont terwijl het huis verbouwd wordt.',
       whatsIncluded: 'Wat je krijgt voor €100 per nacht',
@@ -48,7 +48,7 @@ const LongTermRentalPromo = () => {
     },
     fr: {
       badge: 'Tarif longue durée',
-      title: 'Hivernage & Séjours Longue Durée — 100 € la Nuit',
+      title: 'Hivernage & Séjours Longue Durée, 100 € la Nuit',
       subtitle:
         'À partir de 35 nuits, le tarif passe à 100 € la nuit pour tout le séjour, quelle que soit la saison. Apprécié de ceux qui hivernent sur la Costa Blanca, travaillent à distance, ou logent ici pendant des travaux.',
       whatsIncluded: 'Ce que comprennent les 100 € la nuit',
@@ -69,7 +69,7 @@ const LongTermRentalPromo = () => {
     },
     de: {
       badge: 'Langzeittarif',
-      title: 'Überwintern & Langzeitmiete — 100 € pro Nacht',
+      title: 'Überwintern & Langzeitmiete, 100 € pro Nacht',
       subtitle:
         'Ab 35 Nächten gilt für den gesamten Aufenthalt ein Preis von 100 € pro Nacht, in jeder Saison. Beliebt bei Überwinterern an der Costa Blanca, bei Gästen im Homeoffice und bei allen, die während einer Renovierung hier wohnen.',
       whatsIncluded: 'Darin sind die 100 € pro Nacht enthalten',
@@ -90,7 +90,7 @@ const LongTermRentalPromo = () => {
     },
     es: {
       badge: 'Tarifa larga estancia',
-      title: 'Larga Temporada e Invierno — 100 € la Noche',
+      title: 'Larga Temporada e Invierno, 100 € la Noche',
       subtitle:
         'A partir de 35 noches, la tarifa baja a 100 € por noche durante toda la estancia, sea la temporada que sea. Habitual entre quienes pasan el invierno en la Costa Blanca, teletrabajan, o viven aquí mientras reforman su casa.',
       whatsIncluded: 'Qué incluyen los 100 € por noche',
@@ -111,7 +111,7 @@ const LongTermRentalPromo = () => {
     },
     it: {
       badge: 'Tariffa soggiorni lunghi',
-      title: 'Soggiorni Lunghi e Inverno — 100 € a Notte',
+      title: 'Soggiorni Lunghi e Inverno, 100 € a Notte',
       subtitle:
         'Da 35 notti in su la tariffa scende a 100 € a notte per tutto il soggiorno, in qualsiasi stagione. Scelta da chi passa l\'inverno sulla Costa Blanca, da chi lavora da remoto e da chi abita qui mentre ristruttura casa.',
       whatsIncluded: 'Cosa comprendono i 100 € a notte',

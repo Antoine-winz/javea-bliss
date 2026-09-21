@@ -1,0 +1,45 @@
+I need to perform a major cleanup and restructure. Please follow these steps strictly:
+
+Step 1: CLEANUP (Critical)
+In 'index.html', DELETE the entire section containing the lists of keywords (e.g., "Comprehensive Jávea Content", "Weather and Climate Information", "restaurants jávea, chabada jávea...").
+REPLACE it with this clean "Trends" section:
+<section class="py-12 bg-emerald-50">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">Why Javea in 2025?</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <div class="text-4xl mb-4">💻</div>
+        <h3 class="text-xl font-bold">Remote Work Paradise</h3>
+        <p class="text-gray-600">600Mbps Fiber WiFi & ergonomic workspace.</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <div class="text-4xl mb-4">☀️</div>
+        <h3 class="text-xl font-bold">Winter Sun (20°C)</h3>
+        <p class="text-gray-600">Perfect for cycling and hiking all year round.</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <div class="text-4xl mb-4">🏠</div>
+        <h3 class="text-xl font-bold">Renovation Stays</h3>
+        <p class="text-gray-600">Comfortable housing while you renovate your villa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+Step 2: FOLDER STRUCTURE
+You must create PHYSICAL FOLDERS.
+1. Create a folder named "fr". Copy 'index.html' into it.
+2. Create a folder named "nl". Copy 'index.html' into it.
+3. Create a folder named "es". Copy 'index.html' into it.
+4. Create a folder named "de". Copy 'index.html' into it.
+
+Step 3: TRANSLATE & CUSTOMIZE
+1. In '/nl/index.html': Change the title to "Vakantiehuis Javea | Overwinteren & Verbouwing". Translate the "Renovation" section to Dutch.
+2. In '/fr/index.html': Change the title to "Location Javea | Appartement Vue Canal". Translate content to French.
+3. In '/es/index.html': Change the title to "Alquiler Javea | Escapada Playa Arenal". Translate content to Spanish.
+
+Step 4: NAVIGATION
+Update the flag icons in the header of ALL files to link to these new folders:
+- Link the UK Flag to "/"
+- Link the FR Flag to "/fr/"
+- Link the ES Flag to "/es/"

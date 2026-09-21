@@ -22,7 +22,7 @@ const pages: Record<string, PageContent> = {
     sections: [
       {
         heading: 'About the Apartment',
-        body: 'Jávea Bliss is a fully renovated 2-bedroom holiday apartment located in the Arenal district of Jávea (Xàbia), on the Costa Blanca, Spain. The apartment sits just 250 metres from Arenal Beach — an easy 3-minute walk to the golden sand, the promenade, and the sea.',
+        body: 'Jávea Bliss is a fully renovated 2-bedroom holiday apartment located in the Arenal district of Jávea (Xàbia), on the Costa Blanca, Spain. The apartment sits just 250 metres from Arenal Beach, an easy 3-minute walk to the golden sand, the promenade, and the sea.',
       },
       {
         heading: "What's Included",
@@ -30,7 +30,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Perfect for Beach Holidays',
-        body: 'Arenal Beach is one of the finest beaches on the Costa Blanca — a 480-metre Blue Flag sandy beach with lifeguards, beach bars, and water sports. From your apartment, you can walk to the beach before breakfast and stroll back for lunch. Chabada and La Bambula are both within 5 minutes on foot.',
+        body: 'Arenal Beach is one of the finest beaches on the Costa Blanca, a 480-metre Blue Flag sandy beach with lifeguards, beach bars, and water sports. From your apartment, you can walk to the beach before breakfast and stroll back for lunch. Chabada and La Bambula are both within 5 minutes on foot.',
       },
       {
         heading: 'Rates & Availability',
@@ -39,10 +39,10 @@ const pages: Record<string, PageContent> = {
     ],
   },
   '2-bedroom-apartment-javea': {
-    title: '2-Bedroom Apartment in Javea | Jávea Bliss — Sleeps 4 Guests',
+    title: '2-Bedroom Apartment in Javea | Jávea Bliss, Sleeps 4 Guests',
     description: 'Spacious 2-bedroom holiday apartment in Jávea (Xàbia) with air conditioning, Wi-Fi, kitchen, balcony and lift. 250 m from Arenal Beach. Direct booking from €130/night.',
     canonical: '/en/2-bedroom-apartment-javea/',
-    h1: '2-Bedroom Holiday Apartment in Javea — Sleeps up to 4',
+    h1: '2-Bedroom Holiday Apartment in Javea, Sleeps up to 4',
     sections: [
       {
         heading: 'A Comfortable 2-Bedroom Layout',
@@ -58,19 +58,19 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Location',
-        body: "The apartment is in the Arenal neighbourhood — the beating heart of Jávea's beach life. Arenal Beach, supermarkets, restaurants, and the promenade are all within a 5-minute walk.",
+        body: "The apartment is in the Arenal neighbourhood, the beating heart of Jávea's beach life. Arenal Beach, supermarkets, restaurants, and the promenade are all within a 5-minute walk.",
       },
     ],
   },
   'where-to-stay-in-javea': {
-    title: 'Where to Stay in Javea — The Arenal Neighbourhood Guide | Jávea Bliss',
-    description: "Planning where to stay in Javea? Discover why the Arenal Beach neighbourhood is the best base for your holiday — walkable, vibrant, and 250 m from the sea.",
+    title: 'Where to Stay in Javea, The Arenal Neighbourhood Guide | Jávea Bliss',
+    description: "Planning where to stay in Javea? Discover why the Arenal Beach neighbourhood is the best base for your holiday, walkable, vibrant, and 250 m from the sea.",
     canonical: '/en/where-to-stay-in-javea/',
-    h1: 'Where to Stay in Javea — Why Arenal is the Best Area',
+    h1: 'Where to Stay in Javea, Why Arenal is the Best Area',
     sections: [
       {
         heading: "Javea's Three Districts",
-        body: "Jávea (Xàbia) is split into three main areas: the Old Town (historic village), the Port (fishing harbour), and Arenal Beach. For a beach holiday, Arenal is by far the best base — it's a lively, walkable neighbourhood centred on a beautiful 480-metre sandy beach.",
+        body: "Jávea (Xàbia) is split into three main areas: the Old Town (historic village), the Port (fishing harbour), and Arenal Beach. For a beach holiday, Arenal is by far the best base, it's a lively, walkable neighbourhood centred on a beautiful 480-metre sandy beach.",
       },
       {
         heading: 'The Arenal Area',
@@ -78,23 +78,23 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Why Stay at Jávea Bliss',
-        body: "Jávea Bliss is our holiday apartment near Arenal Beach — just 250 metres from the sand. It's a renovated 2-bedroom apartment for up to 4 guests, with air conditioning, Wi-Fi, a full kitchen, balcony, lift, and free parking. Book directly from €130/night.",
+        body: "Jávea Bliss is our holiday apartment near Arenal Beach, just 250 metres from the sand. It's a renovated 2-bedroom apartment for up to 4 guests, with air conditioning, Wi-Fi, a full kitchen, balcony, lift, and free parking. Book directly from €130/night.",
       },
       {
         heading: 'Getting Around Javea',
-        body: "The centre of Arenal is compact and walkable. Buses connect Arenal to the Port and Old Town. For trips to Cala Granadella, Montgó Natural Park, or neighbouring towns like Dénia and Calpe, a hire car is handy — though not essential for a beach-focused week.",
+        body: "The centre of Arenal is compact and walkable. Buses connect Arenal to the Port and Old Town. For trips to Cala Granadella, Montgó Natural Park, or neighbouring towns like Dénia and Calpe, a hire car is handy, though not essential for a beach-focused week.",
       },
     ],
   },
   'javea-arenal-beach-guide': {
-    title: 'Javea Arenal Beach — Complete Visitor Guide | Jávea Bliss',
+    title: 'Javea Arenal Beach, Complete Visitor Guide | Jávea Bliss',
     description: 'Everything you need to know about Arenal Beach in Javea: facilities, beach bars, parking, best time to visit, and nearby restaurants. Stay 250 m away at Jávea Bliss.',
     canonical: '/en/javea-arenal-beach-guide/',
-    h1: 'Arenal Beach Javea — A Complete Guide',
+    h1: 'Arenal Beach Javea, A Complete Guide',
     sections: [
       {
         heading: 'About Arenal Beach',
-        body: "Playa del Arenal is the main beach of Jávea (Xàbia). It's a 480-metre Blue Flag sandy beach with a gentle slope into calm, crystal-clear water — perfect for swimming, snorkelling, and families with young children. The beach sits in a sheltered bay backed by a palm-lined promenade.",
+        body: "Playa del Arenal is the main beach of Jávea (Xàbia). It's a 480-metre Blue Flag sandy beach with a gentle slope into calm, crystal-clear water, perfect for swimming, snorkelling, and families with young children. The beach sits in a sheltered bay backed by a palm-lined promenade.",
       },
       {
         heading: 'Facilities at the Beach',
@@ -102,7 +102,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Best Restaurants Near Arenal',
-        body: "Chabada and La Bambula are the two best-known spots on the promenade — Chabada for a drink from breakfast onwards, La Bambula for live music into the night. For paella by the sand there is La Fontana, and for a proper dinner, La Masena or Bohemians a short walk back from the seafront.",
+        body: "Chabada and La Bambula are the two best-known spots on the promenade, Chabada for a drink from breakfast onwards, La Bambula for live music into the night. For paella by the sand there is La Fontana, and for a proper dinner, La Masena or Bohemians a short walk back from the seafront.",
       },
       {
         heading: 'Best Time to Visit',
@@ -110,23 +110,23 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Staying Near Arenal Beach',
-        body: 'Our 2-bedroom holiday apartment near Arenal Beach is just 250 metres from the waterfront. Book Jávea Bliss directly from €130/night — no booking fees, no middlemen.',
+        body: 'Our 2-bedroom holiday apartment near Arenal Beach is just 250 metres from the waterfront. Book Jávea Bliss directly from €130/night, no booking fees, no middlemen.',
       },
     ],
   },
   'winter-rental-javea': {
-    title: 'Winter Rental in Javea — Long-Stay Apartments from €100/Night | Jávea Bliss',
+    title: 'Winter Rental in Javea, Long-Stay Apartments from €100/Night | Jávea Bliss',
     description: 'Escape winter with a long-stay rental in Javea. Jávea Bliss offers monthly rates for 35+ night stays from €100/night. Mild climate, 300+ sunny days, 250 m from Arenal Beach.',
     canonical: '/en/winter-rental-javea/',
-    h1: 'Winter Rental in Javea — Stay Warm from €100/Night',
+    h1: 'Winter Rental in Javea, Stay Warm from €100/Night',
     sections: [
       {
         heading: "Why Javea for Winter?",
-        body: "Jávea enjoys one of the mildest climates in Spain — sheltered by the Montgó from cold northern winds, the town records over 300 sunny days a year. Winter daytime temperatures typically sit between 14°C and 18°C, dropping to around 8–10°C overnight. It's a world away from the grey skies of northern Europe.",
+        body: "Jávea enjoys one of the mildest climates in Spain, sheltered by the Montgó from cold northern winds, the town records over 300 sunny days a year. Winter daytime temperatures typically sit between 14°C and 18°C, dropping to around 8–10°C overnight. It's a world away from the grey skies of northern Europe.",
       },
       {
         heading: 'Long-Stay Rates at Jávea Bliss',
-        body: 'For stays of 35 nights or more, Jávea Bliss offers a special long-stay rate of €100/night — significantly below the standard nightly rate. The apartment is fully equipped for a real extended stay: a complete kitchen, washing machine, fast Wi-Fi, heating, and air conditioning.',
+        body: 'For stays of 35 nights or more, Jávea Bliss offers a special long-stay rate of €100/night, significantly below the standard nightly rate. The apartment is fully equipped for a real extended stay: a complete kitchen, washing machine, fast Wi-Fi, heating, and air conditioning.',
       },
       {
         heading: 'Who Stays in Winter?',
@@ -143,10 +143,10 @@ const pages: Record<string, PageContent> = {
     ],
   },
   'javea-without-car': {
-    title: 'Javea Without a Car — What You Can Do on Foot | Jávea Bliss',
-    description: "Wondering if you need a car in Javea? Discover everything within walking distance of Arenal Beach — restaurants, supermarkets, beaches, and more. Stay car-free at Jávea Bliss.",
+    title: 'Javea Without a Car, What You Can Do on Foot | Jávea Bliss',
+    description: "Wondering if you need a car in Javea? Discover everything within walking distance of Arenal Beach, restaurants, supermarkets, beaches, and more. Stay car-free at Jávea Bliss.",
     canonical: '/en/javea-without-car/',
-    h1: 'Javea Without a Car — A Car-Free Holiday Guide',
+    h1: 'Javea Without a Car, A Car-Free Holiday Guide',
     sections: [
       {
         heading: 'The Arenal Neighbourhood is Very Walkable',
@@ -154,75 +154,75 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Restaurants Within Walking Distance',
-        body: "Chabada, La Bambula, La Fontana, La Masena, L'Oasis, Bohemians, Casa Lili, Carnaval — around twenty places to eat and drink sit within a 10-minute walk of Arenal Beach. You will be spoilt for choice without ever calling a taxi.",
+        body: "Chabada, La Bambula, La Fontana, La Masena, L'Oasis, Bohemians, Casa Lili, Carnaval, around twenty places to eat and drink sit within a 10-minute walk of Arenal Beach. You will be spoilt for choice without ever calling a taxi.",
       },
       {
         heading: 'Getting to Javea Without a Car',
-        body: "Alicante Airport is the nearest airport at around 100 km — roughly an hour and a quarter by road. Valencia Airport is a similar distance. Both are served by airport taxis and shared shuttle services to Javea, and coaches run from Alicante and Valencia to Dénia and Javea. Locally, buses connect Javea's Old Town, Port, and Arenal.",
+        body: "Alicante Airport is the nearest airport at around 100 km, roughly an hour and a quarter by road. Valencia Airport is a similar distance. Both are served by airport taxis and shared shuttle services to Javea, and coaches run from Alicante and Valencia to Dénia and Javea. Locally, buses connect Javea's Old Town, Port, and Arenal.",
       },
       {
         heading: 'When a Car is Useful',
         body: 'A car makes it easier to visit Cala Granadella (15 min drive), Montgó Natural Park, and nearby towns like Calpe (with its famous Peñón de Ifach), Dénia, Moraira, and Altea. Day trips to Valencia (1.5 h) and Alicante (1 h) are also popular.',
       },
       {
-        heading: 'Stay at Jávea Bliss — Free Parking Included',
+        heading: 'Stay at Jávea Bliss, Free Parking Included',
         body: "If you do bring a car, our 2-bedroom holiday apartment near Arenal Beach has free street parking outside. And if you're arriving by public transport, you'll be perfectly placed to enjoy Javea car-free.",
       },
     ],
   },
   'restaurants-near-arenal-beach-javea': {
     title: 'Best Restaurants Near Arenal Beach Javea | Jávea Bliss Guide',
-    description: 'Discover the best restaurants near Arenal Beach in Javea — La Bambula, Chabada, Masena, and more. All within walking distance of our holiday apartment.',
+    description: 'Discover the best restaurants near Arenal Beach in Javea, La Bambula, Chabada, Masena, and more. All within walking distance of our holiday apartment.',
     canonical: '/en/restaurants-near-arenal-beach-javea/',
     h1: 'Best Restaurants Near Arenal Beach in Javea',
     sections: [
       {
-        heading: 'Chabada — drinks by the sand',
+        heading: 'Chabada, drinks by the sand',
         body: "Chabada sits right on the Arenal promenade and opens from 8am straight through, which makes it as good for a morning coffee as for a sundowner. Happy hour runs 4–8pm and there is live music on Thursday evenings. About 300 metres from the apartment.",
       },
       {
-        heading: 'La Bambula — live music and dancing',
-        body: "The liveliest spot on this stretch: open 9am to 1am, and until 3am at weekends, with flamenco on Sundays, swing on Tuesdays and rock on Fridays. Come for a drink and stay for the music. Roughly 250 metres away — near enough to walk home.",
+        heading: 'La Bambula, live music and dancing',
+        body: "The liveliest spot on this stretch: open 9am to 1am, and until 3am at weekends, with flamenco on Sundays, swing on Tuesdays and rock on Fridays. Come for a drink and stay for the music. Roughly 250 metres away, near enough to walk home.",
       },
       {
-        heading: 'La Fontana — paella and pizza',
+        heading: 'La Fontana, paella and pizza',
         body: "Right by the beach and open non-stop every day, La Fontana does both authentic paella and Italian pizza. A safe bet with children, or when half the group wants rice and the other half doesn't.",
       },
       {
-        heading: 'La Masena — a proper dinner',
+        heading: 'La Masena, a proper dinner',
         body: "The choice for a longer, more refined meal. Open Monday lunchtime, then Wednesday to Sunday for lunch and dinner (until 11pm at weekends); closed Tuesdays. Worth booking ahead in summer.",
       },
       {
-        heading: "L'Oasis — steaks and grilled meat",
+        heading: "L'Oasis, steaks and grilled meat",
         body: "The place locals name for a good steak. Open 12:30pm to 11pm daily, a short walk from the Arenal seafront.",
       },
       {
-        heading: 'Bohemians — elegant and central',
+        heading: 'Bohemians, elegant and central',
         body: "Elegant dining in a polished setting, open from midday to midnight every day. Good for a dressed-up evening without leaving the neighbourhood.",
       },
       {
-        heading: 'Casa Lili and Carnaval — Asian and fusion',
-        body: "Casa Lili serves fresh, authentic Asian cooking (12:30–4pm and 6:30–11pm daily). Carnaval covers modern fusion — sushi, burgers and poke bowls — non-stop every day. Both are useful when you have had enough Mediterranean food for one week.",
+        heading: 'Casa Lili and Carnaval, Asian and fusion',
+        body: "Casa Lili serves fresh, authentic Asian cooking (12:30–4pm and 6:30–11pm daily). Carnaval covers modern fusion, sushi, burgers and poke bowls, non-stop every day. Both are useful when you have had enough Mediterranean food for one week.",
       },
       {
-        heading: 'Caramel — breakfast and pastries',
+        heading: 'Caramel, breakfast and pastries',
         body: "A French-style bakery open 7:30am to 7:30pm daily, for croissants and proper coffee before the beach.",
       },
       {
         heading: 'Local Tips',
-        body: "In July and August, book ahead for dinner — the Arenal fills up. In low season some places cut their hours, so it is worth checking before you walk down. And with a full kitchen in the apartment, cooking in with something from the local market is always an option.",
+        body: "In July and August, book ahead for dinner, the Arenal fills up. In low season some places cut their hours, so it is worth checking before you walk down. And with a full kitchen in the apartment, cooking in with something from the local market is always an option.",
       },
     ],
   },
   'best-beaches-near-javea-apartment': {
-    title: 'Best Beaches Near Javea — Day Trips from Arenal | Jávea Bliss',
+    title: 'Best Beaches Near Javea, Day Trips from Arenal | Jávea Bliss',
     description: 'Explore the best beaches near Javea: Arenal Beach (250 m), Cala Granadella, Playa Montañar, Cala Sardinera, and more. All reachable from our holiday apartment.',
     canonical: '/en/best-beaches-near-javea-apartment/',
     h1: 'Best Beaches Near Our Javea Holiday Apartment',
     sections: [
       {
-        heading: 'Arenal Beach — Your Home Beach (250 m away)',
-        body: "Playa del Arenal is the main sandy beach of Javea — 480 metres of soft sand with Blue Flag status, calm water, lifeguards in summer, and a lively promenade lined with restaurants. From our holiday apartment near Arenal Beach, it's just a 3-minute walk.",
+        heading: 'Arenal Beach, Your Home Beach (250 m away)',
+        body: "Playa del Arenal is the main sandy beach of Javea, 480 metres of soft sand with Blue Flag status, calm water, lifeguards in summer, and a lively promenade lined with restaurants. From our holiday apartment near Arenal Beach, it's just a 3-minute walk.",
       },
       {
         heading: 'Playa Montañar',
@@ -238,31 +238,31 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Cala del Portichol',
-        body: "A secluded rocky cove south of Cabo de la Nao with exceptional underwater visibility. Bring snorkelling gear and water shoes — this is Javea's wild side.",
+        body: "A secluded rocky cove south of Cabo de la Nao with exceptional underwater visibility. Bring snorkelling gear and water shoes, this is Javea's wild side.",
       },
     ],
   },
   'javea-3-day-itinerary': {
-    title: 'Javea 3-Day Itinerary — What to Do in Javea | Jávea Bliss',
-    description: 'Make the most of 3 days in Javea with our local guide. Beaches, restaurants, hikes, and hidden gems — all planned around a stay at our Arenal Beach apartment.',
+    title: 'Javea 3-Day Itinerary, What to Do in Javea | Jávea Bliss',
+    description: 'Make the most of 3 days in Javea with our local guide. Beaches, restaurants, hikes, and hidden gems, all planned around a stay at our Arenal Beach apartment.',
     canonical: '/en/javea-3-day-itinerary/',
-    h1: '3 Days in Javea — The Perfect Itinerary',
+    h1: '3 Days in Javea, The Perfect Itinerary',
     sections: [
       {
-        heading: 'Day 1 — Arenal Beach & Local Restaurants',
-        body: 'Start your first morning with a walk to Arenal Beach — just 250 metres from Jávea Bliss. Hire a sunbed, swim in the clear Mediterranean water, and take a stroll along the promenade. For lunch, La Fontana does paella a few steps from the sand. In the evening, work along the promenade: a drink at Chabada as the sun goes down, then La Bambula, where there is live music most nights.',
+        heading: 'Day 1, Arenal Beach & Local Restaurants',
+        body: 'Start your first morning with a walk to Arenal Beach, just 250 metres from Jávea Bliss. Hire a sunbed, swim in the clear Mediterranean water, and take a stroll along the promenade. For lunch, La Fontana does paella a few steps from the sand. In the evening, work along the promenade: a drink at Chabada as the sun goes down, then La Bambula, where there is live music most nights.',
       },
       {
-        heading: 'Day 2 — Cala Granadella & Old Town',
-        body: "In the morning, drive (or take a taxi) to Cala Granadella — one of Spain's most beautiful beaches, about 15 minutes from the apartment. Snorkel in the turquoise water and have lunch at the cala's restaurant. In the afternoon, visit Javea's charming Old Town (Pueblo): explore the Gothic church, the covered market, and the maze of narrow streets. Have dinner at Masena or another restaurant in the centre.",
+        heading: 'Day 2, Cala Granadella & Old Town',
+        body: "In the morning, drive (or take a taxi) to Cala Granadella, one of Spain's most beautiful beaches, about 15 minutes from the apartment. Snorkel in the turquoise water and have lunch at the cala's restaurant. In the afternoon, visit Javea's charming Old Town (Pueblo): explore the Gothic church, the covered market, and the maze of narrow streets. Have dinner at Masena or another restaurant in the centre.",
       },
       {
-        heading: 'Day 3 — Montgó, Cabo de la Nao & Departure',
-        body: "On your final morning, hike part of the Montgó Natural Park trail for panoramic views over Javea and the sea. If you prefer a gentler start, drive to Cabo de la Nao — the famous headland with a lighthouse and dramatic coastal views. Stop at Cala Sardinera for a final swim. Return to the apartment, pack up, and check out by 13:00.",
+        heading: 'Day 3, Montgó, Cabo de la Nao & Departure',
+        body: "On your final morning, hike part of the Montgó Natural Park trail for panoramic views over Javea and the sea. If you prefer a gentler start, drive to Cabo de la Nao, the famous headland with a lighthouse and dramatic coastal views. Stop at Cala Sardinera for a final swim. Return to the apartment, pack up, and check out by 13:00.",
       },
       {
         heading: 'Practical Tips',
-        body: 'A hire car is helpful for Day 2 and Day 3 but not required for Day 1 — the Arenal is walkable. Book dinner ahead in July and August. Street parking outside is free, though it is busiest in July and August.',
+        body: 'A hire car is helpful for Day 2 and Day 3 but not required for Day 1, the Arenal is walkable. Book dinner ahead in July and August. Street parking outside is free, though it is busiest in July and August.',
       },
     ],
   },
@@ -278,7 +278,7 @@ const BookingCTA = () => (
     <p className="text-bone/75 font-light leading-relaxed max-w-xl mb-8">
       A renovated two-bedroom apartment for up to four guests, 250 m from Arenal Beach, with air
       conditioning, fast Wi-Fi, a full kitchen, terrace, lift and free street parking. Book direct from
-      €130 a night — no booking fees.
+      €130 a night, no booking fees.
     </p>
     <div className="flex flex-wrap gap-4">
       <Link href="/en/#booking" className="btn-on-dark">
@@ -354,7 +354,7 @@ const SEOLandingPage = ({ slug }: SEOLandingPageProps) => {
   }
 
   const relatedGuides = [
-    { href: '/en/javea-arenal-beach-guide/', label: 'Arenal Beach — Complete Visitor Guide' },
+    { href: '/en/javea-arenal-beach-guide/', label: 'Arenal Beach, Complete Visitor Guide' },
     { href: '/en/where-to-stay-in-javea/', label: 'Where to Stay in Javea' },
     { href: '/en/restaurants-near-arenal-beach-javea/', label: 'Best Restaurants Near Arenal Beach' },
     { href: '/en/best-beaches-near-javea-apartment/', label: 'Best Beaches Near Javea' },

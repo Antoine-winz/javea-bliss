@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+
+.javea-glance {
+  --bone: #faf8f5;
+  --sand: #efe9e1;
+  --ink: #14202e;
+  --ink-soft: #46515c;
+  --stone: #746f69;
+  --brass: #b08d57;
+  box-sizing: border-box;
+  color: var(--ink-soft);
+  font-family: Inter, sans-serif;
+}
+
+.javea-glance *,
+.javea-glance *::before,
+.javea-glance *::after {
+  box-sizing: border-box;
+}
+
+.javea-shell {
+  width: min(100%, 1248px);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+@media (max-width: 640px) {
+  .javea-shell {
+    padding: 0 24px;
+  }
+}

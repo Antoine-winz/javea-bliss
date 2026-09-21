@@ -24,7 +24,7 @@ export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
-    allowedHosts: true,
+    allowedHosts: true as const,
   };
 
   const vite = await createViteServer({
@@ -90,7 +90,7 @@ export function serveStatic(app: Express) {
   app.use("*", (req, res) => {
     const indexPath = path.resolve(distPath, "index.html");
     // Inside a middleware mounted at "*", Express rewrites req.path to "/", so it
-    // can never identify the route. originalUrl keeps the real path — without this
+    // can never identify the route. originalUrl keeps the real path, without this
     // no SEO was ever injected in production and every route returned 200.
     const urlPath = req.originalUrl.split("?")[0];
 

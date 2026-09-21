@@ -4,7 +4,7 @@ import bandImage from "@assets/Bedroom2.3_1749116725138.jpeg";
 
 /*
   Full-bleed photographic interlude between the amenity checklist and the neighbourhood
-  section. The image drifts a few percent against the scroll — enough to feel alive,
+  section. The image drifts a few percent against the scroll, enough to feel alive,
   restrained enough not to read as an effect. Skipped entirely under reduced motion.
 */
 const ImageBand = () => {

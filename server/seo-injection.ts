@@ -76,35 +76,35 @@ const seoLandingPages: Record<string, { title: string; description: string }> = 
     description: 'Book a renovated 2-bedroom holiday apartment 250 m from Arenal Beach in Jávea. Sleeps 4, air conditioning, Wi-Fi, balcony, lift, free parking. Direct booking from €130/night.',
   },
   '2-bedroom-apartment-javea': {
-    title: '2-Bedroom Apartment in Javea | Jávea Bliss — Sleeps 4 Guests',
+    title: '2-Bedroom Apartment in Javea | Jávea Bliss, Sleeps 4 Guests',
     description: 'Spacious 2-bedroom holiday apartment in Jávea (Xàbia) with air conditioning, Wi-Fi, kitchen, balcony and lift. 250 m from Arenal Beach. Direct booking from €130/night.',
   },
   'where-to-stay-in-javea': {
-    title: 'Where to Stay in Javea — The Arenal Neighbourhood Guide | Jávea Bliss',
-    description: "Planning where to stay in Javea? Discover why the Arenal Beach neighbourhood is the best base for your holiday — walkable, vibrant, and 250 m from the sea.",
+    title: 'Where to Stay in Javea, The Arenal Neighbourhood Guide | Jávea Bliss',
+    description: "Planning where to stay in Javea? Discover why the Arenal Beach neighbourhood is the best base for your holiday, walkable, vibrant, and 250 m from the sea.",
   },
   'javea-arenal-beach-guide': {
-    title: 'Javea Arenal Beach — Complete Visitor Guide | Jávea Bliss',
+    title: 'Javea Arenal Beach, Complete Visitor Guide | Jávea Bliss',
     description: 'Everything you need to know about Arenal Beach in Javea: facilities, beach bars, parking, best time to visit, and nearby restaurants. Stay 250 m away at Jávea Bliss.',
   },
   'winter-rental-javea': {
-    title: 'Winter Rental in Javea — Long-Stay Apartments from €100/Night | Jávea Bliss',
+    title: 'Winter Rental in Javea, Long-Stay Apartments from €100/Night | Jávea Bliss',
     description: 'Escape winter with a long-stay rental in Javea. Jávea Bliss offers monthly rates for 35+ night stays from €100/night. Mild climate, 300+ sunny days, 250 m from Arenal Beach.',
   },
   'javea-without-car': {
-    title: 'Javea Without a Car — What You Can Do on Foot | Jávea Bliss',
-    description: "Wondering if you need a car in Javea? Discover everything within walking distance of Arenal Beach — restaurants, supermarkets, beaches, and more. Stay car-free at Jávea Bliss.",
+    title: 'Javea Without a Car, What You Can Do on Foot | Jávea Bliss',
+    description: "Wondering if you need a car in Javea? Discover everything within walking distance of Arenal Beach, restaurants, supermarkets, beaches, and more. Stay car-free at Jávea Bliss.",
   },
   'restaurants-near-arenal-beach-javea': {
     title: 'Best Restaurants Near Arenal Beach Javea | Jávea Bliss Guide',
-    description: 'Discover the best restaurants near Arenal Beach in Javea — La Bambula, Chabada, Masena, and more. All within walking distance of our holiday apartment.',
+    description: 'Discover the best restaurants near Arenal Beach in Javea, La Bambula, Chabada, Masena, and more. All within walking distance of our holiday apartment.',
   },
   'best-beaches-near-javea-apartment': {
-    title: 'Best Beaches Near Javea — Day Trips from Our Apartment | Jávea Bliss',
+    title: 'Best Beaches Near Javea, Day Trips from Our Apartment | Jávea Bliss',
     description: 'Explore the best beaches near Javea: Arenal, Cala Granadella, La Barraca, and more. Base yourself at Jávea Bliss, 250 m from Arenal Beach.',
   },
   'javea-3-day-itinerary': {
-    title: 'Javea 3-Day Itinerary — How to Spend a Long Weekend | Jávea Bliss',
+    title: 'Javea 3-Day Itinerary, How to Spend a Long Weekend | Jávea Bliss',
     description: 'Plan the perfect 3-day trip to Javea with our itinerary: Arenal Beach, the Old Town, Cala Granadella, and top restaurants. Stay at Jávea Bliss from €130/night.',
   },
 };
@@ -230,7 +230,7 @@ export function injectSEOIntoHTML(html: string, seo: RouteSEO): string {
       `<meta name="twitter:description" content="${escapeHtml(seo.description)}" />`,
     )
     .replace(
-      /(<link rel="alternate" hreflang="en"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="fr"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="es"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="de"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="nl"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="it"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="x-default"[^>]*>)/s,
+      /(<link rel="alternate" hreflang="en"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="fr"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="es"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="de"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="nl"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="it"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="x-default"[^>]*>)/,
       hreflangTags,
     );
 }

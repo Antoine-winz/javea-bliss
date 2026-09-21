@@ -2,7 +2,7 @@ import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 
@@ -13,11 +13,14 @@ import MotionProvider from "@/components/MotionProvider";
 
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
-import Admin from "@/pages/Admin";
-import PromotionalOffer from "@/pages/PromotionalOffer";
-import { SocialMedia } from "@/pages/SocialMedia";
-import Recommendations from "@/pages/Recommendations";
-import SEOLandingPage from "@/pages/SEOLandingPage";
+
+const Admin = lazy(() => import("@/pages/Admin"));
+const PromotionalOffer = lazy(() => import("@/pages/PromotionalOffer"));
+const SocialMedia = lazy(() => import("@/pages/SocialMedia").then(({ SocialMedia }) => ({ default: SocialMedia })));
+const Recommendations = lazy(() => import("@/pages/Recommendations"));
+const SEOLandingPage = lazy(() => import("@/pages/SEOLandingPage"));
+const SalesAccess = lazy(() => import("@/pages/SalesAccess"));
+const SalesPrivacy = lazy(() => import("@/pages/SalesPrivacy"));
 
 const SEO_SLUGS = [
   'holiday-apartment-javea-arenal-beach',
@@ -55,6 +58,14 @@ function Router() {
       {SUPPORTED_LANGUAGES.map(lang => (
         <Route key={`${lang}-social`} path={`/${lang}/social-media/:id`} component={SocialMedia} />
       ))}
+      {SUPPORTED_LANGUAGES.map(lang => (
+        <Route key={`${lang}-sale`} path={`/${lang}/for-sale`} component={SalesAccess} />
+      ))}
+      {SUPPORTED_LANGUAGES.map(lang => (
+        <Route key={`${lang}-sale-privacy`} path={`/${lang}/privacy-policy`} component={SalesPrivacy} />
+      ))}
+      <Route path="/for-sale" component={SalesAccess} />
+      <Route path="/privacy-policy" component={SalesPrivacy} />
       
       {/* SEO landing pages (English only) */}
       {SEO_SLUGS.map(slug => (
@@ -93,7 +104,9 @@ function App() {
           <SEOHead />
           <MotionProvider />
           <Toaster />
-          <Router />
+          <Suspense fallback={<div className="min-h-screen bg-bone" aria-busy="true" />}>
+            <Router />
+          </Suspense>
         </LanguageProvider>
       </QueryClientProvider>
     </ErrorBoundary>

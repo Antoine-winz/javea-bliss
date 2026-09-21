@@ -16,26 +16,29 @@ interface GuestReview {
   isVerified: boolean;
   createdAt: string;
   updatedAt: string;
+  originalText?: string;
+  originalLanguage?: string;
+  isAirbnb?: boolean;
 }
-
-// Live listing facts, checked August 2026: 5.0 overall from 15 reviews (100%
-// five-star), Guest Favorite, Laurent is a Superhost. Update META when the
-// listing changes — the badge must never claim more than the listing shows.
-const AIRBNB_URL = 'https://www.airbnb.com/rooms/1437724898890828336';
-const AIRBNB_META = { rating: '5.0', count: 15 };
-
-const BADGE_LABELS: Record<string, { onAirbnb: string; reviews: string; superhost: string }> = {
-  en: { onAirbnb: 'on Airbnb', reviews: 'reviews', superhost: 'Superhost' },
-  nl: { onAirbnb: 'op Airbnb', reviews: 'beoordelingen', superhost: 'Superhost' },
-  fr: { onAirbnb: 'sur Airbnb', reviews: 'avis', superhost: 'Superhôte' },
-  it: { onAirbnb: 'su Airbnb', reviews: 'recensioni', superhost: 'Superhost' },
-  de: { onAirbnb: 'auf Airbnb', reviews: 'Bewertungen', superhost: 'Superhost' },
-  es: { onAirbnb: 'en Airbnb', reviews: 'reseñas', superhost: 'Superanfitrión' },
-};
 
 const REVIEW_LOCALES: Record<string, string> = {
   en: 'en-GB', nl: 'nl-NL', fr: 'fr-FR', it: 'it-IT', de: 'de-DE', es: 'es-ES',
 };
+
+const REVIEW_PLATFORM_REPLACEMENTS: Record<string, string> = {
+  en: 'holiday apartment',
+  nl: 'vakantieappartement',
+  fr: 'appartement de vacances',
+  it: 'casa vacanze',
+  de: 'Ferienwohnung',
+  es: 'apartamento vacacional',
+};
+
+const removePlatformName = (text: string, language: string) =>
+  text.replace(
+    /Airbnb(?:'s|\s+s|s)?/gi,
+    REVIEW_PLATFORM_REPLACEMENTS[language] || REVIEW_PLATFORM_REPLACEMENTS.en,
+  );
 
 const formatStay = (iso: string, language: string) => {
   const [y, m] = iso.split('-').map(Number);
@@ -53,23 +56,35 @@ interface AirbnbReview {
 }
 
 /*
-  Reviews taken verbatim from the Airbnb listing (as displayed in English there),
-  lightly copy-edited and translated for the other site languages. Airbnb shows
-  them machine-translated too, so no "original" toggle for these. Deduped at
-  render time against the site's own review database by guest name.
+  Reviews imported from the previous listing, with the English text kept as the
+  source version and localized versions for the other site languages. Deduped
+  at render time against the site's own review database by guest name.
 */
 const AIRBNB_REVIEWS: AirbnbReview[] = [
   {
-    id: -1,
-    guestName: 'Ailyssa',
+    id: -9,
+    guestName: 'Gabriella',
     stayISO: '2026-08',
     texts: {
-      en: "This place is a dream. The apartment is spacious and perfectly equipped, down to the smallest details — a bucket and spade, umbrellas and towels for the beach. The beach is a stone's throw away and Laurent recommended perfect spots for us to eat. We loved every moment and were sad to go!",
-      nl: 'Dit appartement is een droom. Ruim en tot in de kleinste details uitgerust — zelfs een emmertje en schepje, parasols en strandhanddoeken. Het strand ligt op een steenworp afstand en Laurent gaf ons perfecte eettips. We hebben van elk moment genoten en vonden het jammer om te vertrekken!',
-      fr: "Cet endroit est un rêve. L'appartement est spacieux et parfaitement équipé, jusqu'aux moindres détails — seau et pelle, parasols et serviettes de plage. La plage est à deux pas et Laurent nous a recommandé de très bonnes adresses. Nous avons adoré chaque instant, tristes de repartir !",
-      it: "Questo posto è un sogno. L'appartamento è spazioso e attrezzato alla perfezione, fin nei minimi dettagli — secchiello e paletta, ombrelloni e teli mare. La spiaggia è a due passi e Laurent ci ha consigliato posti perfetti dove mangiare. Ci è dispiaciuto andare via!",
-      de: 'Diese Wohnung ist ein Traum. Geräumig und bis ins kleinste Detail ausgestattet — sogar Eimer und Schaufel, Sonnenschirme und Strandtücher. Der Strand ist einen Steinwurf entfernt, und Laurent hatte perfekte Restauranttipps. Wir haben jeden Moment genossen!',
-      es: 'Este sitio es un sueño. El apartamento es amplio y está equipado hasta el último detalle — cubo y pala, sombrillas y toallas para la playa. La playa está a un paso y Laurent nos recomendó sitios perfectos para comer. ¡Nos dio pena irnos!',
+      en: 'Great stay!',
+      nl: 'Geweldig verblijf!',
+      fr: 'Excellent séjour !',
+      it: 'Ottimo soggiorno!',
+      de: 'Toller Aufenthalt!',
+      es: '¡Estancia estupenda!',
+    },
+  },
+  {
+    id: -10,
+    guestName: 'Jasper',
+    stayISO: '2026-08',
+    texts: {
+      en: 'It was perfect! Really amazing apartment',
+      nl: 'Het was perfect! Echt een geweldig appartement',
+      fr: "C'était parfait ! Un appartement vraiment incroyable",
+      it: 'È stato perfetto! Un appartamento davvero fantastico',
+      de: 'Es war perfekt! Eine wirklich fantastische Wohnung',
+      es: '¡Fue perfecto! Un apartamento realmente increíble',
     },
   },
   {
@@ -86,16 +101,29 @@ const AIRBNB_REVIEWS: AirbnbReview[] = [
     },
   },
   {
+    id: -1,
+    guestName: 'Ailyssa',
+    stayISO: '2026-08',
+    texts: {
+      en: "This place is a dream. The apartment is spacious and perfectly equipped, down to the smallest details, a bucket and spade, umbrellas and towels for the beach. The beach is a stone's throw away and Laurent recommended perfect spots for us to eat. We loved every moment and were sad to go!",
+      nl: 'Dit appartement is een droom. Ruim en tot in de kleinste details uitgerust, zelfs een emmertje en schepje, parasols en strandhanddoeken. Het strand ligt op een steenworp afstand en Laurent gaf ons perfecte eettips. We hebben van elk moment genoten en vonden het jammer om te vertrekken!',
+      fr: "Cet endroit est un rêve. L'appartement est spacieux et parfaitement équipé, jusqu'aux moindres détails, seau et pelle, parasols et serviettes de plage. La plage est à deux pas et Laurent nous a recommandé de très bonnes adresses. Nous avons adoré chaque instant, tristes de repartir !",
+      it: "Questo posto è un sogno. L'appartamento è spazioso e attrezzato alla perfezione, fin nei minimi dettagli, secchiello e paletta, ombrelloni e teli mare. La spiaggia è a due passi e Laurent ci ha consigliato posti perfetti dove mangiare. Ci è dispiaciuto andare via!",
+      de: 'Diese Wohnung ist ein Traum. Geräumig und bis ins kleinste Detail ausgestattet, sogar Eimer und Schaufel, Sonnenschirme und Strandtücher. Der Strand ist einen Steinwurf entfernt, und Laurent hatte perfekte Restauranttipps. Wir haben jeden Moment genossen!',
+      es: 'Este sitio es un sueño. El apartamento es amplio y está equipado hasta el último detalle, cubo y pala, sombrillas y toallas para la playa. La playa está a un paso y Laurent nos recomendó sitios perfectos para comer. ¡Nos dio pena irnos!',
+    },
+  },
+  {
     id: -3,
     guestName: 'Ana',
     stayISO: '2026-04',
     texts: {
-      en: "Laurent has been a great host. We spent beautiful days as a family and the stay couldn't have been better — clean, perfect location, two minutes' walk from the beach, surrounded by restaurants. He even left us beach towels. We'll be back for sure!",
-      nl: 'Laurent was een geweldige gastheer. We hebben prachtige dagen met het gezin gehad en het verblijf had niet beter gekund — schoon, perfecte ligging, twee minuten lopen van het strand, omringd door restaurants. Hij had zelfs strandhanddoeken voor ons klaargelegd. We komen zeker terug!',
-      fr: "Laurent a été un hôte formidable. De très belles journées en famille, un séjour parfait — propre, très bien situé, à deux minutes à pied de la plage, entouré de restaurants. Il nous a même laissé des serviettes de plage. Nous reviendrons, c'est sûr !",
-      it: 'Laurent è stato un ottimo host. Giorni bellissimi in famiglia, un soggiorno perfetto — pulito, posizione ideale, a due minuti a piedi dalla spiaggia, circondato da ristoranti. Ci ha lasciato persino i teli mare. Torneremo di sicuro!',
-      de: 'Laurent war ein großartiger Gastgeber. Wunderschöne Tage mit der Familie, der Aufenthalt hätte nicht besser sein können — sauber, perfekte Lage, zwei Gehminuten zum Strand, Restaurants ringsum. Er hat uns sogar Strandtücher dagelassen. Wir kommen sicher wieder!',
-      es: 'Laurent ha sido un anfitrión estupendo. Pasamos unos días preciosos en familia y la estancia no pudo ser mejor — limpio, ubicación perfecta, a dos minutos andando de la playa y rodeado de restaurantes. Hasta nos dejó toallas de playa. ¡Volveremos seguro!',
+      en: "Laurent has been a great host. We spent beautiful days as a family and the stay couldn't have been better, clean, perfect location, two minutes' walk from the beach, surrounded by restaurants. He even left us beach towels. We'll be back for sure!",
+      nl: 'Laurent was een geweldige gastheer. We hebben prachtige dagen met het gezin gehad en het verblijf had niet beter gekund, schoon, perfecte ligging, twee minuten lopen van het strand, omringd door restaurants. Hij had zelfs strandhanddoeken voor ons klaargelegd. We komen zeker terug!',
+      fr: "Laurent a été un hôte formidable. De très belles journées en famille, un séjour parfait, propre, très bien situé, à deux minutes à pied de la plage, entouré de restaurants. Il nous a même laissé des serviettes de plage. Nous reviendrons, c'est sûr !",
+      it: 'Laurent è stato un ottimo host. Giorni bellissimi in famiglia, un soggiorno perfetto, pulito, posizione ideale, a due minuti a piedi dalla spiaggia, circondato da ristoranti. Ci ha lasciato persino i teli mare. Torneremo di sicuro!',
+      de: 'Laurent war ein großartiger Gastgeber. Wunderschöne Tage mit der Familie, der Aufenthalt hätte nicht besser sein können, sauber, perfekte Lage, zwei Gehminuten zum Strand, Restaurants ringsum. Er hat uns sogar Strandtücher dagelassen. Wir kommen sicher wieder!',
+      es: 'Laurent ha sido un anfitrión estupendo. Pasamos unos días preciosos en familia y la estancia no pudo ser mejor, limpio, ubicación perfecta, a dos minutos andando de la playa y rodeado de restaurantes. Hasta nos dejó toallas de playa. ¡Volveremos seguro!',
     },
   },
   {
@@ -116,12 +144,12 @@ const AIRBNB_REVIEWS: AirbnbReview[] = [
     guestName: 'Marcos',
     stayISO: '2026-07',
     texts: {
-      en: 'The apartment is spectacular — new, very well equipped and clean. Perfect location a few metres from the beach. Laurent kept checking whether we were comfortable or needed anything.',
-      nl: 'Het appartement is spectaculair — nieuw, zeer goed uitgerust en schoon. Perfecte ligging op een paar meter van het strand. Laurent vroeg steeds of alles naar wens was en of we iets nodig hadden.',
-      fr: "L'appartement est spectaculaire — neuf, très bien équipé et propre. Emplacement parfait à quelques mètres de la plage. Laurent prenait régulièrement des nouvelles pour savoir si tout allait bien.",
-      it: "L'appartamento è spettacolare — nuovo, attrezzatissimo e pulito. Posizione perfetta a pochi metri dalla spiaggia. Laurent ci ha scritto per sapere se andava tutto bene e se ci servisse qualcosa.",
-      de: 'Die Wohnung ist spektakulär — neu, sehr gut ausgestattet und sauber. Perfekte Lage, wenige Meter vom Strand. Laurent fragte immer wieder, ob alles passt und ob wir etwas brauchen.',
-      es: 'El apartamento es espectacular — nuevo, muy bien equipado y limpio. Ubicación perfecta a pocos metros de la playa. Laurent estuvo pendiente de nosotros por si necesitábamos algo.',
+      en: 'The apartment is spectacular, new, very well equipped and clean. Perfect location a few metres from the beach. Laurent kept checking whether we were comfortable or needed anything.',
+      nl: 'Het appartement is spectaculair, nieuw, zeer goed uitgerust en schoon. Perfecte ligging op een paar meter van het strand. Laurent vroeg steeds of alles naar wens was en of we iets nodig hadden.',
+      fr: "L'appartement est spectaculaire, neuf, très bien équipé et propre. Emplacement parfait à quelques mètres de la plage. Laurent prenait régulièrement des nouvelles pour savoir si tout allait bien.",
+      it: "L'appartamento è spettacolare, nuovo, attrezzatissimo e pulito. Posizione perfetta a pochi metri dalla spiaggia. Laurent ci ha scritto per sapere se andava tutto bene e se ci servisse qualcosa.",
+      de: 'Die Wohnung ist spektakulär, neu, sehr gut ausgestattet und sauber. Perfekte Lage, wenige Meter vom Strand. Laurent fragte immer wieder, ob alles passt und ob wir etwas brauchen.',
+      es: 'El apartamento es espectacular, nuevo, muy bien equipado y limpio. Ubicación perfecta a pocos metros de la playa. Laurent estuvo pendiente de nosotros por si necesitábamos algo.',
     },
   },
   {
@@ -129,12 +157,12 @@ const AIRBNB_REVIEWS: AirbnbReview[] = [
     guestName: 'Brandon',
     stayISO: '2025-09',
     texts: {
-      en: "Laurent was amazing — when we had a problem with our previous place he made sure everything was perfect for our stay. He met us at check-in with a bottle of champagne, answered quickly and gave us great recommendations. We'll definitely book again.",
-      nl: 'Laurent was geweldig — toen we een probleem hadden met ons vorige adres zorgde hij dat alles perfect geregeld was. Hij stond bij het inchecken klaar met een fles champagne, reageerde snel en gaf goede tips. We boeken zeker weer.',
-      fr: "Laurent a été formidable — après un souci avec notre logement précédent, il a veillé à ce que tout soit parfait. Il nous a accueillis avec une bouteille de champagne, répondait vite et donnait d'excellents conseils. Nous réserverons à nouveau.",
-      it: 'Laurent è stato eccezionale — dopo un problema con il nostro alloggio precedente, ha fatto in modo che tutto fosse perfetto. Ci ha accolti con una bottiglia di champagne, rispondeva subito e ci ha dato ottimi consigli. Prenoteremo di nuovo.',
-      de: 'Laurent war großartig — nach einem Problem mit unserer vorherigen Unterkunft sorgte er dafür, dass alles perfekt war. Er empfing uns mit einer Flasche Champagner, antwortete schnell und gab tolle Empfehlungen. Wir buchen sicher wieder.',
-      es: 'Laurent fue increíble — tras un problema con nuestro alojamiento anterior, se aseguró de que todo estuviera perfecto. Nos recibió con una botella de champán, respondía rapidísimo y nos dio muy buenas recomendaciones. Sin duda repetiremos.',
+      en: "Laurent was amazing, when we had a problem with our previous place he made sure everything was perfect for our stay. He met us at check-in with a bottle of champagne, answered quickly and gave us great recommendations. We'll definitely book again.",
+      nl: 'Laurent was geweldig, toen we een probleem hadden met ons vorige adres zorgde hij dat alles perfect geregeld was. Hij stond bij het inchecken klaar met een fles champagne, reageerde snel en gaf goede tips. We boeken zeker weer.',
+      fr: "Laurent a été formidable, après un souci avec notre logement précédent, il a veillé à ce que tout soit parfait. Il nous a accueillis avec une bouteille de champagne, répondait vite et donnait d'excellents conseils. Nous réserverons à nouveau.",
+      it: 'Laurent è stato eccezionale, dopo un problema con il nostro alloggio precedente, ha fatto in modo che tutto fosse perfetto. Ci ha accolti con una bottiglia di champagne, rispondeva subito e ci ha dato ottimi consigli. Prenoteremo di nuovo.',
+      de: 'Laurent war großartig, nach einem Problem mit unserer vorherigen Unterkunft sorgte er dafür, dass alles perfekt war. Er empfing uns mit einer Flasche Champagner, antwortete schnell und gab tolle Empfehlungen. Wir buchen sicher wieder.',
+      es: 'Laurent fue increíble, tras un problema con nuestro alojamiento anterior, se aseguró de que todo estuviera perfecto. Nos recibió con una botella de champán, respondía rapidísimo y nos dio muy buenas recomendaciones. Sin duda repetiremos.',
     },
   },
   {
@@ -142,12 +170,12 @@ const AIRBNB_REVIEWS: AirbnbReview[] = [
     guestName: 'Maria',
     stayISO: '2025-09',
     texts: {
-      en: "The apartment is brand new — super comfortable beds, a full kitchen, beach towels, they even left food in the fridge. Two minutes' walk from the sandy beach, with everything you need to relax or go out. Laurent left us a restaurant guide for the area. We'd come back without hesitation.",
-      nl: 'Het appartement is splinternieuw — supercomfortabele bedden, een complete keuken, strandhanddoeken, er lag zelfs eten in de koelkast. Twee minuten lopen van het zandstrand, met alles om te ontspannen of uit te gaan. Laurent liet een restaurantgids voor de buurt achter. We komen zonder twijfel terug.',
-      fr: "L'appartement est flambant neuf — lits très confortables, cuisine complète, serviettes de plage, il y avait même de quoi manger dans le frigo. À deux minutes à pied de la plage de sable, avec tout ce qu'il faut pour se détendre ou sortir. Laurent nous a laissé un guide des restaurants du quartier. Nous reviendrons sans hésiter.",
-      it: "L'appartamento è nuovissimo — letti comodissimi, cucina completa, teli mare, persino qualcosa da mangiare in frigo. A due minuti a piedi dalla spiaggia di sabbia, con tutto quello che serve per rilassarsi o uscire. Laurent ci ha lasciato una guida ai ristoranti della zona. Torneremmo senza pensarci.",
-      de: 'Die Wohnung ist nagelneu — superbequeme Betten, komplette Küche, Strandtücher, sogar etwas zu essen im Kühlschrank. Zwei Gehminuten vom Sandstrand, mit allem, was man zum Entspannen oder Ausgehen braucht. Laurent hinterließ uns einen Restaurantführer fürs Viertel. Wir kämen jederzeit wieder.',
-      es: 'El apartamento está completamente nuevo — camas comodísimas, cocina completa, toallas de playa, hasta comida en la nevera. A dos minutos andando de la playa de arena, con todo para relajarse o salir… tú decides. Laurent nos dejó una guía de restaurantes de la zona. Volveríamos sin dudarlo.',
+      en: "The apartment is brand new, super comfortable beds, a full kitchen, beach towels, they even left food in the fridge. Two minutes' walk from the sandy beach, with everything you need to relax or go out. Laurent left us a restaurant guide for the area. We'd come back without hesitation.",
+      nl: 'Het appartement is splinternieuw, supercomfortabele bedden, een complete keuken, strandhanddoeken, er lag zelfs eten in de koelkast. Twee minuten lopen van het zandstrand, met alles om te ontspannen of uit te gaan. Laurent liet een restaurantgids voor de buurt achter. We komen zonder twijfel terug.',
+      fr: "L'appartement est flambant neuf, lits très confortables, cuisine complète, serviettes de plage, il y avait même de quoi manger dans le frigo. À deux minutes à pied de la plage de sable, avec tout ce qu'il faut pour se détendre ou sortir. Laurent nous a laissé un guide des restaurants du quartier. Nous reviendrons sans hésiter.",
+      it: "L'appartamento è nuovissimo, letti comodissimi, cucina completa, teli mare, persino qualcosa da mangiare in frigo. A due minuti a piedi dalla spiaggia di sabbia, con tutto quello che serve per rilassarsi o uscire. Laurent ci ha lasciato una guida ai ristoranti della zona. Torneremmo senza pensarci.",
+      de: 'Die Wohnung ist nagelneu, superbequeme Betten, komplette Küche, Strandtücher, sogar etwas zu essen im Kühlschrank. Zwei Gehminuten vom Sandstrand, mit allem, was man zum Entspannen oder Ausgehen braucht. Laurent hinterließ uns einen Restaurantführer fürs Viertel. Wir kämen jederzeit wieder.',
+      es: 'El apartamento está completamente nuevo, camas comodísimas, cocina completa, toallas de playa, hasta comida en la nevera. A dos minutos andando de la playa de arena, con todo para relajarse o salir… tú decides. Laurent nos dejó una guía de restaurantes de la zona. Volveríamos sin dudarlo.',
     },
   },
   {
@@ -155,15 +183,28 @@ const AIRBNB_REVIEWS: AirbnbReview[] = [
     guestName: 'Carlos',
     stayISO: '2025-07',
     texts: {
-      en: "One of the most complete Airbnbs I've stayed in — renovated, with full kitchenware, linens, towels, even cooking ingredients. Ideal location close to the beach and restaurants. Unbeatable service from Laurent.",
-      nl: "Een van de meest complete Airbnb's waar ik ooit verbleef — gerenoveerd, met volledig keukengerei, beddengoed, handdoeken en zelfs kookingrediënten. Ideale ligging bij het strand en de restaurants. Onverslaanbare service van Laurent.",
-      fr: "L'un des Airbnb les plus complets où j'aie séjourné — rénové, avec toute la vaisselle, le linge, les serviettes et même des ingrédients de cuisine. Emplacement idéal près de la plage et des restaurants. Service imbattable de Laurent.",
-      it: 'Uno degli Airbnb più completi in cui abbia mai soggiornato — ristrutturato, con stoviglie complete, biancheria, asciugamani e persino gli ingredienti per cucinare. Posizione ideale vicino a spiaggia e ristoranti. Servizio imbattibile da parte di Laurent.',
-      de: 'Eines der bestausgestatteten Airbnbs, in denen ich je war — renoviert, mit komplettem Küchenzubehör, Bettwäsche, Handtüchern und sogar Kochzutaten. Ideale Lage nahe Strand und Restaurants. Unschlagbarer Service von Laurent.',
-      es: 'Uno de los Airbnb más completos en los que he estado — reformado, con utensilios de cocina, sábanas, toallas e incluso ingredientes para cocinar. Ubicación ideal cerca de la playa y los restaurantes. Atención inmejorable de Laurent.',
+      en: "One of the most complete holiday apartments I've stayed in, renovated, with full kitchenware, linens, towels, even cooking ingredients. Ideal location close to the beach and restaurants. Unbeatable service from Laurent.",
+      nl: "Een van de meest complete vakantieappartementen waar ik ooit verbleef, gerenoveerd, met volledig keukengerei, beddengoed, handdoeken en zelfs kookingrediënten. Ideale ligging bij het strand en de restaurants. Onverslaanbare service van Laurent.",
+      fr: "L'un des appartements de vacances les plus complets où j'aie séjourné, rénové, avec toute la vaisselle, le linge, les serviettes et même des ingrédients de cuisine. Emplacement idéal près de la plage et des restaurants. Service imbattable de Laurent.",
+      it: 'Una delle case vacanze più complete in cui abbia mai soggiornato, ristrutturata, con stoviglie complete, biancheria, asciugamani e persino gli ingredienti per cucinare. Posizione ideale vicino a spiaggia e ristoranti. Servizio imbattibile da parte di Laurent.',
+      de: 'Eine der bestausgestatteten Ferienwohnungen, in denen ich je war, renoviert, mit komplettem Küchenzubehör, Bettwäsche, Handtüchern und sogar Kochzutaten. Ideale Lage nahe Strand und Restaurants. Unschlagbarer Service von Laurent.',
+      es: 'Uno de los apartamentos vacacionales más completos en los que he estado, reformado, con utensilios de cocina, sábanas, toallas e incluso ingredientes para cocinar. Ubicación ideal cerca de la playa y los restaurantes. Atención inmejorable de Laurent.',
     },
   },
 ];
+
+const reviewStats = {
+  overall: '5.0',
+  reviewCount: '17',
+  categories: [
+    { labelKey: 'reviews.cleanliness', value: '5.00' },
+    { labelKey: 'reviews.accuracy', value: '5.00' },
+    { labelKey: 'reviews.checkIn', value: '5.00' },
+    { labelKey: 'reviews.communication', value: '5.00' },
+    { labelKey: 'reviews.location', value: '4.94' },
+    { labelKey: 'reviews.value', value: '4.82' },
+  ],
+};
 
 const TestimonialsSection = () => {
   const { t, language } = useLanguage();
@@ -193,7 +234,7 @@ const TestimonialsSection = () => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  // Database reviews (owner-managed via the admin panel), then the Airbnb set —
+  // Database reviews (owner-managed via the admin panel), then the Airbnb set,
   // deduped by guest name so a review imported into the database never shows twice.
   const dbReviews = reviews.filter((review) => review.isVisible);
   const dbNames = new Set(dbReviews.map((r) => r.guestName.trim().toLowerCase().split(' ')[0]));
@@ -210,13 +251,13 @@ const TestimonialsSection = () => {
     isVisible: true,
     isVerified: true,
     isAirbnb: true,
+    originalText: r.texts.en,
+    originalLanguage: 'en',
   }));
   const displayReviews = [
     ...airbnbCards,
     ...dbReviews.map((r) => ({ ...r, isAirbnb: false })),
   ];
-
-  const badge = BADGE_LABELS[language] || BADGE_LABELS.en;
 
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, i) => (
@@ -257,7 +298,7 @@ const TestimonialsSection = () => {
         // English reviews to Spanish
         'One of the most complete Airbnbs I have stayed in, renovated, with complete kitchen utensils, sheets, towels, cooking ingredients. Very happy with our stay on the floor, we went as a family to spend the weekend. Ideal location near the beach and restaurants. Unbeatable attention from Laurent.': 'Uno de los Airbnb más completos en los que me he alojado, renovado, con utensilios de cocina completos, sábanas, toallas, ingredientes para cocinar. Muy contentos con nuestra estancia en el piso, fuimos en familia a pasar el fin de semana. Ubicación ideal cerca de la playa y restaurantes. Atención inmejorable de Laurent.',
         
-        'We found exactly what we were looking for — affordable luxury within walking distance to the beach. The terrace, beautifully lit at sunset, became our favorite spot to relax. Great value for money and impeccably clean.': 'Encontramos exactamente lo que buscábamos: lujo asequible a poca distancia de la playa. La terraza, bellamente iluminada al atardecer, se convirtió en nuestro lugar favorito para relajarnos. Excelente relación calidad-precio e impecablemente limpio.',
+        'We found exactly what we were looking for, affordable luxury within walking distance to the beach. The terrace, beautifully lit at sunset, became our favorite spot to relax. Great value for money and impeccably clean.': 'Encontramos exactamente lo que buscábamos: lujo asequible a poca distancia de la playa. La terraza, bellamente iluminada al atardecer, se convirtió en nuestro lugar favorito para relajarnos. Excelente relación calidad-precio e impecablemente limpio.',
         
         'An exceptional place, truly just 3 minutes from the beach and surrounded by Javea\'s best restaurants and bars. The nightlife is so close that walking is the only option you\'ll need. The apartment strikes the perfect balance between comfort and affordability. The kitchen is fully equipped for home cooking, and the host even welcomed us with a bottle of sparkling wine (cava).': 'Un lugar excepcional, realmente a solo 3 minutos de la playa y rodeado de los mejores restaurantes y bares de Jávea. La vida nocturna está tan cerca que caminar será la única opción que necesitarás. El apartamento logra el equilibrio perfecto entre comodidad y asequibilidad. La cocina está totalmente equipada para cocinar en casa, y el anfitrión incluso nos recibió con una botella de vino espumoso (cava).',
         
@@ -275,7 +316,7 @@ const TestimonialsSection = () => {
         // English reviews to French
         'One of the most complete Airbnbs I have stayed in, renovated, with complete kitchen utensils, sheets, towels, cooking ingredients. Very happy with our stay on the floor, we went as a family to spend the weekend. Ideal location near the beach and restaurants. Unbeatable attention from Laurent.': 'L\'un des Airbnb les plus complets où j\'ai séjourné, rénové, avec des ustensiles de cuisine complets, draps, serviettes, ingrédients de cuisine. Très heureux de notre séjour dans l\'appartement, nous sommes venus en famille passer le week-end. Emplacement idéal près de la plage et des restaurants. Attention imbattable de Laurent.',
         
-        'We found exactly what we were looking for — affordable luxury within walking distance to the beach. The terrace, beautifully lit at sunset, became our favorite spot to relax. Great value for money and impeccably clean.': 'Nous avons trouvé exactement ce que nous cherchions — un luxe abordable à distance de marche de la plage. La terrasse, magnifiquement éclairée au coucher du soleil, est devenue notre endroit favori pour nous détendre. Excellent rapport qualité-prix et impeccablement propre.',
+        'We found exactly what we were looking for, affordable luxury within walking distance to the beach. The terrace, beautifully lit at sunset, became our favorite spot to relax. Great value for money and impeccably clean.': 'Nous avons trouvé exactement ce que nous cherchions, un luxe abordable à distance de marche de la plage. La terrasse, magnifiquement éclairée au coucher du soleil, est devenue notre endroit favori pour nous détendre. Excellent rapport qualité-prix et impeccablement propre.',
         
         'An exceptional place, just 3 minutes from the beach and surrounded by Javea\'s best restaurants and bars. The nightlife is so close that you\'ll only need your legs to get there. The apartment is brand new. The kitchen is fully equipped for cooking and the host even welcomed us with a bottle of Cava!': 'Un endroit exceptionnel, à seulement 3 minutes de la plage et entouré des meilleurs restaurants et bars de Javea. La vie nocturne est si proche que vous n\'aurez besoin que de vos jambes pour vous y rendre. L\'appartement est tout neuf. La cuisine est entièrement équipée pour cuisiner et l\'hôte nous a même accueillis avec une bouteille de Cava !',
         
@@ -301,7 +342,7 @@ const TestimonialsSection = () => {
         // English reviews to Dutch
         'One of the most complete Airbnbs I have stayed in, renovated, with complete kitchen utensils, sheets, towels, cooking ingredients. Very happy with our stay on the floor, we went as a family to spend the weekend. Ideal location near the beach and restaurants. Unbeatable attention from Laurent.': 'Een van de meest complete Airbnb\'s waar ik heb verbleven, gerenoveerd, met complete keukenbenodigdheden, lakens, handdoeken, kookingrediënten. Zeer tevreden met ons verblijf in het appartement, we gingen als familie het weekend doorbrengen. Ideale locatie nabij het strand en restaurants. Onverslaanbare aandacht van Laurent.',
         
-        'We found exactly what we were looking for — affordable luxury within walking distance to the beach. The terrace, beautifully lit at sunset, became our favorite spot to relax. Great value for money and impeccably clean.': 'We vonden precies wat we zochten — betaalbare luxe op loopafstand van het strand. Het terras, prachtig verlicht bij zonsondergang, werd onze favoriete plek om te ontspannen. Uitstekende prijs-kwaliteitverhouding en onberispelijk schoon.',
+        'We found exactly what we were looking for, affordable luxury within walking distance to the beach. The terrace, beautifully lit at sunset, became our favorite spot to relax. Great value for money and impeccably clean.': 'We vonden precies wat we zochten, betaalbare luxe op loopafstand van het strand. Het terras, prachtig verlicht bij zonsondergang, werd onze favoriete plek om te ontspannen. Uitstekende prijs-kwaliteitverhouding en onberispelijk schoon.',
         
         'An exceptional place, just 3 minutes from the beach and surrounded by Javea\'s best restaurants and bars. The nightlife is so close that you\'ll only need your legs to get there. The apartment is brand new. The kitchen is fully equipped for cooking and the host even welcomed us with a bottle of Cava!': 'Een uitzonderlijke plek, slechts 3 minuten van het strand en omringd door Javea\'s beste restaurants en bars. Het nachtleven is zo dichtbij dat je alleen je benen nodig hebt om er te komen. Het appartement is gloednieuw. De keuken is volledig uitgerust om te koken en de gastheer verwelkomde ons zelfs met een fles Cava!',
         
@@ -333,7 +374,7 @@ const TestimonialsSection = () => {
         // English reviews to German
         'One of the most complete Airbnbs I have stayed in, renovated, with complete kitchen utensils, sheets, towels, cooking ingredients. Very happy with our stay on the floor, we went as a family to spend the weekend. Ideal location near the beach and restaurants. Unbeatable attention from Laurent.': 'Eines der vollständigsten Airbnbs, in denen ich übernachtet habe, renoviert, mit kompletten Küchenutensilien, Bettwäsche, Handtüchern, Kochzutaten. Sehr zufrieden mit unserem Aufenthalt in der Wohnung, wir gingen als Familie, um das Wochenende zu verbringen. Ideale Lage in der Nähe des Strandes und der Restaurants. Unschlagbare Aufmerksamkeit von Laurent.',
         
-        'We found exactly what we were looking for — affordable luxury within walking distance to the beach. The terrace, beautifully lit at sunset, became our favorite spot to relax. Great value for money and impeccably clean.': 'Wir fanden genau das, was wir suchten — erschwinglicher Luxus in Gehweite zum Strand. Die Terrasse, wunderschön beleuchtet bei Sonnenuntergang, wurde unser Lieblingsplatz zum Entspannen. Ausgezeichnetes Preis-Leistungs-Verhältnis und tadellos sauber.',
+        'We found exactly what we were looking for, affordable luxury within walking distance to the beach. The terrace, beautifully lit at sunset, became our favorite spot to relax. Great value for money and impeccably clean.': 'Wir fanden genau das, was wir suchten, erschwinglicher Luxus in Gehweite zum Strand. Die Terrasse, wunderschön beleuchtet bei Sonnenuntergang, wurde unser Lieblingsplatz zum Entspannen. Ausgezeichnetes Preis-Leistungs-Verhältnis und tadellos sauber.',
         
         'An exceptional place, just 3 minutes from the beach and surrounded by Javea\'s best restaurants and bars. The nightlife is so close that you\'ll only need your legs to get there. The apartment is brand new. The kitchen is fully equipped for cooking and the host even welcomed us with a bottle of Cava!': 'Ein außergewöhnlicher Ort, nur 3 Minuten vom Strand entfernt und umgeben von Javeas besten Restaurants und Bars. Das Nachtleben ist so nah, dass Sie nur Ihre Beine brauchen, um dorthin zu gelangen. Die Wohnung ist brandneu. Die Küche ist vollständig zum Kochen ausgestattet und der Gastgeber begrüßte uns sogar mit einer Flasche Cava!',
         
@@ -388,51 +429,73 @@ const TestimonialsSection = () => {
   // No loading or empty branch: the Airbnb set is static, so the section always
   // has content, and database reviews slot in when the API responds.
   return (
-    <section className="section bg-sand">
+    <section id="reviews" className="section bg-sand">
       <div className="shell">
-        <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-16 items-end" data-reveal>
-          <div className="lg:col-span-7">
-            <p className="eyebrow mb-5">{t('testimonials.eyebrow')}</p>
-            <h2 className="display-lg mb-5">{t('testimonials.title')}</h2>
+        <div className="mb-14 md:mb-16" data-reveal>
+          <p className="eyebrow mb-5">{t('testimonials.eyebrow')}</p>
+          <h2 className="display-lg">{t('testimonials.title')}</h2>
 
-            {/* Verified from the live listing — see AIRBNB_META above. */}
-            <a
-              href={AIRBNB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex flex-wrap items-baseline gap-x-3 gap-y-1 group"
-              data-testid="airbnb-rating-badge"
+          <div className="mt-8 flex flex-col gap-8 xl:flex-row xl:items-start xl:justify-between">
+            <div
+              className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4 xl:flex xl:min-w-0 xl:flex-1 xl:flex-nowrap xl:gap-0"
+              role="list"
+              aria-label={t('reviews.ratingSummary')}
             >
-              <span className="flex gap-1 text-brass self-center" aria-hidden="true">
-                {renderStars(5)}
-              </span>
-              <span className="font-sans text-[0.9375rem] text-ink">
-                {AIRBNB_META.rating} {badge.onAirbnb}
-              </span>
-              <span className="font-sans text-[0.8125rem] text-stone">
-                {AIRBNB_META.count} {badge.reviews} · {badge.superhost}
-              </span>
-              <span className="font-sans text-[0.8125rem] text-stone underline underline-offset-4 decoration-stone/40 group-hover:decoration-ink group-hover:text-ink transition">
-                airbnb.com
-              </span>
-            </a>
-          </div>
+              <div className="min-w-0 xl:shrink-0 xl:pr-6" role="listitem">
+                <div className="flex items-center gap-x-3">
+                  <span className="flex shrink-0 gap-1 text-brass" aria-hidden="true">
+                    {renderStars(5)}
+                  </span>
+                  <span className="font-sans text-[0.9375rem] text-ink">
+                    {reviewStats.overall}
+                  </span>
+                </div>
+                <span className="mt-1 block text-[0.6875rem] tracking-[0.06em] text-stone">
+                  {t('reviews.overallRating')}
+                </span>
+              </div>
 
-          <div className="lg:col-span-5 flex lg:justify-end gap-3">
-            <button
-              onClick={scrollPrev}
-              className="w-12 h-12 border border-ink/20 flex items-center justify-center text-ink hover:bg-ink hover:text-bone transition-colors"
-              aria-label="Previous review"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={scrollNext}
-              className="w-12 h-12 border border-ink/20 flex items-center justify-center text-ink hover:bg-ink hover:text-bone transition-colors"
-              aria-label="Next review"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+              <div className="min-w-0 xl:shrink-0 xl:border-l xl:border-ink/12 xl:px-6" role="listitem">
+                <span className="block font-sans text-[0.9375rem] text-ink">
+                  {reviewStats.reviewCount}
+                </span>
+                <span className="mt-1 block text-[0.6875rem] tracking-[0.06em] text-stone">
+                  {t('reviews.count')}
+                </span>
+              </div>
+
+              {reviewStats.categories.map((stat) => (
+                <div
+                  key={stat.labelKey}
+                  className="min-w-0 xl:flex-1 xl:border-l xl:border-ink/12 xl:px-5"
+                  role="listitem"
+                >
+                  <span className="block font-sans text-[0.9375rem] text-ink">
+                    {stat.value}
+                  </span>
+                  <span className="mt-1 block text-[0.6875rem] tracking-[0.06em] text-stone">
+                    {t(stat.labelKey)}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex shrink-0 gap-3 xl:pl-5">
+              <button
+                onClick={scrollPrev}
+                className="w-12 h-12 border border-ink/20 flex items-center justify-center text-ink hover:bg-ink hover:text-bone transition-colors"
+                aria-label="Previous review"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={scrollNext}
+                className="w-12 h-12 border border-ink/20 flex items-center justify-center text-ink hover:bg-ink hover:text-bone transition-colors"
+                aria-label="Next review"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -445,31 +508,38 @@ const TestimonialsSection = () => {
 
                   <blockquote className="flex-1">
                     <p className="font-display text-[1.375rem] leading-[1.45] text-ink">
-                      {showOriginal[review.id]
-                        ? review.reviewText
-                        : translateText(review.reviewText, review.language, language)}
+                      {removePlatformName(
+                        showOriginal[review.id]
+                          ? review.originalText || review.reviewText
+                          : review.isAirbnb
+                            ? review.reviewText
+                            : translateText(review.reviewText, review.language, language),
+                        language,
+                      )}
                     </p>
                   </blockquote>
 
-                  {/* Airbnb entries are already shown translated on Airbnb itself,
-                      so there is no "original" to toggle to. */}
-                  {!review.isAirbnb && (
-                    <button
-                      onClick={() => toggleOriginal(review.id)}
-                      className="mt-5 self-start inline-flex items-center gap-1.5 text-[0.75rem] tracking-[0.08em] uppercase text-stone hover:text-ink transition-colors"
-                      data-testid={`button-toggle-original-${review.id}`}
-                    >
-                      <Globe className="w-3 h-3" />
-                      {showOriginal[review.id]
-                        ? t('reviews.hideOriginal').replace('{lang}', review.language.toUpperCase())
-                        : t('reviews.showOriginal').replace('{lang}', review.language.toUpperCase())}
-                    </button>
-                  )}
+                  <button
+                    onClick={() => toggleOriginal(review.id)}
+                    className="mt-5 self-start inline-flex items-center gap-1.5 text-[0.75rem] tracking-[0.08em] uppercase text-stone hover:text-ink transition-colors"
+                    data-testid={`button-toggle-original-${review.id}`}
+                  >
+                    <Globe className="w-3 h-3" />
+                    {showOriginal[review.id]
+                      ? t('reviews.hideOriginal').replace(
+                          '{lang}',
+                          (review.originalLanguage || review.language).toUpperCase(),
+                        )
+                      : t('reviews.showOriginal').replace(
+                          '{lang}',
+                          (review.originalLanguage || review.language).toUpperCase(),
+                        )}
+                  </button>
 
                   <figcaption className="mt-8 pt-5 border-t border-ink/10">
                     <p className="font-sans text-[0.9375rem] text-ink">{review.guestName}</p>
                     <p className="font-sans text-[0.8125rem] text-stone mt-0.5">
-                      {[review.country, review.stayDate, review.isAirbnb ? 'Airbnb' : null]
+                      {[review.country, review.stayDate]
                         .filter(Boolean)
                         .join(' · ')}
                     </p>

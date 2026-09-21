@@ -4,7 +4,7 @@ import { useEffect } from "react";
   Drives the [data-reveal] / [data-reveal-stagger] CSS in index.css.
 
   Elements are hidden only once `js-reveal` is set on <html>, and that happens only
-  when this hook runs and the visitor allows motion — so with JS off, with reduced
+  when this hook runs and the visitor allows motion, so with JS off, with reduced
   motion on, or if anything here throws, every element simply renders visible.
 
   A MutationObserver picks up nodes that mount later (reviews arrive from the API),

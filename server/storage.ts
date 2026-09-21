@@ -1,6 +1,19 @@
-import { users, type User, type InsertUser, type BookingInquiry, type InsertBookingInquiry, type PromotionalOffer, type InsertPromotionalOffer, promotionalOffers, bookingInquiries, calendarSettings, calendarEvents, type CalendarSettings, type InsertCalendarSettings, type CalendarEvent, type InsertCalendarEvent, visitorStats, visitorDetails, type VisitorStats, type InsertVisitorStats, type VisitorDetails, type InsertVisitorDetails, guestReviews, type GuestReview, type InsertGuestReview, dailyRates, type DailyRate, type InsertDailyRate } from "@shared/schema";
+import { users, type User, type InsertUser, type BookingInquiry, type InsertBookingInquiry, type PromotionalOffer, type InsertPromotionalOffer, promotionalOffers, bookingInquiries, calendarSettings, calendarEvents, type CalendarSettings, type InsertCalendarSettings, type CalendarEvent, type InsertCalendarEvent, visitorStats, visitorDetails, type VisitorStats, type InsertVisitorStats, type VisitorDetails, type InsertVisitorDetails, guestReviews, type GuestReview, type InsertGuestReview, dailyRates, type DailyRate, type InsertDailyRate, salesLeads, salesDownloads, blockedSalesIps, type SalesLead, type SalesDownload, type InsertSalesLead } from "@shared/schema";
 import { db } from "./db";
-import { eq, gte, lte, and, inArray, sql, asc } from "drizzle-orm";
+import { eq, gte, lte, lt, and, inArray, sql, asc, desc, ilike, or, type SQL } from "drizzle-orm";
+
+async function retryTransientNeonResult<T>(operation: () => Promise<T>): Promise<T> {
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    try {
+      return await operation();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "";
+      if (!message.includes("reading 'map'") || attempt === 3) throw error;
+      await new Promise((resolve) => setTimeout(resolve, 75 * 2 ** attempt));
+    }
+  }
+  throw new Error("Database operation failed");
+}
 
 // modify the interface with any CRUD methods
 // you might need
@@ -39,6 +52,21 @@ export interface IStorage {
   getRatesByDateRange(startDate: string, endDate: string): Promise<DailyRate[]>;
   upsertDailyRates(rates: InsertDailyRate[]): Promise<void>;
   deleteDailyRates(dates: string[]): Promise<void>;
+
+  // Private sale leads and brochure audit
+  getSalesLeadByEmail(email: string): Promise<SalesLead | undefined>;
+  getSalesLeadById(id: number): Promise<SalesLead | undefined>;
+  upsertSalesLead(lead: typeof salesLeads.$inferInsert): Promise<SalesLead>;
+  updateSalesLead(id: number, updates: Partial<typeof salesLeads.$inferInsert>): Promise<SalesLead | undefined>;
+  claimSalesBrochureDownload(id: number, downloadedAt: Date): Promise<boolean>;
+  releaseSalesBrochureDownload(id: number, downloadedAt: Date): Promise<void>;
+  listSalesLeads(options?: { search?: string; status?: string; buyerType?: string }): Promise<SalesLead[]>;
+  createSalesDownload(download: { leadId: number; language: string; reference: string }): Promise<SalesDownload>;
+  getSalesDownloads(leadId: number): Promise<SalesDownload[]>;
+  isSalesIpBlocked(ipAddress: string): Promise<boolean>;
+  blockSalesIp(block: { ipAddress: string; city?: string | null; country?: string | null }): Promise<void>;
+  unblockSalesIp(ipAddress: string): Promise<void>;
+  deleteExpiredSalesData(pendingBefore: Date, verifiedBefore: Date): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -321,6 +349,180 @@ export class DatabaseStorage implements IStorage {
       console.error("Error deleting daily rates:", error);
       throw error;
     }
+  }
+
+  async getSalesLeadByEmail(email: string): Promise<SalesLead | undefined> {
+    const [lead] = await retryTransientNeonResult(() =>
+      db.select().from(salesLeads).where(eq(salesLeads.email, email.toLowerCase()))
+    );
+    return lead || undefined;
+  }
+
+  async getSalesLeadById(id: number): Promise<SalesLead | undefined> {
+    const [lead] = await retryTransientNeonResult(() =>
+      db.select().from(salesLeads).where(eq(salesLeads.id, id))
+    );
+    return lead || undefined;
+  }
+
+  async upsertSalesLead(lead: typeof salesLeads.$inferInsert): Promise<SalesLead> {
+    const normalizedEmail = lead.email.toLowerCase();
+    await retryTransientNeonResult(() =>
+      db.insert(salesLeads)
+        .values({ ...lead, email: normalizedEmail })
+        .onConflictDoUpdate({
+          target: salesLeads.email,
+          set: {
+            firstName: lead.firstName,
+            lastName: lead.lastName,
+            phone: lead.phone,
+            ipAddress: lead.ipAddress,
+            ipCity: lead.ipCity,
+            ipCountry: lead.ipCountry,
+            buyerType: lead.buyerType,
+            agencyName: lead.agencyName,
+            preferredLanguage: lead.preferredLanguage,
+            consentGiven: lead.consentGiven,
+            consentTimestamp: lead.consentTimestamp,
+            verificationStatus: lead.verificationStatus,
+            verificationCodeHash: lead.verificationCodeHash,
+            verificationCreatedAt: lead.verificationCreatedAt,
+            verificationExpiresAt: lead.verificationExpiresAt,
+            verificationAttempts: lead.verificationAttempts,
+            lastCodeSentAt: lead.lastCodeSentAt,
+            verifiedAt: sql`NULL`,
+            brochureDownloadedAt: sql`NULL`,
+            updatedAt: new Date(),
+          },
+        })
+    );
+    const result = await this.getSalesLeadByEmail(normalizedEmail);
+    if (!result) throw new Error("Sales lead was not available after upsert");
+    return result;
+  }
+
+  async updateSalesLead(id: number, updates: Partial<typeof salesLeads.$inferInsert>): Promise<SalesLead | undefined> {
+    await retryTransientNeonResult(() =>
+      db.update(salesLeads)
+        .set({ ...updates, updatedAt: new Date() })
+        .where(eq(salesLeads.id, id))
+    );
+    return this.getSalesLeadById(id);
+  }
+
+  async claimSalesBrochureDownload(id: number, downloadedAt: Date): Promise<boolean> {
+    const claimed = await retryTransientNeonResult(() =>
+      db.update(salesLeads)
+        .set({ brochureDownloadedAt: downloadedAt, updatedAt: downloadedAt })
+        .where(and(
+          eq(salesLeads.id, id),
+          eq(salesLeads.verificationStatus, "verified"),
+          sql`${salesLeads.brochureDownloadedAt} IS NULL`,
+        ))
+        .returning({ id: salesLeads.id })
+    );
+    return claimed.length === 1;
+  }
+
+  async releaseSalesBrochureDownload(id: number, downloadedAt: Date): Promise<void> {
+    await retryTransientNeonResult(() =>
+      db.update(salesLeads)
+        .set({ brochureDownloadedAt: sql`NULL`, updatedAt: new Date() })
+        .where(and(
+          eq(salesLeads.id, id),
+          eq(salesLeads.brochureDownloadedAt, downloadedAt),
+        ))
+    );
+  }
+
+  async listSalesLeads(options: { search?: string; status?: string; buyerType?: string } = {}): Promise<SalesLead[]> {
+    const filters: SQL[] = [];
+    if (options.status) filters.push(eq(salesLeads.followUpStatus, options.status));
+    if (options.buyerType) filters.push(eq(salesLeads.buyerType, options.buyerType === "private" ? "private_buyer" : options.buyerType));
+    if (options.search) {
+      const query = `%${options.search}%`;
+      const searchFilter = or(
+        ilike(salesLeads.firstName, query),
+        ilike(salesLeads.lastName, query),
+        ilike(salesLeads.email, query),
+        ilike(salesLeads.phone, query),
+        ilike(salesLeads.agencyName, query),
+      );
+      if (searchFilter) filters.push(searchFilter);
+    }
+    return retryTransientNeonResult(() =>
+      db.select().from(salesLeads)
+        .where(filters.length ? and(...filters) : undefined)
+        .orderBy(desc(salesLeads.createdAt))
+    );
+  }
+
+  async createSalesDownload(download: { leadId: number; language: string; reference: string }): Promise<SalesDownload> {
+    await retryTransientNeonResult(() =>
+      db.insert(salesDownloads).values(download)
+    );
+    const [created] = await retryTransientNeonResult(() =>
+      db.select().from(salesDownloads).where(eq(salesDownloads.reference, download.reference))
+    );
+    if (!created) throw new Error("Sales download was not available after creation");
+    return created;
+  }
+
+  async getSalesDownloads(leadId: number): Promise<SalesDownload[]> {
+    return retryTransientNeonResult(() =>
+      db.select().from(salesDownloads)
+        .where(eq(salesDownloads.leadId, leadId))
+        .orderBy(desc(salesDownloads.downloadedAt))
+    );
+  }
+
+  async isSalesIpBlocked(ipAddress: string): Promise<boolean> {
+    const [result] = await retryTransientNeonResult(() =>
+      db.select({ count: sql<number>`COUNT(*)` })
+        .from(blockedSalesIps)
+        .where(eq(blockedSalesIps.ipAddress, ipAddress))
+    );
+    return Number(result?.count || 0) > 0;
+  }
+
+  async blockSalesIp(block: { ipAddress: string; city?: string | null; country?: string | null }): Promise<void> {
+    await retryTransientNeonResult(() =>
+      db.insert(blockedSalesIps)
+        .values(block)
+        .onConflictDoUpdate({
+          target: blockedSalesIps.ipAddress,
+          set: { city: block.city, country: block.country, blockedAt: new Date() },
+        })
+    );
+  }
+
+  async unblockSalesIp(ipAddress: string): Promise<void> {
+    await retryTransientNeonResult(() =>
+      db.delete(blockedSalesIps).where(eq(blockedSalesIps.ipAddress, ipAddress))
+    );
+  }
+
+  async deleteExpiredSalesData(pendingBefore: Date, verifiedBefore: Date): Promise<void> {
+    const staleCondition = or(
+      and(
+        eq(salesLeads.verificationStatus, "pending_verification"),
+        lt(salesLeads.createdAt, pendingBefore),
+      ),
+      and(
+        eq(salesLeads.verificationStatus, "verified"),
+        lt(salesLeads.verifiedAt, verifiedBefore),
+      ),
+    );
+
+    await retryTransientNeonResult(() =>
+      db.delete(salesDownloads).where(inArray(
+        salesDownloads.leadId,
+        db.select({ id: salesLeads.id }).from(salesLeads).where(staleCondition),
+      ))
+    );
+    await retryTransientNeonResult(() =>
+      db.delete(salesLeads).where(staleCondition)
+    );
   }
 }
 

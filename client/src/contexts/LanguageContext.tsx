@@ -125,7 +125,7 @@ const detectUserLanguage = (): Language => {
 };
 
 // Remember the resolved language in localStorage (client-side detection) AND a
-// cookie — the cookie is what lets the server answer the bare "/" in the right
+// cookie, the cookie is what lets the server answer the bare "/" in the right
 // language on the first response, before any JS has run.
 const persistLanguage = (lang: Language) => {
   localStorage.setItem('preferredLanguage', lang);
@@ -161,9 +161,10 @@ const translations = {
 
     // Apartment Section
     'apartment.title': 'The Apartment',
-    'apartment.description': "A first-floor apartment on the quiet Nou Fontana canal, renovated from the walls out — micro-cement, oak slats and forest green against clean white. Two double bedrooms sleep four, and the terrace hangs right over the water.",
+    'apartment.description': "A first-floor apartment on the quiet Nou Fontana canal, renovated from the walls out, micro-cement, oak slats and forest green against clean white. Two double bedrooms sleep four, and the terrace hangs right over the water.",
 
     // At Glance Section
+    'glance.label': 'At a glance',
     'glance.sleeps': 'Sleeps 4 guests',
     'glance.bedrooms': '2 double bedrooms',
     'glance.bathroom': '1 modern bathroom',
@@ -178,7 +179,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Rates & Policies',
-    'rates.description': "Three seasons, one straightforward price for each — and no platform fees when you book direct.",
+    'rates.description': "Three seasons, one straightforward price for each, and no platform fees when you book direct.",
     'rates.highSeason': 'High Season',
     'rates.highPeriod': 'June – September & holidays',
     'rates.highRate': 'From €210 per night',
@@ -189,8 +190,7 @@ const translations = {
     'rates.lowPeriod': 'November – March (outside holidays)',
     'rates.lowRate': 'From €130 per night',
     'rates.policies': 'Booking Policies',
-    'rates.policy1': 'Minimum 5 nights in high season',
-    'rates.policy2': 'Minimum 3 nights the rest of the year',
+    'rates.policy1': 'Minimum 11 nights, regardless of the season',
     'rates.policy3': 'Check-in from 4:00 PM',
     'rates.policy4': "Check-out by 1:00 PM",
 
@@ -200,12 +200,12 @@ const translations = {
     'location.transport': 'Getting Here',
     'location.transportDesc': 'About 75 minutes from Alicante Airport, 90 from Valencia',
     'location.restaurantTitle': 'Where the Locals Eat',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians — our guide covers the places we actually go, all within walking distance of the apartment.',
+    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, our guide covers the places we actually go, all within walking distance of the apartment.',
     'location.viewRecommendations': 'View Restaurant Guide',
 
     // Booking Section
     'booking.title': 'Check Availability & Book Direct',
-    'booking.description': "Send your dates and you will have an answer within a day. From first enquiry to key handover you deal with the owner — no call centre, no commission.",
+    'booking.description': "Send your dates and you will have an answer within a day. From first enquiry to key handover you deal with the owner, no call centre, no commission.",
     'booking.name': 'Full Name',
     'booking.email': 'Email Address',
     'booking.phone': 'Phone Number',
@@ -228,7 +228,6 @@ const translations = {
     'footer.rights': 'All rights reserved.',
     'footer.quickLinks': 'Quick Links',
     'footer.guides': 'Javea Guides',
-    'footer.followUs': 'Follow Us',
 
     // Form validation
     'form.nameRequired': 'Name must be at least 2 characters',
@@ -236,6 +235,7 @@ const translations = {
     'form.checkInRequired': 'Please select a check-in date',
     'form.checkOutRequired': 'Please select a check-out date',
     'form.checkOutMustBeAfterCheckIn': 'Check-out date must be after check-in date',
+    'form.minimumStayRequired': 'A minimum stay of 11 nights is required, regardless of the season.',
     'form.guestsRequired': 'Please select number of guests',
     'form.phoneRequired': 'Please enter a valid phone number',
     'form.spam': 'Spam protection triggered',
@@ -262,7 +262,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'The Apartment in Photos',
-    'gallery.description': "Living room, bedrooms, kitchen, bathroom, terrace — as they are, no wide-angle tricks.",
+    'gallery.description': "Living room, bedrooms, kitchen, bathroom, terrace, as they are, no wide-angle tricks.",
     'gallery.showAll': "View all photographs",
     'gallery.livingAreas': 'Living Areas',
     'gallery.bedrooms': 'Bedrooms',
@@ -301,17 +301,26 @@ const translations = {
     'testimonials.description': "What recent guests made of it.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, July 2025',
-    'testimonials.guest1Text': 'One of the most complete holiday apartments I have stayed in — renovated, with full kitchen equipment, sheets, towels, even cooking basics. Very happy with our family weekend. Ideal location near the beach and restaurants, and unbeatable attention from Laurent.',
+    'testimonials.guest1Text': 'One of the most complete holiday apartments I have stayed in, renovated, with full kitchen equipment, sheets, towels, even cooking basics. Very happy with our family weekend. Ideal location near the beach and restaurants, and unbeatable attention from Laurent.',
     'testimonials.guest2Name': 'Emma',
     'testimonials.guest2Location': 'Amsterdam, Netherlands, June 2025',
-    'testimonials.guest2Text': 'We found exactly what we were looking for — a comfortable apartment within walking distance of the beach at a fair price. The terrace, beautifully lit at sunset, became our favourite spot. Impeccably clean.',
+    'testimonials.guest2Text': 'We found exactly what we were looking for, a comfortable apartment within walking distance of the beach at a fair price. The terrace, beautifully lit at sunset, became our favourite spot. Impeccably clean.',
     'testimonials.guest3Name': 'Pierre & Marie',
     'testimonials.guest3Location': 'Lyon, France, June 2025',
-    'testimonials.guest3Text': 'Truly just 3 minutes from the beach, surrounded by Jávea\'s best restaurants and bars — walking is the only transport you need. The kitchen is fully equipped, and the host even welcomed us with a bottle of cava.',
+    'testimonials.guest3Text': 'Truly just 3 minutes from the beach, surrounded by Jávea\'s best restaurants and bars, walking is the only transport you need. The kitchen is fully equipped, and the host even welcomed us with a bottle of cava.',
 
     // Reviews Translation
     'reviews.showOriginal': 'Show original ({lang})',
     'reviews.hideOriginal': 'Hide original ({lang})',
+    'reviews.ratingSummary': 'Guest review rating summary',
+    'reviews.overallRating': 'Overall rating',
+    'reviews.count': 'Reviews',
+    'reviews.cleanliness': 'Cleanliness',
+    'reviews.accuracy': 'Accuracy',
+    'reviews.checkIn': 'Check-in',
+    'reviews.communication': 'Communication',
+    'reviews.location': 'Location',
+    'reviews.value': 'Value',
 
     // Interior Section
     'interior.group.bedrooms': "Bedrooms",
@@ -325,7 +334,7 @@ const translations = {
     'interior.kitchen': 'Forest-green fitted kitchen: induction hob, multifunction oven, dishwasher, Nespresso machine and LED task lighting.',
     'interior.lounge': "Open-plan lounge with an oak-slat media wall and a 55-inch smart TV.",
     'interior.lighting': 'Dimmable LED lighting throughout for easy evenings.',
-    'interior.patio': 'Private patio for slow breakfasts — or rinsing off sandy flip-flops.',
+    'interior.patio': 'Private patio for slow breakfasts, or rinsing off sandy flip-flops.',
     'interior.laundry': 'Washing machine on the patio, with room to store a bike or windsurf gear.',
     'interior.connectivity': 'Zoned air conditioning and fast fibre Wi-Fi throughout.',
 
@@ -368,14 +377,14 @@ const translations = {
 
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Why Stay at the Arenal',
-    'paradise.description1': 'The Arenal is Jávea\'s sandy beach: calm, shallow water, a long promenade of restaurants and bars, and everything you need within walking distance. It\'s the easiest base in town — you won\'t need the car.',
-    'paradise.description2': "Mornings on the sand, lunch on the promenade, an evening walk along the canal — and the coves, the old town and the Montgó whenever you want more. The Arenal keeps its restaurants and shops open all year round.",
+    'paradise.description1': 'The Arenal is Jávea\'s sandy beach: calm, shallow water, a long promenade of restaurants and bars, and everything you need within walking distance. It\'s the easiest base in town, you won\'t need the car.',
+    'paradise.description2': "Mornings on the sand, lunch on the promenade, an evening walk along the canal, and the coves, the old town and the Montgó whenever you want more. The Arenal keeps its restaurants and shops open all year round.",
     'paradise.beach.title': 'Arenal Beach',
     'paradise.beach.description': "Sand, shallow water and lifeguards through the season, with the promenade's restaurants directly behind it.",
     'paradise.watersports.title': 'Water Sports',
     'paradise.watersports.description': 'Kayak, paddle-board, jet-ski and diving operators cluster around the canal mouth, a few steps away.',
     'paradise.dining.title': 'Eating Out',
-    'paradise.dining.description': 'Breakfast to late dinner without moving the car — canal-side rice dishes at Amarre 152, sunset drinks at Tosca, and the whole promenade in between.',
+    'paradise.dining.description': 'Breakfast to late dinner without moving the car, canal-side rice dishes at Amarre 152, sunset drinks at Tosca, and the whole promenade in between.',
     'paradise.oldtown.title': 'The Old Town',
     'paradise.oldtown.description': '4 km away: Gothic church, covered market and weekly craft stalls. 15 minutes by bike, 5 by car.',
     'paradise.walks.title': 'Coastal Walks',
@@ -383,8 +392,8 @@ const translations = {
 
     // Availability Section
     'availability.title': 'Check Availability & Pricing',
-    'availability.subtitle': 'Live availability and seasonal rates — the calendar syncs with Airbnb daily',
-    'availability.note': 'Dates blocked on Airbnb can sometimes still be booked direct — ask us before ruling yours out.',
+    'availability.subtitle': 'Live availability and seasonal rates, the calendar syncs with Airbnb daily',
+    'availability.note': 'Dates blocked on Airbnb can sometimes still be booked direct, ask us before ruling yours out.',
 
     // Calendar
     'calendar.jan': 'Jan', 'calendar.feb': 'Feb', 'calendar.mar': 'Mar',
@@ -403,7 +412,7 @@ const translations = {
     'booking.midSeason': '• Mid season (April, May & October): from €160 per night',
     'booking.lowSeason': '• Low season (November – March outside holidays): from €130 per night',
     'booking.minimumStay': 'Minimum Stay',
-    'booking.minimumStayText': '5 nights in high season, 3 nights the rest of the year',
+    'booking.minimumStayText': 'Minimum 11 nights, regardless of the season',
     'booking.checkInOut': 'Check-in & Check-out',
     'booking.checkInTime': '• Check-in: from 4:00 PM',
     'booking.checkOutTime': "• Check-out: by 1:00 PM",
@@ -412,14 +421,14 @@ const translations = {
     'booking.directContact': 'Direct Contact',
     'booking.airbnb': 'Book on Airbnb',
     'booking.checkingAvailability': 'Checking availability...',
-    'booking.datesAvailable': '✅ These dates are available — continue with your booking.',
-    'booking.datesUnavailable': '❌ Those dates are taken. Try others — or ask us: Airbnb-blocked dates can sometimes be booked direct.',
+    'booking.datesAvailable': '✅ These dates are available, continue with your booking.',
+    'booking.datesUnavailable': '❌ Those dates are taken. Try others, or ask us: Airbnb-blocked dates can sometimes be booked direct.',
     'booking.nextAvailable': 'Next available dates:',
     'booking.useSuggestedDates': 'Use These Dates',
 
     // Recommendations Page
     'recommendations.title': 'Where to Eat & What to Do',
-    'recommendations.subtitle': 'Our honest shortlist for the Arenal and around — the places we send friends to.',
+    'recommendations.subtitle': 'Our honest shortlist for the Arenal and around, the places we send friends to.',
     'recommendations.restaurants': 'Restaurants',
     'recommendations.drinks': 'Bars & Drinks',
     'recommendations.breakfast': 'Breakfast & Bakery',
@@ -439,7 +448,7 @@ const translations = {
     'rec.loasis.hours': '12:30pm–11pm daily',
     'rec.casalili.desc': 'Fresh, authentic Asian cooking',
     'rec.casalili.hours': '12:30–4pm & 6:30–11pm daily',
-    'rec.carnaval.desc': 'Modern fusion — sushi, burgers and poke bowls',
+    'rec.carnaval.desc': 'Modern fusion, sushi, burgers and poke bowls',
     'rec.carnaval.hours': 'Non-stop every day',
     'rec.caramel.desc': 'French-style bakery with fresh pastries and proper coffee',
     'rec.caramel.hours': '7:30am–7:30pm daily',
@@ -453,7 +462,7 @@ const translations = {
     'recommendations.activities': 'Activities',
     'recommendations.shopping': 'Shopping',
     'recommendations.contact': 'Need a Hand?',
-    'recommendations.contactText': 'Message us any time during your stay — for directions, bookings or a local tip.',
+    'recommendations.contactText': 'Message us any time during your stay, for directions, bookings or a local tip.',
     'recommendations.backToHome': 'Back to Home',
     'contact.phone': 'Call me',
     'contact.whatsapp': 'Send me a WhatsApp',
@@ -494,9 +503,10 @@ const translations = {
 
     // Apartment Section
     'apartment.title': 'Het Appartement',
-    'apartment.description': "Een appartement op de eerste verdieping aan het rustige Nou Fontana-kanaal, tot op het casco gerenoveerd: microcement, eiken lamellen en dennengroen tegen strak wit. In de twee slaapkamers — elk met een tweepersoonsbed — slaap je met z'n vieren, en het terras hangt pal boven het water.",
+    'apartment.description': "Een appartement op de eerste verdieping aan het rustige Nou Fontana-kanaal, tot op het casco gerenoveerd: microcement, eiken lamellen en dennengroen tegen strak wit. In de twee slaapkamers, elk met een tweepersoonsbed, slaap je met z'n vieren, en het terras hangt pal boven het water.",
 
     // At Glance Section
+    'glance.label': 'In één oogopslag',
     'glance.sleeps': 'Voor 4 personen',
     'glance.bedrooms': '2 slaapkamers',
     'glance.bathroom': '1 moderne badkamer',
@@ -511,7 +521,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Tarieven & Voorwaarden',
-    'rates.description': "Drie seizoenen, elk met één duidelijke prijs — en geen servicekosten als je direct bij de eigenaar boekt.",
+    'rates.description': "Drie seizoenen, elk met één duidelijke prijs, en geen servicekosten als je direct bij de eigenaar boekt.",
     'rates.highSeason': 'Hoogseizoen',
     'rates.highPeriod': 'Juni – september & feestdagen',
     'rates.highRate': 'Vanaf €210 per nacht',
@@ -522,8 +532,7 @@ const translations = {
     'rates.lowPeriod': 'November – maart (buiten feestdagen)',
     'rates.lowRate': 'Vanaf €130 per nacht',
     'rates.policies': 'Boekingsvoorwaarden',
-    'rates.policy1': 'Minimaal 5 nachten in het hoogseizoen',
-    'rates.policy2': 'Minimaal 3 nachten in de rest van het jaar',
+    'rates.policy1': 'Minimaal 11 nachten, ongeacht het seizoen',
     'rates.policy3': 'Inchecken vanaf 16:00 uur',
     'rates.policy4': "Uitchecken vóór 13:00 uur",
 
@@ -533,12 +542,12 @@ const translations = {
     'location.transport': 'Bereikbaarheid',
     'location.transportDesc': 'Circa 75 minuten van Alicante Airport, 90 van Valencia',
     'location.restaurantTitle': 'Waar de locals eten',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians — onze gids staat vol adressen waar we zelf komen, allemaal op loopafstand van het appartement.',
+    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, onze gids staat vol adressen waar we zelf komen, allemaal op loopafstand van het appartement.',
     'location.viewRecommendations': 'Bekijk de Restaurantgids',
 
     // Booking Section
     'booking.title': 'Check Beschikbaarheid & Boek Direct',
-    'booking.description': "Stuur je reisdata en je krijgt binnen een dag antwoord. Van eerste aanvraag tot sleuteloverdracht heb je rechtstreeks contact met de eigenaar — geen callcenter, geen commissie.",
+    'booking.description': "Stuur je reisdata en je krijgt binnen een dag antwoord. Van eerste aanvraag tot sleuteloverdracht heb je rechtstreeks contact met de eigenaar, geen callcenter, geen commissie.",
     'booking.name': 'Volledige Naam',
     'booking.email': 'E-mailadres',
     'booking.phone': 'Telefoonnummer',
@@ -561,7 +570,6 @@ const translations = {
     'footer.rights': 'Alle rechten voorbehouden.',
     'footer.quickLinks': 'Snelle Links',
     'footer.guides': 'Jávea-gidsen (in het Engels)',
-    'footer.followUs': 'Volg Ons',
 
     // Form validation
     'form.nameRequired': 'Naam moet minimaal 2 tekens bevatten',
@@ -569,6 +577,7 @@ const translations = {
     'form.checkInRequired': 'Kies een incheckdatum',
     'form.checkOutRequired': 'Kies een uitcheckdatum',
     'form.checkOutMustBeAfterCheckIn': 'De uitcheckdatum moet na de incheckdatum liggen',
+    'form.minimumStayRequired': 'Een verblijf van minimaal 11 nachten is vereist, ongeacht het seizoen.',
     'form.guestsRequired': 'Kies het aantal gasten',
     'form.phoneRequired': 'Vul een geldig telefoonnummer in',
     'form.spam': 'Spambeveiliging geactiveerd',
@@ -595,7 +604,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'Het Appartement in Beeld',
-    'gallery.description': "Woonkamer, slaapkamers, keuken, badkamer, terras — zoals ze echt zijn, zonder trucjes met de groothoeklens.",
+    'gallery.description': "Woonkamer, slaapkamers, keuken, badkamer, terras, zoals ze echt zijn, zonder trucjes met de groothoeklens.",
     'gallery.showAll': "Bekijk alle foto's",
     'gallery.livingAreas': 'Woonruimtes',
     'gallery.bedrooms': 'Slaapkamers',
@@ -634,17 +643,26 @@ const translations = {
     'testimonials.description': "Wat recente gasten ervan vonden.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, juli 2025',
-    'testimonials.guest1Text': 'Een van de meest complete vakantieappartementen waar ik ooit heb gelogeerd — gerenoveerd, met volledig uitgeruste keuken, lakens, handdoeken en zelfs basisingrediënten. Heel blij met ons familieweekend. Ideale ligging bij het strand en de restaurants, en geweldige service van Laurent.',
+    'testimonials.guest1Text': 'Een van de meest complete vakantieappartementen waar ik ooit heb gelogeerd, gerenoveerd, met volledig uitgeruste keuken, lakens, handdoeken en zelfs basisingrediënten. Heel blij met ons familieweekend. Ideale ligging bij het strand en de restaurants, en geweldige service van Laurent.',
     'testimonials.guest2Name': 'Emma',
     'testimonials.guest2Location': 'Amsterdam, juni 2025',
-    'testimonials.guest2Text': 'We vonden precies wat we zochten — een comfortabel appartement op loopafstand van het strand voor een eerlijke prijs. Het terras, prachtig verlicht bij zonsondergang, werd onze favoriete plek. Brandschoon.',
+    'testimonials.guest2Text': 'We vonden precies wat we zochten, een comfortabel appartement op loopafstand van het strand voor een eerlijke prijs. Het terras, prachtig verlicht bij zonsondergang, werd onze favoriete plek. Brandschoon.',
     'testimonials.guest3Name': 'Pierre & Marie',
     'testimonials.guest3Location': 'Lyon, Frankrijk, juni 2025',
-    'testimonials.guest3Text': 'Echt maar 3 minuten van het strand, omringd door de beste restaurants en bars van Jávea — lopen is het enige vervoer dat je nodig hebt. De keuken is compleet uitgerust en de gastheer verwelkomde ons zelfs met een fles cava.',
+    'testimonials.guest3Text': 'Echt maar 3 minuten van het strand, omringd door de beste restaurants en bars van Jávea, lopen is het enige vervoer dat je nodig hebt. De keuken is compleet uitgerust en de gastheer verwelkomde ons zelfs met een fles cava.',
 
     // Reviews Translation
     'reviews.showOriginal': 'Toon origineel ({lang})',
     'reviews.hideOriginal': 'Verberg origineel ({lang})',
+    'reviews.ratingSummary': 'Overzicht van gastbeoordelingen',
+    'reviews.overallRating': 'Algemene beoordeling',
+    'reviews.count': 'Beoordelingen',
+    'reviews.cleanliness': 'Netheid',
+    'reviews.accuracy': 'Nauwkeurigheid',
+    'reviews.checkIn': 'Inchecken',
+    'reviews.communication': 'Communicatie',
+    'reviews.location': 'Locatie',
+    'reviews.value': 'Prijs-kwaliteit',
 
     // Interior Section
     'interior.group.bedrooms': "Slaapkamers",
@@ -658,7 +676,7 @@ const translations = {
     'interior.kitchen': 'Flessengroene keuken: inductiekookplaat, multifunctionele oven, vaatwasser, Nespresso-apparaat en LED-werkverlichting.',
     'interior.lounge': "Open woonkamer met eikenhouten lattenwand en een 55-inch smart TV.",
     'interior.lighting': 'Dimbare LED-verlichting voor ontspannen avonden.',
-    'interior.patio': 'Eigen patio voor een rustig ontbijt — of om zanderige slippers af te spoelen.',
+    'interior.patio': 'Eigen patio voor een rustig ontbijt, of om zanderige slippers af te spoelen.',
     'interior.laundry': 'Wasmachine op de patio, met ruimte voor een fiets of surfspullen.',
     'interior.connectivity': 'Airco per zone en snelle glasvezel-wifi in het hele appartement.',
 
@@ -701,14 +719,14 @@ const translations = {
 
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Waarom het Arenal',
-    'paradise.description1': 'Het Arenal is het zandstrand van Jávea: rustig, ondiep water, een lange boulevard vol restaurants en bars, en alles wat je nodig hebt op loopafstand. De makkelijkste uitvalsbasis van de stad — de auto kan blijven staan.',
-    'paradise.description2': "'s Ochtends op het strand, 's middags lunchen op de boulevard, 's avonds een wandeling langs het kanaal — en de baaitjes, het oude centrum en de Montgó voor wanneer je meer wilt. De restaurants en winkels aan het Arenal strand zijn het hele jaar open — fijn als je hier overwintert.",
+    'paradise.description1': 'Het Arenal is het zandstrand van Jávea: rustig, ondiep water, een lange boulevard vol restaurants en bars, en alles wat je nodig hebt op loopafstand. De makkelijkste uitvalsbasis van de stad, de auto kan blijven staan.',
+    'paradise.description2': "'s Ochtends op het strand, 's middags lunchen op de boulevard, 's avonds een wandeling langs het kanaal, en de baaitjes, het oude centrum en de Montgó voor wanneer je meer wilt. De restaurants en winkels aan het Arenal strand zijn het hele jaar open, fijn als je hier overwintert.",
     'paradise.beach.title': 'Arenal strand',
     'paradise.beach.description': "Zand, ondiep water en strandbewaking in het seizoen, met de restaurants van de boulevard er direct achter.",
     'paradise.watersports.title': 'Watersport',
     'paradise.watersports.description': 'Kajak-, sup-, jetski- en duikverhuur zitten allemaal rond de monding van het kanaal, op een paar stappen afstand.',
     'paradise.dining.title': 'Uit Eten',
-    'paradise.dining.description': 'Van ontbijt tot late dinertjes zonder de auto te pakken — rijstgerechten aan het kanaal bij Amarre 152, zonsondergang met een drankje bij Tosca, en de hele boulevard daartussenin.',
+    'paradise.dining.description': 'Van ontbijt tot late dinertjes zonder de auto te pakken, rijstgerechten aan het kanaal bij Amarre 152, zonsondergang met een drankje bij Tosca, en de hele boulevard daartussenin.',
     'paradise.oldtown.title': 'De Oude Stad',
     'paradise.oldtown.description': 'Op 4 km: gotische kerk, overdekte markt en wekelijkse kraampjes. 15 minuten fietsen, 5 minuten met de auto.',
     'paradise.walks.title': 'Kustwandelingen',
@@ -716,8 +734,8 @@ const translations = {
 
     // Availability Section
     'availability.title': 'Beschikbaarheid & Prijzen',
-    'availability.subtitle': 'Actuele beschikbaarheid en seizoenstarieven — de kalender synchroniseert dagelijks met Airbnb',
-    'availability.note': 'Data die op Airbnb geblokkeerd zijn, kunnen soms tóch direct geboekt worden — vraag het ons even.',
+    'availability.subtitle': 'Actuele beschikbaarheid en seizoenstarieven, de kalender synchroniseert dagelijks met Airbnb',
+    'availability.note': 'Data die op Airbnb geblokkeerd zijn, kunnen soms tóch direct geboekt worden, vraag het ons even.',
 
     // Calendar
     'calendar.jan': 'Jan', 'calendar.feb': 'Feb', 'calendar.mar': 'Mrt',
@@ -736,7 +754,7 @@ const translations = {
     'booking.midSeason': '• Middenseizoen (april, mei & oktober): vanaf €160 per nacht',
     'booking.lowSeason': '• Laagseizoen (november – maart buiten feestdagen): vanaf €130 per nacht',
     'booking.minimumStay': 'Minimaal Verblijf',
-    'booking.minimumStayText': '5 nachten in het hoogseizoen, 3 nachten in de rest van het jaar',
+    'booking.minimumStayText': 'Minimaal 11 nachten, ongeacht het seizoen',
     'booking.checkInOut': 'In- & Uitchecken',
     'booking.checkInTime': '• Inchecken: vanaf 16:00 uur',
     'booking.checkOutTime': "• Uitchecken: vóór 13:00 uur",
@@ -745,14 +763,14 @@ const translations = {
     'booking.directContact': 'Direct Contact',
     'booking.airbnb': 'Boek via Airbnb',
     'booking.checkingAvailability': 'Beschikbaarheid controleren...',
-    'booking.datesAvailable': '✅ Deze data zijn beschikbaar — ga verder met je boeking.',
-    'booking.datesUnavailable': '❌ Deze data zijn bezet. Probeer andere — of vraag het ons: op Airbnb geblokkeerde data zijn soms direct wél te boeken.',
+    'booking.datesAvailable': '✅ Deze data zijn beschikbaar, ga verder met je boeking.',
+    'booking.datesUnavailable': '❌ Deze data zijn bezet. Probeer andere, of vraag het ons: op Airbnb geblokkeerde data zijn soms direct wél te boeken.',
     'booking.nextAvailable': 'Eerstvolgende beschikbare data:',
     'booking.useSuggestedDates': 'Gebruik Deze Data',
 
     // Recommendations Page
     'recommendations.title': 'Waar Eten & Wat Doen',
-    'recommendations.subtitle': 'Onze eerlijke shortlist voor het Arenal en omgeving — de adressen waar we vrienden naartoe sturen.',
+    'recommendations.subtitle': 'Onze eerlijke shortlist voor het Arenal en omgeving, de adressen waar we vrienden naartoe sturen.',
     'recommendations.restaurants': 'Restaurants',
     'recommendations.drinks': 'Bars & Drankjes',
     'recommendations.breakfast': 'Ontbijt & Bakkerij',
@@ -772,7 +790,7 @@ const translations = {
     'rec.loasis.hours': '12:30–23:00 (dagelijks)',
     'rec.casalili.desc': 'Verse, authentieke Aziatische keuken',
     'rec.casalili.hours': '12:30–16:00 & 18:30–23:00 (dagelijks)',
-    'rec.carnaval.desc': 'Moderne fusion — sushi, burgers en poké bowls',
+    'rec.carnaval.desc': 'Moderne fusion, sushi, burgers en poké bowls',
     'rec.carnaval.hours': 'Elke dag doorlopend open',
     'rec.caramel.desc': 'Franse bakkerij met verse croissants en goede koffie',
     'rec.caramel.hours': '7:30–19:30 (dagelijks)',
@@ -786,7 +804,7 @@ const translations = {
     'recommendations.activities': 'Activiteiten',
     'recommendations.shopping': 'Winkelen',
     'recommendations.contact': 'Hulp nodig?',
-    'recommendations.contactText': 'Stuur ons gerust een berichtje tijdens je verblijf — voor een routebeschrijving, reservering of een lokale tip.',
+    'recommendations.contactText': 'Stuur ons gerust een berichtje tijdens je verblijf, voor een routebeschrijving, reservering of een lokale tip.',
     'recommendations.backToHome': 'Terug naar Home',
     'contact.phone': 'Bel me',
     'contact.whatsapp': 'Stuur me een WhatsApp',
@@ -827,9 +845,10 @@ const translations = {
 
     // Apartment Section
     'apartment.title': 'L\'Appartement',
-    'apartment.description': "Un appartement au premier étage, au bord du paisible canal Nou Fontana, rénové de fond en comble — béton ciré, tasseaux de chêne et vert forêt sur blanc immaculé. Deux chambres doubles offrent quatre couchages, et la terrasse surplombe directement l'eau.",
+    'apartment.description': "Un appartement au premier étage, au bord du paisible canal Nou Fontana, rénové de fond en comble, béton ciré, tasseaux de chêne et vert forêt sur blanc immaculé. Deux chambres doubles offrent quatre couchages, et la terrasse surplombe directement l'eau.",
 
     // At Glance Section
+    'glance.label': 'En un coup d’œil',
     'glance.sleeps': 'Pour 4 personnes',
     'glance.bedrooms': '2 chambres doubles',
     'glance.bathroom': '1 salle de bain moderne',
@@ -844,7 +863,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Tarifs & Conditions',
-    'rates.description': "Trois saisons, un tarif clair pour chacune — et pas de frais de plateforme quand vous réservez en direct.",
+    'rates.description': "Trois saisons, un tarif clair pour chacune, et pas de frais de plateforme quand vous réservez en direct.",
     'rates.highSeason': 'Haute Saison',
     'rates.highPeriod': 'Juin – septembre & jours fériés',
     'rates.highRate': 'Dès 210 € la nuit',
@@ -855,8 +874,7 @@ const translations = {
     'rates.lowPeriod': 'Novembre – mars (hors vacances)',
     'rates.lowRate': 'Dès 130 € la nuit',
     'rates.policies': 'Conditions de Réservation',
-    'rates.policy1': '5 nuits minimum en haute saison',
-    'rates.policy2': '3 nuits minimum le reste de l\'année',
+    'rates.policy1': '11 nuits minimum, quelle que soit la saison',
     'rates.policy3': 'Arrivée à partir de 16 h',
     'rates.policy4': "Départ avant 13 h",
 
@@ -866,12 +884,12 @@ const translations = {
     'location.transport': 'Accès',
     'location.transportDesc': 'Environ 1 h 15 de l\'aéroport d\'Alicante, 1 h 30 de Valence',
     'location.restaurantTitle': 'Où mangent les habitués',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians — notre guide réunit les adresses où nous allons vraiment, toutes accessibles à pied depuis l\'appartement.',
+    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, notre guide réunit les adresses où nous allons vraiment, toutes accessibles à pied depuis l\'appartement.',
     'location.viewRecommendations': 'Voir le Guide des Restaurants',
 
     // Booking Section
     'booking.title': 'Vérifier les Disponibilités & Réserver en Direct',
-    'booking.description': "Envoyez vos dates : réponse sous 24 h. De la première demande à la remise des clés, vous échangez directement avec le propriétaire — sans centre d'appels, sans commission.",
+    'booking.description': "Envoyez vos dates : réponse sous 24 h. De la première demande à la remise des clés, vous échangez directement avec le propriétaire, sans centre d'appels, sans commission.",
     'booking.name': 'Nom Complet',
     'booking.email': 'Adresse E-mail',
     'booking.phone': 'Numéro de Téléphone',
@@ -894,7 +912,6 @@ const translations = {
     'footer.rights': 'Tous droits réservés.',
     'footer.quickLinks': 'Liens Rapides',
     'footer.guides': 'Guides Jávea (en anglais)',
-    'footer.followUs': 'Suivez-nous',
 
     // Form validation
     'form.nameRequired': 'Le nom doit contenir au moins 2 caractères',
@@ -902,6 +919,7 @@ const translations = {
     'form.checkInRequired': 'Veuillez choisir une date d\'arrivée',
     'form.checkOutRequired': 'Veuillez choisir une date de départ',
     'form.checkOutMustBeAfterCheckIn': 'La date de départ doit être postérieure à la date d\'arrivée',
+    'form.minimumStayRequired': 'Un séjour minimum de 11 nuits est requis, quelle que soit la saison.',
     'form.guestsRequired': 'Veuillez indiquer le nombre de personnes',
     'form.phoneRequired': 'Veuillez saisir un numéro de téléphone valide',
     'form.spam': 'Protection anti-spam déclenchée',
@@ -928,7 +946,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'L\'Appartement en Photos',
-    'gallery.description': "Salon, chambres, cuisine, salle de bain, terrasse — le tout tel quel, sans grand angle flatteur.",
+    'gallery.description': "Salon, chambres, cuisine, salle de bain, terrasse, le tout tel quel, sans grand angle flatteur.",
     'gallery.showAll': "Voir toutes les photos",
     'gallery.livingAreas': 'Pièces à Vivre',
     'gallery.bedrooms': 'Chambres',
@@ -967,17 +985,26 @@ const translations = {
     'testimonials.description': "Ce qu'en ont pensé nos derniers voyageurs.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, juillet 2025',
-    'testimonials.guest1Text': 'L\'un des appartements de vacances les plus complets où j\'ai séjourné — rénové, avec cuisine entièrement équipée, draps, serviettes et même des ingrédients de base. Très contents de notre week-end en famille. Emplacement idéal près de la plage et des restaurants, et un accueil irréprochable de Laurent.',
+    'testimonials.guest1Text': 'L\'un des appartements de vacances les plus complets où j\'ai séjourné, rénové, avec cuisine entièrement équipée, draps, serviettes et même des ingrédients de base. Très contents de notre week-end en famille. Emplacement idéal près de la plage et des restaurants, et un accueil irréprochable de Laurent.',
     'testimonials.guest2Name': 'Emma',
     'testimonials.guest2Location': 'Amsterdam, Pays-Bas, juin 2025',
-    'testimonials.guest2Text': 'Exactement ce que nous cherchions — un appartement confortable à quelques minutes à pied de la plage, à un prix juste. La terrasse, joliment éclairée au coucher du soleil, est devenue notre endroit préféré. Propreté impeccable.',
+    'testimonials.guest2Text': 'Exactement ce que nous cherchions, un appartement confortable à quelques minutes à pied de la plage, à un prix juste. La terrasse, joliment éclairée au coucher du soleil, est devenue notre endroit préféré. Propreté impeccable.',
     'testimonials.guest3Name': 'Pierre & Marie',
     'testimonials.guest3Location': 'Lyon, France, juin 2025',
-    'testimonials.guest3Text': 'Vraiment à 3 minutes de la plage, entouré des meilleurs restaurants et bars de Jávea — la marche est le seul moyen de transport dont vous aurez besoin. La cuisine est parfaitement équipée, et l\'hôte nous a même accueillis avec une bouteille de cava.',
+    'testimonials.guest3Text': 'Vraiment à 3 minutes de la plage, entouré des meilleurs restaurants et bars de Jávea, la marche est le seul moyen de transport dont vous aurez besoin. La cuisine est parfaitement équipée, et l\'hôte nous a même accueillis avec une bouteille de cava.',
 
     // Reviews Translation
     'reviews.showOriginal': 'Voir l\'original ({lang})',
     'reviews.hideOriginal': 'Masquer l\'original ({lang})',
+    'reviews.ratingSummary': 'Résumé des évaluations des voyageurs',
+    'reviews.overallRating': 'Note globale',
+    'reviews.count': 'Avis',
+    'reviews.cleanliness': 'Propreté',
+    'reviews.accuracy': 'Précision',
+    'reviews.checkIn': 'Arrivée',
+    'reviews.communication': 'Communication',
+    'reviews.location': 'Emplacement',
+    'reviews.value': 'Rapport qualité-prix',
 
     // Interior Section
     'interior.group.bedrooms': "Chambres",
@@ -991,7 +1018,7 @@ const translations = {
     'interior.kitchen': 'Cuisine vert forêt : plaque à induction, four multifonction, lave-vaisselle, machine Nespresso et éclairage LED.',
     'interior.lounge': "Salon ouvert avec mur TV en lattes de chêne et smart TV 55 pouces.",
     'interior.lighting': 'Éclairage LED à intensité variable pour des soirées tranquilles.',
-    'interior.patio': 'Patio privé pour les petits-déjeuners au calme — ou rincer les tongs pleines de sable.',
+    'interior.patio': 'Patio privé pour les petits-déjeuners au calme, ou rincer les tongs pleines de sable.',
     'interior.laundry': 'Lave-linge sur le patio, avec de la place pour ranger un vélo ou une planche.',
     'interior.connectivity': 'Climatisation par zones et wifi fibre rapide dans tout l\'appartement.',
 
@@ -1034,14 +1061,14 @@ const translations = {
 
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Pourquoi l\'Arenal',
-    'paradise.description1': 'L\'Arenal, c\'est la plage de sable de Jávea : une eau calme et peu profonde, une longue promenade de restaurants et de bars, et tout le nécessaire accessible à pied. La base la plus pratique de la ville — la voiture peut rester au parking.',
-    'paradise.description2': "Le matin sur le sable, le déjeuner sur la promenade, la balade du soir le long du canal — et les criques, la vieille ville et le Montgó quand vous avez envie d'en voir plus. À l'Arenal, restaurants et commerces restent ouverts toute l'année.",
+    'paradise.description1': 'L\'Arenal, c\'est la plage de sable de Jávea : une eau calme et peu profonde, une longue promenade de restaurants et de bars, et tout le nécessaire accessible à pied. La base la plus pratique de la ville, la voiture peut rester au parking.',
+    'paradise.description2': "Le matin sur le sable, le déjeuner sur la promenade, la balade du soir le long du canal, et les criques, la vieille ville et le Montgó quand vous avez envie d'en voir plus. À l'Arenal, restaurants et commerces restent ouverts toute l'année.",
     'paradise.beach.title': 'Plage de l\'Arenal',
-    'paradise.beach.description': "Du sable, une eau peu profonde, une baignade surveillée en saison — et les restaurants de la promenade juste derrière.",
+    'paradise.beach.description': "Du sable, une eau peu profonde, une baignade surveillée en saison, et les restaurants de la promenade juste derrière.",
     'paradise.watersports.title': 'Sports Nautiques',
     'paradise.watersports.description': 'Kayak, paddle, jet-ski et clubs de plongée sont regroupés à l\'embouchure du canal, à quelques pas.',
     'paradise.dining.title': 'Bien Manger',
-    'paradise.dining.description': 'Du petit-déjeuner au dîner tardif sans toucher à la voiture — riz au bord du canal chez Amarre 152, apéritif au coucher du soleil chez Tosca, et toute la promenade entre les deux.',
+    'paradise.dining.description': 'Du petit-déjeuner au dîner tardif sans toucher à la voiture, riz au bord du canal chez Amarre 152, apéritif au coucher du soleil chez Tosca, et toute la promenade entre les deux.',
     'paradise.oldtown.title': 'La Vieille Ville',
     'paradise.oldtown.description': 'À 4 km : église gothique, marché couvert et étals artisanaux hebdomadaires. 15 minutes à vélo, 5 en voiture.',
     'paradise.walks.title': 'Sentiers Côtiers',
@@ -1049,8 +1076,8 @@ const translations = {
 
     // Availability Section
     'availability.title': 'Disponibilités & Tarifs',
-    'availability.subtitle': 'Disponibilités en temps réel et tarifs saisonniers — le calendrier se synchronise chaque jour avec Airbnb',
-    'availability.note': 'Des dates bloquées sur Airbnb restent parfois réservables en direct — demandez-nous avant d\'y renoncer.',
+    'availability.subtitle': 'Disponibilités en temps réel et tarifs saisonniers, le calendrier se synchronise chaque jour avec Airbnb',
+    'availability.note': 'Des dates bloquées sur Airbnb restent parfois réservables en direct, demandez-nous avant d\'y renoncer.',
 
     // Calendar
     'calendar.jan': 'Jan', 'calendar.feb': 'Fév', 'calendar.mar': 'Mar',
@@ -1069,7 +1096,7 @@ const translations = {
     'booking.midSeason': '• Moyenne saison (avril, mai & octobre) : dès 160 € la nuit',
     'booking.lowSeason': '• Basse saison (novembre – mars hors vacances) : dès 130 € la nuit',
     'booking.minimumStay': 'Séjour Minimum',
-    'booking.minimumStayText': '5 nuits en haute saison, 3 nuits le reste de l\'année',
+    'booking.minimumStayText': '11 nuits minimum, quelle que soit la saison',
     'booking.checkInOut': 'Arrivée & Départ',
     'booking.checkInTime': '• Arrivée : à partir de 16 h',
     'booking.checkOutTime': "• Départ : avant 13 h",
@@ -1078,14 +1105,14 @@ const translations = {
     'booking.directContact': 'Contact Direct',
     'booking.airbnb': 'Réserver sur Airbnb',
     'booking.checkingAvailability': 'Vérification des disponibilités...',
-    'booking.datesAvailable': '✅ Ces dates sont disponibles — poursuivez votre réservation.',
-    'booking.datesUnavailable': '❌ Ces dates sont prises. Essayez-en d\'autres — ou demandez-nous : des dates bloquées sur Airbnb sont parfois réservables en direct.',
+    'booking.datesAvailable': '✅ Ces dates sont disponibles, poursuivez votre réservation.',
+    'booking.datesUnavailable': '❌ Ces dates sont prises. Essayez-en d\'autres, ou demandez-nous : des dates bloquées sur Airbnb sont parfois réservables en direct.',
     'booking.nextAvailable': 'Prochaines dates disponibles :',
     'booking.useSuggestedDates': 'Utiliser Ces Dates',
 
     // Recommendations Page
     'recommendations.title': 'Où Manger & Que Faire',
-    'recommendations.subtitle': 'Notre sélection honnête pour l\'Arenal et ses environs — les adresses où nous envoyons nos amis.',
+    'recommendations.subtitle': 'Notre sélection honnête pour l\'Arenal et ses environs, les adresses où nous envoyons nos amis.',
     'recommendations.restaurants': 'Restaurants',
     'recommendations.drinks': 'Bars & Boissons',
     'recommendations.breakfast': 'Petit-déjeuner & Boulangerie',
@@ -1105,7 +1132,7 @@ const translations = {
     'rec.loasis.hours': '12 h 30–23 h (tous les jours)',
     'rec.casalili.desc': 'Cuisine asiatique fraîche et authentique',
     'rec.casalili.hours': '12 h 30–16 h & 18 h 30–23 h (tous les jours)',
-    'rec.carnaval.desc': 'Fusion moderne — sushis, burgers et poke bowls',
+    'rec.carnaval.desc': 'Fusion moderne, sushis, burgers et poke bowls',
     'rec.carnaval.hours': 'Non-stop tous les jours',
     'rec.caramel.desc': 'Boulangerie à la française, viennoiseries fraîches et bon café',
     'rec.caramel.hours': '7 h 30–19 h 30 (tous les jours)',
@@ -1119,7 +1146,7 @@ const translations = {
     'recommendations.activities': 'Activités',
     'recommendations.shopping': 'Shopping',
     'recommendations.contact': 'Besoin d\'un Conseil ?',
-    'recommendations.contactText': 'Écrivez-nous à tout moment pendant votre séjour — pour un itinéraire, une réservation ou un bon plan local.',
+    'recommendations.contactText': 'Écrivez-nous à tout moment pendant votre séjour, pour un itinéraire, une réservation ou un bon plan local.',
     'recommendations.backToHome': 'Retour à l\'Accueil',
     'contact.phone': 'Appelez-moi',
     'contact.whatsapp': 'Envoyez-moi un WhatsApp',
@@ -1163,6 +1190,7 @@ const translations = {
     'apartment.description': "Un appartamento al primo piano sul tranquillo canale Nou Fontana, ristrutturato da cima a fondo: microcemento, listelli in rovere e verde bosco su bianco candido. Due camere matrimoniali per dormire in quattro, e la terrazza è sospesa proprio sull'acqua.",
 
     // At Glance Section
+    'glance.label': 'In breve',
     'glance.sleeps': 'Per 4 persone',
     'glance.bedrooms': '2 camere matrimoniali',
     'glance.bathroom': '1 bagno moderno',
@@ -1177,7 +1205,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Tariffe & Condizioni',
-    'rates.description': "Tre stagioni, un prezzo chiaro per ciascuna — e senza le commissioni dei portali se prenoti direttamente.",
+    'rates.description': "Tre stagioni, un prezzo chiaro per ciascuna, e senza le commissioni dei portali se prenoti direttamente.",
     'rates.highSeason': 'Alta Stagione',
     'rates.highPeriod': 'Giugno – settembre & festività',
     'rates.highRate': 'Da 210 € a notte',
@@ -1188,8 +1216,7 @@ const translations = {
     'rates.lowPeriod': 'Novembre – marzo (escluse festività)',
     'rates.lowRate': 'Da 130 € a notte',
     'rates.policies': 'Condizioni di Prenotazione',
-    'rates.policy1': 'Minimo 5 notti in alta stagione',
-    'rates.policy2': 'Minimo 3 notti nel resto dell\'anno',
+    'rates.policy1': 'Minimo 11 notti, indipendentemente dalla stagione',
     'rates.policy3': 'Check-in dalle 16:00',
     'rates.policy4': "Check-out entro le 13:00",
 
@@ -1199,12 +1226,12 @@ const translations = {
     'location.transport': 'Come Arrivare',
     'location.transportDesc': 'Circa 1 ora e 15 dall\'aeroporto di Alicante, 1 e 30 da Valencia',
     'location.restaurantTitle': 'Dove mangiano i locali',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians — la nostra guida raccoglie i posti dove andiamo davvero, tutti raggiungibili a piedi dall\'appartamento.',
+    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, la nostra guida raccoglie i posti dove andiamo davvero, tutti raggiungibili a piedi dall\'appartamento.',
     'location.viewRecommendations': 'Vedi la Guida ai Ristoranti',
 
     // Booking Section
     'booking.title': 'Verifica Disponibilità & Prenota Direttamente',
-    'booking.description': "Invia le tue date e avrai una risposta entro 24 ore. Dalla prima richiesta alla consegna delle chiavi parli direttamente con il proprietario — niente call center, niente commissioni.",
+    'booking.description': "Invia le tue date e avrai una risposta entro 24 ore. Dalla prima richiesta alla consegna delle chiavi parli direttamente con il proprietario, niente call center, niente commissioni.",
     'booking.name': 'Nome Completo',
     'booking.email': 'Indirizzo Email',
     'booking.phone': 'Numero di Telefono',
@@ -1227,7 +1254,6 @@ const translations = {
     'footer.rights': 'Tutti i diritti riservati.',
     'footer.quickLinks': 'Link Rapidi',
     'footer.guides': 'Guide su Jávea (in inglese)',
-    'footer.followUs': 'Seguici',
 
     // Form validation
     'form.nameRequired': 'Il nome deve contenere almeno 2 caratteri',
@@ -1235,6 +1261,7 @@ const translations = {
     'form.checkInRequired': 'Seleziona una data di arrivo',
     'form.checkOutRequired': 'Seleziona una data di partenza',
     'form.checkOutMustBeAfterCheckIn': 'La data di partenza deve essere successiva a quella di arrivo',
+    'form.minimumStayRequired': 'È richiesto un soggiorno minimo di 11 notti, indipendentemente dalla stagione.',
     'form.guestsRequired': 'Seleziona il numero di ospiti',
     'form.phoneRequired': 'Inserisci un numero di telefono valido',
     'form.spam': 'Protezione antispam attivata',
@@ -1261,7 +1288,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'L\'Appartamento in Foto',
-    'gallery.description': "Soggiorno, camere, cucina, bagno, terrazza — così come sono, senza trucchi col grandangolo.",
+    'gallery.description': "Soggiorno, camere, cucina, bagno, terrazza, così come sono, senza trucchi col grandangolo.",
     'gallery.showAll': "Vedi tutte le foto",
     'gallery.livingAreas': 'Zona Giorno',
     'gallery.bedrooms': 'Camere',
@@ -1300,17 +1327,26 @@ const translations = {
     'testimonials.description': "Cosa ne dicono gli ultimi ospiti.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, luglio 2025',
-    'testimonials.guest1Text': 'Una delle case vacanze più complete in cui abbia mai soggiornato — ristrutturata, con cucina attrezzatissima, lenzuola, asciugamani e persino gli ingredienti di base. Molto contenti del nostro weekend in famiglia. Posizione ideale vicino a spiaggia e ristoranti, e un\'attenzione impeccabile da parte di Laurent.',
+    'testimonials.guest1Text': 'Una delle case vacanze più complete in cui abbia mai soggiornato, ristrutturata, con cucina attrezzatissima, lenzuola, asciugamani e persino gli ingredienti di base. Molto contenti del nostro weekend in famiglia. Posizione ideale vicino a spiaggia e ristoranti, e un\'attenzione impeccabile da parte di Laurent.',
     'testimonials.guest2Name': 'Emma',
     'testimonials.guest2Location': 'Amsterdam, Paesi Bassi, giugno 2025',
-    'testimonials.guest2Text': 'Abbiamo trovato esattamente quello che cercavamo — un appartamento confortevole a pochi passi dalla spiaggia, a un prezzo onesto. La terrazza, illuminata al tramonto, è diventata il nostro posto preferito. Pulizia impeccabile.',
+    'testimonials.guest2Text': 'Abbiamo trovato esattamente quello che cercavamo, un appartamento confortevole a pochi passi dalla spiaggia, a un prezzo onesto. La terrazza, illuminata al tramonto, è diventata il nostro posto preferito. Pulizia impeccabile.',
     'testimonials.guest3Name': 'Pierre & Marie',
     'testimonials.guest3Location': 'Lione, Francia, giugno 2025',
-    'testimonials.guest3Text': 'Davvero a 3 minuti dalla spiaggia, circondati dai migliori ristoranti e bar di Jávea — camminare è l\'unico mezzo di trasporto che ti serve. La cucina è attrezzata di tutto, e il proprietario ci ha persino accolti con una bottiglia di cava.',
+    'testimonials.guest3Text': 'Davvero a 3 minuti dalla spiaggia, circondati dai migliori ristoranti e bar di Jávea, camminare è l\'unico mezzo di trasporto che ti serve. La cucina è attrezzata di tutto, e il proprietario ci ha persino accolti con una bottiglia di cava.',
 
     // Reviews Translation
     'reviews.showOriginal': 'Mostra originale ({lang})',
     'reviews.hideOriginal': 'Nascondi originale ({lang})',
+    'reviews.ratingSummary': 'Riepilogo delle valutazioni degli ospiti',
+    'reviews.overallRating': 'Valutazione generale',
+    'reviews.count': 'Recensioni',
+    'reviews.cleanliness': 'Pulizia',
+    'reviews.accuracy': 'Precisione',
+    'reviews.checkIn': 'Check-in',
+    'reviews.communication': 'Comunicazione',
+    'reviews.location': 'Posizione',
+    'reviews.value': 'Qualità-prezzo',
 
     // Interior Section
     'interior.group.bedrooms': "Camere",
@@ -1324,7 +1360,7 @@ const translations = {
     'interior.kitchen': 'Cucina verde bosco: piano a induzione, forno multifunzione, lavastoviglie, macchina Nespresso e luci LED.',
     'interior.lounge': "Soggiorno open space con parete TV in doghe di rovere e smart TV da 55 pollici.",
     'interior.lighting': 'Illuminazione LED dimmerabile per serate rilassate.',
-    'interior.patio': 'Patio privato per colazioni con calma — o per sciacquare le infradito piene di sabbia.',
+    'interior.patio': 'Patio privato per colazioni con calma, o per sciacquare le infradito piene di sabbia.',
     'interior.laundry': 'Lavatrice nel patio, con spazio per una bici o l\'attrezzatura da surf.',
     'interior.connectivity': 'Aria condizionata a zone e WiFi veloce in fibra in tutto l\'appartamento.',
 
@@ -1367,14 +1403,14 @@ const translations = {
 
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Perché l\'Arenal',
-    'paradise.description1': 'L\'Arenal è la spiaggia di sabbia di Jávea: acqua calma e bassa, un lungo lungomare di ristoranti e bar, e tutto quello che serve raggiungibile a piedi. La base più comoda della città — l\'auto può restare parcheggiata.',
-    'paradise.description2': "Mattine sulla sabbia, pranzi sul lungomare, due passi la sera lungo il canale — e le calette, il centro storico e il Montgó per quando vuoi di più. All'Arenal, ristoranti e negozi restano aperti tutto l'anno.",
+    'paradise.description1': 'L\'Arenal è la spiaggia di sabbia di Jávea: acqua calma e bassa, un lungo lungomare di ristoranti e bar, e tutto quello che serve raggiungibile a piedi. La base più comoda della città, l\'auto può restare parcheggiata.',
+    'paradise.description2': "Mattine sulla sabbia, pranzi sul lungomare, due passi la sera lungo il canale, e le calette, il centro storico e il Montgó per quando vuoi di più. All'Arenal, ristoranti e negozi restano aperti tutto l'anno.",
     'paradise.beach.title': 'Spiaggia dell\'Arenal',
     'paradise.beach.description': "Sabbia, fondale basso e bagnini per tutta la stagione, con i ristoranti del lungomare subito alle spalle.",
     'paradise.watersports.title': 'Sport Acquatici',
     'paradise.watersports.description': 'Kayak, SUP, moto d\'acqua e diving si concentrano alla foce del canale, a pochi passi.',
     'paradise.dining.title': 'Mangiare Fuori',
-    'paradise.dining.description': 'Dalla colazione alla cena tardi senza toccare l\'auto — riso sul canale da Amarre 152, aperitivo al tramonto da Tosca, e tutto il lungomare nel mezzo.',
+    'paradise.dining.description': 'Dalla colazione alla cena tardi senza toccare l\'auto, riso sul canale da Amarre 152, aperitivo al tramonto da Tosca, e tutto il lungomare nel mezzo.',
     'paradise.oldtown.title': 'Il Centro Storico',
     'paradise.oldtown.description': 'A 4 km: chiesa gotica, mercato coperto e bancarelle artigianali settimanali. 15 minuti in bici, 5 in auto.',
     'paradise.walks.title': 'Sentieri Costieri',
@@ -1382,8 +1418,8 @@ const translations = {
 
     // Availability Section
     'availability.title': 'Disponibilità & Prezzi',
-    'availability.subtitle': 'Disponibilità in tempo reale e tariffe stagionali — il calendario si sincronizza ogni giorno con Airbnb',
-    'availability.note': 'Date bloccate su Airbnb a volte restano prenotabili direttamente — chiedici prima di rinunciare.',
+    'availability.subtitle': 'Disponibilità in tempo reale e tariffe stagionali, il calendario si sincronizza ogni giorno con Airbnb',
+    'availability.note': 'Date bloccate su Airbnb a volte restano prenotabili direttamente, chiedici prima di rinunciare.',
 
     // Calendar
     'calendar.jan': 'Gen', 'calendar.feb': 'Feb', 'calendar.mar': 'Mar',
@@ -1402,7 +1438,7 @@ const translations = {
     'booking.midSeason': '• Media stagione (aprile, maggio & ottobre): da 160 € a notte',
     'booking.lowSeason': '• Bassa stagione (novembre – marzo escluse festività): da 130 € a notte',
     'booking.minimumStay': 'Soggiorno Minimo',
-    'booking.minimumStayText': '5 notti in alta stagione, 3 notti nel resto dell\'anno',
+    'booking.minimumStayText': 'Minimo 11 notti, indipendentemente dalla stagione',
     'booking.checkInOut': 'Check-in & Check-out',
     'booking.checkInTime': '• Check-in: dalle 16:00',
     'booking.checkOutTime': "• Check-out: entro le 13:00",
@@ -1411,14 +1447,14 @@ const translations = {
     'booking.directContact': 'Contatto Diretto',
     'booking.airbnb': 'Prenota su Airbnb',
     'booking.checkingAvailability': 'Verifica disponibilità...',
-    'booking.datesAvailable': '✅ Queste date sono disponibili — continua con la prenotazione.',
-    'booking.datesUnavailable': '❌ Queste date sono occupate. Provane altre — o chiedici: le date bloccate su Airbnb a volte si possono prenotare direttamente.',
+    'booking.datesAvailable': '✅ Queste date sono disponibili, continua con la prenotazione.',
+    'booking.datesUnavailable': '❌ Queste date sono occupate. Provane altre, o chiedici: le date bloccate su Airbnb a volte si possono prenotare direttamente.',
     'booking.nextAvailable': 'Prossime date disponibili:',
     'booking.useSuggestedDates': 'Usa Queste Date',
 
     // Recommendations Page
     'recommendations.title': 'Dove Mangiare & Cosa Fare',
-    'recommendations.subtitle': 'La nostra lista onesta per l\'Arenal e dintorni — i posti dove mandiamo gli amici.',
+    'recommendations.subtitle': 'La nostra lista onesta per l\'Arenal e dintorni, i posti dove mandiamo gli amici.',
     'recommendations.restaurants': 'Ristoranti',
     'recommendations.drinks': 'Bar & Drink',
     'recommendations.breakfast': 'Colazione & Panetteria',
@@ -1438,7 +1474,7 @@ const translations = {
     'rec.loasis.hours': '12:30–23 (tutti i giorni)',
     'rec.casalili.desc': 'Cucina asiatica fresca e autentica',
     'rec.casalili.hours': '12:30–16 & 18:30–23 (tutti i giorni)',
-    'rec.carnaval.desc': 'Fusion moderna — sushi, burger e poke bowl',
+    'rec.carnaval.desc': 'Fusion moderna, sushi, burger e poke bowl',
     'rec.carnaval.hours': 'Orario continuato tutti i giorni',
     'rec.caramel.desc': 'Panetteria in stile francese con dolci freschi e buon caffè',
     'rec.caramel.hours': '7:30–19:30 (tutti i giorni)',
@@ -1452,7 +1488,7 @@ const translations = {
     'recommendations.activities': 'Attività',
     'recommendations.shopping': 'Shopping',
     'recommendations.contact': 'Serve un Consiglio?',
-    'recommendations.contactText': 'Scrivici in qualsiasi momento durante il soggiorno — per indicazioni, una prenotazione o un consiglio locale.',
+    'recommendations.contactText': 'Scrivici in qualsiasi momento durante il soggiorno, per indicazioni, una prenotazione o un consiglio locale.',
     'recommendations.backToHome': 'Torna alla Home',
     'contact.phone': 'Chiamami',
     'contact.whatsapp': 'Scrivimi su WhatsApp',
@@ -1493,9 +1529,10 @@ const translations = {
 
     // Apartment Section
     'apartment.title': 'Die Wohnung',
-    'apartment.description': "Eine Ferienwohnung im ersten Stock am ruhigen Nou-Fontana-Kanal, von Grund auf renoviert — Mikrozement, Eichenlamellen und Waldgrün vor klarem Weiß. Zwei Schlafzimmer mit Doppelbett bieten Platz für vier Gäste, und die Terrasse liegt direkt über dem Wasser.",
+    'apartment.description': "Eine Ferienwohnung im ersten Stock am ruhigen Nou-Fontana-Kanal, von Grund auf renoviert, Mikrozement, Eichenlamellen und Waldgrün vor klarem Weiß. Zwei Schlafzimmer mit Doppelbett bieten Platz für vier Gäste, und die Terrasse liegt direkt über dem Wasser.",
 
     // At Glance Section
+    'glance.label': 'Auf einen Blick',
     'glance.sleeps': 'Für 4 Gäste',
     'glance.bedrooms': '2 Schlafzimmer',
     'glance.bathroom': '1 modernes Bad',
@@ -1510,7 +1547,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Preise & Bedingungen',
-    'rates.description': "Drei Saisons, für jede ein klarer Preis — und keine Plattformgebühren, wenn Sie direkt buchen.",
+    'rates.description': "Drei Saisons, für jede ein klarer Preis, und keine Plattformgebühren, wenn Sie direkt buchen.",
     'rates.highSeason': 'Hochsaison',
     'rates.highPeriod': 'Juni – September & Feiertage',
     'rates.highRate': 'Ab 210 € pro Nacht',
@@ -1521,8 +1558,7 @@ const translations = {
     'rates.lowPeriod': 'November – März (außerhalb der Feiertage)',
     'rates.lowRate': 'Ab 130 € pro Nacht',
     'rates.policies': 'Buchungsbedingungen',
-    'rates.policy1': 'Mindestens 5 Nächte in der Hochsaison',
-    'rates.policy2': 'Mindestens 3 Nächte im Rest des Jahres',
+    'rates.policy1': 'Mindestens 11 Nächte, unabhängig von der Saison',
     'rates.policy3': 'Check-in ab 16:00 Uhr',
     'rates.policy4': "Check-out bis 13:00 Uhr",
 
@@ -1532,12 +1568,12 @@ const translations = {
     'location.transport': 'Anreise',
     'location.transportDesc': 'Ca. 75 Minuten vom Flughafen Alicante, 90 von Valencia',
     'location.restaurantTitle': 'Wo die Einheimischen essen',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians — unser Führer versammelt die Adressen, zu denen wir selbst gehen, alle zu Fuß von der Wohnung erreichbar.',
+    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, unser Führer versammelt die Adressen, zu denen wir selbst gehen, alle zu Fuß von der Wohnung erreichbar.',
     'location.viewRecommendations': 'Zum Restaurantführer',
 
     // Booking Section
     'booking.title': 'Verfügbarkeit Prüfen & Direkt Buchen',
-    'booking.description': "Senden Sie uns Ihre Reisedaten — die Antwort kommt innerhalb eines Tages. Von der ersten Anfrage bis zur Schlüsselübergabe sprechen Sie direkt mit dem Eigentümer: kein Callcenter, keine Provision.",
+    'booking.description': "Senden Sie uns Ihre Reisedaten, die Antwort kommt innerhalb eines Tages. Von der ersten Anfrage bis zur Schlüsselübergabe sprechen Sie direkt mit dem Eigentümer: kein Callcenter, keine Provision.",
     'booking.name': 'Vollständiger Name',
     'booking.email': 'E-Mail-Adresse',
     'booking.phone': 'Telefonnummer',
@@ -1560,7 +1596,6 @@ const translations = {
     'footer.rights': 'Alle Rechte vorbehalten.',
     'footer.quickLinks': 'Schnellzugriff',
     'footer.guides': 'Jávea-Guides (auf Englisch)',
-    'footer.followUs': 'Folgen Sie Uns',
 
     // Form validation
     'form.nameRequired': 'Der Name muss mindestens 2 Zeichen lang sein',
@@ -1568,6 +1603,7 @@ const translations = {
     'form.checkInRequired': 'Bitte wählen Sie ein Anreisedatum',
     'form.checkOutRequired': 'Bitte wählen Sie ein Abreisedatum',
     'form.checkOutMustBeAfterCheckIn': 'Das Abreisedatum muss nach dem Anreisedatum liegen',
+    'form.minimumStayRequired': 'Unabhängig von der Saison gilt ein Mindestaufenthalt von 11 Nächten.',
     'form.guestsRequired': 'Bitte wählen Sie die Anzahl der Gäste',
     'form.phoneRequired': 'Bitte geben Sie eine gültige Telefonnummer ein',
     'form.spam': 'Spamschutz ausgelöst',
@@ -1594,7 +1630,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'Die Wohnung in Bildern',
-    'gallery.description': "Wohnzimmer, Schlafzimmer, Küche, Bad, Terrasse — so wie sie sind, keine Weitwinkel-Tricks.",
+    'gallery.description': "Wohnzimmer, Schlafzimmer, Küche, Bad, Terrasse, so wie sie sind, keine Weitwinkel-Tricks.",
     'gallery.showAll': "Alle Fotos ansehen",
     'gallery.livingAreas': 'Wohnbereiche',
     'gallery.bedrooms': 'Schlafzimmer',
@@ -1633,17 +1669,26 @@ const translations = {
     'testimonials.description': "Das sagen Gäste, die zuletzt hier waren.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, Juli 2025',
-    'testimonials.guest1Text': 'Eine der am besten ausgestatteten Ferienwohnungen, in denen ich je übernachtet habe — renoviert, mit komplett eingerichteter Küche, Bettwäsche, Handtüchern und sogar Grundzutaten. Sehr zufrieden mit unserem Familienwochenende. Ideale Lage nahe Strand und Restaurants, und eine tadellose Betreuung durch Laurent.',
+    'testimonials.guest1Text': 'Eine der am besten ausgestatteten Ferienwohnungen, in denen ich je übernachtet habe, renoviert, mit komplett eingerichteter Küche, Bettwäsche, Handtüchern und sogar Grundzutaten. Sehr zufrieden mit unserem Familienwochenende. Ideale Lage nahe Strand und Restaurants, und eine tadellose Betreuung durch Laurent.',
     'testimonials.guest2Name': 'Emma',
     'testimonials.guest2Location': 'Amsterdam, Niederlande, Juni 2025',
-    'testimonials.guest2Text': 'Genau das, was wir gesucht haben — eine komfortable Wohnung in Gehweite zum Strand, zu einem fairen Preis. Die Terrasse, bei Sonnenuntergang schön beleuchtet, wurde unser Lieblingsplatz. Makellos sauber.',
+    'testimonials.guest2Text': 'Genau das, was wir gesucht haben, eine komfortable Wohnung in Gehweite zum Strand, zu einem fairen Preis. Die Terrasse, bei Sonnenuntergang schön beleuchtet, wurde unser Lieblingsplatz. Makellos sauber.',
     'testimonials.guest3Name': 'Pierre & Marie',
     'testimonials.guest3Location': 'Lyon, Frankreich, Juni 2025',
-    'testimonials.guest3Text': 'Wirklich nur 3 Minuten vom Strand, umgeben von Jáveas besten Restaurants und Bars — zu Fuß gehen ist das einzige Verkehrsmittel, das man braucht. Die Küche ist komplett ausgestattet, und der Gastgeber hat uns sogar mit einer Flasche Cava begrüßt.',
+    'testimonials.guest3Text': 'Wirklich nur 3 Minuten vom Strand, umgeben von Jáveas besten Restaurants und Bars, zu Fuß gehen ist das einzige Verkehrsmittel, das man braucht. Die Küche ist komplett ausgestattet, und der Gastgeber hat uns sogar mit einer Flasche Cava begrüßt.',
 
     // Reviews Translation
     'reviews.showOriginal': 'Original anzeigen ({lang})',
     'reviews.hideOriginal': 'Original ausblenden ({lang})',
+    'reviews.ratingSummary': 'Übersicht der Gästebewertungen',
+    'reviews.overallRating': 'Gesamtbewertung',
+    'reviews.count': 'Bewertungen',
+    'reviews.cleanliness': 'Sauberkeit',
+    'reviews.accuracy': 'Genauigkeit',
+    'reviews.checkIn': 'Check-in',
+    'reviews.communication': 'Kommunikation',
+    'reviews.location': 'Lage',
+    'reviews.value': 'Preis-Leistung',
 
     // Interior Section
     'interior.group.bedrooms': "Schlafzimmer",
@@ -1657,7 +1702,7 @@ const translations = {
     'interior.kitchen': 'Waldgrüne Einbauküche: Induktionskochfeld, Multifunktionsofen, Geschirrspüler, Nespresso-Maschine und LED-Arbeitslicht.',
     'interior.lounge': "Offener Wohnbereich mit TV-Wand aus Eichenlamellen und 55-Zoll-Smart-TV.",
     'interior.lighting': 'Dimmbare LED-Beleuchtung für entspannte Abende.',
-    'interior.patio': 'Eigener Patio für ein ruhiges Frühstück — oder zum Abspülen sandiger Badelatschen.',
+    'interior.patio': 'Eigener Patio für ein ruhiges Frühstück, oder zum Abspülen sandiger Badelatschen.',
     'interior.laundry': 'Waschmaschine auf dem Patio, mit Platz für Fahrrad oder Surfausrüstung.',
     'interior.connectivity': 'Klimaanlage nach Zonen und schnelles Glasfaser-WLAN in der ganzen Wohnung.',
 
@@ -1669,7 +1714,7 @@ const translations = {
     // Availability Calendar
     'checkAvailability': 'Verfügbarkeit Prüfen',
     'availabilityDescription': 'Grüne Daten sind frei, rote bereits gebucht. Der Kalender synchronisiert sich täglich mit unserem Buchungssystem.',
-    'calendarNote': 'Passende Daten gefunden? Senden Sie unten eine Anfrage — wir bestätigen innerhalb von 24 Stunden.',
+    'calendarNote': 'Passende Daten gefunden? Senden Sie unten eine Anfrage, wir bestätigen innerhalb von 24 Stunden.',
     'available': 'Verfügbar',
     'booked': 'Gebucht',
     'lastUpdated': 'Zuletzt aktualisiert',
@@ -1700,14 +1745,14 @@ const translations = {
 
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Warum der Arenal',
-    'paradise.description1': 'Der Arenal ist Jáveas Sandstrand: ruhiges, flaches Wasser, eine lange Promenade voller Restaurants und Bars, und alles Nötige zu Fuß erreichbar. Die bequemste Basis der Stadt — das Auto kann stehen bleiben.',
-    'paradise.description2': "Morgens am Strand, mittags auf der Promenade, abends ein Spaziergang am Kanal — und wenn Sie mehr wollen: die Buchten, die Altstadt und der Montgó. Die Restaurants und Geschäfte am Arenal haben das ganze Jahr über geöffnet.",
+    'paradise.description1': 'Der Arenal ist Jáveas Sandstrand: ruhiges, flaches Wasser, eine lange Promenade voller Restaurants und Bars, und alles Nötige zu Fuß erreichbar. Die bequemste Basis der Stadt, das Auto kann stehen bleiben.',
+    'paradise.description2': "Morgens am Strand, mittags auf der Promenade, abends ein Spaziergang am Kanal, und wenn Sie mehr wollen: die Buchten, die Altstadt und der Montgó. Die Restaurants und Geschäfte am Arenal haben das ganze Jahr über geöffnet.",
     'paradise.beach.title': 'Arenal-Strand',
-    'paradise.beach.description': "Sand, flaches Wasser, Rettungsschwimmer in der Saison — und die Restaurants der Promenade direkt dahinter.",
+    'paradise.beach.description': "Sand, flaches Wasser, Rettungsschwimmer in der Saison, und die Restaurants der Promenade direkt dahinter.",
     'paradise.watersports.title': 'Wassersport',
     'paradise.watersports.description': 'Kajak-, SUP-, Jetski- und Tauchanbieter konzentrieren sich an der Kanalmündung, wenige Schritte entfernt.',
     'paradise.dining.title': 'Essen Gehen',
-    'paradise.dining.description': 'Vom Frühstück bis zum späten Abendessen, ohne das Auto zu bewegen — Reisgerichte am Kanal bei Amarre 152, Sundowner bei Tosca, und die ganze Promenade dazwischen.',
+    'paradise.dining.description': 'Vom Frühstück bis zum späten Abendessen, ohne das Auto zu bewegen, Reisgerichte am Kanal bei Amarre 152, Sundowner bei Tosca, und die ganze Promenade dazwischen.',
     'paradise.oldtown.title': 'Die Altstadt',
     'paradise.oldtown.description': '4 km entfernt: gotische Kirche, Markthalle und wöchentliche Handwerksstände. 15 Minuten mit dem Rad, 5 mit dem Auto.',
     'paradise.walks.title': 'Küstenwege',
@@ -1715,8 +1760,8 @@ const translations = {
 
     // Availability Section
     'availability.title': 'Verfügbarkeit & Preise',
-    'availability.subtitle': 'Aktuelle Verfügbarkeit und Saisonpreise — der Kalender synchronisiert sich täglich mit Airbnb',
-    'availability.note': 'Auf Airbnb blockierte Daten sind manchmal trotzdem direkt buchbar — fragen Sie uns einfach.',
+    'availability.subtitle': 'Aktuelle Verfügbarkeit und Saisonpreise, der Kalender synchronisiert sich täglich mit Airbnb',
+    'availability.note': 'Auf Airbnb blockierte Daten sind manchmal trotzdem direkt buchbar, fragen Sie uns einfach.',
 
     // Calendar
     'calendar.jan': 'Jan', 'calendar.feb': 'Feb', 'calendar.mar': 'Mär',
@@ -1735,7 +1780,7 @@ const translations = {
     'booking.midSeason': '• Nebensaison (April, Mai & Oktober): ab 160 € pro Nacht',
     'booking.lowSeason': '• Wintersaison (November – März außerhalb der Feiertage): ab 130 € pro Nacht',
     'booking.minimumStay': 'Mindestaufenthalt',
-    'booking.minimumStayText': '5 Nächte in der Hochsaison, 3 Nächte im Rest des Jahres',
+    'booking.minimumStayText': 'Mindestens 11 Nächte, unabhängig von der Saison',
     'booking.checkInOut': 'Check-in & Check-out',
     'booking.checkInTime': '• Check-in: ab 16:00 Uhr',
     'booking.checkOutTime': "• Check-out: bis 13:00 Uhr",
@@ -1744,14 +1789,14 @@ const translations = {
     'booking.directContact': 'Direkter Kontakt',
     'booking.airbnb': 'Auf Airbnb Buchen',
     'booking.checkingAvailability': 'Verfügbarkeit wird geprüft...',
-    'booking.datesAvailable': '✅ Diese Daten sind verfügbar — fahren Sie mit Ihrer Buchung fort.',
-    'booking.datesUnavailable': '❌ Diese Daten sind belegt. Versuchen Sie andere — oder fragen Sie uns: auf Airbnb blockierte Daten sind manchmal direkt buchbar.',
+    'booking.datesAvailable': '✅ Diese Daten sind verfügbar, fahren Sie mit Ihrer Buchung fort.',
+    'booking.datesUnavailable': '❌ Diese Daten sind belegt. Versuchen Sie andere, oder fragen Sie uns: auf Airbnb blockierte Daten sind manchmal direkt buchbar.',
     'booking.nextAvailable': 'Nächste verfügbare Daten:',
     'booking.useSuggestedDates': 'Diese Daten Übernehmen',
 
     // Recommendations Page
     'recommendations.title': 'Essen & Unternehmungen',
-    'recommendations.subtitle': 'Unsere ehrliche Auswahl für den Arenal und Umgebung — die Adressen, zu denen wir Freunde schicken.',
+    'recommendations.subtitle': 'Unsere ehrliche Auswahl für den Arenal und Umgebung, die Adressen, zu denen wir Freunde schicken.',
     'recommendations.restaurants': 'Restaurants',
     'recommendations.drinks': 'Bars & Getränke',
     'recommendations.breakfast': 'Frühstück & Bäckerei',
@@ -1771,7 +1816,7 @@ const translations = {
     'rec.loasis.hours': '12:30–23 Uhr (täglich)',
     'rec.casalili.desc': 'Frische, authentische asiatische Küche',
     'rec.casalili.hours': '12:30–16 & 18:30–23 Uhr (täglich)',
-    'rec.carnaval.desc': 'Moderne Fusionsküche — Sushi, Burger und Poke Bowls',
+    'rec.carnaval.desc': 'Moderne Fusionsküche, Sushi, Burger und Poke Bowls',
     'rec.carnaval.hours': 'Täglich durchgehend geöffnet',
     'rec.caramel.desc': 'Bäckerei nach französischer Art mit frischem Gebäck und gutem Kaffee',
     'rec.caramel.hours': '7:30–19:30 Uhr (täglich)',
@@ -1785,7 +1830,7 @@ const translations = {
     'recommendations.activities': 'Aktivitäten',
     'recommendations.shopping': 'Einkaufen',
     'recommendations.contact': 'Noch Fragen?',
-    'recommendations.contactText': 'Schreiben Sie uns jederzeit während Ihres Aufenthalts — für Wegbeschreibungen, Reservierungen oder einen lokalen Tipp.',
+    'recommendations.contactText': 'Schreiben Sie uns jederzeit während Ihres Aufenthalts, für Wegbeschreibungen, Reservierungen oder einen lokalen Tipp.',
     'recommendations.backToHome': 'Zurück zur Startseite',
     'contact.phone': 'Rufen Sie mich an',
     'contact.whatsapp': 'Schreiben Sie mir auf WhatsApp',
@@ -1826,9 +1871,10 @@ const translations = {
 
     // Apartment Section
     'apartment.title': 'El Apartamento',
-    'apartment.description': "Un apartamento en primera planta junto al tranquilo canal de la Fontana, reformado de arriba abajo — microcemento, lamas de roble y verde bosque sobre un blanco impoluto. Dos habitaciones con cama de matrimonio para cuatro personas, y la terraza se asoma directamente al agua.",
+    'apartment.description': "Un apartamento en primera planta junto al tranquilo canal de la Fontana, reformado de arriba abajo, microcemento, lamas de roble y verde bosque sobre un blanco impoluto. Dos habitaciones con cama de matrimonio para cuatro personas, y la terraza se asoma directamente al agua.",
 
     // At Glance Section
+    'glance.label': 'De un vistazo',
     'glance.sleeps': 'Para 4 personas',
     'glance.bedrooms': '2 habitaciones dobles',
     'glance.bathroom': '1 baño moderno',
@@ -1843,7 +1889,7 @@ const translations = {
 
     // Rates Section
     'rates.title': 'Tarifas y Condiciones',
-    'rates.description': "Tres temporadas, un precio claro para cada una — y sin comisiones si reservas directo.",
+    'rates.description': "Tres temporadas, un precio claro para cada una, y sin comisiones si reservas directo.",
     'rates.highSeason': 'Temporada Alta',
     'rates.highPeriod': 'Junio – septiembre y festivos',
     'rates.highRate': 'Desde 210 € la noche',
@@ -1854,8 +1900,7 @@ const translations = {
     'rates.lowPeriod': 'Noviembre – marzo (fuera de festivos)',
     'rates.lowRate': 'Desde 130 € la noche',
     'rates.policies': 'Condiciones de Reserva',
-    'rates.policy1': 'Mínimo 5 noches en temporada alta',
-    'rates.policy2': 'Mínimo 3 noches el resto del año',
+    'rates.policy1': 'Mínimo 11 noches, independientemente de la temporada',
     'rates.policy3': 'Entrada a partir de las 16:00',
     'rates.policy4': "Salida antes de las 13:00",
 
@@ -1865,12 +1910,12 @@ const translations = {
     'location.transport': 'Cómo Llegar',
     'location.transportDesc': 'A 1 h 15 del aeropuerto de Alicante, 1 h 30 del de Valencia',
     'location.restaurantTitle': 'Donde comen los de aquí',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians — nuestra guía reúne los sitios a los que vamos de verdad, todos a un paseo del apartamento.',
+    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, nuestra guía reúne los sitios a los que vamos de verdad, todos a un paseo del apartamento.',
     'location.viewRecommendations': 'Ver la Guía de Restaurantes',
 
     // Booking Section
     'booking.title': 'Consulta Disponibilidad y Reserva Directo',
-    'booking.description': "Envíanos tus fechas y tendrás respuesta en menos de 24 horas. De la primera consulta a la entrega de llaves tratas con el propietario — nada de centralitas ni comisiones.",
+    'booking.description': "Envíanos tus fechas y tendrás respuesta en menos de 24 horas. De la primera consulta a la entrega de llaves tratas con el propietario, nada de centralitas ni comisiones.",
     'booking.name': 'Nombre Completo',
     'booking.email': 'Correo Electrónico',
     'booking.phone': 'Teléfono',
@@ -1893,7 +1938,6 @@ const translations = {
     'footer.rights': 'Todos los derechos reservados.',
     'footer.quickLinks': 'Enlaces Rápidos',
     'footer.guides': 'Guías de Jávea (en inglés)',
-    'footer.followUs': 'Síguenos',
 
     // Form validation
     'form.nameRequired': 'El nombre debe tener al menos 2 caracteres',
@@ -1901,6 +1945,7 @@ const translations = {
     'form.checkInRequired': 'Elige una fecha de entrada',
     'form.checkOutRequired': 'Elige una fecha de salida',
     'form.checkOutMustBeAfterCheckIn': 'La fecha de salida debe ser posterior a la de entrada',
+    'form.minimumStayRequired': 'Se requiere una estancia mínima de 11 noches, independientemente de la temporada.',
     'form.guestsRequired': 'Indica el número de personas',
     'form.phoneRequired': 'Introduce un teléfono válido',
     'form.spam': 'Protección antispam activada',
@@ -1927,7 +1972,7 @@ const translations = {
 
     // Gallery Section
     'gallery.title': 'El Apartamento en Fotos',
-    'gallery.description': "Salón, habitaciones, cocina, baño, terraza — tal y como son, sin trampa ni cartón.",
+    'gallery.description': "Salón, habitaciones, cocina, baño, terraza, tal y como son, sin trampa ni cartón.",
     'gallery.showAll': "Ver todas las fotos",
     'gallery.livingAreas': 'Zonas de Estar',
     'gallery.bedrooms': 'Habitaciones',
@@ -1966,17 +2011,26 @@ const translations = {
     'testimonials.description': "La impresión que se llevaron los últimos huéspedes.",
     'testimonials.guest1Name': 'Carlos',
     'testimonials.guest1Location': 'Madrid, julio 2025',
-    'testimonials.guest1Text': 'Uno de los alojamientos más completos en los que he estado — reformado, con la cocina totalmente equipada, sábanas, toallas e incluso ingredientes básicos. Muy contentos con nuestro fin de semana en familia. Ubicación ideal cerca de la playa y los restaurantes, y una atención inmejorable de Laurent.',
+    'testimonials.guest1Text': 'Uno de los alojamientos más completos en los que he estado, reformado, con la cocina totalmente equipada, sábanas, toallas e incluso ingredientes básicos. Muy contentos con nuestro fin de semana en familia. Ubicación ideal cerca de la playa y los restaurantes, y una atención inmejorable de Laurent.',
     'testimonials.guest2Name': 'Emma',
     'testimonials.guest2Location': 'Ámsterdam, Países Bajos, junio 2025',
-    'testimonials.guest2Text': 'Encontramos justo lo que buscábamos — un apartamento cómodo a un paseo de la playa y a un precio justo. La terraza, preciosa iluminada al atardecer, se convirtió en nuestro rincón favorito. Limpieza impecable.',
+    'testimonials.guest2Text': 'Encontramos justo lo que buscábamos, un apartamento cómodo a un paseo de la playa y a un precio justo. La terraza, preciosa iluminada al atardecer, se convirtió en nuestro rincón favorito. Limpieza impecable.',
     'testimonials.guest3Name': 'Pierre & Marie',
     'testimonials.guest3Location': 'Lyon, Francia, junio 2025',
-    'testimonials.guest3Text': 'De verdad a 3 minutos de la playa, rodeado de los mejores restaurantes y bares de Jávea — andar es el único transporte que necesitas. La cocina está equipada con todo, y el anfitrión nos recibió incluso con una botella de cava.',
+    'testimonials.guest3Text': 'De verdad a 3 minutos de la playa, rodeado de los mejores restaurantes y bares de Jávea, andar es el único transporte que necesitas. La cocina está equipada con todo, y el anfitrión nos recibió incluso con una botella de cava.',
 
     // Reviews Translation
     'reviews.showOriginal': 'Ver original ({lang})',
     'reviews.hideOriginal': 'Ocultar original ({lang})',
+    'reviews.ratingSummary': 'Resumen de las valoraciones de los huéspedes',
+    'reviews.overallRating': 'Valoración general',
+    'reviews.count': 'Reseñas',
+    'reviews.cleanliness': 'Limpieza',
+    'reviews.accuracy': 'Precisión',
+    'reviews.checkIn': 'Llegada',
+    'reviews.communication': 'Comunicación',
+    'reviews.location': 'Ubicación',
+    'reviews.value': 'Calidad-precio',
 
     // Interior Section
     'interior.group.bedrooms': "Habitaciones",
@@ -1990,7 +2044,7 @@ const translations = {
     'interior.kitchen': 'Cocina verde bosque: placa de inducción, horno multifunción, lavavajillas, cafetera Nespresso e iluminación LED.',
     'interior.lounge': "Salón abierto con mueble de TV en lamas de roble y smart TV de 55 pulgadas.",
     'interior.lighting': 'Iluminación LED regulable para tardes tranquilas.',
-    'interior.patio': 'Patio privado para desayunar con calma — o aclarar las chanclas llenas de arena.',
+    'interior.patio': 'Patio privado para desayunar con calma, o aclarar las chanclas llenas de arena.',
     'interior.laundry': 'Lavadora en el patio, con sitio para guardar una bici o el equipo de surf.',
     'interior.connectivity': 'Aire acondicionado por zonas y wifi rápido de fibra en todo el apartamento.',
 
@@ -2033,14 +2087,14 @@ const translations = {
 
     // Discover Paradise Section (replaces original location section)
     'paradise.title': 'Por qué el Arenal',
-    'paradise.description1': 'El Arenal es la playa de arena de Jávea: agua tranquila y poco profunda, un paseo largo lleno de restaurantes y bares, y todo lo necesario a un paso. La base más cómoda de la ciudad — el coche se queda aparcado.',
-    'paradise.description2': "Mañanas de playa, comida en el paseo, una vuelta por el canal al caer la tarde — y las calas, el casco antiguo y el Montgó para cuando quieras más. En el Arenal, los restaurantes y las tiendas abren todo el año.",
+    'paradise.description1': 'El Arenal es la playa de arena de Jávea: agua tranquila y poco profunda, un paseo largo lleno de restaurantes y bares, y todo lo necesario a un paso. La base más cómoda de la ciudad, el coche se queda aparcado.',
+    'paradise.description2': "Mañanas de playa, comida en el paseo, una vuelta por el canal al caer la tarde, y las calas, el casco antiguo y el Montgó para cuando quieras más. En el Arenal, los restaurantes y las tiendas abren todo el año.",
     'paradise.beach.title': 'Playa del Arenal',
     'paradise.beach.description': "Arena, agua poco profunda y socorristas toda la temporada, con los restaurantes del paseo justo detrás.",
     'paradise.watersports.title': 'Deportes Acuáticos',
     'paradise.watersports.description': 'Kayak, paddle surf, motos de agua y buceo se concentran en la bocana del canal, a unos pasos.',
     'paradise.dining.title': 'Comer Fuera',
-    'paradise.dining.description': 'Del desayuno a la cena tardía sin tocar el coche — arroces junto al canal en Amarre 152, atardecer con una copa en Tosca, y todo el paseo entre medias.',
+    'paradise.dining.description': 'Del desayuno a la cena tardía sin tocar el coche, arroces junto al canal en Amarre 152, atardecer con una copa en Tosca, y todo el paseo entre medias.',
     'paradise.oldtown.title': 'El Casco Antiguo',
     'paradise.oldtown.description': 'A 4 km: iglesia gótica, mercado cubierto y puestos artesanos semanales. 15 minutos en bici, 5 en coche.',
     'paradise.walks.title': 'Senderos Costeros',
@@ -2048,8 +2102,8 @@ const translations = {
 
     // Availability Section
     'availability.title': 'Disponibilidad y Precios',
-    'availability.subtitle': 'Disponibilidad en tiempo real y tarifas por temporada — el calendario se sincroniza a diario con Airbnb',
-    'availability.note': 'Fechas bloqueadas en Airbnb a veces siguen disponibles reservando directo — pregúntanos antes de descartarlas. Para Semana Santa y puentes, reserva con antelación: el Arenal se llena.',
+    'availability.subtitle': 'Disponibilidad en tiempo real y tarifas por temporada, el calendario se sincroniza a diario con Airbnb',
+    'availability.note': 'Fechas bloqueadas en Airbnb a veces siguen disponibles reservando directo, pregúntanos antes de descartarlas. Para Semana Santa y puentes, reserva con antelación: el Arenal se llena.',
 
     // Calendar
     'calendar.jan': 'Ene', 'calendar.feb': 'Feb', 'calendar.mar': 'Mar',
@@ -2068,7 +2122,7 @@ const translations = {
     'booking.midSeason': '• Temporada media (abril, mayo y octubre): desde 160 € la noche',
     'booking.lowSeason': '• Temporada baja (noviembre – marzo fuera de festivos): desde 130 € la noche',
     'booking.minimumStay': 'Estancia Mínima',
-    'booking.minimumStayText': '5 noches en temporada alta, 3 noches el resto del año',
+    'booking.minimumStayText': 'Mínimo 11 noches, independientemente de la temporada',
     'booking.checkInOut': 'Entrada y Salida',
     'booking.checkInTime': '• Entrada: a partir de las 16:00',
     'booking.checkOutTime': "• Salida: antes de las 13:00",
@@ -2077,14 +2131,14 @@ const translations = {
     'booking.directContact': 'Contacto Directo',
     'booking.airbnb': 'Reservar en Airbnb',
     'booking.checkingAvailability': 'Comprobando disponibilidad...',
-    'booking.datesAvailable': '✅ Estas fechas están disponibles — continúa con tu reserva.',
-    'booking.datesUnavailable': '❌ Esas fechas están ocupadas. Prueba otras — o pregúntanos: fechas bloqueadas en Airbnb a veces se pueden reservar directo.',
+    'booking.datesAvailable': '✅ Estas fechas están disponibles, continúa con tu reserva.',
+    'booking.datesUnavailable': '❌ Esas fechas están ocupadas. Prueba otras, o pregúntanos: fechas bloqueadas en Airbnb a veces se pueden reservar directo.',
     'booking.nextAvailable': 'Próximas fechas disponibles:',
     'booking.useSuggestedDates': 'Usar Estas Fechas',
 
     // Recommendations Page
     'recommendations.title': 'Dónde Comer y Qué Hacer',
-    'recommendations.subtitle': 'Nuestra lista honesta para el Arenal y alrededores — los sitios a los que mandamos a los amigos.',
+    'recommendations.subtitle': 'Nuestra lista honesta para el Arenal y alrededores, los sitios a los que mandamos a los amigos.',
     'recommendations.restaurants': 'Restaurantes',
     'recommendations.drinks': 'Bares y Copas',
     'recommendations.breakfast': 'Desayuno y Panadería',
@@ -2104,7 +2158,7 @@ const translations = {
     'rec.loasis.hours': '12:30–23:00 (a diario)',
     'rec.casalili.desc': 'Cocina asiática fresca y auténtica',
     'rec.casalili.hours': '12:30–16:00 y 18:30–23:00 (a diario)',
-    'rec.carnaval.desc': 'Fusión moderna — sushi, hamburguesas y poke bowls',
+    'rec.carnaval.desc': 'Fusión moderna, sushi, hamburguesas y poke bowls',
     'rec.carnaval.hours': 'Todos los días sin cerrar',
     'rec.caramel.desc': 'Panadería de estilo francés con bollería recién hecha y buen café',
     'rec.caramel.hours': '7:30–19:30 (a diario)',
@@ -2118,7 +2172,7 @@ const translations = {
     'recommendations.activities': 'Actividades',
     'recommendations.shopping': 'Compras',
     'recommendations.contact': '¿Necesitas Ayuda?',
-    'recommendations.contactText': 'Escríbenos en cualquier momento durante tu estancia — para indicaciones, una reserva o un consejo local.',
+    'recommendations.contactText': 'Escríbenos en cualquier momento durante tu estancia, para indicaciones, una reserva o un consejo local.',
     'recommendations.backToHome': 'Volver al Inicio',
     'contact.phone': 'Llámame',
     'contact.whatsapp': 'Mándame un WhatsApp',

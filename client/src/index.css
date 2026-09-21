@@ -5,19 +5,19 @@
 @tailwind utilities;
 
 /*
-  Design system — "editorial coastal".
+  Design system, "editorial coastal".
   Three surfaces (bone / sand / ink) and one accent (brass). Anything outside this
   palette is a mistake, not a decision: the old site had seven section backgrounds
   and three competing accent colours, which is why it read as incoherent.
 */
 :root {
   /* Surfaces */
-  --bone: 36 33% 97%;        /* #FAF8F5 — default page surface */
-  --sand: 33 25% 91%;        /* #EFE9E1 — alternating sections */
-  --ink: 213 38% 13%;        /* #14202E — dark sections, headings */
+  --bone: 36 33% 97%;        /* #FAF8F5, default page surface */
+  --sand: 33 25% 91%;        /* #EFE9E1, alternating sections */
+  --ink: 213 38% 13%;        /* #14202E, dark sections, headings */
   --ink-soft: 213 20% 32%;   /* body text on light surfaces */
   --stone: 40 6% 45%;        /* muted / secondary text */
-  --brass: 33 35% 51%;       /* #B08D57 — the single accent */
+  --brass: 33 35% 51%;       /* #B08D57, the single accent */
   --hairline: 213 15% 84%;
 
   /* shadcn/ui tokens mapped onto the palette above */
@@ -72,7 +72,7 @@
 }
 
 @layer components {
-  /* Editorial display sizes. Serif at these sizes is the whole look — do not
+  /* Editorial display sizes. Serif at these sizes is the whole look, do not
      substitute the body sans here. */
   .display-xl {
     @apply font-display text-ink;
@@ -219,7 +219,7 @@
   - [data-reveal] fades and rises once when it enters the viewport
   - [data-reveal-stagger] does the same for its children, cascading
   The `js-reveal` class is added by MotionProvider only when JS is running AND the
-  visitor has not asked for reduced motion — without it nothing is ever hidden,
+  visitor has not asked for reduced motion, without it nothing is ever hidden,
   so content can never be lost to a script failure.
 */
 :root {
@@ -259,7 +259,7 @@ html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(7) { transition-de
 html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(8) { transition-delay: 0.49s; }
 html.js-reveal [data-reveal-stagger].is-visible > *:nth-child(n + 9) { transition-delay: 0.56s; }
 
-/* Hero entrance — above the fold, so keyframes on load rather than an observer. */
+/* Hero entrance, above the fold, so keyframes on load rather than an observer. */
 @keyframes hero-rise {
   from { opacity: 0; transform: translateY(28px); }
   to { opacity: 1; transform: none; }
@@ -300,7 +300,7 @@ html.js-reveal .bar-drop { animation: bar-drop 0.5s var(--ease-out-soft); }
   .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
   .font-sans { font-family: 'Inter', system-ui, sans-serif; }
 
-  /* Legacy aliases — older components still reference these class names. */
+  /* Legacy aliases, older components still reference these class names. */
   .font-montserrat { font-family: 'Cormorant Garamond', Georgia, serif; }
   .font-raleway { font-family: 'Inter', system-ui, sans-serif; }
 

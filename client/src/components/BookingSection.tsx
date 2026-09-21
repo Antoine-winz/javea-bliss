@@ -31,6 +31,7 @@ import { Mail, Calendar, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import OptimizedCalendar from "@/components/OptimizedCalendar";
 import { trackBookingInteraction } from "@/lib/analytics";
+import { addNights, getMinimumStayNights, getStayLengthNights } from "@shared/booking-rules";
 
 
 const BookingSection = () => {
@@ -107,6 +108,13 @@ const BookingSection = () => {
   }, {
     message: t('form.checkOutMustBeAfterCheckIn'),
     path: ['checkOut'],
+  }).refine((data) => {
+    if (!data.checkIn || !data.checkOut) return true;
+    return getStayLengthNights(data.checkIn, data.checkOut) >=
+      getMinimumStayNights(data.checkIn, data.checkOut);
+  }, {
+    message: t('form.minimumStayRequired'),
+    path: ['checkOut'],
   });
 
   type FormValues = z.infer<typeof formSchema>;
@@ -118,21 +126,20 @@ const BookingSection = () => {
     tomorrow.setDate(today.getDate() + 1);
     
     if (!calendarData || !calendarData.blockedDates) {
-      // No calendar data, default to tomorrow + 3 days
+      // No calendar data, default to the minimum stay
       const checkInDate = new Date(tomorrow);
-      const checkOutDate = new Date(tomorrow);
-      checkOutDate.setDate(tomorrow.getDate() + 3);
+      const checkIn = checkInDate.toISOString().split('T')[0];
       
       return {
-        checkIn: checkInDate.toISOString().split('T')[0],
-        checkOut: checkOutDate.toISOString().split('T')[0]
+        checkIn,
+        checkOut: addNights(checkIn, getMinimumStayNights(checkIn))
       };
     }
     
     const blockedDates = new Set(calendarData.blockedDates);
     const checkOutDates = new Set(calendarData.checkOutDates || []);
     
-    // Simple and reliable strategy: Find first completely available 3-day period
+    // Find the first completely available period matching the minimum stay
     for (let i = 0; i < 90; i++) {
       const currentDate = new Date(tomorrow);
       currentDate.setDate(tomorrow.getDate() + i);
@@ -143,8 +150,7 @@ const BookingSection = () => {
       const isAvailableForCheckIn = !blockedDates.has(currentDateStr) || checkOutDates.has(currentDateStr);
       
       if (isAvailableForCheckIn) {
-        // Test different stay lengths (3-7 days)
-        for (const stayLength of [3, 4, 5, 6, 7]) {
+        for (const stayLength of [getMinimumStayNights(currentDateStr)]) {
           let isStayAvailable = true;
           
           // Check each day of the stay
@@ -161,11 +167,9 @@ const BookingSection = () => {
           }
           
           if (isStayAvailable) {
-            const checkOutDate = new Date(currentDate);
-            checkOutDate.setDate(currentDate.getDate() + stayLength);
             return {
               checkIn: currentDateStr,
-              checkOut: checkOutDate.toISOString().split('T')[0]
+              checkOut: addNights(currentDateStr, stayLength)
             };
           }
         }
@@ -175,12 +179,11 @@ const BookingSection = () => {
     // Fallback if no availability found in next 90 days
     const fallbackCheckIn = new Date(tomorrow);
     fallbackCheckIn.setDate(tomorrow.getDate() + 90);
-    const fallbackCheckOut = new Date(fallbackCheckIn);
-    fallbackCheckOut.setDate(fallbackCheckIn.getDate() + 3);
+    const fallbackCheckInString = fallbackCheckIn.toISOString().split('T')[0];
     
     return {
-      checkIn: fallbackCheckIn.toISOString().split('T')[0],
-      checkOut: fallbackCheckOut.toISOString().split('T')[0]
+      checkIn: fallbackCheckInString,
+      checkOut: addNights(fallbackCheckInString, getMinimumStayNights(fallbackCheckInString))
     };
   };
 
@@ -192,12 +195,11 @@ const BookingSection = () => {
     const today = new Date();
     const checkInDate = new Date(today);
     checkInDate.setDate(today.getDate() + 1);
-    const checkOutDate = new Date(today);
-    checkOutDate.setDate(today.getDate() + 4);
+    const checkIn = formatDate(checkInDate);
 
     return {
-      checkIn: formatDate(checkInDate),
-      checkOut: formatDate(checkOutDate)
+      checkIn,
+      checkOut: addNights(checkIn, getMinimumStayNights(checkIn))
     };
   });
 
@@ -211,7 +213,7 @@ const BookingSection = () => {
     }
   }, [urlParams.promoStartDate, urlParams.promoEndDate]);
   
-  // Default dates are always today+1 / today+4 unless overridden by promotional URL params
+  // Default dates use the minimum stay unless overridden by promotional URL params
 
   // Initialize EmailJS once when component mounts
   useEffect(() => {
@@ -475,7 +477,21 @@ const BookingSection = () => {
         throw new Error("Spam detected");
       }
 
-      // Try EmailJS first
+      const response = await fetch('/api/booking-inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const result = await response.json().catch(() => null);
+        if (result?.code === 'MINIMUM_STAY_REQUIRED') {
+          throw new Error(t('form.minimumStayRequired'));
+        }
+        throw new Error(result?.message || t('booking.error'));
+      }
+
+      // Send the owner notification only after server validation succeeds.
       try {
         const emailParams = {
           from_name: data.name,
@@ -625,10 +641,10 @@ This inquiry was submitted through the Jávea Bliss website.
                               field.onChange(e);
                               const checkInDate = new Date(e.target.value);
                               
-                              // Set checkout to check-in + 3 nights (minimum stay)
-                              const minCheckOut = new Date(checkInDate);
-                              minCheckOut.setDate(checkInDate.getDate() + 3);
-                              const minCheckOutString = minCheckOut.toISOString().split('T')[0];
+                              const minCheckOutString = addNights(
+                                e.target.value,
+                                getMinimumStayNights(e.target.value)
+                              );
                               
                               // Only update checkout if it would be before the new minimum
                               const currentCheckOut = form.getValues("checkOut");
@@ -692,9 +708,10 @@ This inquiry was submitted through the Jávea Bliss website.
                             min={(() => {
                               const checkInDate = form.getValues("checkIn");
                               if (checkInDate) {
-                                const minCheckOut = new Date(checkInDate);
-                                minCheckOut.setDate(minCheckOut.getDate() + 3);
-                                return minCheckOut.toISOString().split('T')[0];
+                                return addNights(
+                                  checkInDate,
+                                  getMinimumStayNights(checkInDate, field.value)
+                                );
                               }
                               const today = new Date();
                               today.setDate(today.getDate() + 4);

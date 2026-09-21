@@ -1,0 +1,57 @@
+Improve the SEO architecture of javeabliss.com for accommodation searches in Jávea / Xàbia.
+
+Main objective:
+Rank for people looking for a holiday apartment or place to stay in Javea, especially near Arenal Beach.
+
+Please implement the following:
+
+1. Replace all indexable page titles that say “Last Minute Deal”, “20% OFF”, “30% OFF”, “expires in X days” or similar with evergreen SEO titles.
+
+English homepage:
+Title: 2-Bedroom Holiday Apartment in Javea near Arenal Beach | Jávea Bliss
+Meta description: Stay 250 m from Arenal Beach in Jávea. Renovated 2-bedroom holiday apartment for up to 4 guests with air conditioning, Wi-Fi, kitchen, balcony, lift and free parking.
+H1: 2-Bedroom Holiday Apartment in Javea, 250 m from Arenal Beach
+
+2. Add equivalent SEO titles, meta descriptions and H1s for Spanish, French, Dutch and Italian.
+
+3. Add hreflang tags for en, es, fr, nl, it and x-default on every language version.
+
+4. Add self-referencing canonical tags on every page.
+
+5. Add JSON-LD structured data for VacationRental or LodgingBusiness, including:
+- name: Jávea Bliss
+- location: Jávea / Xàbia, Alicante, Spain
+- capacity: 4 guests
+- bedrooms: 2
+- amenities: air conditioning, Wi-Fi, kitchen, balcony, lift, free parking
+- check-in: 16:00
+- check-out: 12:00
+- distance to Arenal Beach: 250 m
+
+6. Add an FAQ section with FAQ schema:
+- How far is Jávea Bliss from Arenal Beach?
+- How many guests can stay?
+- Is parking included?
+- Is the apartment suitable for families?
+- Can I stay in Jávea without a car?
+- Is Jávea Bliss suitable for winter stays?
+
+7. Generate a sitemap.xml with only clean, evergreen, indexable URLs.
+
+8. Create these new SEO pages:
+- /en/holiday-apartment-javea-arenal-beach/
+- /en/2-bedroom-apartment-javea/
+- /en/where-to-stay-in-javea/
+- /en/javea-arenal-beach-guide/
+- /en/winter-rental-javea/
+- /en/javea-without-car/
+- /en/restaurants-near-arenal-beach-javea/
+- /en/best-beaches-near-javea-apartment/
+- /en/javea-3-day-itinerary/
+
+9. Each new page must internally link back to the main booking page using natural anchor text such as:
+- holiday apartment near Arenal Beach
+- 2-bedroom apartment in Javea
+- stay at Jávea Bliss
+
+10. Do not index temporary offer pages. If a promotional page is needed, add noindex or keep the promotion as a temporary section inside the page without changing the SEO title/meta.

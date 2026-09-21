@@ -28,7 +28,10 @@ export interface VisitorStatsData {
 /**
  * Get country information from IP address
  */
-async function getCountryFromIP(ip: string): Promise<{country: string, countryCode: string}> {
+export async function getLocationFromIP(ip: string): Promise<{city: string, country: string, countryCode: string}> {
+  if (!ip || ip === "unknown" || ip.includes("127.0.0.1") || ip === "::1") {
+    return { city: "Unknown", country: "Unknown", countryCode: "XX" };
+  }
   try {
     // Use ipapi.co for IP geolocation (free tier: 1000 requests/day)
     const response = await fetch(`https://ipapi.co/${ip}/json/`);
@@ -36,11 +39,13 @@ async function getCountryFromIP(ip: string): Promise<{country: string, countryCo
     
     const data = await response.json();
     return {
+      city: data.city || 'Unknown',
       country: data.country_name || 'Unknown',
       countryCode: data.country_code || 'XX'
     };
   } catch (error) {
     return {
+      city: 'Unknown',
       country: 'Unknown',
       countryCode: 'XX'
     };
@@ -100,7 +105,7 @@ export const trackVisit = async (req: Request, res: Response, next: NextFunction
     }
     
     // Get country information
-    const { country, countryCode } = await getCountryFromIP(ip);
+    const { country, countryCode } = await getLocationFromIP(ip);
     
     // Extract referrer domain
     const referrerDomain = referrer === 'Direct' ? 'Direct' : extractDomain(referrer);
@@ -199,7 +204,7 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
     const lastThreeWeeksVisits = lastThreeWeeksResult[0]?.total || 0;
     const averageWeeklyVisits = Math.round(lastThreeWeeksVisits / 3);
 
-    // Get all weekly data (no date filter — show full history)
+    // Get all weekly data (no date filter, show full history)
     const weeklyData = await db
       .select({
         visitDate: visitorStats.visitDate,
@@ -229,7 +234,7 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
       .slice(-12) // last 12 weeks
       .map(({ weekKey, ...rest }) => rest);
 
-    // Get country statistics — all time
+    // Get country statistics, all time
     const countryStatsResult = await db
       .select({
         country: visitorDetails.country,
@@ -248,7 +253,7 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
       percentage: Math.round((Number(row.visits) / totalDetailVisits) * 100)
     }));
 
-    // Get referrer statistics — all time
+    // Get referrer statistics, all time
     const referrerStatsResult = await db
       .select({
         referrer: visitorDetails.referrer,

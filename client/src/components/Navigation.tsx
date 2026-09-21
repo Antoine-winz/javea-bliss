@@ -8,7 +8,7 @@ import { useLocation } from "wouter";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { t, getLocalizedPath } = useLanguage();
+  const { t, language, getLocalizedPath } = useLanguage();
   const [location, setLocation] = useLocation();
 
   // Pages other than the homepage have a light background under the bar, so the
@@ -49,6 +49,15 @@ const Navigation = () => {
     { key: 'nav.gallery', id: 'gallery' },
     { key: 'nav.rates', id: 'rates' },
   ];
+  const saleLabel = {
+    en: 'FOR SALE',
+    fr: 'À VENDRE',
+    es: 'EN VENTA',
+    de: 'ZU VERKAUFEN',
+    nl: 'TE KOOP',
+    it: 'IN VENDITA',
+  }[language];
+  const salePath = getLocalizedPath('/for-sale');
 
   return (
     <nav
@@ -65,7 +74,7 @@ const Navigation = () => {
             className={`font-display text-xl md:text-2xl tracking-wide transition-colors duration-500 ${
               solid ? 'text-ink' : 'text-bone'
             }`}
-            aria-label="Jávea Bliss — home"
+            aria-label="Jávea Bliss, home"
           >
             Jávea Bliss
           </button>
@@ -82,6 +91,9 @@ const Navigation = () => {
                 {t(item.key)}
               </button>
             ))}
+            <a href={salePath} className={`nav-link font-sans text-[0.8125rem] tracking-[0.12em] uppercase transition-colors duration-300 ${solid ? 'text-ink-soft' : 'text-bone/90'}`}>
+              {saleLabel}
+            </a>
 
             <div className={`flex items-center gap-5 pl-8 border-l ${solid ? 'border-ink/12' : 'border-bone/25'}`}>
               <div className={solid ? 'text-ink-soft' : 'text-bone/85'}>
@@ -139,6 +151,9 @@ const Navigation = () => {
                 {t(item.key)}
               </button>
             ))}
+            <a href={salePath} className="block w-full text-left py-4 font-sans text-[0.8125rem] tracking-[0.12em] uppercase text-ink-soft border-b border-ink/10 hover:text-brass transition-colors" role="menuitem">
+              {saleLabel}
+            </a>
             <button
               onClick={() => navigateToSection('booking')}
               className="mt-6 mb-2 w-full btn-primary"

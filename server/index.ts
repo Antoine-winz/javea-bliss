@@ -5,6 +5,7 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+app.set("trust proxy", 1);
 
 // Health check endpoint - MUST be before any middleware that could redirect or block
 // Replit probes both / and /healthz during startup
@@ -12,7 +13,7 @@ app.get("/healthz", (_req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-// Lightweight root health probe — returns 200 immediately so deployment
+// Lightweight root health probe, returns 200 immediately so deployment
 // healthchecks pass even before the full app is wired up. Registered ahead of
 // the language redirect below, which must never intercept a probe: a 302 here
 // fails the deploy.

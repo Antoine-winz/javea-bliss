@@ -15,8 +15,7 @@ import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 
 /*
-  Order: photography sits directly under the hero and the essentials strip —
-  photos are how a rental gets shortlisted. The long-stay offer appears once
+  Order: photography sits directly under the hero and the essentials strip, photos are how a rental gets shortlisted. The long-stay offer appears once
   (the ink section before booking), not twice.
 */
 const Home = () => {

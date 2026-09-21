@@ -1,0 +1,135 @@
+Update the “What Our Guests Say” review carousel on javeabliss.com to include the three latest Airbnb reviews from Noé, Jasper, and Gabriella.
+
+IMPORTANT:
+- Keep the existing review section design exactly as it is.
+- Do not redesign the cards, typography, colors, spacing, stars, carousel controls, or animations.
+- Reuse the existing review data structure and component logic.
+- Do not modify any other section of the website.
+- Do not invent or rewrite any review text.
+- Before adding a review, check whether it already exists. Do NOT create duplicates.
+
+ADD / VERIFY THESE THREE REVIEWS:
+
+1. Gabriella
+Date: August 2026
+Exact review text:
+“Great stay!”
+
+Rating: 5 stars
+
+This is currently the newest review and should appear before Jasper and Noé when reviews are ordered chronologically from newest to oldest.
+
+
+2. Jasper
+Date: August 2026
+Exact review text:
+“It was perfect! Really amazing apartment”
+
+Rating: 5 stars
+
+
+3. Noé
+Date: August 2026
+Exact review text:
+“We loved the experience. We'll do it again. A 10-star host.”
+
+Rating: 5 stars
+
+IMPORTANT:
+Noé may already exist in the current review data. If so, do not add him again. Verify that his existing text matches the exact wording above and leave one single Noé review.
+
+
+ORDER
+
+The beginning of the carousel should now be ordered:
+
+1. Gabriella . August 2026
+2. Jasper . August 2026
+3. Noé . August 2026
+4. Ailyssa . August 2026
+5. Continue with the existing older reviews in chronological order
+
+Use the actual chronological order of the existing dataset if exact dates are stored internally.
+
+Do not remove any legitimate existing Airbnb reviews.
+
+
+REVIEW COUNT
+
+The Airbnb review count is now:
+
+17 reviews
+
+Overall Airbnb rating:
+
+5.0
+
+If the review header currently contains the review count, update it to 17.
+
+If the new rating-summary header has already been implemented, preserve these values:
+
+Overall rating: 5.0
+Reviews: 17
+Cleanliness: 5.00
+Accuracy: 5.00
+Check-in: 5.00
+Communication: 5.00
+Location: 4.94
+Value: 4.82
+
+
+DISPLAY
+
+Each new review should use exactly the same visual structure as existing reviews:
+
+★★★★★
+
+Review text
+
+Existing language/original-review control, only if supported by the existing data structure
+
+Guest name
+Month + year
+
+Do not create a special design for the new reviews.
+
+
+LANGUAGE
+
+On the English version of the site, display the review text exactly as provided above.
+
+Do not automatically rewrite, expand, improve, or paraphrase the comments.
+
+For other language versions of the site, follow the same translation mechanism currently used by the existing review component.
+
+Do not invent an “original” review in another language if the original wording is not available.
+
+
+CAROUSEL
+
+Keep all existing functionality:
+
+- Previous/next arrows
+- Desktop layout with the existing number of visible reviews
+- Tablet responsiveness
+- Mobile responsiveness
+- Carousel transitions
+- Existing “SHOW ORIGINAL” functionality where applicable
+
+The three new reviews must behave exactly like the existing review entries.
+
+
+FINAL CHECKS
+
+Before finishing:
+
+1. Confirm Gabriella appears only once.
+2. Confirm Jasper appears only once.
+3. Confirm Noé appears only once.
+4. Confirm the review count is 17.
+5. Confirm all three show 5 stars.
+6. Confirm the exact review wording has not been altered.
+7. Confirm the newest reviews appear first.
+8. Confirm the carousel still works on desktop, tablet, and mobile.
+9. Confirm there is no horizontal overflow or layout shift.
+10. Do not change any other content or design on the website.

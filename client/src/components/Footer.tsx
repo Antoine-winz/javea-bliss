@@ -1,5 +1,4 @@
 
-import { FaAirbnb } from "react-icons/fa";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -64,7 +63,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-5">
             <h4 className="eyebrow text-bone/45 mb-6">{t('footer.guides')}</h4>
             <ul className="space-y-3">
               {seoGuides.map(({ href, label }) => (
@@ -80,18 +79,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="lg:col-span-2">
-            <h4 className="eyebrow text-bone/45 mb-6">{t('footer.followUs')}</h4>
-            <a
-              href="https://www.airbnb.com/rooms/1437724898890828336"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex text-bone/75 hover:text-brass transition-colors"
-              aria-label="Jávea Bliss on Airbnb"
-            >
-              <FaAirbnb size={22} />
-            </a>
-          </div>
         </div>
 
         <div className="border-t border-white/12 mt-16 pt-8 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">

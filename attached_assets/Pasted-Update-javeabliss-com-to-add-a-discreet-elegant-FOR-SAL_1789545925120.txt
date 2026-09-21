@@ -1,0 +1,720 @@
+Update javeabliss.com to add a discreet, elegant “FOR SALE” tab in the main navigation.
+
+The purpose is NOT to publicly advertise the apartment details or price on the website.
+
+The FOR SALE page should simply act as a premium registration gateway for potential buyers and real-estate agencies who want access to the private sales brochure.
+
+IMPORTANT:
+- DO NOT show the asking price anywhere on the public FOR SALE page.
+- DO NOT show detailed financial information.
+- DO NOT show rental revenues.
+- DO NOT reproduce the full sales brochure on the website.
+- DO NOT mention Airbnb.
+- Keep the page elegant, discreet and exclusive.
+- The detailed property information should only become available inside the PDF after successful email verification.
+- Keep the existing Javea Bliss design, fonts, colors and overall visual identity.
+- Use only existing real photographs from JaveaBliss.com. Never use AI-generated property images.
+
+==================================================
+1. NAVIGATION
+==================================================
+
+Add a new navigation tab:
+
+English: FOR SALE
+French: À VENDRE
+Spanish: EN VENTA
+German: ZU VERKAUFEN
+Dutch: TE KOOP
+
+Use the existing multilingual routing system.
+
+Suggested route:
+
+/for-sale
+
+with localized routes if the website already uses them.
+
+Do not change any existing rental, booking, gallery or review functionality.
+
+==================================================
+2. PUBLIC FOR SALE LANDING PAGE
+==================================================
+
+The page should be very elegant and intentionally minimal.
+
+This is a private-sale access page, not a property listing.
+
+Do NOT display:
+- price
+- rental revenue
+- detailed property specifications
+- cadastral information
+- financial returns
+- Airbnb information
+- full brochure content
+
+Use one strong existing photograph of the apartment, or at most 2 photographs.
+
+The page should feel more like access to a private property presentation than an online property advertisement.
+
+Suggested design:
+
+Small eyebrow:
+
+PRIVATE SALE · JÁVEA · COSTA BLANCA
+
+Main heading:
+
+Jávea Bliss
+
+Subheading:
+
+Private property presentation
+
+Short text:
+
+“The apartment is privately offered for sale. Detailed information, photographs, specifications and sale conditions are available in the private property presentation.”
+
+Alternative slightly warmer wording:
+
+“Interested in Jávea Bliss? Register below to receive access to the private property presentation, including full details, photographs and sale information.”
+
+CTA:
+
+ACCESS PRIVATE PRESENTATION
+
+or:
+
+REQUEST BROCHURE ACCESS
+
+Do NOT show the asking price before registration.
+
+==================================================
+3. REGISTRATION EXPERIENCE
+==================================================
+
+Clicking “ACCESS PRIVATE PRESENTATION” should open an elegant registration form.
+
+Do NOT describe this as creating an account.
+
+Use wording such as:
+
+Register your interest
+
+or:
+
+Request access
+
+Required fields:
+
+First name
+Last name
+Email address
+Mobile phone
+Type of enquiry
+Preferred language
+
+Type of enquiry options:
+
+Private buyer
+Real-estate agency
+
+If “Real-estate agency” is selected, dynamically display:
+
+Agency name
+
+Agency name becomes required for agencies.
+
+Preferred language options:
+
+English
+Français
+Español
+Deutsch
+Nederlands
+
+Phone field:
+- include international country code selector
+- store phone number in international format
+- validate basic formatting
+
+==================================================
+4. FORM DESIGN
+==================================================
+
+The registration form should feel premium.
+
+Avoid a generic SaaS/account-registration appearance.
+
+Use:
+- generous whitespace
+- existing Javea Bliss typography
+- elegant form inputs
+- existing accent color
+- subtle borders
+- no unnecessary cards or visual clutter
+
+Suggested heading:
+
+Private brochure access
+
+Suggested text:
+
+“Please provide your contact details to access the complete property presentation.”
+
+Submit button:
+
+SEND VERIFICATION CODE
+
+==================================================
+5. GDPR / PRIVACY
+==================================================
+
+Add a required checkbox:
+
+“I agree that my information may be stored and processed in connection with my enquiry regarding this property.”
+
+Link to the existing Privacy Policy.
+
+Do not automatically subscribe users to newsletters or marketing.
+
+If marketing consent is ever added:
+- it must be separate
+- optional
+- unchecked by default
+
+Store:
+consent_given
+consent_timestamp
+
+==================================================
+6. EMAIL VERIFICATION
+==================================================
+
+After registration:
+
+1. Create the lead server-side with status:
+
+pending_verification
+
+2. Generate a random 6-digit verification code.
+
+Example:
+
+482731
+
+3. Email the code to the user.
+
+4. Replace the registration form with an elegant verification screen.
+
+Heading:
+
+Verify your email
+
+Text:
+
+“We’ve sent a six-digit access code to [masked email]. Enter it below to access the private property presentation.”
+
+Input:
+
+_ _ _ _ _ _
+
+Button:
+
+VERIFY & CONTINUE
+
+Links:
+
+Resend code
+Change email address
+
+==================================================
+7. VERIFICATION SECURITY
+==================================================
+
+Handle verification server-side.
+
+Requirements:
+
+- random 6-digit code
+- expires after 10 minutes
+- maximum 5 incorrect attempts
+- resend available after 60 seconds
+- generating a new code invalidates the previous code
+- rate-limit by IP and email
+- do not put codes in URLs
+- do not store codes in localStorage
+- store a hash of the verification code instead of plain text where practical
+
+After successful verification:
+
+verification_status = verified
+verified_at = timestamp
+
+==================================================
+8. VERIFIED ACCESS PAGE
+==================================================
+
+Once verified, show an elegant success page.
+
+Example:
+
+Thank you, [First Name]
+
+Your access has been verified.
+
+You can now download the private Jávea Bliss property presentation.
+
+Then show a prominent button:
+
+DOWNLOAD PROPERTY BROCHURE
+
+Do NOT suddenly reveal the property price or specifications directly on this web page.
+
+The detailed information should remain inside the brochure.
+
+==================================================
+9. LANGUAGE-SPECIFIC BROCHURE
+==================================================
+
+Automatically offer the brochure matching the language selected during registration.
+
+Available brochure languages:
+
+English
+French
+Spanish
+German
+Dutch
+
+Preferred-language mapping:
+
+English → English PDF
+Français → French PDF
+Español → Spanish PDF
+Deutsch → German PDF
+Nederlands → Dutch PDF
+
+If a language file is unavailable, fall back to English.
+
+After verification, also show a discreet language selector:
+
+Presentation language:
+[ English ▼ ]
+
+This allows the verified user to download another language if needed.
+
+==================================================
+10. EXISTING PDF BROCHURES
+==================================================
+
+Use the existing brochures already created for Jávea Bliss.
+
+Current versions include:
+
+English:
+Javea_Bliss_One_Page_Agency_Sheet_EN_No_Airbnb_v6.pdf
+
+French:
+Javea_Bliss_Fiche_Agence_FR.pdf
+
+Spanish:
+Javea_Bliss_Ficha_Agencia_ES.pdf
+
+German:
+Javea_Bliss_Maklerexpose_DE.pdf
+
+Dutch:
+Javea_Bliss_Makelaarsfiche_NL.pdf
+
+If the filenames in the project differ, identify the equivalent files rather than creating new brochures.
+
+Do NOT alter the PDF contents as part of this task.
+
+==================================================
+11. PROTECT THE PDF FILES
+==================================================
+
+VERY IMPORTANT:
+
+Do NOT place the brochures in a publicly accessible /public directory with predictable URLs.
+
+Someone should NOT be able to type:
+
+javeabliss.com/brochure.pdf
+
+and bypass registration.
+
+Store the brochure files in protected server-side storage.
+
+Serve them through an authenticated endpoint such as:
+
+GET /api/sales-brochure?lang=en
+
+Before returning a brochure:
+
+1. Confirm the session is verified.
+2. Confirm verification is still valid.
+3. Return the correct language PDF.
+
+Unverified requests must receive 401/403.
+
+Do not include email addresses, names or other personal information in the PDF URL.
+
+==================================================
+12. VERIFIED SESSION
+==================================================
+
+After verification, create a secure session.
+
+Keep brochure access valid for approximately:
+
+24 hours
+
+This prevents a user having to request another email code immediately if they reload the page.
+
+Use secure HTTP-only cookies if compatible with the project's architecture.
+
+Do not store authentication state solely in frontend JavaScript.
+
+==================================================
+13. LEAD DATABASE
+==================================================
+
+Use the website's existing database if one already exists.
+
+Create a property-interest / sales-lead record containing:
+
+id
+first_name
+last_name
+email
+phone
+buyer_type
+agency_name
+preferred_language
+consent_given
+consent_timestamp
+verification_status
+verification_created_at
+verified_at
+created_at
+updated_at
+brochure_downloaded_at
+brochure_language
+
+Do not create multiple unnecessary duplicate leads.
+
+If the same verified email returns, handle it gracefully.
+
+==================================================
+14. OWNER NOTIFICATION
+==================================================
+
+After successful verification, notify the property owner.
+
+Do NOT send the owner notification merely when someone submits the first form.
+
+Only send it once the email has been verified.
+
+Use environment variable:
+
+SALES_NOTIFICATION_EMAIL=
+
+Example notification:
+
+NEW VERIFIED JÁVEA BLISS SALE ENQUIRY
+
+Name:
+John Smith
+
+Enquiry type:
+Private buyer
+
+Agency:
+-
+
+Email:
+john@example.com
+
+Mobile:
++44 7...
+
+Preferred language:
+English
+
+Email verified:
+16 September 2026 · 10:32
+
+Brochure:
+English
+
+If the brochure is later downloaded, optionally update the database record.
+
+==================================================
+15. EMAIL PROVIDER
+==================================================
+
+First inspect the project for an existing transactional email solution.
+
+If one exists:
+USE IT.
+
+Do not add another provider unnecessarily.
+
+If none exists, use Resend.
+
+Environment variables:
+
+RESEND_API_KEY=
+SALES_EMAIL_FROM=
+SALES_NOTIFICATION_EMAIL=
+
+Do not hardcode credentials.
+
+==================================================
+16. VERIFICATION EMAIL
+==================================================
+
+Subject:
+
+Jávea Bliss · Private presentation access
+
+Email:
+
+Hello [First Name],
+
+Thank you for your interest in Jávea Bliss.
+
+Your verification code is:
+
+XXXXXX
+
+The code is valid for 10 minutes.
+
+Enter the code on the website to access the private property presentation.
+
+Jávea Bliss
+Arenal · Jávea · Costa Blanca
+
+Keep the email simple, elegant and branded consistently with the website.
+
+==================================================
+17. PUBLIC PAGE VISUAL DIRECTION
+==================================================
+
+The public FOR SALE page should feel discreet and premium.
+
+Recommended desktop composition:
+
+---------------------------------
+
+PRIVATE SALE · JÁVEA · COSTA BLANCA
+
+Jávea Bliss
+
+Private property presentation
+
+[large real apartment photograph]
+
+The apartment is privately offered for sale.
+Register to access the complete property presentation.
+
+[ ACCESS PRIVATE PRESENTATION ]
+
+---------------------------------
+
+Do not clutter this page with property statistics.
+
+The goal is curiosity and qualified enquiries.
+
+==================================================
+18. MOBILE EXPERIENCE
+==================================================
+
+Mobile must be particularly clean.
+
+Suggested flow:
+
+Jávea Bliss
+
+Private property presentation
+
+[photo]
+
+“Register to access the complete sales brochure.”
+
+[ ACCESS PRESENTATION ]
+
+Then:
+
+First name
+Last name
+Email
+Phone
+Buyer / Agency
+Preferred language
+Consent
+
+[ SEND VERIFICATION CODE ]
+
+No horizontal scrolling.
+
+Use proper mobile input keyboards.
+
+==================================================
+19. ACCESSIBILITY
+==================================================
+
+Use proper labels and autocomplete attributes:
+
+First name:
+autocomplete="given-name"
+
+Last name:
+autocomplete="family-name"
+
+Email:
+autocomplete="email"
+
+Phone:
+autocomplete="tel"
+
+Verification code:
+autocomplete="one-time-code"
+
+Ensure:
+- keyboard navigation
+- clear focus states
+- accessible validation errors
+- adequate contrast
+
+==================================================
+20. ERROR STATES
+==================================================
+
+Handle elegantly:
+
+Invalid email
+Invalid phone
+Missing required field
+Failed email delivery
+Incorrect code
+Expired code
+Too many attempts
+Rate limit exceeded
+Brochure unavailable
+
+Never expose technical backend errors.
+
+==================================================
+21. SEO / PRIVACY
+==================================================
+
+The general FOR SALE gateway may be indexed if desired.
+
+However, add noindex to:
+
+verification screen
+verified-access screen
+brochure endpoints
+internal lead endpoints
+
+Do not expose personal information to search engines.
+
+Do not put personal data in URL parameters.
+
+==================================================
+22. DO NOT CHANGE
+==================================================
+
+Do NOT change:
+
+existing homepage
+existing rental pages
+booking functionality
+existing reviews
+existing gallery
+existing SEO structure outside the new page
+existing styles outside the new feature
+
+The new FOR SALE area must be self-contained.
+
+==================================================
+23. FINAL USER FLOW
+==================================================
+
+The intended experience is:
+
+FOR SALE
+↓
+Elegant private-sale landing page
+↓
+ACCESS PRIVATE PRESENTATION
+↓
+Register interest
+↓
+Receive verification code by email
+↓
+Enter code
+↓
+Email verified
+↓
+Choose/download preferred-language PDF
+
+No password.
+
+No account.
+
+No public price.
+
+No detailed public property information.
+
+==================================================
+24. TEST EVERYTHING
+==================================================
+
+Before completion test:
+
+1. FOR SALE appears in navigation.
+2. No asking price appears anywhere on the public sale page.
+3. No rental revenue appears.
+4. No Airbnb reference appears.
+5. Private buyer registration works.
+6. Agency registration works.
+7. Agency name becomes mandatory when Agency is selected.
+8. Email validation works.
+9. Phone validation works.
+10. GDPR consent is mandatory.
+11. Verification email is sent.
+12. Wrong code is rejected.
+13. Expired code is rejected.
+14. Resend code works.
+15. Old code stops working after resend.
+16. Successful verification creates a verified session.
+17. PDFs cannot be downloaded without verification.
+18. PDFs can be downloaded after verification.
+19. English preference downloads English PDF.
+20. French preference downloads French PDF.
+21. Spanish preference downloads Spanish PDF.
+22. German preference downloads German PDF.
+23. Dutch preference downloads Dutch PDF.
+24. Owner receives verified-lead notification.
+25. Download is recorded.
+26. Desktop works.
+27. Tablet works.
+28. Mobile works.
+29. No public static PDF URLs exist.
+30. No personal data leaks into URLs or browser source.
+
+At completion report:
+
+- components/pages created
+- database changes
+- backend/API routes
+- email provider
+- environment variables required
+- protected PDF storage location
+- verification/session method
+- any remaining manual configuration

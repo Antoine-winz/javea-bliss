@@ -11,7 +11,6 @@ const RatesSection = () => {
 
   const policies = [
     t('rates.policy1'),
-    t('rates.policy2'),
     t('rates.policy3'),
     t('rates.policy4'),
   ];
@@ -21,7 +20,7 @@ const RatesSection = () => {
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-12 gap-x-16">
           {/* Heading, description and the booking policies share the left column,
-              beside the season table — one screen, no stranded space. */}
+              beside the season table, one screen, no stranded space. */}
           <div className="lg:col-span-5" data-reveal>
             <p className="eyebrow mb-5">{t('rates.eyebrow')}</p>
             <h2 className="display-lg mb-6">{t('rates.title')}</h2>

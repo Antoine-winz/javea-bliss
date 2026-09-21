@@ -48,7 +48,7 @@ const PromotionalOffer = () => {
 
   // Optimized translations using shared utilities
   const translations = useMemo(() => {
-    if (!offer) return {};
+    if (!offer) return getPromotionalTranslations("en", 0);
     const savings = offer.originalPrice - offer.discountedPrice;
     return getPromotionalTranslations(offer.language, savings);
   }, [offer]);
@@ -58,7 +58,7 @@ const PromotionalOffer = () => {
     if (!offer?.validUntil) return;
 
     const updateTimeLeft = () => {
-      const timeLeftStr = calculateTimeLeft(offer.validUntil, offer.language);
+      const timeLeftStr = calculateTimeLeft(offer.validUntil!, offer.language);
       setTimeLeft(timeLeftStr);
     };
 
@@ -70,7 +70,7 @@ const PromotionalOffer = () => {
   // Track promotional offer view
   useEffect(() => {
     if (offer) {
-      trackPromoInteraction('view', offer.title, `${getPercentageText(offer.originalPrice, offer.discountedPrice)} OFF`);
+      trackPromoInteraction('view', offer.title, getPercentageText(offer.discountPercentage, offer.language));
     }
   }, [offer]);
 
@@ -109,6 +109,7 @@ const PromotionalOffer = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!offer) return;
     setIsSubmitting(true);
     
     try {
@@ -128,8 +129,8 @@ const PromotionalOffer = () => {
       if (!response.ok) throw new Error('Failed to submit booking');
 
       toast({
-        title: translations.bookingSubmitted || "Booking submitted successfully!",
-        description: translations.bookingConfirmation || "We'll get back to you soon with confirmation details.",
+        title: "Booking submitted successfully!",
+        description: "We'll get back to you soon with confirmation details.",
       });
 
       // Reset form
@@ -281,7 +282,7 @@ const PromotionalOffer = () => {
                     onClick={() => {
                       // Track promotional offer interaction
                       if (offer) {
-                        trackPromoInteraction('click', offer.title, `${getPercentageText(offer.originalPrice, offer.discountedPrice)} OFF`);
+                        trackPromoInteraction('click', offer.title, getPercentageText(offer.discountPercentage, offer.language));
                       }
                       
                       const element = document.getElementById('booking-section');
@@ -402,7 +403,7 @@ const PromotionalOffer = () => {
                         endDate={offer.endDate}
                         discountedPrice={offer.discountedPrice}
                         originalPrice={offer.originalPrice}
-                        validUntil={offer.validUntil}
+                        validUntil={offer.validUntil || offer.endDate}
                         language={offer.language}
                       />
                     </div>

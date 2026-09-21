@@ -4,7 +4,7 @@ import apartmentImage from "@assets/Livingroom1_optimized.jpeg";
 import kitchenImage from "@assets/Kitchen1_optimized.jpeg";
 
 /*
-  Ordered as a walk through the apartment — where you sleep first, since capacity and bed
+  Ordered as a walk through the apartment, where you sleep first, since capacity and bed
   configuration are what a guest checks before anything else, then the rooms in the order
   you meet them, then the things that make a long stay work (climate, Wi-Fi) and finally
   the building. Neighbourhood facts that used to sit here (the marina, the shops, the
@@ -29,7 +29,7 @@ const ApartmentSection = () => {
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-14 gap-x-16 items-start">
           {/* Sticky on desktop so the photographs stay with the description they belong to.
-              Two frames, offset — the living room carries the column, the signature
+              Two frames, offset, the living room carries the column, the signature
               forest-green kitchen overlaps its corner. */}
           <div className="lg:col-span-5">
             <div className="relative lg:sticky lg:top-28 pb-16 md:pb-24" data-reveal>

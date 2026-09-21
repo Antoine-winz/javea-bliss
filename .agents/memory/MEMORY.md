@@ -1,0 +1,4 @@
+- [Resend isolation](resend-isolation.md) — keep Jávea Bliss email credentials separate from the shared connector used by unrelated apps.
+- [One-time brochure access](one-time-brochure-access.md) — every brochure copy requires a fresh registration and verification.
+- [PDF stamping compatibility](pdf-stamping-compatibility.md) — rebuild stamped brochures as new PDFs so strict readers such as macOS Preview accept them.
+- [Neon empty-result queries](neon-empty-result-queries.md) — use aggregate existence checks where empty Drizzle selects trigger the Neon driver's null-map failure.

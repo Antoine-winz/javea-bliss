@@ -44,7 +44,7 @@ const SEOHead = ({
   // have; re-assert on every route change so returning to a shared page restores them.
   const [location] = useLocation();
 
-  // Active promotional offer feeds a clean, factual title variant — no urgency spam
+  // Active promotional offer feeds a clean, factual title variant, no urgency spam
   const { data: promotionalOffers } = useQuery<PromotionalOffer[]>({
     queryKey: ['/api/promotional-offers'],
     staleTime: 5 * 60 * 1000,
@@ -203,7 +203,7 @@ const SEOHead = ({
     }
     xDefault.href = pagePath ? `${BASE_URL}/en${pagePath}` : `${BASE_URL}/`;
 
-    // VacationRental structured data — factual amenities only, no self-awarded ratings
+    // VacationRental structured data, factual amenities only, no self-awarded ratings
     const schema: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': ['LodgingBusiness', 'VacationRental'],

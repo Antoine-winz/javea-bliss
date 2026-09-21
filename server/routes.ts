@@ -4,12 +4,14 @@ import path from "path";
 import fs from "fs";
 import { storage } from "./storage";
 import { bookingInquirySchema, insertPromotionalOfferSchema, insertGuestReviewSchema, insertDailyRateSchema } from "@shared/schema";
+import { getMinimumStayNights, getStayLengthNights, isValidBookingDate } from "@shared/booking-rules";
 import { calendarService } from "./calendar";
 import { trackVisit, getVisitorStats } from "./visitor-tracking";
 import { getRatesForRange } from "./pricing";
+import { registerSalesRoutes } from "./sales-routes";
 
 
-// Last-minute offers toggle (off by default — owner must enable explicitly)
+// Last-minute offers toggle (off by default, owner must enable explicitly)
 let lastMinuteOffersEnabled = false;
 
 // Simple rate limiting store with automatic cleanup
@@ -51,6 +53,8 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  registerSalesRoutes(app);
+
   // Keep old printed-flyer links working without presenting a 404.
   app.get("/flyer.html", (req, res) => {
     res.redirect(301, "/flyer2.html");
@@ -161,8 +165,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Server-side date validation
-      const checkIn = new Date(req.body.checkIn);
-      const checkOut = new Date(req.body.checkOut);
+      if (!isValidBookingDate(req.body.checkIn) || !isValidBookingDate(req.body.checkOut)) {
+        return res.status(400).json({
+          code: "INVALID_DATE_FORMAT",
+          message: "Check-in and check-out must use the YYYY-MM-DD format."
+        });
+      }
+
+      const checkIn = new Date(`${req.body.checkIn}T00:00:00Z`);
+      const checkOut = new Date(`${req.body.checkOut}T00:00:00Z`);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
@@ -181,6 +192,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (checkOut <= checkIn) {
         return res.status(400).json({
           message: "Check-out date must be after check-in date."
+        });
+      }
+
+      const stayLength = getStayLengthNights(req.body.checkIn, req.body.checkOut);
+      const minimumNights = getMinimumStayNights(req.body.checkIn, req.body.checkOut);
+      if (!Number.isFinite(stayLength) || stayLength < minimumNights) {
+        return res.status(400).json({
+          code: "MINIMUM_STAY_REQUIRED",
+          minimumNights,
+          message: `A minimum stay of ${minimumNights} nights is required for the selected dates.`
         });
       }
 
@@ -364,12 +385,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      if (!isValidBookingDate(startDate) || !isValidBookingDate(endDate)) {
+        return res.status(400).json({
+          code: "INVALID_DATE_FORMAT",
+          message: "Start and end dates must use the YYYY-MM-DD format."
+        });
+      }
+
+      const start = new Date(`${startDate}T00:00:00Z`);
+      const end = new Date(`${endDate}T00:00:00Z`);
       
       if (isNaN(start.getTime()) || isNaN(end.getTime())) {
         return res.status(400).json({ 
           message: "Invalid date format" 
+        });
+      }
+
+      const stayLength = getStayLengthNights(startDate, endDate);
+      const minimumNights = getMinimumStayNights(startDate, endDate);
+      if (!Number.isFinite(stayLength) || stayLength < minimumNights) {
+        return res.status(400).json({
+          code: "MINIMUM_STAY_REQUIRED",
+          minimumNights,
+          message: `A minimum stay of ${minimumNights} nights is required for the selected dates.`
         });
       }
 

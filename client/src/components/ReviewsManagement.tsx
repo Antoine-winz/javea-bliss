@@ -351,7 +351,7 @@ const ReviewsManagement = () => {
                     <FormItem className="flex items-center space-x-2">
                       <FormControl>
                         <Checkbox
-                          checked={form.watch("isVisible")}
+                          checked={form.watch("isVisible") ?? false}
                           onCheckedChange={(checked) => form.setValue("isVisible", checked === true)}
                         />
                       </FormControl>
@@ -361,7 +361,7 @@ const ReviewsManagement = () => {
                     <FormItem className="flex items-center space-x-2">
                       <FormControl>
                         <Checkbox
-                          checked={form.watch("isVerified")}
+                          checked={form.watch("isVerified") ?? false}
                           onCheckedChange={(checked) => form.setValue("isVerified", checked === true)}
                         />
                       </FormControl>

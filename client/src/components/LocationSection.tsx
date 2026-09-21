@@ -66,7 +66,7 @@ const LocationSection = () => {
           ))}
         </ul>
 
-        {/* Practical distances — what guests check once they like the look of the place. */}
+        {/* Practical distances, what guests check once they like the look of the place. */}
         <ul className="mt-20 pt-14 border-t border-white/16 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-14" data-reveal-stagger>
           {practical.map(({ icon: Icon, label, body }) => (
             <li key={label} className="hairline-dark py-6 grid grid-cols-[1.5rem_1fr] gap-x-4">

@@ -26,7 +26,7 @@ export function SocialMedia() {
     if (!offer?.validUntil) return;
 
     const updateTimeLeft = () => {
-      const timeLeftStr = calculateTimeLeft(offer.validUntil, offer.language);
+      const timeLeftStr = calculateTimeLeft(offer.validUntil!, offer.language);
       setTimeLeft(timeLeftStr);
     };
 

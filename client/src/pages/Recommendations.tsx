@@ -229,7 +229,7 @@ const Recommendations = () => {
 
                 <p className="text-[0.95rem] text-ink-soft leading-relaxed mb-6">{venue.desc}</p>
 
-                {'tip' in venue && venue.tip && (
+                {'tip' in venue && typeof venue.tip === "string" && (
                   <p className="text-[0.9rem] text-ink-soft leading-relaxed border-l border-brass pl-5 mb-6">
                     {venue.tip}
                   </p>

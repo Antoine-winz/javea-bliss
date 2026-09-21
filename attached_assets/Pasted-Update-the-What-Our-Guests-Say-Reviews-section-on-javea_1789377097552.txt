@@ -1,0 +1,240 @@
+Update the “What Our Guests Say” / Reviews section on javeabliss.com.
+
+IMPORTANT:
+- Keep the current design language exactly as it is.
+- Do NOT redesign the review cards.
+- Do NOT change the existing fonts, cream background, colors, typography, testimonial layout, spacing style, review carousel behavior, or navigation arrows.
+- Reuse the website’s existing CSS variables, fonts and colors wherever possible.
+- The goal is simply to improve the header of the Reviews section by integrating the Airbnb rating breakdown elegantly.
+
+CURRENT SECTION:
+The section currently has:
+- Small “REVIEWS” eyebrow text
+- Large heading: “What Our Guests Say”
+- 5 gold stars + “5.0”
+- Left/right carousel arrows on the right
+- Three review cards underneath on desktop
+
+CHANGE THE HEADER TO THIS STRUCTURE:
+
+REVIEWS
+
+What Our Guests Say
+
+★★★★★  5.0   |   17   |   5.00   |   5.00   |   5.00   |   5.00   |   4.94   |   4.82
+       Overall      Reviews   Cleanliness Accuracy Check-in Communication Location Value
+       rating
+
+More specifically, create a horizontal rating summary directly underneath the main heading.
+
+Use these exact values:
+
+Overall rating: 5.0
+Reviews: 17
+Cleanliness: 5.00
+Accuracy: 5.00
+Check-in: 5.00
+Communication: 5.00
+Location: 4.94
+Value: 4.82
+
+DESKTOP DESIGN
+
+The rating strip should look refined and minimal, matching the existing luxury/editorial design.
+
+Structure:
+
+[★★★★★  5.0]
+ Overall rating
+
+vertical divider
+
+[17]
+ Reviews
+
+vertical divider
+
+[5.00]
+ Cleanliness
+
+vertical divider
+
+[5.00]
+ Accuracy
+
+vertical divider
+
+[5.00]
+ Check-in
+
+vertical divider
+
+[5.00]
+ Communication
+
+vertical divider
+
+[4.94]
+ Location
+
+vertical divider
+
+[4.82]
+ Value
+
+Then keep the existing previous/next review navigation arrows aligned to the right of this same general header area.
+
+VISUAL STYLE
+
+- Keep the existing gold used for the review stars.
+- Use the existing dark navy/charcoal text color for numbers.
+- Main values should be visually prominent but not bold or oversized.
+- Category labels should be smaller and use the existing muted secondary text color.
+- Add subtle thin vertical separators between metrics.
+- Separators should use the same light grey/beige tone already used for borders and horizontal rules elsewhere on the page.
+- Do not put the ratings inside cards or boxes.
+- Do not add shadows.
+- Do not add a different background.
+- It should feel integrated into the existing section.
+
+The result should feel like a boutique luxury hotel website, not an analytics dashboard.
+
+SPACING
+
+Maintain generous whitespace.
+
+Suggested hierarchy:
+
+REVIEWS eyebrow
+
+~25–35px spacing
+
+“What Our Guests Say”
+
+~35–45px spacing
+
+Rating summary strip
+
+~45–60px spacing
+
+Existing horizontal divider/review cards
+
+Adjust values to match the current site's spacing system rather than hard-coding these values if equivalent spacing tokens already exist.
+
+STARS
+
+Keep the five existing gold stars.
+
+Place “5.0” beside the stars.
+
+Underneath that group add the small label:
+“Overall rating”
+
+Do not repeat stars for the six individual category ratings.
+
+REVIEWS
+
+For the Reviews metric display:
+
+17
+Reviews
+
+Do NOT display “17 / 17” here.
+
+The fact that all reviews are 5-star does not need to be shown in this header.
+
+CAROUSEL
+
+Do not alter the testimonial carousel logic.
+
+Keep:
+- current testimonial text
+- guest names
+- dates
+- stars
+- “SHOW ORIGINAL”
+- carousel transitions
+- previous/next arrows
+
+Only reposition the arrow controls if necessary to align them nicely with the new rating strip.
+
+RESPONSIVE BEHAVIOUR
+
+The desktop design should show the rating metrics in one clean horizontal row if space permits.
+
+Do not make the text uncomfortably small just to fit the row.
+
+For tablet:
+- Allow the metrics to wrap into two balanced rows if necessary.
+- Keep clean alignment.
+- Keep adequate spacing.
+
+For mobile:
+Do NOT try to display all eight metrics in one horizontal line.
+
+Use a compact responsive layout such as:
+
+★★★★★ 5.0
+17 Reviews
+
+then a 2-column or 3-column grid:
+
+5.00
+Cleanliness
+
+5.00
+Accuracy
+
+5.00
+Check-in
+
+5.00
+Communication
+
+4.94
+Location
+
+4.82
+Value
+
+Keep it clean and easy to read.
+
+Do not introduce horizontal scrolling for the ratings.
+
+DATA
+
+For now these values may be stored in a simple configuration object/array in the Reviews component so they are easy to update later.
+
+Example conceptual structure:
+
+const reviewStats = {
+  overall: 5.0,
+  reviewCount: 17,
+  categories: [
+    { label: "Cleanliness", value: "5.00" },
+    { label: "Accuracy", value: "5.00" },
+    { label: "Check-in", value: "5.00" },
+    { label: "Communication", value: "5.00" },
+    { label: "Location", value: "4.94" },
+    { label: "Value", value: "4.82" }
+  ]
+}
+
+Do not add an API integration at this stage.
+
+IMPORTANT FINAL CHECKS
+
+Before finishing:
+
+1. Compare the updated section with the existing site and make sure it still clearly looks like the same website.
+2. Do not modify other sections of the homepage.
+3. Do not modify the testimonial content.
+4. Check desktop, tablet and mobile.
+5. Ensure there is no horizontal overflow.
+6. Ensure the carousel still works.
+7. Keep the existing review section design intact below the new rating summary.
+8. Use semantic HTML and accessible labels where appropriate.
+9. Preserve existing SEO structure and heading hierarchy.
+10. Do not add new dependencies unless absolutely necessary.
+
+The desired result is a subtle evolution of the existing Reviews header, not a redesign.

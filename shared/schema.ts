@@ -2,6 +2,9 @@ import { pgTable, text, serial, integer, boolean, date, timestamp } from "drizzl
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+export const MINIMUM_STAY_NIGHTS = 11;
+export const CLEANING_FEE_EUR = 60;
+
 // Users table (kept from template)
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -200,3 +203,67 @@ export const insertDailyRateSchema = createInsertSchema(dailyRates).pick({
 
 export type InsertDailyRate = z.infer<typeof insertDailyRateSchema>;
 export type DailyRate = typeof dailyRates.$inferSelect;
+
+// Private property-sale leads and brochure access audit trail
+export const salesLeads = pgTable("sales_leads", {
+  id: serial("id").primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull().unique(),
+  phone: text("phone").notNull(),
+  ipAddress: text("ip_address"),
+  ipCity: text("ip_city"),
+  ipCountry: text("ip_country"),
+  buyerType: text("buyer_type").notNull(),
+  agencyName: text("agency_name"),
+  preferredLanguage: text("preferred_language").notNull().default("en"),
+  consentGiven: boolean("consent_given").notNull().default(false),
+  consentTimestamp: timestamp("consent_timestamp"),
+  verificationStatus: text("verification_status").notNull().default("pending_verification"),
+  verificationCodeHash: text("verification_code_hash"),
+  verificationCreatedAt: timestamp("verification_created_at"),
+  verificationExpiresAt: timestamp("verification_expires_at"),
+  verificationAttempts: integer("verification_attempts").notNull().default(0),
+  lastCodeSentAt: timestamp("last_code_sent_at"),
+  verifiedAt: timestamp("verified_at"),
+  ownerNotifiedAt: timestamp("owner_notified_at"),
+  followUpStatus: text("follow_up_status").notNull().default("new"),
+  followUpNotes: text("follow_up_notes"),
+  lastContactedAt: timestamp("last_contacted_at"),
+  brochureDownloadedAt: timestamp("brochure_downloaded_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const blockedSalesIps = pgTable("blocked_sales_ips", {
+  id: serial("id").primaryKey(),
+  ipAddress: text("ip_address").notNull().unique(),
+  city: text("city"),
+  country: text("country"),
+  blockedAt: timestamp("blocked_at").defaultNow(),
+});
+
+export const salesDownloads = pgTable("sales_downloads", {
+  id: serial("id").primaryKey(),
+  leadId: integer("lead_id").notNull().references(() => salesLeads.id),
+  language: text("language").notNull(),
+  downloadedAt: timestamp("downloaded_at").defaultNow(),
+  reference: text("reference").notNull().unique(),
+});
+
+export const insertSalesLeadSchema = createInsertSchema(salesLeads).pick({
+  firstName: true,
+  lastName: true,
+  email: true,
+  phone: true,
+  buyerType: true,
+  agencyName: true,
+  preferredLanguage: true,
+  consentGiven: true,
+  consentTimestamp: true,
+  verificationStatus: true,
+});
+
+export type InsertSalesLead = z.infer<typeof insertSalesLeadSchema>;
+export type SalesLead = typeof salesLeads.$inferSelect;
+export type SalesDownload = typeof salesDownloads.$inferSelect;

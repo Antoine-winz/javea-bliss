@@ -3,12 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Lock, Settings, Calendar, RefreshCw, Clock, CheckCircle, LogOut, Copy, Check, BarChart3, Plus, Edit, Trash2, ExternalLink, Star, Eye, EyeOff, DollarSign, Ban, Zap } from "lucide-react";
+import { Lock, Settings, Calendar, RefreshCw, Clock, CheckCircle, LogOut, Copy, Check, BarChart3, Plus, Edit, Trash2, ExternalLink, Star, Eye, EyeOff, DollarSign, Ban, Zap, Users } from "lucide-react";
 import VisitorStats from "@/components/VisitorStats";
 import CleaningSchedule from "@/components/CleaningSchedule";
 import ReviewsManagement from "@/components/ReviewsManagement";
@@ -18,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { insertPromotionalOfferSchema, insertGuestReviewSchema } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
+import SalesCRM from "@/components/SalesCRM";
 
 interface SyncStatus {
   isActive: boolean;
@@ -156,7 +156,6 @@ const getLanguageSuggestions = (language: string) => {
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
   const [icalUrl, setIcalUrl] = useState("https://www.airbnb.com/calendar/ical/1437724898890828336.ics?s=fa161fdacdd13bf8dd30a6eaf26e3c98");
   const [isLoading, setIsLoading] = useState(false);
   const [syncStatus, setSyncStatus] = useState<SyncStatus | null>(null);
@@ -334,7 +333,7 @@ const Admin = () => {
     
     const offerData = {
       ...data,
-      validUntil: cetDate,
+      validUntil: cetDate.toISOString(),
     };
     
     createOfferMutation.mutate(offerData);
@@ -369,7 +368,7 @@ const Admin = () => {
     
     const offerData = {
       ...data,
-      validUntil: cetDate,
+      validUntil: cetDate.toISOString(),
     };
     
     createOfferMutation.mutate(offerData);
@@ -405,21 +404,11 @@ const Admin = () => {
     });
   };
 
-  // Check for saved authentication on page load
+  // Authentication is server-backed; no password or session token is stored in the browser.
   useEffect(() => {
-    const savedAuth = localStorage.getItem('admin_auth');
-    if (savedAuth) {
-      const authData = JSON.parse(savedAuth);
-      const now = new Date().getTime();
-      
-      // Check if auth is still valid (30 days = 30 * 24 * 60 * 60 * 1000)
-      if (authData.expires > now) {
-        setIsAuthenticated(true);
-      } else {
-        // Auth expired, remove it
-        localStorage.removeItem('admin_auth');
-      }
-    }
+    fetch('/api/admin/session', { credentials: 'include' })
+      .then((response) => { if (response.ok) setIsAuthenticated(true); })
+      .catch(() => undefined);
   }, []);
 
   // Fetch sync status
@@ -442,44 +431,25 @@ const Admin = () => {
   };
   
   // Handle authentication with optional remember me
-  const handleLogin = () => {
-    if (password === "javeabliss2024") {
+  const handleLogin = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ password }) });
+      if (!response.ok) throw new Error();
       setIsAuthenticated(true);
-      
-      // If remember me is checked, save authentication for 30 days
-      if (rememberMe) {
-        const expirationTime = new Date().getTime() + (30 * 24 * 60 * 60 * 1000); // 30 days
-        const authData = {
-          authenticated: true,
-          expires: expirationTime
-        };
-        localStorage.setItem('admin_auth', JSON.stringify(authData));
-        
-        toast({
-          title: "Login Successful",
-          description: "You'll stay logged in for 30 days",
-        });
-      } else {
-        toast({
-          title: "Login Successful",
-          description: "You're logged in for this session",
-        });
-      }
-      
-      setPassword(""); // Clear password field
-    } else {
-      toast({
-        title: "Authentication Failed",
-        description: "Incorrect password. Please try again.",
-        variant: "destructive",
-      });
+      setPassword("");
+      toast({ title: "Login successful", description: "Your secure session is active for 24 hours." });
+    } catch {
+      toast({ title: "Authentication failed", description: "The password was not accepted.", variant: "destructive" });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   // Handle logout
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' }).catch(() => undefined);
     setIsAuthenticated(false);
-    localStorage.removeItem('admin_auth');
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out",
@@ -553,21 +523,8 @@ const Admin = () => {
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
             />
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="remember-me"
-                checked={rememberMe}
-                onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-              />
-              <Label 
-                htmlFor="remember-me" 
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Remember me for 30 days
-              </Label>
-            </div>
-            <Button onClick={handleLogin} className="w-full">
-              Login
+            <Button onClick={handleLogin} disabled={isLoading || !password} className="w-full">
+              {isLoading ? "Signing in…" : "Login"}
             </Button>
           </CardContent>
         </Card>
@@ -604,7 +561,7 @@ const Admin = () => {
         </div>
 
         <Tabs defaultValue="stats" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7">
+          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 md:grid-cols-4 xl:grid-cols-8">
             <TabsTrigger value="stats" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               Visitor Stats
@@ -633,10 +590,18 @@ const Admin = () => {
               <Settings className="w-4 h-4" />
               Settings
             </TabsTrigger>
+            <TabsTrigger value="sales" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Sales CRM
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="stats">
             <VisitorStats />
+          </TabsContent>
+
+          <TabsContent value="sales">
+            <SalesCRM />
           </TabsContent>
 
           <TabsContent value="calendar">
@@ -735,7 +700,7 @@ const Admin = () => {
                   Block Dates Manually
                 </CardTitle>
                 <CardDescription>
-                  Block a date range directly on your website calendar — for direct bookings, personal use, or any reason not captured by Airbnb.
+                  Block a date range directly on your website calendar, for direct bookings, personal use, or any reason not captured by Airbnb.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -835,7 +800,7 @@ const Admin = () => {
                   <div className={`flex items-center gap-3 px-4 py-3 rounded-lg border-2 ${lastMinuteSettings?.enabled ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-gray-50'}`}>
                     <div className={`w-3 h-3 rounded-full ${lastMinuteSettings?.enabled ? 'bg-green-500' : 'bg-gray-400'}`} />
                     <span className="font-medium">
-                      {lastMinuteSettings?.enabled ? 'Currently ON — 20% discount is showing on the site' : 'Currently OFF — no automatic discount shown'}
+                      {lastMinuteSettings?.enabled ? 'Currently ON, 20% discount is showing on the site' : 'Currently OFF, no automatic discount shown'}
                     </span>
                   </div>
                   <Button

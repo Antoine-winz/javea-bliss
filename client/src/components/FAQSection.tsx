@@ -5,7 +5,7 @@ const faqs = {
   en: [
     {
       q: 'How far is the apartment from Arenal Beach?',
-      a: '250 metres — about a 3-minute walk. You can reach the sand, the promenade and the Arenal restaurants on foot without ever taking the car out.',
+      a: '250 metres, about a 3-minute walk. You can reach the sand, the promenade and the Arenal restaurants on foot without ever taking the car out.',
     },
     {
       q: 'How do I get to Jávea from the airport?',
@@ -13,7 +13,7 @@ const faqs = {
     },
     {
       q: 'Do I need a car in Jávea?',
-      a: 'Not for a beach holiday. The beach, supermarkets, a pharmacy and around twenty restaurants are all within a 10-minute walk. A car is useful for day trips — Cala Granadella, the Old Town, Dénia or Calpe — and if you bring one, parking on the street outside is free.',
+      a: 'Not for a beach holiday. The beach, supermarkets, a pharmacy and around twenty restaurants are all within a 10-minute walk. A car is useful for day trips, Cala Granadella, the Old Town, Dénia or Calpe, and if you bring one, parking on the street outside is free.',
     },
     {
       q: 'How many people can stay?',
@@ -24,8 +24,8 @@ const faqs = {
       a: 'Yes. Booking through this site means no platform service fee, which is typically 12–15% of the total on the big portals. You are dealing directly with the owner, so questions get answered by the person who actually knows the apartment.',
     },
     {
-      q: 'The calendar shows my dates as unavailable — is that final?',
-      a: 'Not always. The calendar syncs with Airbnb, and Airbnb sometimes blocks dates that are actually free. Send us your dates anyway — we can often take a direct booking on days the calendar shows as blocked.',
+      q: 'The calendar shows my dates as unavailable, is that final?',
+      a: 'Not always. The calendar syncs with Airbnb, and Airbnb sometimes blocks dates that are actually free. Send us your dates anyway, we can often take a direct booking on days the calendar shows as blocked.',
     },
     {
       q: 'Do you take long stays and winter lets?',
@@ -33,11 +33,11 @@ const faqs = {
     },
     {
       q: 'Is there a lift, and is the apartment suitable for older guests?',
-      a: 'Yes — the building has a lift and the apartment is on the first floor, so there are no stairs to manage with luggage. Everything day-to-day is on the flat and within walking distance, which is why the apartment suits guests who would rather not drive.',
+      a: 'Yes, the building has a lift and the apartment is on the first floor, so there are no stairs to manage with luggage. Everything day-to-day is on the flat and within walking distance, which is why the apartment suits guests who would rather not drive.',
     },
     {
       q: 'How far ahead should I book?',
-      a: 'For July and August, three to six months is sensible; the Arenal fills up. Easter and the Spanish long weekends go early too. Outside those periods there is usually more flexibility, and last-minute stays are often possible — just ask.',
+      a: 'For July and August, three to six months is sensible; the Arenal fills up. Easter and the Spanish long weekends go early too. Outside those periods there is usually more flexibility, and last-minute stays are often possible, just ask.',
     },
     {
       q: 'Are pets allowed?',
@@ -47,7 +47,7 @@ const faqs = {
   nl: [
     {
       q: 'Hoe ver is het appartement van het Arenal strand?',
-      a: '250 meter — ongeveer 3 minuten lopen. Het strand, de boulevard en de restaurants van het Arenal bereik je te voet, zonder de auto te pakken.',
+      a: '250 meter, ongeveer 3 minuten lopen. Het strand, de boulevard en de restaurants van het Arenal bereik je te voet, zonder de auto te pakken.',
     },
     {
       q: 'Hoe kom ik vanaf het vliegveld in Jávea?',
@@ -55,7 +55,7 @@ const faqs = {
     },
     {
       q: 'Heb ik een auto nodig in Jávea?',
-      a: 'Voor een strandvakantie niet. Het strand, supermarkten, een apotheek en een stuk of twintig restaurants liggen binnen 10 minuten lopen. Handig is een auto voor uitstapjes — Cala Granadella, de oude stad, Dénia of Calpe. Kom je met de auto, dan parkeer je gratis in de straat.',
+      a: 'Voor een strandvakantie niet. Het strand, supermarkten, een apotheek en een stuk of twintig restaurants liggen binnen 10 minuten lopen. Handig is een auto voor uitstapjes, Cala Granadella, de oude stad, Dénia of Calpe. Kom je met de auto, dan parkeer je gratis in de straat.',
     },
     {
       q: 'Voor hoeveel personen is het appartement?',
@@ -63,23 +63,23 @@ const faqs = {
     },
     {
       q: 'Is direct boeken goedkoper dan via Airbnb of Booking?',
-      a: 'Ja. Boek je via deze site, dan betaal je geen servicekosten van het platform — op de grote portalen is dat al snel 12 tot 15% van het totaal. Je hebt direct contact met de eigenaar, dus je vragen worden beantwoord door iemand die het appartement echt kent.',
+      a: 'Ja. Boek je via deze site, dan betaal je geen servicekosten van het platform, op de grote portalen is dat al snel 12 tot 15% van het totaal. Je hebt direct contact met de eigenaar, dus je vragen worden beantwoord door iemand die het appartement echt kent.',
     },
     {
-      q: 'De kalender zegt dat mijn data bezet zijn — is dat definitief?',
-      a: 'Niet altijd. De kalender synchroniseert met Airbnb, en Airbnb blokkeert soms dagen die in werkelijkheid vrij zijn. Stuur je data gerust toch door — vaak kunnen we een directe boeking wél aannemen op dagen die geblokkeerd lijken.',
+      q: 'De kalender zegt dat mijn data bezet zijn, is dat definitief?',
+      a: 'Niet altijd. De kalender synchroniseert met Airbnb, en Airbnb blokkeert soms dagen die in werkelijkheid vrij zijn. Stuur je data gerust toch door, vaak kunnen we een directe boeking wél aannemen op dagen die geblokkeerd lijken.',
     },
     {
       q: 'Kan ik hier overwinteren of langere tijd verblijven?',
-      a: 'Ja, en dat is een groot deel van wat we doen. Vanaf 35 nachten kost het €100 per nacht voor het hele verblijf, in welk seizoen dan ook. Er is verwarming én airco, 600 Mbps glasvezel, een wasmachine en een complete keuken — geschikt voor een maand of drie, niet alleen voor een weekje.',
+      a: 'Ja, en dat is een groot deel van wat we doen. Vanaf 35 nachten kost het €100 per nacht voor het hele verblijf, in welk seizoen dan ook. Er is verwarming én airco, 600 Mbps glasvezel, een wasmachine en een complete keuken, geschikt voor een maand of drie, niet alleen voor een weekje.',
     },
     {
       q: 'Is er een lift, en is het geschikt voor oudere gasten?',
-      a: 'Ja — het gebouw heeft een lift en het appartement ligt op de eerste verdieping, dus je hoeft niet met koffers te sjouwen. Alles wat je dagelijks nodig hebt ligt vlak en op loopafstand, wat het prettig maakt voor gasten die liever niet rijden.',
+      a: 'Ja, het gebouw heeft een lift en het appartement ligt op de eerste verdieping, dus je hoeft niet met koffers te sjouwen. Alles wat je dagelijks nodig hebt ligt vlak en op loopafstand, wat het prettig maakt voor gasten die liever niet rijden.',
     },
     {
       q: 'Hoe ver van tevoren moet ik boeken?',
-      a: 'Voor juli en augustus is drie tot zes maanden verstandig; het Arenal zit dan vol. Ook Pasen en de Spaanse lange weekenden gaan snel. Daarbuiten is er meestal meer ruimte en kan het last minute vaak ook — vraag het gewoon even.',
+      a: 'Voor juli en augustus is drie tot zes maanden verstandig; het Arenal zit dan vol. Ook Pasen en de Spaanse lange weekenden gaan snel. Daarbuiten is er meestal meer ruimte en kan het last minute vaak ook, vraag het gewoon even.',
     },
     {
       q: 'Zijn huisdieren toegestaan?',
@@ -97,7 +97,7 @@ const faqs = {
     },
     {
       q: "Faut-il une voiture à Jávea ?",
-      a: "Pas pour des vacances à la plage. La plage, les supermarchés, une pharmacie et une vingtaine de restaurants sont à moins de 10 minutes à pied. La voiture est utile pour les excursions — Cala Granadella, la vieille ville, Dénia ou Calpe — et si vous venez avec, le stationnement est gratuit dans la rue.",
+      a: "Pas pour des vacances à la plage. La plage, les supermarchés, une pharmacie et une vingtaine de restaurants sont à moins de 10 minutes à pied. La voiture est utile pour les excursions, Cala Granadella, la vieille ville, Dénia ou Calpe, et si vous venez avec, le stationnement est gratuit dans la rue.",
     },
     {
       q: "Combien de personnes peuvent loger ?",
@@ -117,11 +117,11 @@ const faqs = {
     },
     {
       q: "Y a-t-il un ascenseur ? L'appartement convient-il aux personnes âgées ?",
-      a: "Oui — l'immeuble a un ascenseur et l'appartement est au premier étage : pas d'escalier à monter avec les valises. Tout le quotidien est de plain-pied et accessible à pied, ce qui convient bien aux hôtes qui préfèrent ne pas conduire.",
+      a: "Oui, l'immeuble a un ascenseur et l'appartement est au premier étage : pas d'escalier à monter avec les valises. Tout le quotidien est de plain-pied et accessible à pied, ce qui convient bien aux hôtes qui préfèrent ne pas conduire.",
     },
     {
       q: "Combien de temps à l'avance faut-il réserver ?",
-      a: "Pour juillet et août, trois à six mois est raisonnable : l'Arenal se remplit. Pâques et les ponts espagnols partent vite également. Le reste de l'année, il y a généralement plus de souplesse, et le dernier moment reste souvent possible — demandez-nous.",
+      a: "Pour juillet et août, trois à six mois est raisonnable : l'Arenal se remplit. Pâques et les ponts espagnols partent vite également. Le reste de l'année, il y a généralement plus de souplesse, et le dernier moment reste souvent possible, demandez-nous.",
     },
     {
       q: "Les animaux sont-ils acceptés ?",
@@ -131,7 +131,7 @@ const faqs = {
   de: [
     {
       q: 'Wie weit ist die Wohnung vom Arenal-Strand entfernt?',
-      a: '250 Meter — etwa 3 Gehminuten. Strand, Promenade und die Restaurants am Arenal erreichen Sie zu Fuß, ohne das Auto zu bewegen.',
+      a: '250 Meter, etwa 3 Gehminuten. Strand, Promenade und die Restaurants am Arenal erreichen Sie zu Fuß, ohne das Auto zu bewegen.',
     },
     {
       q: 'Wie komme ich vom Flughafen nach Jávea?',
@@ -139,7 +139,7 @@ const faqs = {
     },
     {
       q: 'Braucht man in Jávea ein Auto?',
-      a: 'Für einen Strandurlaub nicht. Strand, Supermärkte, Apotheke und rund zwanzig Restaurants liegen innerhalb von 10 Gehminuten. Für Ausflüge — Cala Granadella, Altstadt, Dénia oder Calpe — ist ein Auto praktisch, und wenn Sie eines mitbringen, parken Sie kostenlos auf der Straße.',
+      a: 'Für einen Strandurlaub nicht. Strand, Supermärkte, Apotheke und rund zwanzig Restaurants liegen innerhalb von 10 Gehminuten. Für Ausflüge, Cala Granadella, Altstadt, Dénia oder Calpe, ist ein Auto praktisch, und wenn Sie eines mitbringen, parken Sie kostenlos auf der Straße.',
     },
     {
       q: 'Für wie viele Gäste ist die Wohnung?',
@@ -147,23 +147,23 @@ const faqs = {
     },
     {
       q: 'Ist die Direktbuchung günstiger als über Airbnb oder Booking?',
-      a: 'Ja. Über diese Seite zahlen Sie keine Servicegebühr der Plattform — auf den großen Portalen sind das schnell 12 bis 15 % der Gesamtsumme. Sie buchen direkt beim Eigentümer, Ihre Fragen beantwortet also jemand, der die Wohnung wirklich kennt.',
+      a: 'Ja. Über diese Seite zahlen Sie keine Servicegebühr der Plattform, auf den großen Portalen sind das schnell 12 bis 15 % der Gesamtsumme. Sie buchen direkt beim Eigentümer, Ihre Fragen beantwortet also jemand, der die Wohnung wirklich kennt.',
     },
     {
-      q: 'Der Kalender zeigt meine Daten als belegt — ist das endgültig?',
-      a: 'Nicht immer. Der Kalender synchronisiert sich mit Airbnb, und Airbnb sperrt gelegentlich Tage, die tatsächlich frei sind. Schicken Sie uns Ihre Daten trotzdem — häufig können wir für scheinbar blockierte Tage eine Direktbuchung annehmen.',
+      q: 'Der Kalender zeigt meine Daten als belegt, ist das endgültig?',
+      a: 'Nicht immer. Der Kalender synchronisiert sich mit Airbnb, und Airbnb sperrt gelegentlich Tage, die tatsächlich frei sind. Schicken Sie uns Ihre Daten trotzdem, häufig können wir für scheinbar blockierte Tage eine Direktbuchung annehmen.',
     },
     {
       q: 'Kann man bei Ihnen überwintern oder länger bleiben?',
-      a: 'Ja, das ist ein großer Teil unseres Geschäfts. Ab 35 Nächten kostet die Wohnung 100 € pro Nacht für den gesamten Aufenthalt, in jeder Saison. Es gibt Heizung und Klimaanlage, 600 Mbit/s Glasfaser, eine Waschmaschine und eine komplette Küche — geeignet für einen Monat oder drei, nicht nur für eine Woche.',
+      a: 'Ja, das ist ein großer Teil unseres Geschäfts. Ab 35 Nächten kostet die Wohnung 100 € pro Nacht für den gesamten Aufenthalt, in jeder Saison. Es gibt Heizung und Klimaanlage, 600 Mbit/s Glasfaser, eine Waschmaschine und eine komplette Küche, geeignet für einen Monat oder drei, nicht nur für eine Woche.',
     },
     {
       q: 'Gibt es einen Aufzug, und eignet sich die Wohnung für ältere Gäste?',
-      a: 'Ja — das Haus hat einen Aufzug, und die Wohnung liegt im ersten Stock, Sie müssen also keine Koffer tragen. Alles Alltägliche ist eben und fußläufig erreichbar, was besonders Gästen entgegenkommt, die lieber nicht fahren möchten.',
+      a: 'Ja, das Haus hat einen Aufzug, und die Wohnung liegt im ersten Stock, Sie müssen also keine Koffer tragen. Alles Alltägliche ist eben und fußläufig erreichbar, was besonders Gästen entgegenkommt, die lieber nicht fahren möchten.',
     },
     {
       q: 'Wie früh sollte ich buchen?',
-      a: 'Für Juli und August sind drei bis sechs Monate sinnvoll; der Arenal ist dann voll. Ostern und die spanischen langen Wochenenden sind ebenfalls schnell vergeben. Außerhalb dieser Zeiten ist meist mehr möglich, auch kurzfristig — fragen Sie einfach nach.',
+      a: 'Für Juli und August sind drei bis sechs Monate sinnvoll; der Arenal ist dann voll. Ostern und die spanischen langen Wochenenden sind ebenfalls schnell vergeben. Außerhalb dieser Zeiten ist meist mehr möglich, auch kurzfristig, fragen Sie einfach nach.',
     },
     {
       q: 'Sind Haustiere erlaubt?',
@@ -181,7 +181,7 @@ const faqs = {
     },
     {
       q: '¿Hace falta coche en Jávea?',
-      a: 'Para unas vacaciones de playa, no. La playa, supermercados, farmacia y una veintena de restaurantes están a menos de 10 minutos andando. El coche va bien para excursiones — Cala Granadella, el casco antiguo, Dénia o Calpe — y si vienes con él, se aparca gratis en la calle.',
+      a: 'Para unas vacaciones de playa, no. La playa, supermercados, farmacia y una veintena de restaurantes están a menos de 10 minutos andando. El coche va bien para excursiones, Cala Granadella, el casco antiguo, Dénia o Calpe, y si vienes con él, se aparca gratis en la calle.',
     },
     {
       q: '¿Para cuántas personas es el apartamento?',
@@ -201,7 +201,7 @@ const faqs = {
     },
     {
       q: '¿Hay ascensor? ¿Va bien para personas mayores?',
-      a: 'Sí — el edificio tiene ascensor y el apartamento está en primera planta, así que no hay escaleras con las maletas. Todo el día a día está llano y a un paseo, algo que agradecen quienes prefieren no conducir.',
+      a: 'Sí, el edificio tiene ascensor y el apartamento está en primera planta, así que no hay escaleras con las maletas. Todo el día a día está llano y a un paseo, algo que agradecen quienes prefieren no conducir.',
     },
     {
       q: '¿Con cuánta antelación conviene reservar?',
@@ -223,7 +223,7 @@ const faqs = {
     },
     {
       q: 'Serve la macchina a Jávea?',
-      a: "Per una vacanza al mare no. Spiaggia, supermercati, farmacia e una ventina di ristoranti sono entro 10 minuti a piedi. L'auto è utile per le gite — Cala Granadella, il centro storico, Dénia o Calpe — e se la porti, il parcheggio in strada è gratuito.",
+      a: "Per una vacanza al mare no. Spiaggia, supermercati, farmacia e una ventina di ristoranti sono entro 10 minuti a piedi. L'auto è utile per le gite, Cala Granadella, il centro storico, Dénia o Calpe, e se la porti, il parcheggio in strada è gratuito.",
     },
     {
       q: 'Per quante persone è l\'appartamento?',
@@ -243,11 +243,11 @@ const faqs = {
     },
     {
       q: "C'è l'ascensore? È adatto a ospiti anziani?",
-      a: "Sì — il palazzo ha l'ascensore e l'appartamento è al primo piano, quindi niente scale con le valigie. Tutto il quotidiano è in piano e raggiungibile a piedi, cosa che apprezza chi preferisce non guidare.",
+      a: "Sì, il palazzo ha l'ascensore e l'appartamento è al primo piano, quindi niente scale con le valigie. Tutto il quotidiano è in piano e raggiungibile a piedi, cosa che apprezza chi preferisce non guidare.",
     },
     {
       q: 'Con quanto anticipo conviene prenotare?',
-      a: "Per luglio e agosto, tre-sei mesi: l'Arenal si riempie, e Ferragosto va via presto. Anche Pasqua e i ponti spagnoli si esauriscono in fretta. Nel resto dell'anno di solito c'è più margine e spesso si riesce anche all'ultimo — basta chiedere.",
+      a: "Per luglio e agosto, tre-sei mesi: l'Arenal si riempie, e Ferragosto va via presto. Anche Pasqua e i ponti spagnoli si esauriscono in fretta. Nel resto dell'anno di solito c'è più margine e spesso si riesce anche all'ultimo, basta chiedere.",
     },
     {
       q: 'Sono ammessi animali?',
@@ -279,7 +279,7 @@ const FAQSection = () => {
   const items = faqs[language as keyof typeof faqs] || faqs.en;
   const title = titles[language] || titles.en;
   const eyebrow = eyebrows[language] || eyebrows.en;
-  // Something not answered here? — reuses the booking section's contact line.
+  // Something not answered here?, reuses the booking section's contact line.
   const contact = t('booking.contactDesc');
 
   useEffect(() => {

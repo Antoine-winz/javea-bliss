@@ -22,8 +22,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
   is the scannable list a guest checks against their own requirements, so it stays flat
   and complete rather than being folded into that narrative.
 
-  Ordered differentiators first — free parking and 600 Mbps are the things this apartment
-  has that its competitors mostly do not — then commodities, then what is deliberately
+  Ordered differentiators first, free parking and 600 Mbps are the things this apartment
+  has that its competitors mostly do not, then commodities, then what is deliberately
   not here. Icons are stone, not brass: they should recede behind the apartment section's
   accented ones rather than compete with them.
 */

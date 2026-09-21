@@ -24,7 +24,7 @@ const LanguageSwitcher = () => {
   return (
     <DropdownMenu>
       {/* Inherits colour from the nav so it works over the hero photo and on light
-          surfaces alike — hence no background or border of its own. */}
+          surfaces alike, hence no background or border of its own. */}
       <DropdownMenuTrigger
         className="inline-flex items-center gap-1.5 font-sans text-[0.8125rem] tracking-[0.12em] uppercase transition-opacity hover:opacity-70 focus-visible:outline-none"
         aria-label="Change language"
@@ -32,10 +32,7 @@ const LanguageSwitcher = () => {
         <span className="text-base leading-none">{currentLanguage?.flag}</span>
         <span className="hidden sm:inline">{currentLanguage?.code.toUpperCase()}</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        className="min-w-[160px] rounded-none border-ink/12 bg-bone p-0"
-      >
+      <DropdownMenuContent className="min-w-[160px] rounded-none border-ink/12 bg-bone p-0">
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}

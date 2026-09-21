@@ -1,0 +1,51 @@
+Please create a new file named 'recommendations.html' in the 'en' folder (and corresponding /fr/, /es/ folders).
+
+Copy the header and footer from 'index.html', but replace the main content with this structure:
+
+<main class="container mx-auto px-4 py-12">
+  <h1 class="text-4xl font-bold text-gray-800 mb-6 text-center">Javea Insider Guide: Best Restaurants & Beach Clubs (2025)</h1>
+  <p class="text-xl text-gray-600 text-center mb-12">Stay just steps away from Javea's most famous venues. No taxi needed.</p>
+
+  <div class="grid md:grid-cols-2 gap-10">
+    
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">La Bambula</h2>
+        <p class="text-emerald-600 font-bold mb-4">🚶 6 min walk from Javea Bliss</p>
+        <p class="text-gray-600 mb-4">Famous for sunset cocktails and live music. The ultimate "boho-chic" spot in Javea.</p>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <p class="text-sm"><strong>Insider Tip:</strong> Book a table on the terrace for 8 PM to catch the sunset. Then walk home to Javea Bliss in minutes.</p>
+        </div>
+        <a href="/" class="block mt-4 text-center bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700">Stay Nearby</a>
+      </div>
+    </article>
+
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Chabada</h2>
+        <p class="text-emerald-600 font-bold mb-4">🚶 5 min walk from Javea Bliss</p>
+        <p class="text-gray-600 mb-4">Located right on the Arenal promenade. Perfect for breakfast or evening cocktails with sea views.</p>
+        <a href="/" class="block mt-4 text-center bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700">Check Apartment Availability</a>
+      </div>
+    </article>
+
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">La Siesta Beach Club</h2>
+        <p class="text-emerald-600 font-bold mb-4">🚶 8 min walk from Javea Bliss</p>
+        <p class="text-gray-600 mb-4">Ibiza vibes in Javea. Lounge on the rocks with a mojito right by the water.</p>
+        <a href="/" class="block mt-4 text-center bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700">Book Your Stay</a>
+      </div>
+    </article>
+
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Bohemians</h2>
+        <p class="text-emerald-600 font-bold mb-4">🚶 3 min walk from Javea Bliss</p>
+        <p class="text-gray-600 mb-4">Elegant dining with a French touch. One of the most refined kitchens in the Arenal area.</p>
+        <a href="/" class="block mt-4 text-center bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700">Stay 3 Minutes Away</a>
+      </div>
+    </article>
+
+  </div>
+</main>
