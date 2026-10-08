@@ -24,6 +24,12 @@ const RETENTION_CLEANUP_INTERVAL_MS = 6 * 60 * 60 * 1000;
 const DEFAULT_ADMIN_EMAIL = "admin@javeabliss.com";
 
 const memoryRateLimits = new Map<string, { count: number; resetAt: number }>();
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, entry] of memoryRateLimits) {
+    if (entry.resetAt <= now) memoryRateLimits.delete(key);
+  }
+}, 60_000).unref();
 const configuredSessionSecret = process.env.SESSION_SECRET;
 if (!configuredSessionSecret) {
   console.warn("[Sales] SESSION_SECRET is not configured; using a process-local fallback. Set it for persistent secure sessions.");
@@ -112,7 +118,9 @@ function signToken(payload: Record<string, unknown>): string {
 
 function readToken(value: string | undefined): Record<string, unknown> | null {
   if (!value) return null;
-  const [encoded, signature] = value.split(".");
+  const parts = value.split(".");
+  if (parts.length !== 2) return null;
+  const [encoded, signature] = parts;
   if (!encoded || !signature) return null;
   const expected = createHmac("sha256", sessionSecret).update(encoded).digest("base64url");
   if (!safeEqual(expected, signature)) return null;
@@ -132,11 +140,11 @@ function getCookie(req: Request, name: string): string | undefined {
 }
 
 function setCookie(res: Response, name: string, value: string, maxAge: number) {
-  res.setHeader("Set-Cookie", `${name}=${value}; Max-Age=${Math.floor(maxAge / 1000)}; Path=/; HttpOnly; SameSite=None; Secure`);
+  res.setHeader("Set-Cookie", `${name}=${value}; Max-Age=${Math.floor(maxAge / 1000)}; Path=/; HttpOnly; ${process.env.NODE_ENV === "production" ? "SameSite=None; Secure" : "SameSite=Lax"}`);
 }
 
 function clearCookie(res: Response, name: string) {
-  res.setHeader("Set-Cookie", `${name}=; Max-Age=0; Path=/; HttpOnly; SameSite=None; Secure`);
+  res.setHeader("Set-Cookie", `${name}=; Max-Age=0; Path=/; HttpOnly; ${process.env.NODE_ENV === "production" ? "SameSite=None; Secure" : "SameSite=Lax"}`);
 }
 
 function accessLeadId(req: Request): number | null {
@@ -146,7 +154,8 @@ function accessLeadId(req: Request): number | null {
   return typeof payload?.leadId === "number" ? payload.leadId : null;
 }
 
-function adminMiddleware(req: Request, res: Response, next: NextFunction) {
+export function adminMiddleware(req: Request, res: Response, next: NextFunction) {
+  res.setHeader("Cache-Control", "no-store, private");
   const payload = readToken(getCookie(req, ADMIN_COOKIE));
   if (payload?.role !== "admin") return res.status(401).json({ code: "ADMIN_AUTH_REQUIRED", message: "Authentication required." });
   next();
@@ -174,6 +183,7 @@ async function sendEmail(to: string, subject: string, text: string, html: string
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) throw new Error("RESEND_API_KEY is not configured");
   const response = await fetch("https://api.resend.com/emails", {
+    signal: AbortSignal.timeout(15_000),
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -322,15 +332,14 @@ export function registerSalesRoutes(app: Express) {
       console.error("[Sales] Lead retention cleanup failed:", error);
     }
   };
-  void cleanExpiredSalesData();
-  const retentionTimer = setInterval(cleanExpiredSalesData, RETENTION_CLEANUP_INTERVAL_MS);
-  retentionTimer.unref();
+  if (process.env.NODE_ENV !== "test") {
+    void cleanExpiredSalesData();
+    const retentionTimer = setInterval(cleanExpiredSalesData, RETENTION_CLEANUP_INTERVAL_MS);
+    retentionTimer.unref();
+  }
 
   app.post("/api/sales/request-access", safeAsync(async (req, res) => {
     const ipAddress = clientIp(req);
-    if (await storage.isSalesIpBlocked(ipAddress)) {
-      return res.status(403).json({ code: "IP_BLOCKED", message: "Access is unavailable." });
-    }
     const body = {
       ...req.body,
       buyerType: req.body?.buyerType === "private" ? "private_buyer" : req.body?.buyerType,
@@ -342,6 +351,9 @@ export function registerSalesRoutes(app: Express) {
     if (!allowRateLimit(`sales-ip:${clientIp(req)}`, 5, 15 * 60 * 1000) ||
         !allowRateLimit(`sales-email:${email}`, 5, 15 * 60 * 60 * 1000)) {
       return genericError(res, 429, "RATE_LIMITED");
+    }
+    if (await storage.isSalesIpBlocked(ipAddress)) {
+      return res.status(403).json({ code: "IP_BLOCKED", message: "Access is unavailable." });
     }
     const code = String(crypto.randomInt(100000, 1000000));
     const now = new Date();

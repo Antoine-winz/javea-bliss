@@ -1,5 +1,6 @@
 import { ReplitConnectors } from "@replit/connectors-sdk";
 import fs from "fs";
+import { execFileSync } from "node:child_process";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -14,27 +15,10 @@ async function ghProxy(endpoint, options = {}) {
   return connectors.proxy("github", endpoint, options);
 }
 
-// Collect every file, excluding things that should never be in git
-function getAllFiles(dir, base = dir) {
-  const skip = new Set([
-    path.join(base, "node_modules"),
-    path.join(base, "dist"),
-    path.join(base, ".git"),
-    path.join(base, ".local"),
-    path.join(base, ".cache"),
-    path.join(base, "attached_assets"),
-  ]);
-  const results = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (skip.has(full)) continue;
-    if (entry.isDirectory()) {
-      results.push(...getAllFiles(full, base));
-    } else {
-      results.push(path.relative(base, full));
-    }
-  }
-  return results;
+// Use the Git allowlist so ignored credentials and private brochures cannot be uploaded.
+function getAllFiles() {
+  return execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' })
+    .split('\0').filter(file => file && !/(^|\/)(?:\.env(?:\..*)?|private)(?:\/|$)/.test(file) && !/\.(pem|key)$/.test(file));
 }
 
 async function main() {

@@ -12,7 +12,7 @@ interface CalendarData {
 }
 
 const OptimizedCalendar = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedRange, setSelectedRange] = useState<{
     startDate: string | null;
@@ -69,7 +69,7 @@ const OptimizedCalendar = () => {
 
   // Fetch custom daily rates from backend
   const { data: pricingData } = useQuery<{ date: string; rate: number }[]>({
-    queryKey: ['pricing', { start: pricingRange.start, end: pricingRange.end, stayLength: null }],
+    queryKey: ['/api/pricing', { start: pricingRange.start, end: pricingRange.end, stayLength: null }],
     queryFn: async () => {
       const response = await fetch(`/api/pricing?start=${pricingRange.start}&end=${pricingRange.end}`);
       if (!response.ok) throw new Error('Failed to fetch pricing');
@@ -187,23 +187,12 @@ const OptimizedCalendar = () => {
         const endDate = new Date(offer.endDate);
         
         // Check if offer is still valid and date falls within promotional period
-        return today <= validUntil && checkDate >= startDate && checkDate <= endDate;
+        return today <= validUntil && dateStr >= offer.startDate && dateStr < offer.endDate;
       });
       
-      if (activePromo) {
+      if (activePromo && activePromo.discountedPrice < baseRate) {
         return activePromo.discountedPrice;
       }
-    }
-    
-    // Check for last-minute booking discount (next 7 days)
-    const todayNormalized = new Date(today);
-    todayNormalized.setHours(0, 0, 0, 0);
-    const diffTime = checkDate.getTime() - todayNormalized.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    // Apply last-minute discount if date is within next 7 days and not blocked
-    if (diffDays > 0 && diffDays <= 7 && !isBlocked(date) && baseRate === 210) {
-      return 168; // 20% discount: €210 -> €168
     }
     
     return baseRate;
@@ -425,22 +414,21 @@ const OptimizedCalendar = () => {
     });
   }, []);
   
-  // Format month/year display - using fallback month names if translations are missing
-  const monthNames = useMemo(() => [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ], []);
-  
-  const dayNames = useMemo(() => [
-    'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
-  ], []);
-  
+  const monthNames = useMemo(() => Array.from({ length: 12 }, (_, month) =>
+    new Intl.DateTimeFormat(language, { month: 'long' }).format(new Date(2020, month, 1))), [language]);
+  const dayNames = useMemo(() => Array.from({ length: 7 }, (_, day) =>
+    new Intl.DateTimeFormat(language, { weekday: 'short', timeZone: 'UTC' }).format(new Date(Date.UTC(2023, 0, 1 + day)))), [language]);
+
+  if (isLoading || (!data && !error)) {
+    return <div className="py-12 text-center text-ink-soft" role="status" aria-busy="true">{t('booking.checkingAvailability')}</div>;
+  }
+
   // Error handling
   if (error) {
     return (
       <div className="bg-red-50 border border-red-200 rounded-lg p-4">
         <p className="text-red-800 text-sm">
-          Failed to load calendar data - Please try refreshing the page
+          {t('calendar.error')} — {t('calendar.tryAgain')}
         </p>
       </div>
     );
@@ -655,11 +643,11 @@ const OptimizedCalendar = () => {
       <div className="flex items-center justify-center gap-4 mt-2 sm:mt-4 text-xs">
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 bg-green-50 border border-green-200 rounded"></div>
-          <span className="text-gray-600">{t('available')}</span>
+          <span className="text-gray-600">{t('calendar.available')}</span>
         </div>
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 bg-red-100 border border-red-200 rounded"></div>
-          <span className="text-gray-600">{t('booked')}</span>
+          <span className="text-gray-600">{t('calendar.unavailable')}</span>
         </div>
         {selectedRange.startDate && (
           <div className="flex items-center gap-1">

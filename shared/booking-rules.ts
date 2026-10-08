@@ -1,3 +1,5 @@
+export const CLEANING_FEE_EUR = 30;
+
 export const STANDARD_MINIMUM_NIGHTS = 11;
 export const HIGH_SEASON_MINIMUM_NIGHTS = 11;
 
@@ -57,10 +59,4 @@ export const stayIncludesHighSeason = (checkIn: string, checkOut: string) => {
   return false;
 };
 
-export const getMinimumStayNights = (checkIn: string, checkOut?: string) => {
-  if (!checkIn) return STANDARD_MINIMUM_NIGHTS;
-  const effectiveCheckOut = checkOut || addNights(checkIn, STANDARD_MINIMUM_NIGHTS);
-  return stayIncludesHighSeason(checkIn, effectiveCheckOut)
-    ? HIGH_SEASON_MINIMUM_NIGHTS
-    : STANDARD_MINIMUM_NIGHTS;
-};
+export const getMinimumStayNights = (_checkIn: string, _checkOut?: string) => STANDARD_MINIMUM_NIGHTS;

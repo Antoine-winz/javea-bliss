@@ -6,31 +6,27 @@ declare global {
   }
 }
 
-// Initialize Google Analytics
+// Initialize once; SPA navigation sends the page views.
+let initialized = false;
 export const initGA = () => {
-  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
-
-  if (!measurementId) {
-    return;
-  }
-
-  // Google Analytics is loaded via HTML head script
-  // Check if gtag is available
-  if (typeof window.gtag === 'function') {
-    // Send a test event to verify tracking is working
-    window.gtag('event', 'page_view', {
-      page_title: 'Jávea Bliss - Home',
-      page_location: window.location.href,
-      send_to: measurementId
-    });
-  }
+  if (initialized) return;
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-ZQ6FF9R1BQ';
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', measurementId, { send_page_view: false });
+  const script = document.createElement('script');
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+  script.async = true;
+  document.head.appendChild(script);
+  initialized = true;
 };
 
 // Track page views - useful for single-page applications
 export const trackPageView = (url: string) => {
   if (typeof window === 'undefined' || !window.gtag) return;
   
-  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-ZQ6FF9R1BQ';
   if (!measurementId) return;
   
 

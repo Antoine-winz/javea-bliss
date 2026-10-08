@@ -1,4 +1,4 @@
-import { users, type User, type InsertUser, type BookingInquiry, type InsertBookingInquiry, type PromotionalOffer, type InsertPromotionalOffer, promotionalOffers, bookingInquiries, calendarSettings, calendarEvents, type CalendarSettings, type InsertCalendarSettings, type CalendarEvent, type InsertCalendarEvent, visitorStats, visitorDetails, type VisitorStats, type InsertVisitorStats, type VisitorDetails, type InsertVisitorDetails, guestReviews, type GuestReview, type InsertGuestReview, dailyRates, type DailyRate, type InsertDailyRate, salesLeads, salesDownloads, blockedSalesIps, type SalesLead, type SalesDownload, type InsertSalesLead } from "@shared/schema";
+import { type BookingInquiry, type InsertBookingInquiry, type PromotionalOffer, type InsertPromotionalOffer, promotionalOffers, bookingInquiries, guestReviews, type GuestReview, type InsertGuestReview, dailyRates, type DailyRate, type InsertDailyRate, salesLeads, salesDownloads, blockedSalesIps, type SalesLead, type SalesDownload } from "@shared/schema";
 import { db } from "./db";
 import { eq, gte, lte, lt, and, inArray, sql, asc, desc, ilike, or, type SQL } from "drizzle-orm";
 
@@ -19,9 +19,6 @@ async function retryTransientNeonResult<T>(operation: () => Promise<T>): Promise
 // you might need
 
 export interface IStorage {
-  getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
   createBookingInquiry(inquiry: InsertBookingInquiry): Promise<BookingInquiry>;
   createPromotionalOffer(offer: InsertPromotionalOffer): Promise<PromotionalOffer>;
   getActivePromotionalOffers(): Promise<PromotionalOffer[]>;
@@ -30,21 +27,13 @@ export interface IStorage {
   deletePromotionalOffer(id: number): Promise<boolean>;
   
   // Calendar methods
-  getCalendarSettings(): Promise<CalendarSettings | undefined>;
-  upsertCalendarSettings(settings: InsertCalendarSettings): Promise<CalendarSettings>;
-  saveCalendarEvents(events: InsertCalendarEvent[]): Promise<void>;
-  getCalendarEvents(): Promise<CalendarEvent[]>;
-  clearCalendarEvents(): Promise<void>;
   
   // Visitor tracking methods
-  trackVisitor(visitor: InsertVisitorDetails): Promise<void>;
-  getVisitorStats(): Promise<{totalVisits: number, currentWeekVisits: number}>;
   
   // Guest reviews methods
   createGuestReview(review: InsertGuestReview): Promise<GuestReview>;
   getAllGuestReviews(): Promise<GuestReview[]>;
   getVisibleGuestReviews(): Promise<GuestReview[]>;
-  getGuestReviewById(id: number): Promise<GuestReview | undefined>;
   updateGuestReview(id: number, updates: Partial<InsertGuestReview>): Promise<GuestReview | undefined>;
   deleteGuestReview(id: number): Promise<boolean>;
   
@@ -70,24 +59,6 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  async getUser(id: number): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user || undefined;
-  }
-
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
-    return user || undefined;
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db
-      .insert(users)
-      .values(insertUser)
-      .returning();
-    return user;
-  }
-
   async createBookingInquiry(insertInquiry: InsertBookingInquiry): Promise<BookingInquiry> {
     const [inquiry] = await db
       .insert(bookingInquiries)
@@ -150,99 +121,6 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  // Calendar methods
-  async getCalendarSettings(): Promise<CalendarSettings | undefined> {
-    try {
-      const [settings] = await db.select().from(calendarSettings).orderBy(calendarSettings.id).limit(1);
-      return settings;
-    } catch (error) {
-      console.error("Error fetching calendar settings:", error);
-      return undefined;
-    }
-  }
-
-  async upsertCalendarSettings(settings: InsertCalendarSettings): Promise<CalendarSettings> {
-    try {
-      const existing = await this.getCalendarSettings();
-      if (existing) {
-        const [updated] = await db.update(calendarSettings)
-          .set({ ...settings, updatedAt: new Date() })
-          .where(eq(calendarSettings.id, existing.id))
-          .returning();
-        return updated;
-      } else {
-        const [created] = await db.insert(calendarSettings).values(settings).returning();
-        return created;
-      }
-    } catch (error) {
-      console.error("Error upserting calendar settings:", error);
-      throw error;
-    }
-  }
-
-  async saveCalendarEvents(events: InsertCalendarEvent[]): Promise<void> {
-    try {
-      if (events.length === 0) return;
-      
-      // Clear existing events first
-      await this.clearCalendarEvents();
-      
-      // Insert new events
-      await db.insert(calendarEvents).values(events);
-    } catch (error) {
-      console.error("Error saving calendar events:", error);
-      throw error;
-    }
-  }
-
-  async getCalendarEvents(): Promise<CalendarEvent[]> {
-    try {
-      return await db.select().from(calendarEvents);
-    } catch (error) {
-      console.error("Error fetching calendar events:", error);
-      return [];
-    }
-  }
-
-  async clearCalendarEvents(): Promise<void> {
-    try {
-      await db.delete(calendarEvents);
-    } catch (error) {
-      console.error("Error clearing calendar events:", error);
-      throw error;
-    }
-  }
-
-  // Visitor tracking methods
-  async trackVisitor(visitor: InsertVisitorDetails): Promise<void> {
-    try {
-      await db.insert(visitorDetails).values(visitor);
-    } catch (error) {
-      console.error("Error tracking visitor:", error);
-    }
-  }
-
-  async getVisitorStats(): Promise<{totalVisits: number, currentWeekVisits: number}> {
-    try {
-      const totalResult = await db.select().from(visitorDetails);
-      const totalVisits = totalResult.length;
-      
-      const oneWeekAgo = new Date();
-      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-      
-      const weeklyResult = await db.select().from(visitorDetails).where(
-        eq(visitorDetails.visitDate, oneWeekAgo.toISOString().split('T')[0])
-      );
-      const currentWeekVisits = weeklyResult.length;
-      
-      return { totalVisits, currentWeekVisits };
-    } catch (error) {
-      console.error("Error fetching visitor stats:", error);
-      return { totalVisits: 0, currentWeekVisits: 0 };
-    }
-  }
-
-  // Guest reviews methods
   async createGuestReview(insertReview: InsertGuestReview): Promise<GuestReview> {
     try {
       const [review] = await db.insert(guestReviews).values(insertReview).returning();
@@ -268,16 +146,6 @@ export class DatabaseStorage implements IStorage {
     } catch (error) {
       console.error("Error fetching visible guest reviews:", error);
       return [];
-    }
-  }
-
-  async getGuestReviewById(id: number): Promise<GuestReview | undefined> {
-    try {
-      const [review] = await db.select().from(guestReviews).where(eq(guestReviews.id, id));
-      return review || undefined;
-    } catch (error) {
-      console.error("Error fetching guest review by ID:", error);
-      return undefined;
     }
   }
 
@@ -316,7 +184,7 @@ export class DatabaseStorage implements IStorage {
       return rates;
     } catch (error) {
       console.error("Error fetching daily rates by date range:", error);
-      return [];
+      throw error;
     }
   }
 

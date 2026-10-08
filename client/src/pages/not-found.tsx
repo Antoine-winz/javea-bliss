@@ -12,8 +12,9 @@ export default function NotFound() {
           </div>
 
           <p className="mt-4 text-sm text-gray-600">
-            Did you forget to add the page to the router?
+            This page could not be found.
           </p>
+          <a href="/" className="link-underline mt-6 inline-block">Return to Jávea Bliss</a>
         </CardContent>
       </Card>
     </div>

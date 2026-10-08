@@ -2,13 +2,14 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import path from "path";
 import fs from "fs";
+import { z } from "zod";
 import { storage } from "./storage";
 import { bookingInquirySchema, insertPromotionalOfferSchema, insertGuestReviewSchema, insertDailyRateSchema } from "@shared/schema";
 import { getMinimumStayNights, getStayLengthNights, isValidBookingDate } from "@shared/booking-rules";
 import { calendarService } from "./calendar";
 import { trackVisit, getVisitorStats } from "./visitor-tracking";
 import { getRatesForRange } from "./pricing";
-import { registerSalesRoutes } from "./sales-routes";
+import { adminMiddleware, registerSalesRoutes } from "./sales-routes";
 
 
 // Last-minute offers toggle (off by default, owner must enable explicitly)
@@ -33,7 +34,7 @@ function cleanupRateLimitStore(): void {
 }
 
 // Start periodic cleanup
-setInterval(cleanupRateLimitStore, RATE_LIMIT_CLEANUP_INTERVAL);
+setInterval(cleanupRateLimitStore, RATE_LIMIT_CLEANUP_INTERVAL).unref();
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
@@ -53,6 +54,10 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  app.param("id", (_req, res, next, id) => {
+    if (!/^\d+$/.test(id) || !Number.isSafeInteger(Number(id)) || Number(id) < 1) return res.status(400).json({ message: "Invalid identifier" });
+    next();
+  });
   registerSalesRoutes(app);
 
   // Keep old printed-flyer links working without presenting a 404.
@@ -64,7 +69,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(trackVisit);
 
   // Visitor statistics endpoint
-  app.get("/api/visitor-stats", async (req, res) => {
+  app.get("/api/visitor-stats", adminMiddleware, async (req, res) => {
     try {
       const stats = await getVisitorStats();
       res.json(stats);
@@ -79,7 +84,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ enabled: lastMinuteOffersEnabled });
   });
 
-  app.post("/api/last-minute-offers/settings", (req, res) => {
+  app.post("/api/last-minute-offers/settings", adminMiddleware, (req, res) => {
     const { enabled } = req.body;
     if (typeof enabled !== 'boolean') {
       return res.status(400).json({ message: "enabled must be a boolean" });
@@ -96,17 +101,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      today.setUTCHours(0, 0, 0, 0);
       
       // Get next 7 days
       const next7Days = [];
       for (let i = 1; i <= 7; i++) {
         const date = new Date(today);
-        date.setDate(today.getDate() + i);
+        date.setUTCDate(today.getUTCDate() + i);
         next7Days.push(date.toISOString().split('T')[0]);
       }
       
       // Get blocked dates from calendar service
+      if (!calendarService.isReady()) return res.status(503).json({ message: "Calendar unavailable; please contact us to confirm your dates" });
       const blockedDates = calendarService.getBlockedDates();
       const blockedDateStrings = blockedDates.map(date => date.toISOString().split('T')[0]);
       const blockedDateSet = new Set(blockedDateStrings);
@@ -150,15 +156,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Honeypot spam protection
-      if (req.body.website && req.body.website.trim() !== '') {
+      if (req.body.website !== undefined && (typeof req.body.website !== 'string' || req.body.website.trim() !== '')) {
         return res.status(400).json({ 
           message: "Spam detected" 
         });
       }
 
       // Server-side validation for guests (must be numeric 1-4)
-      const guests = parseInt(req.body.guests);
-      if (isNaN(guests) || guests < 1 || guests > 4) {
+      const guests = typeof req.body.guests === "string" || typeof req.body.guests === "number" ? Number(req.body.guests) : NaN;
+      if (!Number.isInteger(guests) || guests < 1 || guests > 4) {
         return res.status(400).json({
           message: "Invalid number of guests. Must be between 1 and 4."
         });
@@ -175,7 +181,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const checkIn = new Date(`${req.body.checkIn}T00:00:00Z`);
       const checkOut = new Date(`${req.body.checkOut}T00:00:00Z`);
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      today.setUTCHours(0, 0, 0, 0);
 
       if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) {
         return res.status(400).json({
@@ -205,6 +211,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      if (stayLength > 730) return res.status(400).json({ message: "Please contact us for stays longer than 730 nights" });
+      if (!calendarService.isReady()) return res.status(503).json({ message: "Calendar unavailable; please contact us to confirm your dates" });
+
       // Verify availability against calendar service
       const isAvailable = calendarService.isDateRangeAvailable(checkIn, checkOut);
       if (!isAvailable) {
@@ -227,20 +236,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Store inquiry in database
       const savedInquiry = await storage.createBookingInquiry(inquiryData);
       
-      // Email notification would be sent to admin@javeabliss.com
-      // In production, configure with real SMTP credentials
-      const emailSent = true;
-      
-      if (emailSent) {
-        return res.status(200).json({ 
-          message: "Booking inquiry received successfully",
-          inquiry: savedInquiry
-        });
-      } else {
-        return res.status(500).json({ 
-          message: "Failed to send email notification" 
-        });
-      }
+      // Delivery is handled by the client notification flow; this confirms storage only.
+      return res.status(200).json({ message: "Booking inquiry received successfully", id: savedInquiry.id });
     } catch (error) {
       console.error("Booking inquiry error:", error);
       return res.status(500).json({ 
@@ -250,7 +247,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Calendar sync endpoint - sync with Airbnb calendar
-  app.post("/api/calendar/sync", async (req, res) => {
+  app.post("/api/calendar/sync", adminMiddleware, async (req, res) => {
     try {
       const { icalUrl } = req.body;
       
@@ -280,7 +277,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get sync status
-  app.get("/api/calendar/sync-status", (req, res) => {
+  app.get("/api/calendar/sync-status", adminMiddleware, (req, res) => {
     try {
       const status = calendarService.getSyncStatus();
       res.json(status);
@@ -295,6 +292,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get blocked dates
   app.get("/api/calendar/blocked-dates", (req, res) => {
     try {
+      if (!calendarService.isReady()) return res.status(503).json({ message: "Calendar unavailable; please contact us to confirm your dates" });
       const blockedDates = calendarService.getBlockedDates();
       const checkInDates = calendarService.getCheckInDates();
       const checkOutDates = calendarService.getCheckOutDates();
@@ -313,7 +311,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Manual block routes
-  app.get("/api/calendar/manual-blocks", async (req, res) => {
+  app.get("/api/calendar/manual-blocks", adminMiddleware, async (req, res) => {
     try {
       const blocks = await calendarService.getManualBlocks();
       res.json({ blocks });
@@ -322,10 +320,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/calendar/manual-block", async (req, res) => {
+  app.post("/api/calendar/manual-block", adminMiddleware, async (req, res) => {
     try {
       const { startDate, endDate, label } = req.body;
-      if (!startDate || !endDate) return res.status(400).json({ message: "startDate and endDate are required" });
+      if (!isValidBookingDate(startDate) || !isValidBookingDate(endDate) || getStayLengthNights(startDate, endDate) < 1 || getStayLengthNights(startDate, endDate) > 730) return res.status(400).json({ message: "A valid date range of 1–730 nights is required" });
+      if (label !== undefined && (typeof label !== 'string' || label.length > 160)) return res.status(400).json({ message: "Invalid block label" });
       const result = await calendarService.addManualBlock(startDate, endDate, label || 'Owner Block');
       res.json({ success: true, uid: result.uid });
     } catch (error) {
@@ -334,9 +333,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/calendar/manual-block/:uid", async (req, res) => {
+  app.delete("/api/calendar/manual-block/:uid", adminMiddleware, async (req, res) => {
     try {
-      const uid = decodeURIComponent(req.params.uid);
+      const uid = req.params.uid;
+      if (!uid.startsWith("manual-")) return res.status(400).json({ message: "Only manual blocks can be removed" });
       await calendarService.removeManualBlock(uid);
       res.json({ success: true });
     } catch (error) {
@@ -346,7 +346,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get calendar events for cleaning schedule
-  app.get("/api/calendar/events", (req, res) => {
+  app.get("/api/calendar/events", adminMiddleware, (req, res) => {
     try {
       const events = calendarService.getEvents();
       res.json({ 
@@ -362,7 +362,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get cleaning schedule with cleaning reminders
-  app.get("/api/calendar/cleaning-schedule", (req, res) => {
+  app.get("/api/calendar/cleaning-schedule", adminMiddleware, (req, res) => {
     try {
       const schedule = calendarService.getCleaningSchedule();
       res.json(schedule);
@@ -411,6 +411,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      if (stayLength > 730) return res.status(400).json({ message: "Please contact us for stays longer than 730 nights" });
+      if (!calendarService.isReady()) return res.status(503).json({ message: "Calendar unavailable; please contact us to confirm your dates" });
       const isAvailable = calendarService.isDateRangeAvailable(start, end);
       
       res.json({ 
@@ -426,29 +428,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get calendar events
-  app.get("/api/calendar/events", (req, res) => {
-    try {
-      const events = calendarService.getEvents();
-      res.json({ 
-        events: events.map(event => ({
-          startDate: event.startDate.toISOString().split('T')[0],
-          endDate: event.endDate.toISOString().split('T')[0],
-          summary: event.summary,
-          uid: event.uid
-        })),
-        lastUpdated: calendarService.getLastUpdated()
-      });
-    } catch (error) {
-      console.error("Error getting events:", error);
-      res.status(500).json({ 
-        message: "Failed to get calendar events" 
-      });
-    }
-  });
-
   // Promotional offers API routes
-  app.post("/api/promotional-offers", async (req, res) => {
+  app.post("/api/promotional-offers", adminMiddleware, async (req, res) => {
     try {
       // Convert validUntil string to Date if it's a string
       const processedBody = {
@@ -474,6 +455,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
+      if (validation.data.endDate <= validation.data.startDate || validation.data.discountedPrice > validation.data.originalPrice) {
+        return res.status(400).json({ message: "Offer dates and discount must be valid" });
+      }
       const savedOffer = await storage.createPromotionalOffer(validation.data);
       res.json(savedOffer);
     } catch (error) {
@@ -508,7 +492,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/promotional-offers/:id", async (req, res) => {
+  app.put("/api/promotional-offers/:id", adminMiddleware, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
@@ -531,6 +515,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
+      const existingOffer = await storage.getPromotionalOfferById(id);
+      if (!existingOffer) return res.status(404).json({ message: "Promotional offer not found" });
+      const nextOffer = { ...existingOffer, ...validation.data };
+      if (nextOffer.endDate <= nextOffer.startDate || nextOffer.discountedPrice > nextOffer.originalPrice) {
+        return res.status(400).json({ message: "Offer dates and discount must be valid" });
+      }
       const updatedOffer = await storage.updatePromotionalOffer(id, validation.data);
       
       if (!updatedOffer) {
@@ -544,7 +534,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/promotional-offers/:id", async (req, res) => {
+  app.delete("/api/promotional-offers/:id", adminMiddleware, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const deleted = await storage.deletePromotionalOffer(id);
@@ -563,7 +553,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Guest Reviews API routes
   
   // Get all reviews (admin)
-  app.get("/api/reviews", async (req, res) => {
+  app.get("/api/reviews", adminMiddleware, async (req, res) => {
     try {
       const reviews = await storage.getAllGuestReviews();
       res.json(reviews);
@@ -585,7 +575,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Create new review
-  app.post("/api/reviews", async (req, res) => {
+  app.post("/api/reviews", adminMiddleware, async (req, res) => {
     try {
       const validation = insertGuestReviewSchema.safeParse(req.body);
       
@@ -605,7 +595,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Update review
-  app.put("/api/reviews/:id", async (req, res) => {
+  app.put("/api/reviews/:id", adminMiddleware, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const validation = insertGuestReviewSchema.partial().safeParse(req.body);
@@ -631,7 +621,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Delete review
-  app.delete("/api/reviews/:id", async (req, res) => {
+  app.delete("/api/reviews/:id", adminMiddleware, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const deleted = await storage.deleteGuestReview(id);
@@ -656,16 +646,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "start and end dates are required" });
       }
       
-      // Validate and parse stayLength
-      let stay: number | undefined;
-      if (stayLength) {
-        const parsed = parseInt(stayLength as string);
-        if (isNaN(parsed) || parsed < 1 || parsed > 365) {
-          return res.status(400).json({ message: "stayLength must be a number between 1 and 365" });
-        }
-        stay = parsed;
+      if (!isValidBookingDate(start) || !isValidBookingDate(end) || getStayLengthNights(start, end) < 0 || getStayLengthNights(start, end) > 730) {
+        return res.status(400).json({ message: "A valid pricing range of at most 730 days is required" });
       }
-      
+      let stay: number | undefined;
+      if (stayLength !== undefined) {
+        if (typeof stayLength !== "string" || !/^\d+$/.test(stayLength) || Number(stayLength) < 1 || Number(stayLength) > 730) {
+          return res.status(400).json({ message: "stayLength must be an integer between 1 and 730" });
+        }
+        stay = Number(stayLength);
+      }
+
       const rates = await getRatesForRange(start as string, end as string, stay);
       
       res.json(rates);
@@ -676,22 +667,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Bulk upsert daily rates
-  app.post("/api/daily-rates/bulk", async (req, res) => {
+  app.post("/api/daily-rates/bulk", adminMiddleware, async (req, res) => {
     try {
       const { rates } = req.body;
       
-      if (!Array.isArray(rates) || rates.length === 0) {
-        return res.status(400).json({ message: "rates array is required" });
-      }
-      
-      const validatedRates = rates.map(rate => {
-        const validation = insertDailyRateSchema.safeParse(rate);
-        if (!validation.success) {
-          throw new Error(`Invalid rate data: ${validation.error.message}`);
-        }
-        return validation.data;
-      });
-      
+      const validation = z.array(insertDailyRateSchema).min(1).max(731).safeParse(rates);
+      if (!validation.success) return res.status(400).json({ message: "Invalid daily rates" });
+      const validatedRates = validation.data;
+
       await storage.upsertDailyRates(validatedRates);
       
       res.json({ message: `Successfully updated ${validatedRates.length} rates`, count: validatedRates.length });
@@ -702,11 +685,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Delete daily rates
-  app.delete("/api/daily-rates", async (req, res) => {
+  app.delete("/api/daily-rates", adminMiddleware, async (req, res) => {
     try {
       const { dates } = req.body;
       
-      if (!Array.isArray(dates) || dates.length === 0) {
+      if (!Array.isArray(dates) || dates.length === 0 || dates.length > 731 || !dates.every(isValidBookingDate)) {
         return res.status(400).json({ message: "dates array is required" });
       }
       
@@ -718,6 +701,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to delete daily rates" });
     }
   });
+
+  app.use("/api", (_req, res) => res.status(404).json({ message: "API endpoint not found" }));
 
   const httpServer = createServer(app);
 

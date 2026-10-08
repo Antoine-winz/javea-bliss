@@ -1,4 +1,5 @@
 #!/bin/bash
 set -e
-npm install
-npm run db:push
+npm ci
+npm run check
+# Apply reviewed database migrations separately; a merge must not change live tables.

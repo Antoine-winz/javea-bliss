@@ -29,6 +29,8 @@ const LazyImage = memo(function LazyImage({
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    setHasError(false);
+    setIsLoaded(Boolean(imgRef.current?.complete && imgRef.current?.naturalWidth));
     if (loading === 'eager' || priority) {
       setImageSrc(src);
       return;
@@ -55,11 +57,7 @@ const LazyImage = memo(function LazyImage({
       observer.observe(imgRef.current);
     }
 
-    return () => {
-      if (imgRef.current) {
-        observer.unobserve(imgRef.current);
-      }
-    };
+    return () => observer.disconnect();
   }, [src, loading, priority]);
 
   const handleError = () => {
@@ -93,7 +91,7 @@ const LazyImage = memo(function LazyImage({
       loading={priority ? 'eager' : loading}
       decoding="async"
       sizes={sizes}
-      fetchPriority={priority ? 'high' : 'auto'}
+      {...{ fetchpriority: priority ? 'high' : 'auto' }}
     />
   );
 });

@@ -3,7 +3,7 @@ import { storage } from "./storage";
 export interface PriceInfo {
   date: string;
   rate: number;
-  source: 'custom' | 'seasonal';
+  source: 'custom' | 'seasonal' | 'long-stay';
 }
 
 /**
@@ -19,7 +19,7 @@ export interface PriceInfo {
  * - Long-term stays (35+ days): €100/night (intentionally below seasonal rates to encourage longer bookings)
  */
 function getSeasonalRate(date: Date, stayLength?: number): number {
-  const month = date.getMonth();
+  const month = date.getUTCMonth();
   let baseRate = 130;
   
   if (month >= 5 && month <= 8) baseRate = 210; // Jun-Sep (high season)
@@ -42,7 +42,7 @@ function getDatesBetween(startDate: string, endDate: string): string[] {
   
   while (current <= end) {
     dates.push(current.toISOString().split('T')[0]);
-    current.setDate(current.getDate() + 1);
+    current.setUTCDate(current.getUTCDate() + 1);
   }
   
   return dates;
@@ -59,6 +59,7 @@ export async function getRatesForRange(startDate: string, endDate: string, stayL
   const allDates = getDatesBetween(startDate, endDate);
   
   return allDates.map(dateStr => {
+    if (stayLength && stayLength >= 35) return { date: dateStr, rate: 100, source: "long-stay" as const };
     if (customRateMap.has(dateStr)) {
       return {
         date: dateStr,

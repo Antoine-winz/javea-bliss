@@ -8,6 +8,8 @@ const WALKING_TIMES = [
   { name: 'Chabada', minutes: 5 },
   { name: 'La Bambula', minutes: 6 },
   { name: 'Bohemians', minutes: 6 },
+  { name: 'Posidonia', minutes: 5 },
+  { name: 'Ammos', minutes: 7 },
 ];
 
 const LocationSection = () => {
@@ -95,7 +97,7 @@ const LocationSection = () => {
           </div>
 
           <div className="lg:col-span-7">
-            <ul className="grid grid-cols-2 gap-x-12">
+            <ul className="grid sm:grid-cols-2 gap-x-8">
               {WALKING_TIMES.map(({ name, minutes }) => (
                 <li
                   key={name}
@@ -103,7 +105,7 @@ const LocationSection = () => {
                 >
                   <span className="font-display text-xl text-bone">{name}</span>
                   <span className="font-sans text-[0.75rem] tracking-[0.1em] uppercase text-bone/50 whitespace-nowrap">
-                    {minutes} {t('rec.location.walk')}
+                    ≈ {minutes} {t('rec.location.walk')}
                   </span>
                 </li>
               ))}

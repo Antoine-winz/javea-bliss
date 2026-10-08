@@ -15,10 +15,10 @@ const HeroSection = () => {
     <section id="home" className="relative min-h-[92vh] flex items-end overflow-hidden">
       <img
         src={heroImage}
-        alt="Arenal Beach and the Montgó above Jávea on the Costa Blanca"
+        alt="La Grava beach in Jávea on the Costa Blanca"
         className="absolute inset-0 h-full w-full object-cover hero-drift"
         style={{ objectPosition: "center 65%" }}
-        fetchPriority="high"
+        {...{ fetchpriority: "high" }}
         width={2000}
         height={1333}
       />

@@ -1,23 +1,16 @@
-import { useEffect } from 'react';
 import { Link } from 'wouter';
+import { getRouteSEO } from '@shared/seo';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 
-const BASE_URL = 'https://javeabliss.com';
 
 interface PageContent {
-  title: string;
-  description: string;
-  canonical: string;
   h1: string;
   sections: { heading: string; body: string }[];
 }
 
 const pages: Record<string, PageContent> = {
   'holiday-apartment-javea-arenal-beach': {
-    title: 'Holiday Apartment in Javea near Arenal Beach | Jávea Bliss',
-    description: 'Book a renovated 2-bedroom holiday apartment 250 m from Arenal Beach in Jávea. Sleeps 4, air conditioning, Wi-Fi, balcony, lift, free parking. Direct booking from €130/night.',
-    canonical: '/en/holiday-apartment-javea-arenal-beach/',
     h1: 'Holiday Apartment in Javea, 250 m from Arenal Beach',
     sections: [
       {
@@ -30,18 +23,15 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Perfect for Beach Holidays',
-        body: 'Arenal Beach is one of the finest beaches on the Costa Blanca, a 480-metre Blue Flag sandy beach with lifeguards, beach bars, and water sports. From your apartment, you can walk to the beach before breakfast and stroll back for lunch. Chabada and La Bambula are both within 5 minutes on foot.',
+        body: 'Arenal Beach is one of the finest beaches on the Costa Blanca, a 480-metre Blue Flag sandy beach with lifeguards, beach bars, and water sports. From your apartment, you can walk to the beach before breakfast and stroll back for lunch. Chabada and La Bambula are a short walk away.',
       },
       {
         heading: 'Rates & Availability',
-        body: 'Direct booking rates start from €130/night in low season, €160/night in spring and autumn, and €210/night in July–September. Long stays of 35+ nights receive a special rate of €100/night.',
+        body: 'Direct booking rates start from €130/night in low season, €160/night in spring and autumn, and €210/night in June–September and holidays. Long stays of 35+ nights receive a special rate of €100/night.',
       },
     ],
   },
   '2-bedroom-apartment-javea': {
-    title: '2-Bedroom Apartment in Javea | Jávea Bliss, Sleeps 4 Guests',
-    description: 'Spacious 2-bedroom holiday apartment in Jávea (Xàbia) with air conditioning, Wi-Fi, kitchen, balcony and lift. 250 m from Arenal Beach. Direct booking from €130/night.',
-    canonical: '/en/2-bedroom-apartment-javea/',
     h1: '2-Bedroom Holiday Apartment in Javea, Sleeps up to 4',
     sections: [
       {
@@ -63,9 +53,6 @@ const pages: Record<string, PageContent> = {
     ],
   },
   'where-to-stay-in-javea': {
-    title: 'Where to Stay in Javea, The Arenal Neighbourhood Guide | Jávea Bliss',
-    description: "Planning where to stay in Javea? Discover why the Arenal Beach neighbourhood is the best base for your holiday, walkable, vibrant, and 250 m from the sea.",
-    canonical: '/en/where-to-stay-in-javea/',
     h1: 'Where to Stay in Javea, Why Arenal is the Best Area',
     sections: [
       {
@@ -87,9 +74,6 @@ const pages: Record<string, PageContent> = {
     ],
   },
   'javea-arenal-beach-guide': {
-    title: 'Javea Arenal Beach, Complete Visitor Guide | Jávea Bliss',
-    description: 'Everything you need to know about Arenal Beach in Javea: facilities, beach bars, parking, best time to visit, and nearby restaurants. Stay 250 m away at Jávea Bliss.',
-    canonical: '/en/javea-arenal-beach-guide/',
     h1: 'Arenal Beach Javea, A Complete Guide',
     sections: [
       {
@@ -102,7 +86,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Best Restaurants Near Arenal',
-        body: "Chabada and La Bambula are the two best-known spots on the promenade, Chabada for a drink from breakfast onwards, La Bambula for live music into the night. For paella by the sand there is La Fontana, and for a proper dinner, La Masena or Bohemians a short walk back from the seafront.",
+        body: "Chabada and La Bambula are the two best-known spots on the promenade, Chabada for a drink from breakfast onwards, La Bambula for live music into the night. For paella by the sand there is La Fontana, and for a proper dinner, Posidonia or Bohemians on the promenade.",
       },
       {
         heading: 'Best Time to Visit',
@@ -115,14 +99,11 @@ const pages: Record<string, PageContent> = {
     ],
   },
   'winter-rental-javea': {
-    title: 'Winter Rental in Javea, Long-Stay Apartments from €100/Night | Jávea Bliss',
-    description: 'Escape winter with a long-stay rental in Javea. Jávea Bliss offers monthly rates for 35+ night stays from €100/night. Mild climate, 300+ sunny days, 250 m from Arenal Beach.',
-    canonical: '/en/winter-rental-javea/',
     h1: 'Winter Rental in Javea, Stay Warm from €100/Night',
     sections: [
       {
         heading: "Why Javea for Winter?",
-        body: "Jávea enjoys one of the mildest climates in Spain, sheltered by the Montgó from cold northern winds, the town records over 300 sunny days a year. Winter daytime temperatures typically sit between 14°C and 18°C, dropping to around 8–10°C overnight. It's a world away from the grey skies of northern Europe.",
+        body: "Jávea enjoys one of the mildest climates in Spain, sheltered by the Montgó from cold northern winds, winter is often sunny, though conditions vary. Winter daytime temperatures typically sit between 14°C and 18°C, dropping to around 8–10°C overnight. It's a world away from the grey skies of northern Europe.",
       },
       {
         heading: 'Long-Stay Rates at Jávea Bliss',
@@ -143,9 +124,6 @@ const pages: Record<string, PageContent> = {
     ],
   },
   'javea-without-car': {
-    title: 'Javea Without a Car, What You Can Do on Foot | Jávea Bliss',
-    description: "Wondering if you need a car in Javea? Discover everything within walking distance of Arenal Beach, restaurants, supermarkets, beaches, and more. Stay car-free at Jávea Bliss.",
-    canonical: '/en/javea-without-car/',
     h1: 'Javea Without a Car, A Car-Free Holiday Guide',
     sections: [
       {
@@ -154,7 +132,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Restaurants Within Walking Distance',
-        body: "Chabada, La Bambula, La Fontana, La Masena, L'Oasis, Bohemians, Casa Lili, Carnaval, around twenty places to eat and drink sit within a 10-minute walk of Arenal Beach. You will be spoilt for choice without ever calling a taxi.",
+        body: "Chabada, La Bambula, La Fontana, Posidonia, Ammos and Bohemians sit around the Arenal promenade. You will be spoilt for choice without ever calling a taxi.",
       },
       {
         heading: 'Getting to Javea Without a Car',
@@ -171,18 +149,15 @@ const pages: Record<string, PageContent> = {
     ],
   },
   'restaurants-near-arenal-beach-javea': {
-    title: 'Best Restaurants Near Arenal Beach Javea | Jávea Bliss Guide',
-    description: 'Discover the best restaurants near Arenal Beach in Javea, La Bambula, Chabada, Masena, and more. All within walking distance of our holiday apartment.',
-    canonical: '/en/restaurants-near-arenal-beach-javea/',
     h1: 'Best Restaurants Near Arenal Beach in Javea',
     sections: [
       {
         heading: 'Chabada, drinks by the sand',
-        body: "Chabada sits right on the Arenal promenade and opens from 8am straight through, which makes it as good for a morning coffee as for a sundowner. Happy hour runs 4–8pm and there is live music on Thursday evenings. About 300 metres from the apartment.",
+        body: "Chabada sits on the Arenal promenade, a short walk from the apartment. Stop for breakfast, a meal or a drink with sea views. Check the venue for current opening hours and events.",
       },
       {
         heading: 'La Bambula, live music and dancing',
-        body: "The liveliest spot on this stretch: open 9am to 1am, and until 3am at weekends, with flamenco on Sundays, swing on Tuesdays and rock on Fridays. Come for a drink and stay for the music. Roughly 250 metres away, near enough to walk home.",
+        body: "La Bambula is on the Arenal promenade, with dining, drinks and live music. Check its current programme before planning an evening around a particular performance.",
       },
       {
         heading: 'La Fontana, paella and pizza',
@@ -190,23 +165,23 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'La Masena, a proper dinner',
-        body: "The choice for a longer, more refined meal. Open Monday lunchtime, then Wednesday to Sunday for lunch and dinner (until 11pm at weekends); closed Tuesdays. Worth booking ahead in summer.",
+        body: "Masena serves Mediterranean cuisine in a country-house setting outside the Arenal neighbourhood. Plan to drive or take a taxi, and check opening hours when booking.",
       },
       {
         heading: "L'Oasis, steaks and grilled meat",
-        body: "The place locals name for a good steak. Open 12:30pm to 11pm daily, a short walk from the Arenal seafront.",
+        body: "An option for steaks and grilled meat in the Arenal area. Check the restaurant for current opening hours.",
       },
       {
         heading: 'Bohemians, elegant and central',
-        body: "Elegant dining in a polished setting, open from midday to midnight every day. Good for a dressed-up evening without leaving the neighbourhood.",
+        body: "Dining and drinks on the Arenal promenade. Check current opening hours and book ahead during busy periods.",
       },
       {
         heading: 'Casa Lili and Carnaval, Asian and fusion',
-        body: "Casa Lili serves fresh, authentic Asian cooking (12:30–4pm and 6:30–11pm daily). Carnaval covers modern fusion, sushi, burgers and poke bowls, non-stop every day. Both are useful when you have had enough Mediterranean food for one week.",
+        body: "Carnaval offers an alternative to Mediterranean food around the Arenal. Casa Lili is farther inland; plan transport and check its current menu before going.",
       },
       {
         heading: 'Caramel, breakfast and pastries',
-        body: "A French-style bakery open 7:30am to 7:30pm daily, for croissants and proper coffee before the beach.",
+        body: "A French-style bakery for pastries and coffee before the beach. Check current opening hours before visiting.",
       },
       {
         heading: 'Local Tips',
@@ -215,9 +190,6 @@ const pages: Record<string, PageContent> = {
     ],
   },
   'best-beaches-near-javea-apartment': {
-    title: 'Best Beaches Near Javea, Day Trips from Arenal | Jávea Bliss',
-    description: 'Explore the best beaches near Javea: Arenal Beach (250 m), Cala Granadella, Playa Montañar, Cala Sardinera, and more. All reachable from our holiday apartment.',
-    canonical: '/en/best-beaches-near-javea-apartment/',
     h1: 'Best Beaches Near Our Javea Holiday Apartment',
     sections: [
       {
@@ -226,7 +198,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Playa Montañar',
-        body: 'A quieter sandy beach at the southern end of the Arenal area, Montañar is popular with locals and a great alternative to the main beach when Arenal gets busy in July and August. A 10-minute walk from the apartment.',
+        body: 'The Montañar coastline has rocky platforms and pebbles, rather than the sandy beach at Arenal. Bring suitable footwear and choose an accessible entry point for swimming.',
       },
       {
         heading: 'Cala Granadella',
@@ -243,9 +215,6 @@ const pages: Record<string, PageContent> = {
     ],
   },
   'javea-3-day-itinerary': {
-    title: 'Javea 3-Day Itinerary, What to Do in Javea | Jávea Bliss',
-    description: 'Make the most of 3 days in Javea with our local guide. Beaches, restaurants, hikes, and hidden gems, all planned around a stay at our Arenal Beach apartment.',
-    canonical: '/en/javea-3-day-itinerary/',
     h1: '3 Days in Javea, The Perfect Itinerary',
     sections: [
       {
@@ -254,7 +223,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Day 2, Cala Granadella & Old Town',
-        body: "In the morning, drive (or take a taxi) to Cala Granadella, one of Spain's most beautiful beaches, about 15 minutes from the apartment. Snorkel in the turquoise water and have lunch at the cala's restaurant. In the afternoon, visit Javea's charming Old Town (Pueblo): explore the Gothic church, the covered market, and the maze of narrow streets. Have dinner at Masena or another restaurant in the centre.",
+        body: "In the morning, drive (or take a taxi) to Cala Granadella, one of Spain's most beautiful beaches, about 15 minutes from the apartment. Snorkel in the turquoise water and have lunch at the cala's restaurant. In the afternoon, visit Javea's charming Old Town (Pueblo): explore the Gothic church, the covered market, and the maze of narrow streets. Have dinner in the Old Town, or take a taxi to Masena outside the centre.",
       },
       {
         heading: 'Day 3, Montgó, Cabo de la Nao & Departure',
@@ -292,54 +261,9 @@ const BookingCTA = () => (
 );
 
 const SEOLandingPage = ({ slug }: SEOLandingPageProps) => {
-  const page = pages[slug];
-
-  useEffect(() => {
-    if (!page) return;
-    document.title = page.title;
-
-    const updateMeta = (name: string, content: string, property = false) => {
-      const attr = property ? 'property' : 'name';
-      let meta = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement;
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute(attr, name);
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute('content', content);
-    };
-
-    updateMeta('description', page.description);
-    updateMeta('robots', 'index, follow, max-image-preview:large, max-snippet:-1');
-    updateMeta('og:title', page.title, true);
-    updateMeta('og:description', page.description, true);
-    updateMeta('og:type', 'website', true);
-    updateMeta('og:site_name', 'Jávea Bliss', true);
-    updateMeta('og:url', `${BASE_URL}${page.canonical}`, true);
-
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      document.head.appendChild(canonical);
-    }
-    canonical.href = `${BASE_URL}${page.canonical}`;
-
-    // These guides exist in English only. Advertising the other languages here would
-    // point hreflang at pages that are not translations of this one, so drop any
-    // alternates left in the document by the homepage and self-reference instead.
-    document
-      .querySelectorAll('link[rel="alternate"][hreflang]')
-      .forEach(link => link.remove());
-
-    ['en', 'x-default'].forEach(hreflang => {
-      const link = document.createElement('link');
-      link.rel = 'alternate';
-      link.setAttribute('hreflang', hreflang);
-      link.href = `${BASE_URL}${page.canonical}`;
-      document.head.appendChild(link);
-    });
-  }, [page]);
+  const content = pages[slug];
+  const metadata = getRouteSEO(`/en/${slug}/`);
+  const page = content && metadata ? { ...content, description: metadata.description } : null;
 
   if (!page) {
     return (
@@ -361,7 +285,7 @@ const SEOLandingPage = ({ slug }: SEOLandingPageProps) => {
     { href: '/en/winter-rental-javea/', label: 'Winter Rental in Javea' },
     { href: '/en/javea-without-car/', label: 'Visiting Javea Without a Car' },
     { href: '/en/javea-3-day-itinerary/', label: '3-Day Javea Itinerary' },
-  ].filter((g) => g.href !== page.canonical);
+  ].filter((g) => g.href !== `/en/${slug}/`);
 
   return (
     <div className="min-h-screen bg-bone">

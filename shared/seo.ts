@@ -23,6 +23,7 @@ export interface RouteSEO {
   lang: string;
   hreflang: Array<{ lang: string; href: string }>;
   ogImage?: string;
+  noindex?: boolean;
 }
 
 const homepageHreflang = [
@@ -53,21 +54,21 @@ const locales: Record<Language, string> = {
 };
 
 const recommendationsTitles: Record<Language, string> = {
-  en: 'Best Restaurants Javea | Guide to La Bambula, Chabada & More',
-  nl: 'Beste Restaurants Javea | Gids La Bambula, Chabada & Meer',
-  fr: 'Meilleurs Restaurants Javea | Guide La Bambula, Chabada & Plus',
-  de: 'Beste Restaurants Javea | Guide La Bambula, Chabada & Mehr',
-  es: 'Mejores Restaurantes Javea | Guía La Bambula, Chabada y Más',
-  it: 'Migliori Ristoranti Javea | Guida La Bambula, Chabada e Altro',
+  en: 'Restaurants near Arenal Beach, Jávea | Jávea Bliss Guide',
+  nl: 'Restaurants bij het Arenal-strand, Jávea | Jávea Bliss',
+  fr: 'Restaurants près de la plage de l’Arenal, Jávea | Jávea Bliss',
+  de: 'Restaurants am Arenal-Strand, Jávea | Jávea Bliss',
+  es: 'Restaurantes cerca de la playa del Arenal, Jávea | Jávea Bliss',
+  it: 'Ristoranti vicino alla spiaggia dell’Arenal, Jávea | Jávea Bliss',
 };
 
 const recommendationsDescriptions: Record<Language, string> = {
-  en: "Insider guide to Javea's best restaurants: La Bambula, La Siesta, Chabada. Stay at Javea Bliss, the luxury apartment within walking distance of them all.",
-  nl: "Insider gids voor Javea's beste restaurants: La Bambula, La Siesta, Chabada. Verblijf in Javea Bliss, luxe appartement op loopafstand van alles.",
-  fr: "Guide insider des meilleurs restaurants de Javea: La Bambula, La Siesta, Chabada. Séjournez à Javea Bliss, appartement de luxe à distance de marche.",
-  de: "Insider-Guide zu Javeas besten Restaurants: La Bambula, La Siesta, Chabada. Übernachten Sie in Javea Bliss, Luxus-Apartment in Gehweite.",
-  es: "Guía insider de los mejores restaurantes de Javea: La Bambula, La Siesta, Chabada. Alójate en Javea Bliss, apartamento de lujo a poca distancia de todos.",
-  it: "Guida insider ai migliori ristoranti di Javea: La Bambula, La Siesta, Chabada. Soggiorna a Javea Bliss, appartamento di lusso a pochi passi da tutto.",
+  en: 'Explore restaurants near Arenal Beach in Jávea: La Fontana, Posidonia, Ammos, Chabada, La Bambula and Bohemians, plus La Siesta farther along the coast.',
+  nl: 'Ontdek restaurants bij het Arenal-strand in Jávea: La Fontana, Posidonia, Ammos, Chabada, La Bambula en Bohemians, plus La Siesta verder langs de kust.',
+  fr: 'Découvrez les restaurants près de l’Arenal à Jávea : La Fontana, Posidonia, Ammos, Chabada, La Bambula et Bohemians, puis La Siesta plus loin sur la côte.',
+  de: 'Restaurants am Arenal-Strand in Jávea: La Fontana, Posidonia, Ammos, Chabada, La Bambula und Bohemians sowie La Siesta weiter entlang der Küste.',
+  es: 'Descubre restaurantes cerca del Arenal en Jávea: La Fontana, Posidonia, Ammos, Chabada, La Bambula y Bohemians, y La Siesta más lejos por la costa.',
+  it: 'Scopri i ristoranti vicino all’Arenal a Jávea: La Fontana, Posidonia, Ammos, Chabada, La Bambula e Bohemians, e La Siesta più avanti lungo la costa.',
 };
 
 const seoLandingPages: Record<string, { title: string; description: string }> = {
@@ -89,7 +90,7 @@ const seoLandingPages: Record<string, { title: string; description: string }> = 
   },
   'winter-rental-javea': {
     title: 'Winter Rental in Javea, Long-Stay Apartments from €100/Night | Jávea Bliss',
-    description: 'Escape winter with a long-stay rental in Javea. Jávea Bliss offers monthly rates for 35+ night stays from €100/night. Mild climate, 300+ sunny days, 250 m from Arenal Beach.',
+    description: 'Escape winter with a long-stay rental in Javea. Jávea Bliss offers monthly rates for 35+ night stays from €100/night. A furnished apartment with heating and Wi-Fi, 250 m from Arenal Beach.',
   },
   'javea-without-car': {
     title: 'Javea Without a Car, What You Can Do on Foot | Jávea Bliss',
@@ -97,7 +98,7 @@ const seoLandingPages: Record<string, { title: string; description: string }> = 
   },
   'restaurants-near-arenal-beach-javea': {
     title: 'Best Restaurants Near Arenal Beach Javea | Jávea Bliss Guide',
-    description: 'Discover the best restaurants near Arenal Beach in Javea, La Bambula, Chabada, Masena, and more. All within walking distance of our holiday apartment.',
+    description: 'Discover the best restaurants near Arenal Beach in Javea, La Fontana, Posidonia, Chabada and more, with Mediterranean food near our Arenal apartment.',
   },
   'best-beaches-near-javea-apartment': {
     title: 'Best Beaches Near Javea, Day Trips from Our Apartment | Jávea Bliss',
@@ -112,6 +113,15 @@ const seoLandingPages: Record<string, { title: string; description: string }> = 
 export function getRouteSEO(urlPath: string): RouteSEO | null {
   const cleanPath = urlPath.split('?')[0].split('#')[0];
 
+  if (/^\/(?:en\/|nl\/|fr\/|it\/|de\/|es\/)?(?:for-sale|privacy-policy)\/?$/.test(cleanPath) || /^\/admin\/?$/.test(cleanPath)) {
+    const lang = (cleanPath.match(/^\/(en|nl|fr|it|de|es)\//)?.[1] || 'en') as Language;
+    return {
+      title: cleanPath.includes('privacy-policy') ? 'Privacy Policy | Jávea Bliss' : cleanPath.includes('admin') ? 'Administration | Jávea Bliss' : 'Private Property Presentation | Jávea Bliss',
+      description: 'Jávea Bliss private enquiries.',
+      canonical: `${BASE_URL}${cleanPath.replace(/\/$/, '')}`,
+      locale: locales[lang], lang, hreflang: [], noindex: true,
+    };
+  }
   if (cleanPath === '/') {
     return null;
   }
@@ -171,6 +181,52 @@ export function getRouteSEO(urlPath: string): RouteSEO | null {
   return null;
 }
 
+export function getPageStructuredData(seo: RouteSEO): Record<string, unknown> | null {
+  if (seo.noindex) return null;
+  const property = {
+    '@type': 'LodgingBusiness',
+    '@id': `${BASE_URL}/#property`,
+    name: 'Jávea Bliss',
+    url: `${BASE_URL}/`,
+    image: `${BASE_URL}/og-hero.jpg`,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Jávea', addressRegion: 'Alicante', addressCountry: 'ES',
+    },
+    checkinTime: '16:00', checkoutTime: '13:00', petsAllowed: false,
+    amenityFeature: [
+      { '@type': 'LocationFeatureSpecification', name: 'Air conditioning', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Wi-Fi', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Kitchen', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Terrace', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Lift', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Free street parking', value: true },
+    ],
+  };
+  const page = {
+    '@type': 'WebPage', '@id': seo.canonical,
+    url: seo.canonical, name: seo.title, description: seo.description,
+    inLanguage: seo.lang, about: { '@id': `${BASE_URL}/#property` },
+  };
+  const graph: Record<string, unknown>[] = [property, page];
+  if (seo.canonical.includes('/recommendations')) {
+    const venues = [
+      ['La Fontana', 'https://www.restaurantelafontana.es/'],
+      ['Posidonia', 'https://www.restauranteposidonia.com/'],
+      ['Ammos', 'https://ammos.es/'],
+      ['La Bambula', 'https://labambula.es'],
+      ['Chabada', 'https://chabadajavea.com'],
+      ['La Siesta', 'https://siestajavea.com'],
+      ['Bohemians', 'https://bohemiansjavea.com'],
+    ];
+    graph.push({
+      '@type': 'ItemList', name: seo.title, description: seo.description,
+      itemListElement: venues.map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, url })),
+    });
+  }
+  return { '@context': 'https://schema.org', '@graph': graph };
+}
+
 export function injectSEOIntoHTML(html: string, seo: RouteSEO): string {
   const hreflangTags = seo.hreflang
     .map(h => `<link rel="alternate" hreflang="${h.lang}" href="${h.href}" />`)
@@ -178,20 +234,13 @@ export function injectSEOIntoHTML(html: string, seo: RouteSEO): string {
 
   const ogImage = seo.ogImage || `${BASE_URL}/og-hero.jpg`;
 
-  const headInjection = `
-    <title>${escapeHtml(seo.title)}</title>
-    <meta name="description" content="${escapeHtml(seo.description)}" />
-    <link rel="canonical" href="${seo.canonical}" />
-    <meta property="og:title" content="${escapeHtml(seo.title)}" />
-    <meta property="og:description" content="${escapeHtml(seo.description)}" />
-    <meta property="og:url" content="${seo.canonical}" />
-    <meta property="og:locale" content="${seo.locale}" />
-    <meta property="og:image" content="${ogImage}" />
-    <meta name="twitter:title" content="${escapeHtml(seo.title)}" />
-    <meta name="twitter:description" content="${escapeHtml(seo.description)}" />
-    ${hreflangTags}`;
 
+  const schema = getPageStructuredData(seo);
+  const schemaTag = schema ? `<script type="application/ld+json" data-schema="main">${JSON.stringify(schema).replace(/</g, '\\u003c')}</script>` : '';
   return html
+    .replace(/<script[^>]*data-schema="main"[^>]*>[\s\S]*?<\/script>/g, '')
+    .replace('</head>', `${schemaTag}\n  </head>`)
+    .replace(/<meta name="robots"[^>]*>/, `<meta name="robots" content="${seo.noindex ? 'noindex, nofollow' : 'index, follow'}" />`)
     .replace(/<html lang="[^"]*"/, `<html lang="${seo.lang}"`)
     .replace(
       /<title>[^<]*<\/title>/,
@@ -230,7 +279,7 @@ export function injectSEOIntoHTML(html: string, seo: RouteSEO): string {
       `<meta name="twitter:description" content="${escapeHtml(seo.description)}" />`,
     )
     .replace(
-      /(<link rel="alternate" hreflang="en"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="fr"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="es"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="de"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="nl"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="it"[^>]*>\s*\n?\s*<link rel="alternate" hreflang="x-default"[^>]*>)/,
+      /(?:<link rel="alternate" hreflang="[^"]+"[^>]*>\s*)+/g,
       hreflangTags,
     );
 }
@@ -247,6 +296,7 @@ export function isKnownPublicRoute(urlPath: string): boolean {
   const path = urlPath.split('?')[0].split('#')[0];
 
   if (path === '/') return true;
+  if (/^\/(?:en\/|nl\/|fr\/|it\/|de\/|es\/)?(?:for-sale|privacy-policy)\/?$/.test(path)) return true;
 
   if (/^\/(en|nl|fr|it|de|es)\/?$/.test(path)) return true;
 

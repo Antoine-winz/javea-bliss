@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import LazyImage from "@/components/LazyImage";
 
@@ -123,7 +123,8 @@ const GallerySection = () => {
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-[100vw] w-screen h-screen sm:max-w-[100vw] p-0 border-0 bg-ink/97 rounded-none">
+        <DialogContent aria-describedby={undefined} className="max-w-[100vw] w-screen h-screen sm:max-w-[100vw] p-0 border-0 bg-ink/97 rounded-none">
+          <DialogTitle className="sr-only">{t('gallery.title')}</DialogTitle>
           <div className="relative h-full w-full flex flex-col">
             <div className="flex items-center justify-between px-6 py-5">
               <p className="font-sans text-[0.75rem] tracking-[0.15em] uppercase text-bone/60">

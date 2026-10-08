@@ -1,9 +1,12 @@
 import { pgTable, text, serial, integer, boolean, date, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+import { isValidBookingDate } from "./booking-rules";
+
+const dateOnlySchema = z.string().refine(isValidBookingDate, "Invalid calendar date");
 
 export const MINIMUM_STAY_NIGHTS = 11;
-export const CLEANING_FEE_EUR = 60;
+export { CLEANING_FEE_EUR } from "./booking-rules";
 
 // Users table (kept from template)
 export const users = pgTable("users", {
@@ -33,7 +36,15 @@ export const bookingInquiries = pgTable("booking_inquiries", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const bookingInquirySchema = createInsertSchema(bookingInquiries).pick({
+export const bookingInquirySchema = createInsertSchema(bookingInquiries, {
+  name: z.string().trim().min(1).max(160),
+  email: z.string().trim().email().max(320),
+  checkIn: dateOnlySchema,
+  checkOut: dateOnlySchema,
+  guests: z.enum(["1", "2", "3", "4"]),
+  phone: z.string().trim().min(5).max(40),
+  message: z.string().max(5000).nullable().optional(),
+}).pick({
   name: true,
   email: true,
   checkIn: true,
@@ -142,7 +153,16 @@ export const promotionalOffers = pgTable("promotional_offers", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const insertPromotionalOfferSchema = createInsertSchema(promotionalOffers).pick({
+export const insertPromotionalOfferSchema = createInsertSchema(promotionalOffers, {
+  title: z.string().trim().min(1).max(200),
+  description: z.string().trim().min(1).max(5000),
+  startDate: dateOnlySchema,
+  endDate: dateOnlySchema,
+  originalPrice: z.number().int().positive().max(10000),
+  discountedPrice: z.number().int().positive().max(10000),
+  discountPercentage: z.number().int().min(0).max(100),
+  language: z.string().refine(value => ["en", "nl", "fr", "de", "es", "it"].includes(value), "Unsupported language"),
+}).pick({
   title: true,
   description: true,
   startDate: true,
@@ -173,7 +193,14 @@ export const guestReviews = pgTable("guest_reviews", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const insertGuestReviewSchema = createInsertSchema(guestReviews).pick({
+export const insertGuestReviewSchema = createInsertSchema(guestReviews, {
+  guestName: z.string().trim().min(1).max(160),
+  rating: z.number().int().min(1).max(5),
+  reviewText: z.string().trim().min(1).max(10000),
+  country: z.string().max(100).nullable().optional(),
+  stayDate: z.string().max(100).nullable().optional(),
+  language: z.string().refine(value => ["en", "nl", "fr", "de", "es", "it"].includes(value), "Unsupported language"),
+}).pick({
   guestName: true,
   country: true,
   stayDate: true,
@@ -196,7 +223,10 @@ export const dailyRates = pgTable("daily_rates", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const insertDailyRateSchema = createInsertSchema(dailyRates).pick({
+export const insertDailyRateSchema = createInsertSchema(dailyRates, {
+  date: dateOnlySchema,
+  rate: z.number().int().positive().max(10000),
+}).pick({
   date: true,
   rate: true,
 });

@@ -1,13 +1,9 @@
 import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
-import { createServer as createViteServer, createLogger } from "vite";
 import { type Server } from "http";
-import viteConfig from "../vite.config";
-import { nanoid } from "nanoid";
-import { getRouteSEO, injectSEOIntoHTML, isKnownPublicRoute } from "./seo-injection";
+import { getRouteSEO, injectSEOIntoHTML, isKnownPublicRoute } from "@shared/seo";
 
-const viteLogger = createLogger();
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -21,15 +17,16 @@ export function log(message: string, source = "express") {
 }
 
 export async function setupVite(app: Express, server: Server) {
+  const { createServer: createViteServer, createLogger } = await import("vite");
+  const viteLogger = createLogger();
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
-    allowedHosts: true as const,
+    allowedHosts: [".replit.dev", ".replit.app", ".repl.co", ".replit.com", "javeabliss.com"],
   };
 
   const vite = await createViteServer({
-    ...viteConfig,
-    configFile: false,
+    configFile: path.resolve(process.cwd(), "vite.config.ts"),
     customLogger: {
       ...viteLogger,
       error: (msg, options) => {
@@ -54,10 +51,6 @@ export async function setupVite(app: Express, server: Server) {
       );
 
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
-      template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`,
-      );
       let page = await vite.transformIndexHtml(url, template);
 
       // Inject route-specific SEO meta tags for crawlers
@@ -67,7 +60,7 @@ export async function setupVite(app: Express, server: Server) {
         page = injectSEOIntoHTML(page, seo);
       }
 
-      res.status(200).set({ "Content-Type": "text/html" }).end(page);
+      res.status(isKnownPublicRoute(urlPath) ? 200 : 404).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
       next(e);
@@ -84,18 +77,19 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath));
+  app.use("/assets", express.static(path.join(distPath, "assets"), { maxAge: "1y", immutable: true, index: false }));
+  app.use(express.static(distPath, { index: false }));
+  const template = fs.readFileSync(path.resolve(distPath, "index.html"), "utf-8");
 
   // Catch-all: serve SPA shell for all routes, injecting SEO where known
   app.use("*", (req, res) => {
-    const indexPath = path.resolve(distPath, "index.html");
     // Inside a middleware mounted at "*", Express rewrites req.path to "/", so it
     // can never identify the route. originalUrl keeps the real path, without this
     // no SEO was ever injected in production and every route returned 200.
     const urlPath = req.originalUrl.split("?")[0];
 
     try {
-      let html = fs.readFileSync(indexPath, "utf-8");
+      let html = template;
 
       // Inject SEO for known routes (returns null for unknown routes)
       const seo = getRouteSEO(urlPath);

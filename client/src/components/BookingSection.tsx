@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,10 +31,12 @@ import { Mail, Calendar, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import OptimizedCalendar from "@/components/OptimizedCalendar";
 import { trackBookingInteraction } from "@/lib/analytics";
-import { addNights, getMinimumStayNights, getStayLengthNights } from "@shared/booking-rules";
+import { CLEANING_FEE_EUR, addNights, getMinimumStayNights, getStayLengthNights } from "@shared/booking-rules";
 
 
 const BookingSection = () => {
+  const availabilityRequest = useRef<AbortController | null>(null);
+  useEffect(() => () => availabilityRequest.current?.abort(), []);
   const { toast } = useToast();
   const { t } = useLanguage();
   const [availabilityStatus, setAvailabilityStatus] = useState<'checking' | 'available' | 'unavailable' | null>(null);
@@ -83,7 +85,11 @@ const BookingSection = () => {
   // Fetch blocked dates from Airbnb calendar
   const { data: blockedDatesData } = useQuery({
     queryKey: ['/api/calendar/blocked-dates'],
-    queryFn: () => fetch('/api/calendar/blocked-dates').then(res => res.json()),
+    queryFn: async () => {
+      const response = await fetch('/api/calendar/blocked-dates');
+      if (!response.ok) throw new Error('Calendar unavailable');
+      return response.json();
+    },
     refetchInterval: 1000 * 60 * 60, // Refetch every hour
   });
 
@@ -311,16 +317,21 @@ const BookingSection = () => {
 
   // Check availability when dates change
   const checkAvailability = async (checkIn: string, checkOut: string, navigateCalendar = true) => {
+    availabilityRequest.current?.abort();
     if (!checkIn || !checkOut) {
       setAvailabilityStatus(null);
       setPriceInfo(null);
       return;
     }
 
+    availabilityRequest.current?.abort();
+    const controller = new AbortController();
+    availabilityRequest.current = controller;
     setAvailabilityStatus('checking');
     
     try {
       const response = await fetch('/api/calendar/check-availability', {
+        signal: controller.signal,
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -330,6 +341,8 @@ const BookingSection = () => {
 
       if (response.ok) {
         const data = await response.json();
+        if (controller.signal.aborted) return;
+        setPriceInfo(null);
         setAvailabilityStatus(data.available ? 'available' : 'unavailable');
         
         // Calculate pricing information
@@ -338,20 +351,21 @@ const BookingSection = () => {
           const endDate = new Date(checkOut);
           const stayLength = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
           
-          let dailyRate;
-          const month = startDate.getMonth();
-          
-          if (month >= 5 && month <= 8) dailyRate = 210; // Jun-Sep (high season)
-          else if (month === 3 || month === 4 || month === 9) dailyRate = 160; // Apr, May, Oct (mid season)
-          else dailyRate = 130; // Nov-Mar (low season)
-          
+          const pricingResponse = await fetch(`/api/pricing?start=${checkIn}&end=${addNights(checkOut, -1)}&stayLength=${stayLength}`, { signal: controller.signal });
+          if (!pricingResponse.ok) throw new Error('Pricing unavailable');
+          const rates: { rate: number }[] = await pricingResponse.json();
+          if (controller.signal.aborted) return;
+          if (rates.length !== stayLength || rates.some(rate => !Number.isFinite(rate.rate) || rate.rate <= 0)) throw new Error('Invalid pricing');
+          const subtotal = rates.reduce((total, day) => total + day.rate, 0);
+          const dailyRate = Math.round(subtotal / stayLength * 100) / 100;
+
           // Long-term rental rate: €100/day for stays 35+ days
           if (stayLength >= 35) {
-            const cleaningFee = 30;
+            const cleaningFee = CLEANING_FEE_EUR;
             setPriceInfo({
-              dailyRate: 100,
+              dailyRate,
               totalNights: stayLength,
-              totalPrice: (stayLength * 100) + cleaningFee,
+              totalPrice: subtotal + cleaningFee,
               isLongTerm: true,
               originalRate: dailyRate,
               cleaningFee: cleaningFee
@@ -362,12 +376,8 @@ const BookingSection = () => {
             let isPromoActive = false;
             let promoDiscountRate = 0;
             
-            // Use promotional price if available from URL parameters
-            if (urlParams.promoPrice) {
-              finalRate = parseInt(urlParams.promoPrice);
-              isPromoActive = true;
-              promoDiscountRate = Math.round(((dailyRate - finalRate) / dailyRate) * 100);
-            } else {
+            // Quotes use persisted offers; URL parameters never determine the price.
+            {
               // Fetch current promotional offers from database
               try {
                 const promoResponse = await fetch('/api/promotional-offers');
@@ -389,7 +399,7 @@ const BookingSection = () => {
                     // 2. Check-in date falls within promotional period
                     return validUntilDate >= today && 
                            checkInDate >= promoStartDate && 
-                           checkInDate <= promoEndDate;
+                           new Date(checkOut) <= promoEndDate;
                   });
                   
                   if (activePromo && activePromo.discountedPrice < dailyRate) {
@@ -430,17 +440,18 @@ const BookingSection = () => {
               // No automatic discounts - only apply promotional pricing when there are active offers
             }
             
-            const cleaningFee = 30;
+            const cleaningFee = CLEANING_FEE_EUR;
             const newPriceInfo = {
               dailyRate: finalRate,
               totalNights: stayLength,
-              totalPrice: (stayLength * finalRate) + cleaningFee,
+              totalPrice: (isPromoActive ? stayLength * finalRate : subtotal) + cleaningFee,
               isLongTerm: false,
               originalRate: dailyRate,
               promoDiscount: promoDiscountRate,
               isPromoActive: isPromoActive,
               cleaningFee: cleaningFee
             };
+            if (controller.signal.aborted) return;
             setPriceInfo(newPriceInfo);
           }
         } else {
@@ -449,6 +460,7 @@ const BookingSection = () => {
           // Fetch fresh calendar data to ensure accurate suggestions
           const freshCalendarResponse = await apiRequest('/api/calendar/blocked-dates', 'GET');
           const freshCalendarData = await freshCalendarResponse.json();
+          if (controller.signal.aborted) return;
           const nextAvailable = findNextAvailablePeriod(freshCalendarData);
           setSuggestedDates(nextAvailable);
           
@@ -465,6 +477,7 @@ const BookingSection = () => {
         setSuggestedDates(null);
       }
     } catch (error) {
+      if (controller.signal.aborted) return;
       setAvailabilityStatus(null);
       setPriceInfo(null);
     }
@@ -575,7 +588,7 @@ This inquiry was submitted through the Jávea Bliss website.
   };
 
   return (
-    <section id="booking" className="section bg-sand">
+    <section data-section="booking" className="section bg-sand">
       <div className="shell">
         <div className="grid lg:grid-cols-12 gap-y-8 gap-x-16 mb-14 md:mb-16" data-reveal>
           <div className="lg:col-span-5">

@@ -28,7 +28,8 @@ export const getPathWithoutLanguage = (path: string): string => {
 // Function to detect user's preferred language (fallback when no URL language)
 const detectUserLanguage = (): Language => {
   // First check if user has a saved language preference
-  const savedLanguage = localStorage.getItem('preferredLanguage');
+  let savedLanguage: string | null = null;
+  try { savedLanguage = localStorage.getItem('preferredLanguage'); } catch { /* Storage can be disabled. */ }
   if (savedLanguage && SUPPORTED_LANGUAGES.includes(savedLanguage as Language)) {
     return savedLanguage as Language;
   }
@@ -128,7 +129,7 @@ const detectUserLanguage = (): Language => {
 // cookie, the cookie is what lets the server answer the bare "/" in the right
 // language on the first response, before any JS has run.
 const persistLanguage = (lang: Language) => {
-  localStorage.setItem('preferredLanguage', lang);
+  try { localStorage.setItem('preferredLanguage', lang); } catch { /* Keep navigation working without storage. */ }
   document.cookie = `preferredLanguage=${lang}; path=/; max-age=31536000; SameSite=Lax`;
 };
 
@@ -200,7 +201,7 @@ const translations = {
     'location.transport': 'Getting Here',
     'location.transportDesc': 'About 75 minutes from Alicante Airport, 90 from Valencia',
     'location.restaurantTitle': 'Where the Locals Eat',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, our guide covers the places we actually go, all within walking distance of the apartment.',
+    'location.restaurantDesc': "Paella at La Fontana or Posidonia, a relaxed meal at Ammos, or an evening at Chabada, La Bambula and Bohemians. These Arenal spots are all within about 10 minutes on foot.",
     'location.viewRecommendations': 'View Restaurant Guide',
 
     // Booking Section
@@ -542,7 +543,7 @@ const translations = {
     'location.transport': 'Bereikbaarheid',
     'location.transportDesc': 'Circa 75 minuten van Alicante Airport, 90 van Valencia',
     'location.restaurantTitle': 'Waar de locals eten',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, onze gids staat vol adressen waar we zelf komen, allemaal op loopafstand van het appartement.',
+    'location.restaurantDesc': "Paella bij La Fontana of Posidonia, ontspannen eten bij Ammos, of een avond bij Chabada, La Bambula en Bohemians. Deze adressen aan het Arenal liggen allemaal op ongeveer 10 minuten lopen of minder.",
     'location.viewRecommendations': 'Bekijk de Restaurantgids',
 
     // Booking Section
@@ -884,7 +885,7 @@ const translations = {
     'location.transport': 'Accès',
     'location.transportDesc': 'Environ 1 h 15 de l\'aéroport d\'Alicante, 1 h 30 de Valence',
     'location.restaurantTitle': 'Où mangent les habitués',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, notre guide réunit les adresses où nous allons vraiment, toutes accessibles à pied depuis l\'appartement.',
+    'location.restaurantDesc': "Une paella à La Fontana ou Posidonia, un repas décontracté chez Ammos, ou une soirée à Chabada, La Bambula et Bohemians. Ces adresses de l’Arenal sont toutes à environ 10 minutes à pied ou moins.",
     'location.viewRecommendations': 'Voir le Guide des Restaurants',
 
     // Booking Section
@@ -1226,7 +1227,7 @@ const translations = {
     'location.transport': 'Come Arrivare',
     'location.transportDesc': 'Circa 1 ora e 15 dall\'aeroporto di Alicante, 1 e 30 da Valencia',
     'location.restaurantTitle': 'Dove mangiano i locali',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, la nostra guida raccoglie i posti dove andiamo davvero, tutti raggiungibili a piedi dall\'appartamento.',
+    'location.restaurantDesc': "Paella da La Fontana o Posidonia, un pasto informale da Ammos, o una serata da Chabada, La Bambula e Bohemians. Questi locali dell’Arenal sono tutti a circa 10 minuti a piedi o meno.",
     'location.viewRecommendations': 'Vedi la Guida ai Ristoranti',
 
     // Booking Section
@@ -1568,7 +1569,7 @@ const translations = {
     'location.transport': 'Anreise',
     'location.transportDesc': 'Ca. 75 Minuten vom Flughafen Alicante, 90 von Valencia',
     'location.restaurantTitle': 'Wo die Einheimischen essen',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, unser Führer versammelt die Adressen, zu denen wir selbst gehen, alle zu Fuß von der Wohnung erreichbar.',
+    'location.restaurantDesc': "Paella bei La Fontana oder Posidonia, entspannt essen bei Ammos oder ein Abend bei Chabada, La Bambula und Bohemians. Diese Lokale am Arenal sind alle in etwa 10 Minuten zu Fuß erreichbar.",
     'location.viewRecommendations': 'Zum Restaurantführer',
 
     // Booking Section
@@ -1910,7 +1911,7 @@ const translations = {
     'location.transport': 'Cómo Llegar',
     'location.transportDesc': 'A 1 h 15 del aeropuerto de Alicante, 1 h 30 del de Valencia',
     'location.restaurantTitle': 'Donde comen los de aquí',
-    'location.restaurantDesc': 'Chabada, La Bambula, Masena, Bohemians, nuestra guía reúne los sitios a los que vamos de verdad, todos a un paseo del apartamento.',
+    'location.restaurantDesc': "Paella en La Fontana o Posidonia, una comida informal en Ammos, o una noche en Chabada, La Bambula y Bohemians. Todos estos locales del Arenal están a unos 10 minutos andando o menos.",
     'location.viewRecommendations': 'Ver la Guía de Restaurantes',
 
     // Booking Section

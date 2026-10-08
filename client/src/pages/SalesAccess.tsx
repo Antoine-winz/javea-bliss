@@ -29,7 +29,7 @@ export default function SalesAccess() {
   const [step, setStep] = useState<Step>("landing");
   const [form, setForm] = useState({ firstName: "", lastName: "", email: "", phone: "", buyerType: "private", agencyName: "", preferredLanguage: lang, consentGiven: false, country: "+34" });
   const [code, setCode] = useState(""); const [error, setError] = useState(""); const [busy, setBusy] = useState(false); const [resendIn, setResendIn] = useState(0); const [downloadLang, setDownloadLang] = useState<Lang>(lang);
-  const [accessToken, setAccessToken] = useState(() => window.sessionStorage.getItem("jb_sales_access_token") || "");
+  const [accessToken, setAccessToken] = useState(() => { try { return window.sessionStorage.getItem("jb_sales_access_token") || ""; } catch { return ""; } });
   useEffect(() => {
     fetch("/api/sales/session", { credentials: "include", headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined })
       .then(async (response) => {
@@ -49,8 +49,16 @@ export default function SalesAccess() {
   useEffect(() => { if (!resendIn) return; const timer = window.setInterval(() => setResendIn((n) => Math.max(0, n - 1)), 1000); return () => window.clearInterval(timer); }, [resendIn]);
   const update = (key: string, value: string | boolean) => setForm((f) => ({ ...f, [key]: value }));
   const submit = async (event: FormEvent) => { event.preventDefault(); setError(""); if (!form.firstName || !form.lastName || !form.email || !form.phone || !form.consentGiven || (form.buyerType === "agency" && !form.agencyName)) { setError(t.required); return; } const internationalPhone = `${form.country}${form.phone.replace(/\D/g, "")}`; if (!isValidPhoneNumber(internationalPhone)) { setError(phoneError(lang)); return; } setBusy(true); try { const response = await fetch("/api/sales/request-access", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({ ...form, buyerType: form.buyerType === "private" ? "private_buyer" : "agency", phone: internationalPhone }) }); if (!response.ok) { setError(await salesError(response, lang, "request")); return; } setStep("verify"); setResendIn(60); } catch { setError(t.error); } finally { setBusy(false); } };
-  const verify = async (event: FormEvent) => { event.preventDefault(); setBusy(true); setError(""); try { const response = await fetch("/api/sales/verify", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({ email: form.email, code }) }); if (!response.ok) { setError(await salesError(response, lang, "verify")); return; } const token = response.headers.get("X-Sales-Access-Token"); if (token) { window.sessionStorage.setItem("jb_sales_access_token", token); setAccessToken(token); } setStep("success"); } catch { setError(t.error); } finally { setBusy(false); } };
-  const resend = async () => { if (resendIn) return; await fetch("/api/sales/resend", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({ email: form.email }) }); setResendIn(60); };
+  const verify = async (event: FormEvent) => { event.preventDefault(); setBusy(true); setError(""); try { const response = await fetch("/api/sales/verify", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({ email: form.email, code }) }); if (!response.ok) { setError(await salesError(response, lang, "verify")); return; } const token = response.headers.get("X-Sales-Access-Token"); if (token) { try { window.sessionStorage.setItem("jb_sales_access_token", token); } catch { /* Use the in-memory token when storage is disabled. */ } setAccessToken(token); } setStep("success"); } catch { setError(t.error); } finally { setBusy(false); } };
+  const resend = async () => {
+    if (resendIn || busy) return;
+    setBusy(true); setError("");
+    try {
+      const response = await fetch("/api/sales/resend", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({ email: form.email }) });
+      if (!response.ok) { setError(await salesError(response, lang, "request")); return; }
+      setResendIn(60);
+    } catch { setError(t.error); } finally { setBusy(false); }
+  };
   const download = async () => {
     setBusy(true);
     setError("");
@@ -78,7 +86,7 @@ export default function SalesAccess() {
       anchor.click();
       anchor.remove();
       window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
-      window.sessionStorage.removeItem("jb_sales_access_token");
+      try { window.sessionStorage.removeItem("jb_sales_access_token"); } catch { /* Storage can be disabled. */ }
       setAccessToken("");
       setCode("");
       setStep("landing");

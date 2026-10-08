@@ -1,4 +1,5 @@
-import { parse } from 'date-fns';
+import { isStayAvailable } from '@shared/availability';
+import { isValidBookingDate } from '@shared/booking-rules';
 
 import { db } from './db';
 import { calendarSettings, calendarEvents, type CalendarEvent as DBCalendarEvent } from '@shared/schema';
@@ -28,12 +29,15 @@ export class CalendarService {
     lastUpdated: new Date()
   };
   
+  private ready = false;
+  isReady(): boolean { return this.ready; }
+
   private storedIcalUrl: string | null = null;
-  private syncInterval: NodeJS.Timeout | null = null;
   private dailySyncInterval: NodeJS.Timeout | null = null;
   private isSyncing: boolean = false;
 
   constructor() {
+    if (process.env.NODE_ENV === "test") return;
     // Defer async initialization to prevent unhandled rejections crashing the process
     setTimeout(() => this.initialize(), 0);
   }
@@ -41,6 +45,7 @@ export class CalendarService {
   private async initialize(): Promise<void> {
     try {
       await this.loadFromDatabase();
+      if (!this.storedIcalUrl) await this.setupDefaultSync();
       if (this.storedIcalUrl) {
         console.log('Calendar loaded - triggering automatic sync on startup');
         try {
@@ -88,17 +93,11 @@ export class CalendarService {
 
       // Rebuild blocked dates from events
       this.rebuildBlockedDatesFromEvents();
+      this.ready = true;
       
     } catch (error) {
       console.error('Could not load calendar data from database:', error);
-      // Initialize with empty calendar on database error
-      this.calendar = {
-        blockedDates: [],
-        checkInDates: [],
-        checkOutDates: [],
-        events: [],
-        lastUpdated: new Date()
-      };
+      throw error;
     }
   }
 
@@ -174,15 +173,6 @@ export class CalendarService {
   }
 
   /**
-   * Check if a "Not available" block is long-term (7+ days) and should be treated as blocked
-   */
-  private isLongTermBlock(startDate: Date, endDate: Date): boolean {
-    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays >= 5; // Consider 5+ day blocks as actual bookings
-  }
-
-  /**
    * Rebuild blocked dates from loaded events
    */
   private rebuildBlockedDatesFromEvents(): void {
@@ -190,11 +180,11 @@ export class CalendarService {
     this.calendar.checkInDates = [];
     this.calendar.checkOutDates = [];
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    today.setUTCHours(0, 0, 0, 0);
 
     for (const event of this.calendar.events) {
       // Block dates for actual guest reservations AND manually blocked ranges
-      const isReservation = event.summary.includes('Reserved') || event.summary.includes('Reservation');
+      const isReservation = !/not available/i.test(event.summary);
       const isManualBlock = event.uid.startsWith('manual-');
       
       if (isReservation || isManualBlock) {
@@ -224,17 +214,17 @@ export class CalendarService {
     const dates: Date[] = [];
     
     // Normalize to local midnight to avoid timezone issues
-    const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-    const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+    const start = new Date(Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate()));
+    const end = new Date(Date.UTC(endDate.getUTCFullYear(), endDate.getUTCMonth(), endDate.getUTCDate()));
     
     // Start from the day AFTER check-in
     const current = new Date(start);
-    current.setDate(current.getDate() + 1);
+    current.setUTCDate(current.getUTCDate() + 1);
     
     // Loop until we reach check-out day (exclusive)
     while (current.getTime() < end.getTime()) {
       dates.push(new Date(current));
-      current.setDate(current.getDate() + 1);
+      current.setUTCDate(current.getUTCDate() + 1);
     }
     
     return dates;
@@ -246,21 +236,30 @@ export class CalendarService {
   async syncAirbnbCalendar(icalUrl: string): Promise<void> {
     // Prevent concurrent syncs - skip if already syncing
     if (this.isSyncing) {
-      console.log('Calendar sync already in progress, skipping duplicate sync');
-      return;
+      throw new Error('Calendar sync already in progress');
     }
     
     this.isSyncing = true;
     try {
-      const response = await fetch(icalUrl);
+      const url = new URL(icalUrl);
+      if (url.protocol !== 'https:' || url.username || url.password || url.port ||
+          !/^(www\.)?airbnb\.(com|es|fr|de|it|nl|co\.uk)$/.test(url.hostname) ||
+          !url.pathname.startsWith('/calendar/ical/')) {
+        throw new Error('Only HTTPS Airbnb calendar export URLs are supported');
+      }
+      const response = await fetch(url, { signal: AbortSignal.timeout(15_000), redirect: 'error' });
       if (!response.ok) {
         throw new Error(`Failed to fetch calendar: ${response.status}`);
       }
       
       const icalData = await response.text();
+      if (icalData.length > 2_000_000 || !icalData.includes('BEGIN:VCALENDAR') || !icalData.includes('END:VCALENDAR')) {
+        throw new Error('Invalid calendar feed');
+      }
       await this.parseICalData(icalData);
       this.calendar.lastUpdated = new Date();
       this.storedIcalUrl = icalUrl;
+      this.ready = true;
       
       // Save to database after successful sync
       await this.saveToDatabase();
@@ -309,6 +308,7 @@ export class CalendarService {
       }
     } catch (e) {
       console.error('Failed to reload manual blocks during parse:', e);
+      events.push(...this.calendar.events.filter(event => event.uid.startsWith('manual-')));
     }
     this.calendar.events = events;
     this.rebuildBlockedDatesFromEvents();
@@ -319,7 +319,7 @@ export class CalendarService {
    */
   private parseEvent(eventBlock: string): CalendarEvent | null {
     try {
-      const lines = eventBlock.split('\n');
+      const lines = eventBlock.replace(/\r?\n[ \t]/g, '').split('\n');
       let startDate: Date | null = null;
       let endDate: Date | null = null;
       let summary = '';
@@ -341,7 +341,7 @@ export class CalendarService {
         }
       }
 
-      if (startDate && endDate) {
+      if (startDate && endDate && uid && endDate > startDate) {
         return { startDate, endDate, summary, uid };
       }
       
@@ -363,54 +363,12 @@ export class CalendarService {
       const year = parseInt(cleanDateStr.substring(0, 4));
       const month = parseInt(cleanDateStr.substring(4, 6)) - 1; // Month is 0-indexed
       const day = parseInt(cleanDateStr.substring(6, 8));
-      return new Date(year, month, day);
+      const dateOnly = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      if (!isValidBookingDate(dateOnly)) throw new Error("Invalid calendar date");
+      return new Date(Date.UTC(year, month, day));
     }
     
     throw new Error(`Invalid date format: ${dateStr}`);
-  }
-
-  /**
-   * Get all dates between start and end date (start inclusive, end exclusive)
-   * This matches hotel booking convention where check-out date is available
-   */
-  private getDateRange(startDate: Date, endDate: Date): Date[] {
-    const dates: Date[] = [];
-    const currentDate = new Date(startDate);
-    
-    // Use < instead of <= to exclude check-out date
-    while (currentDate < endDate) {
-      dates.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    
-    return dates;
-  }
-
-  /**
-   * Get all dates between start and end date (both inclusive)
-   * Used for "Not available" blocks that should block the entire period
-   */
-  private getDateRangeInclusive(startDate: Date, endDate: Date): Date[] {
-    const dates: Date[] = [];
-    const currentDate = new Date(startDate);
-    
-    // Use <= to include the end date
-    while (currentDate <= endDate) {
-      dates.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    
-    return dates;
-  }
-
-  /**
-   * Check if a date is available (not blocked)
-   */
-  isDateAvailable(date: Date): boolean {
-    const dateStr = this.formatDateForComparison(date);
-    return !this.calendar.blockedDates.some(blockedDate => 
-      this.formatDateForComparison(blockedDate) === dateStr
-    );
   }
 
   /**
@@ -421,55 +379,7 @@ export class CalendarService {
    * 3. Check-out date can be the same as someone's check-in date
    */
   isDateRangeAvailable(startDate: Date, endDate: Date): boolean {
-    // Get all checkout dates (when people leave)
-    const checkoutDates = this.getCheckOutDates();
-    const checkoutDateStrings = checkoutDates.map(date => this.formatDateForComparison(date));
-    
-    // Get all checkin dates (when people arrive)  
-    const checkinDates = this.getCheckInDates();
-    const checkinDateStrings = checkinDates.map(date => this.formatDateForComparison(date));
-    
-    // Check our check-in date
-    const startDateStr = this.formatDateForComparison(startDate);
-    const endDateStr = this.formatDateForComparison(endDate);
-    
-    // Check if our check-in date is blocked
-    const isStartBlocked = this.calendar.blockedDates.some(blockedDate => 
-      this.formatDateForComparison(blockedDate) === startDateStr
-    );
-    
-    // If start date is blocked, check if someone checks out on that date
-    if (isStartBlocked && !checkoutDateStrings.includes(startDateStr)) {
-      return false; // Start date is blocked and no one checks out
-    }
-    
-    // Check all dates in our stay (excluding checkout date per hotel convention)
-    const dates = this.getDateRange(startDate, endDate);
-    
-    for (const date of dates) {
-      const dateStr = this.formatDateForComparison(date);
-      
-      // Skip the start date - we already checked it above
-      if (dateStr === startDateStr) {
-        continue;
-      }
-      
-      // Check if this date is blocked by a reservation
-      const isBlockedByReservation = this.calendar.blockedDates.some(blockedDate => {
-        const blockedDateStr = this.formatDateForComparison(blockedDate);
-        return blockedDateStr === dateStr;
-      });
-      
-      if (isBlockedByReservation) {
-        // This date is blocked and it's not our check-in date
-        return false;
-      }
-    }
-    
-    // Additional check: if our checkout date is when someone checks in, that's OK
-    // (This is already handled by getDateRange excluding the end date, but let's be explicit)
-    
-    return true;
+    return isStayAvailable(startDate, endDate, this.calendar.events);
   }
 
   /**
@@ -608,7 +518,8 @@ export class CalendarService {
    */
   private async setupDefaultSync(): Promise<void> {
     try {
-      const defaultUrl = 'https://www.airbnb.com/calendar/ical/1437724898890828336.ics?s=fa161fdacdd13bf8dd30a6eaf26e3c98';
+      const defaultUrl = process.env.AIRBNB_ICAL_URL;
+      if (!defaultUrl) return;
       
       // Check if settings already exist
       const [existingSettings] = await db.select().from(calendarSettings).limit(1);
@@ -639,30 +550,6 @@ export class CalendarService {
     } catch (error) {
       console.error('Failed to setup default calendar sync:', error);
     }
-  }
-
-  /**
-   * Format date for consistent comparison
-   */
-  private formatDateForComparison(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
-
-  /**
-   * Add custom blocked dates (for manual blocking)
-   */
-  addBlockedDates(dates: Date[]): void {
-    this.calendar.blockedDates.push(...dates);
-  }
-
-  /**
-   * Remove blocked dates
-   */
-  removeBlockedDates(dates: Date[]): void {
-    const datesToRemove = dates.map(date => this.formatDateForComparison(date));
-    this.calendar.blockedDates = this.calendar.blockedDates.filter(
-      blockedDate => !datesToRemove.includes(this.formatDateForComparison(blockedDate))
-    );
   }
 
   /**

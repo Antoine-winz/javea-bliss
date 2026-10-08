@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { isIP } from 'node:net';
 import { db } from './db';
 import { visitorStats, visitorDetails } from '@shared/schema';
 import { eq, and, gte, lte, desc, sql } from 'drizzle-orm';
@@ -28,21 +29,28 @@ export interface VisitorStatsData {
 /**
  * Get country information from IP address
  */
+const geoCache = new Map<string, { expires: number; location: { city: string; country: string; countryCode: string } }>();
+
 export async function getLocationFromIP(ip: string): Promise<{city: string, country: string, countryCode: string}> {
-  if (!ip || ip === "unknown" || ip.includes("127.0.0.1") || ip === "::1") {
+  if (!isIP(ip) || ip === "unknown" || ip.includes("127.0.0.1") || ip === "::1") {
     return { city: "Unknown", country: "Unknown", countryCode: "XX" };
   }
+  const cached = geoCache.get(ip);
+  if (cached && cached.expires > Date.now()) return cached.location;
   try {
     // Use ipapi.co for IP geolocation (free tier: 1000 requests/day)
-    const response = await fetch(`https://ipapi.co/${ip}/json/`);
+    const response = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/json/`, { signal: AbortSignal.timeout(3000) });
     if (!response.ok) throw new Error('IP lookup failed');
     
     const data = await response.json();
-    return {
+    const location = {
       city: data.city || 'Unknown',
       country: data.country_name || 'Unknown',
       countryCode: data.country_code || 'XX'
     };
+    if (geoCache.size >= 1000) geoCache.delete(geoCache.keys().next().value!);
+    geoCache.set(ip, { expires: Date.now() + 60 * 60 * 1000, location });
+    return location;
   } catch (error) {
     return {
       city: 'Unknown',
@@ -67,11 +75,19 @@ function extractDomain(url: string): string {
 /**
  * Middleware to track page visits
  */
-export const trackVisit = async (req: Request, res: Response, next: NextFunction) => {
+export const trackVisit = (req: Request, res: Response, next: NextFunction) => {
+  // Analytics work never holds up the HTML response or counts unsuccessful requests.
+  res.once('finish', () => {
+    if (req.method === 'GET' && res.statusCode === 200) void recordVisit(req);
+  });
+  next();
+};
+
+const recordVisit = async (req: Request) => {
   try {
     // Only track visits to the main pages, not API calls or assets
     if (req.path.startsWith('/api/') || req.path.includes('.')) {
-      return next();
+      return;
     }
 
     const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
@@ -100,8 +116,8 @@ export const trackVisit = async (req: Request, res: Response, next: NextFunction
                                /[a-f0-9\-]+\.replit\.co/.test(host);
     
     // Skip tracking for development and internal traffic
-    if (isReplitDevelopment) {
-      return next();
+    if (process.env.NODE_ENV !== 'production' || isReplitDevelopment || ip === '::1' || req.path === '/admin' || req.path === '/healthz') {
+      return;
     }
     
     // Get country information
@@ -140,7 +156,7 @@ export const trackVisit = async (req: Request, res: Response, next: NextFunction
       referrer,
       referrerDomain,
       userAgent,
-      ip: ip.substring(0, 15), // Store partial IP for privacy
+      ip: isIP(ip) === 4 ? ip.split('.').slice(0, 3).join('.') + '.0' : isIP(ip) === 6 ? ip.split(':').slice(0, 3).join(':') + '::' : null,
     });
     
   } catch (error) {
@@ -148,7 +164,6 @@ export const trackVisit = async (req: Request, res: Response, next: NextFunction
     console.error('Visitor tracking error:', error);
   }
   
-  next();
 };
 
 /**

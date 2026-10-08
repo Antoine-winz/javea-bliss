@@ -156,7 +156,7 @@ const getLanguageSuggestions = (language: string) => {
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [icalUrl, setIcalUrl] = useState("https://www.airbnb.com/calendar/ical/1437724898890828336.ics?s=fa161fdacdd13bf8dd30a6eaf26e3c98");
+  const [icalUrl, setIcalUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [syncStatus, setSyncStatus] = useState<SyncStatus | null>(null);
   const [blockStart, setBlockStart] = useState("");
@@ -239,6 +239,7 @@ const Admin = () => {
   // Manual date blocks query and mutations
   const { data: manualBlocksData, refetch: refetchManualBlocks } = useQuery({
     queryKey: ['/api/calendar/manual-blocks'],
+    enabled: isAuthenticated,
     queryFn: async () => {
       const response = await fetch('/api/calendar/manual-blocks');
       if (!response.ok) throw new Error('Failed to fetch manual blocks');
@@ -424,6 +425,7 @@ const Admin = () => {
       if (response.ok) {
         const data = await response.json();
         setSyncStatus(data);
+        if (data.syncUrl) setIcalUrl(data.syncUrl);
       }
     } catch (error) {
       // Silent fallback on sync status fetch error
@@ -450,6 +452,7 @@ const Admin = () => {
   const handleLogout = async () => {
     await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' }).catch(() => undefined);
     setIsAuthenticated(false);
+    queryClient.clear();
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out",
@@ -1226,14 +1229,18 @@ const Admin = () => {
                           return;
                         }
 
-                        const rateNum = parseInt(rate);
-                        if (isNaN(rateNum) || rateNum < 1) {
+                        const rateNum = Number(rate);
+                        if (!Number.isInteger(rateNum) || rateNum < 1 || rateNum > 10000) {
                           toast({ title: "Please enter a valid rate", variant: "destructive" });
                           return;
                         }
 
                         const start = new Date(startDate);
                         const end = new Date(endDate);
+                        if (end < start || (end.getTime() - start.getTime()) / 86400000 > 730) {
+                          toast({ title: "Choose a valid range of at most 730 days", variant: "destructive" });
+                          return;
+                        }
                         const rates = [];
                         
                         const current = new Date(start);
@@ -1242,13 +1249,13 @@ const Admin = () => {
                             date: current.toISOString().split('T')[0],
                             rate: rateNum
                           });
-                          current.setDate(current.getDate() + 1);
+                          current.setUTCDate(current.getUTCDate() + 1);
                         }
 
                         apiRequest('/api/daily-rates/bulk', 'POST', { rates })
                           .then(() => {
                             toast({ title: `Set rates for ${rates.length} dates successfully` });
-                            queryClient.invalidateQueries({ queryKey: ['pricing'] });
+                            queryClient.invalidateQueries({ queryKey: ['/api/pricing'] });
                             (document.getElementById('pricing-start-date') as HTMLInputElement).value = '';
                             (document.getElementById('pricing-end-date') as HTMLInputElement).value = '';
                             (document.getElementById('pricing-rate') as HTMLInputElement).value = '';

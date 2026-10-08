@@ -5,6 +5,7 @@ interface WeatherData {
   temperature: number;
   description: string;
   isDay: boolean;
+  code: number;
 }
 
 export default function WeatherDisplay() {
@@ -22,7 +23,7 @@ export default function WeatherDisplay() {
         // Open-Meteo API - free, no API key required
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,is_day&timezone=Europe/Madrid`;
         
-        const response = await fetch(url);
+        const response = await fetch(url, { signal: AbortSignal.timeout(8000) });
         if (!response.ok) throw new Error('Weather fetch failed');
         
         const data = await response.json();
@@ -57,8 +58,10 @@ export default function WeatherDisplay() {
         setWeather({
           temperature,
           description,
-          isDay
+          isDay,
+          code: weatherCode
         });
+        setError(false);
         setLoading(false);
       } catch (err) {
         setError(true);
@@ -101,29 +104,15 @@ export default function WeatherDisplay() {
     return (
       <div className="flex items-center gap-1 text-sm text-gray-500">
         <Cloud className="w-4 h-4" />
-        <span>29°C</span>
+        <span>—</span>
       </div>
     );
   }
 
-  // Map weather description to weather code for icon selection
-  const getWeatherCode = (description: string): number => {
-    const desc = description.toLowerCase();
-    if (desc.includes('clear sky')) return 0;
-    if (desc.includes('mainly clear')) return 1;
-    if (desc.includes('partly cloudy')) return 2;
-    if (desc.includes('overcast')) return 3;
-    if (desc.includes('fog')) return 45;
-    if (desc.includes('drizzle')) return 51;
-    if (desc.includes('rain')) return 61;
-    if (desc.includes('thunderstorm')) return 95;
-    return 0; // Default to clear sky
-  };
-
   return (
     <div className="flex items-center gap-1 text-sm font-medium">
       <span className="text-lg">
-        {getWeatherIcon(getWeatherCode(weather.description), weather.isDay)}
+        {getWeatherIcon(weather.code, weather.isDay)}
       </span>
       <span className="text-gray-800">
         {weather.temperature}°C

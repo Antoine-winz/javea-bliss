@@ -429,7 +429,7 @@ const TestimonialsSection = () => {
   // No loading or empty branch: the Airbnb set is static, so the section always
   // has content, and database reviews slot in when the API responds.
   return (
-    <section id="reviews" className="section bg-sand">
+    <section data-section="reviews" className="section bg-sand">
       <div className="shell">
         <div className="mb-14 md:mb-16" data-reveal>
           <p className="eyebrow mb-5">{t('testimonials.eyebrow')}</p>

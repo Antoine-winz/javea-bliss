@@ -1,11 +1,20 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { getRouteSEO, injectSEOIntoHTML } from "./shared/seo";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 export default defineConfig({
   plugins: [
     react(),
+    {
+      name: "route-seo-preview",
+      apply: "serve",
+      transformIndexHtml(html, context) {
+        const seo = getRouteSEO(context.originalUrl || context.path);
+        return seo ? injectSEOIntoHTML(html, seo) : html;
+      },
+    },
     runtimeErrorOverlay(),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined

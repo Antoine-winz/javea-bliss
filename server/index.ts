@@ -1,10 +1,11 @@
 import express, { type Request, Response, NextFunction } from "express";
 import path from "path";
-import fs from "fs";
+import { sameOriginWrites } from "./security";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+app.disable("x-powered-by");
 app.set("trust proxy", 1);
 
 // Health check endpoint - MUST be before any middleware that could redirect or block
@@ -31,7 +32,7 @@ app.get("/", (_req, res, next) => {
 
 // Serve static files from client/public (flyer.html, robots.txt, etc.)
 const publicPath = path.resolve(process.cwd(), "client", "public");
-app.use(express.static(publicPath));
+
 
 // Security headers middleware
 app.use((req, res, next) => {
@@ -55,7 +56,7 @@ app.use((req, res, next) => {
   // Content Security Policy
   res.setHeader('Content-Security-Policy', 
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://replit.com https://cdn.emailjs.com https://www.googletagmanager.com; " +
+    "script-src 'self' 'unsafe-inline' " + (process.env.NODE_ENV === "production" ? "" : "'unsafe-eval' ") + "https://replit.com https://cdn.emailjs.com https://www.googletagmanager.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "img-src 'self' data: https:; " +
     "font-src 'self' data: https://fonts.gstatic.com; " +
@@ -128,27 +129,19 @@ app.get('/', (req, res, next) => {
   res.redirect(302, `/${lang}/${query}`);
 });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.static(publicPath, { index: false }));
+app.use(express.json({ limit: "32kb" }));
+app.use(express.urlencoded({ extended: false, limit: "32kb" }));
+
+app.use("/api", sameOriginWrites);
 
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
-
   res.on("finish", () => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
 
       if (logLine.length > 80) {
         logLine = logLine.slice(0, 79) + "…";
@@ -167,7 +160,7 @@ app.use((req, res, next) => {
 
     app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
       const status = err.status || err.statusCode || 500;
-      const message = err.message || "Internal Server Error";
+      const message = status >= 500 ? "Internal Server Error" : err.message || "Invalid request";
       console.error(`[Express Error] ${status}: ${message}`);
       if (!res.headersSent) {
         res.status(status).json({ message });

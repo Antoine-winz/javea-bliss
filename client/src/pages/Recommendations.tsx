@@ -1,6 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
-import RecommendationsSEO from "@/components/RecommendationsSEO";
 import { Link } from "wouter";
 
 const Recommendations = () => {
@@ -9,18 +8,21 @@ const Recommendations = () => {
   const translations = {
     en: {
       title: "Javea Insider Guide: Best Restaurants & Beach Clubs",
-      subtitle: "Stay just steps away from Javea's most famous venues. No taxi needed.",
+      subtitle: "Restaurants around Arenal Beach, plus La Siesta farther along the coast. Walking times are approximate.",
       walkMin: "min walk from Javea Bliss",
+      farther: "Farther along the coast",
       stayNearby: "Stay Nearby",
       checkAvailability: "Check Apartment Availability",
       bookStay: "Book Your Stay",
-      stay3Min: "Stay 3 Minutes Away",
       insiderTip: "Insider Tip",
       venues: {
+        lafontana: { name: "La Fontana", desc: "Traditional Mediterranean cooking on the Arenal promenade: paella, fideuà and dishes for the whole family." },
+        posidonia: { name: "Posidonia", desc: "Paella, fideuà and tapas overlooking Arenal Beach. A good option for a leisurely Mediterranean lunch." },
+        ammos: { name: "Ammos", desc: "A casual beachfront stop for pizza, international dishes and a relaxed meal with sea views." },
         labambula: {
           name: "La Bambula",
           desc: "Famous for sunset cocktails and live music. The ultimate \"boho-chic\" spot in Javea.",
-          tip: "Book a table on the terrace for 8 PM to catch the sunset. Then walk home to Javea Bliss in minutes."
+          tip: "Book ahead during busy periods and check the current live music programme before you go."
         },
         chabada: {
           name: "Chabada",
@@ -38,18 +40,21 @@ const Recommendations = () => {
     },
     nl: {
       title: "Javea Insider Gids: Beste Restaurants & Beachclubs",
-      subtitle: "Verblijf op loopafstand van Javea's beroemdste locaties. Geen taxi nodig.",
+      subtitle: "Restaurants rond het Arenal-strand en La Siesta verder langs de kust. Looptijden zijn schattingen.",
       walkMin: "min lopen vanaf Javea Bliss",
+      farther: "Verder langs de kust",
       stayNearby: "Verblijf Dichtbij",
       checkAvailability: "Check Beschikbaarheid",
       bookStay: "Boek Je Verblijf",
-      stay3Min: "Verblijf 3 Minuten Verderop",
       insiderTip: "Insider Tip",
       venues: {
+        lafontana: { name: "La Fontana", desc: "Traditionele mediterrane keuken aan de Arenal-boulevard: paella, fideuà en gerechten voor het hele gezin." },
+        posidonia: { name: "Posidonia", desc: "Paella, fideuà en tapas met uitzicht op het Arenal-strand. Ideaal voor een ontspannen mediterrane lunch." },
+        ammos: { name: "Ammos", desc: "Informeel eten aan het strand met pizza, internationale gerechten en zeezicht." },
         labambula: {
           name: "La Bambula",
           desc: "Beroemd om zonsondergang cocktails en live muziek. Dé ultieme \"boho-chic\" plek in Javea.",
-          tip: "Reserveer een tafel op het terras om 20:00 voor de zonsondergang. Loop daarna in minuten terug naar Javea Bliss."
+          tip: "Reserveer in drukke periodes en bekijk het actuele programma met live muziek voordat je gaat."
         },
         chabada: {
           name: "Chabada",
@@ -67,18 +72,21 @@ const Recommendations = () => {
     },
     fr: {
       title: "Guide Insider Javea: Meilleurs Restaurants & Beach Clubs",
-      subtitle: "Séjournez à quelques pas des lieux les plus célèbres de Javea. Pas besoin de taxi.",
+      subtitle: "Restaurants autour de la plage de l’Arenal et La Siesta plus loin sur la côte. Les temps de marche sont approximatifs.",
       walkMin: "min à pied de Javea Bliss",
+      farther: "Plus loin sur la côte",
       stayNearby: "Séjourner à Proximité",
       checkAvailability: "Vérifier Disponibilité",
       bookStay: "Réserver Votre Séjour",
-      stay3Min: "Séjourner à 3 Minutes",
       insiderTip: "Conseil d'Initié",
       venues: {
+        lafontana: { name: "La Fontana", desc: "Cuisine méditerranéenne traditionnelle sur la promenade de l’Arenal : paella, fideuà et plats pour toute la famille." },
+        posidonia: { name: "Posidonia", desc: "Paella, fideuà et tapas face à la plage de l’Arenal. Une belle adresse pour un déjeuner méditerranéen sans se presser." },
+        ammos: { name: "Ammos", desc: "Une adresse décontractée en bord de plage pour des pizzas et des plats internationaux avec vue sur la mer." },
         labambula: {
           name: "La Bambula",
           desc: "Célèbre pour ses cocktails au coucher du soleil et sa musique live. L'endroit \"boho-chic\" ultime à Javea.",
-          tip: "Réservez une table en terrasse pour 20h et admirez le coucher du soleil. Puis rentrez à pied à Javea Bliss en quelques minutes."
+          tip: "Réservez en période d’affluence et consultez le programme musical actuel avant de partir."
         },
         chabada: {
           name: "Chabada",
@@ -96,18 +104,21 @@ const Recommendations = () => {
     },
     de: {
       title: "Javea Insider Guide: Beste Restaurants & Beach Clubs",
-      subtitle: "Wohnen Sie nur wenige Schritte von Javeas berühmtesten Locations entfernt. Kein Taxi nötig.",
+      subtitle: "Restaurants rund um den Arenal-Strand und La Siesta weiter entlang der Küste. Gehzeiten sind ungefähre Angaben.",
       walkMin: "Min. zu Fuß von Javea Bliss",
+      farther: "Weiter entlang der Küste",
       stayNearby: "In der Nähe Übernachten",
       checkAvailability: "Verfügbarkeit Prüfen",
       bookStay: "Aufenthalt Buchen",
-      stay3Min: "3 Minuten Entfernt Übernachten",
       insiderTip: "Insider-Tipp",
       venues: {
+        lafontana: { name: "La Fontana", desc: "Traditionelle mediterrane Küche an der Arenal-Promenade: Paella, Fideuà und Gerichte für die ganze Familie." },
+        posidonia: { name: "Posidonia", desc: "Paella, Fideuà und Tapas mit Blick auf den Arenal-Strand. Schön für ein entspanntes mediterranes Mittagessen." },
+        ammos: { name: "Ammos", desc: "Ein entspanntes Lokal am Strand mit Pizza, internationalen Gerichten und Meerblick." },
         labambula: {
           name: "La Bambula",
           desc: "Berühmt für Sonnenuntergang-Cocktails und Live-Musik. Der ultimative \"Boho-Chic\" Spot in Javea.",
-          tip: "Reservieren Sie einen Tisch auf der Terrasse für 20 Uhr zum Sonnenuntergang. Dann laufen Sie in Minuten zurück zu Javea Bliss."
+          tip: "Reservieren Sie in der Hochsaison und prüfen Sie vorher das aktuelle Musikprogramm."
         },
         chabada: {
           name: "Chabada",
@@ -125,18 +136,21 @@ const Recommendations = () => {
     },
     es: {
       title: "Guía Insider de Javea: Mejores Restaurantes y Beach Clubs",
-      subtitle: "Alójate a solo unos pasos de los locales más famosos de Javea. Sin necesidad de taxi.",
+      subtitle: "Restaurantes alrededor de la playa del Arenal y La Siesta más lejos por la costa. Los tiempos a pie son aproximados.",
       walkMin: "min a pie desde Javea Bliss",
+      farther: "Más lejos por la costa",
       stayNearby: "Alójate Cerca",
       checkAvailability: "Ver Disponibilidad",
       bookStay: "Reserva Tu Estancia",
-      stay3Min: "Alójate a 3 Minutos",
       insiderTip: "Consejo de Experto",
       venues: {
+        lafontana: { name: "La Fontana", desc: "Cocina mediterránea tradicional en el paseo del Arenal: paella, fideuà y platos para toda la familia." },
+        posidonia: { name: "Posidonia", desc: "Paella, fideuà y tapas frente a la playa del Arenal. Una buena opción para comer sin prisas junto al Mediterráneo." },
+        ammos: { name: "Ammos", desc: "Un local informal frente al mar para disfrutar de pizzas, platos internacionales y vistas a la playa." },
         labambula: {
           name: "La Bambula",
           desc: "Famoso por sus cócteles al atardecer y música en vivo. El lugar \"boho-chic\" definitivo en Javea.",
-          tip: "Reserva mesa en la terraza a las 20:00 para disfrutar del atardecer. Luego camina de vuelta a Javea Bliss en minutos."
+          tip: "Reserva en temporada alta y consulta la programación de música en vivo antes de ir."
         },
         chabada: {
           name: "Chabada",
@@ -154,18 +168,21 @@ const Recommendations = () => {
     },
     it: {
       title: "Guida Insider Javea: Migliori Ristoranti e Beach Club",
-      subtitle: "Soggiorna a pochi passi dai locali più famosi di Javea. Nessun taxi necessario.",
+      subtitle: "Ristoranti intorno alla spiaggia dell’Arenal e La Siesta più avanti lungo la costa. I tempi a piedi sono indicativi.",
       walkMin: "min a piedi da Javea Bliss",
+      farther: "Più avanti lungo la costa",
       stayNearby: "Soggiorna Vicino",
       checkAvailability: "Verifica Disponibilità",
       bookStay: "Prenota il Tuo Soggiorno",
-      stay3Min: "Soggiorna a 3 Minuti",
       insiderTip: "Consiglio dell'Esperto",
       venues: {
+        lafontana: { name: "La Fontana", desc: "Cucina mediterranea tradizionale sul lungomare dell’Arenal: paella, fideuà e piatti per tutta la famiglia." },
+        posidonia: { name: "Posidonia", desc: "Paella, fideuà e tapas con vista sulla spiaggia dell’Arenal. Ideale per un pranzo mediterraneo senza fretta." },
+        ammos: { name: "Ammos", desc: "Un locale informale sul mare per pizza, piatti internazionali e un pasto rilassato con vista sulla spiaggia." },
         labambula: {
           name: "La Bambula",
           desc: "Famoso per cocktail al tramonto e musica dal vivo. Il posto \"boho-chic\" definitivo a Javea.",
-          tip: "Prenota un tavolo in terrazza per le 20:00 per ammirare il tramonto. Poi torna a Javea Bliss a piedi in pochi minuti."
+          tip: "Prenota nei periodi affollati e controlla il programma musicale aggiornato prima di andare."
         },
         chabada: {
           name: "Chabada",
@@ -186,15 +203,17 @@ const Recommendations = () => {
   const t = translations[language as keyof typeof translations] || translations.en;
 
   const venues = [
+    { key: 'lafontana', minutes: 3, venue: t.venues.lafontana, cta: t.stayNearby, website: 'https://www.restaurantelafontana.es/' },
+    { key: 'posidonia', minutes: 5, venue: t.venues.posidonia, cta: t.stayNearby, website: 'https://www.restauranteposidonia.com/' },
+    { key: 'ammos', minutes: 7, venue: t.venues.ammos, cta: t.stayNearby, website: 'https://ammos.es/' },
     { key: 'labambula', minutes: 6, venue: t.venues.labambula, cta: t.stayNearby },
     { key: 'chabada', minutes: 5, venue: t.venues.chabada, cta: t.checkAvailability },
-    { key: 'lasiesta', minutes: 8, venue: t.venues.lasiesta, cta: t.bookStay },
-    { key: 'bohemians', minutes: 3, venue: t.venues.bohemians, cta: t.stay3Min },
+    { key: 'lasiesta', minutes: null, venue: t.venues.lasiesta, cta: t.bookStay },
+    { key: 'bohemians', minutes: 6, venue: t.venues.bohemians, cta: t.stayNearby },
   ];
 
   return (
     <div className="min-h-screen bg-bone">
-      <RecommendationsSEO />
       <Navigation />
 
       <main className="section pt-32 md:pt-40">
@@ -214,16 +233,16 @@ const Recommendations = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-x-16">
-            {venues.map(({ key, minutes, venue, cta }) => (
+            {venues.map(({ key, minutes, venue, cta, website }) => (
               <article
                 key={key}
                 className="border-t border-ink/12 py-10"
                 data-testid={`venue-${key}`}
               >
-                <div className="flex items-baseline justify-between gap-6 mb-4">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 mb-4">
                   <h2 className="font-display text-3xl text-ink">{venue.name}</h2>
                   <span className="font-sans text-[0.75rem] tracking-[0.12em] uppercase text-brass whitespace-nowrap">
-                    {minutes} {t.walkMin}
+                    {minutes === null ? t.farther : `≈ ${minutes} ${t.walkMin}`}
                   </span>
                 </div>
 
@@ -234,6 +253,8 @@ const Recommendations = () => {
                     {venue.tip}
                   </p>
                 )}
+
+                {website && <a href={website} target="_blank" rel="noopener noreferrer" className="link-underline mr-6">{venue.name} ↗</a>}
 
                 <Link
                   href={getLocalizedPath('/')}
