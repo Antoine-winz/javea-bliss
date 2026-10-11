@@ -91,7 +91,7 @@ const Navigation = () => {
                 {t(item.key)}
               </button>
             ))}
-            <a href={salePath} className={`nav-link font-sans text-[0.8125rem] tracking-[0.12em] uppercase transition-colors duration-300 ${solid ? 'text-ink-soft' : 'text-bone/90'}`}>
+            <a href={salePath} className="nav-link font-sans text-[0.8125rem] tracking-[0.12em] uppercase font-bold text-red-700 hover:text-red-800 transition-colors duration-300">
               {saleLabel}
             </a>
 
@@ -151,7 +151,7 @@ const Navigation = () => {
                 {t(item.key)}
               </button>
             ))}
-            <a href={salePath} className="block w-full text-left py-4 font-sans text-[0.8125rem] tracking-[0.12em] uppercase text-ink-soft border-b border-ink/10 hover:text-brass transition-colors" role="menuitem">
+            <a href={salePath} className="block w-full text-left py-4 font-sans text-[0.8125rem] tracking-[0.12em] uppercase font-bold text-red-700 border-b border-ink/10 hover:text-red-800 transition-colors" role="menuitem">
               {saleLabel}
             </a>
             <button
