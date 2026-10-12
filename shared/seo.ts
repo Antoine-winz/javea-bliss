@@ -1,3 +1,4 @@
+import { saleInitialHTML } from "./sale-html";
 const BASE_URL = 'https://javeabliss.com';
 
 const SUPPORTED_LANGUAGES = ['en', 'nl', 'fr', 'it', 'de', 'es'] as const;
@@ -284,6 +285,7 @@ export function injectSEOIntoHTML(html: string, seo: RouteSEO): string {
   const schema = getPageStructuredData(seo);
   const schemaTag = schema ? `<script type="application/ld+json" data-schema="main">${JSON.stringify(schema).replace(/</g, '\\u003c')}</script>` : '';
   return html
+    .replace('<div id="root"></div>', seo.canonical.endsWith("/for-sale") ? `<div id="root">${saleInitialHTML(seo.lang as Language)}</div>` : '<div id="root"></div>')
     .replace(/<script[^>]*data-schema="main"[^>]*>[\s\S]*?<\/script>/g, '')
     .replace('</head>', `${schemaTag}\n  </head>`)
     .replace(/<meta name="robots"[^>]*>/, `<meta name="robots" content="${seo.noindex ? 'noindex, nofollow' : 'index, follow'}" />`)

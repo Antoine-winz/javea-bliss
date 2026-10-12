@@ -2,19 +2,24 @@ import { Request, Response, NextFunction } from 'express';
 import { isIP } from 'node:net';
 import { db } from './db';
 import { visitorStats, visitorDetails } from '@shared/schema';
-import { eq, and, gte, lte, lt, desc, sql } from 'drizzle-orm';
+import { and, gte, lte, lt, desc, sql } from 'drizzle-orm';
 
 export interface VisitorStatsData {
   recentVisits: Array<{
     id: number;
     visitedAt: Date | null;
     locationEstimatedFromMaskedIp: boolean;
+    fullIp: string | null;
+    pagePath: string | null;
+    language: string | null;
+    userAgent: string | null;
     city: string | null;
     country: string | null;
     countryCode: string | null;
     ip: string | null;
     source: string | null;
   }>;
+  hasMore: boolean;
   totalVisits: number;
   currentWeekVisits: number;
   averageWeeklyVisits: number;
@@ -39,11 +44,16 @@ export interface VisitorStatsData {
 export { getLocationFromIP } from './visitor-location';
 import { getLocationFromIP, enrichHistoricalLocation } from './visitor-location';
 
-// Additive, idempotent migration for existing deployments. Retry after failure.
-let locationSchemaReady: Promise<unknown> | undefined;
-function ensureLocationSchema() {
-  return locationSchemaReady ??= db.execute(sql`ALTER TABLE visitor_details ADD COLUMN IF NOT EXISTS city text`)
-    .catch(error => { locationSchemaReady = undefined; throw error; });
+// Run once before serving traffic, never from an analytics request.
+export async function initializeVisitorTracking() {
+  await db.execute(sql`ALTER TABLE visitor_details ADD COLUMN IF NOT EXISTS city text, ADD COLUMN IF NOT EXISTS full_ip text, ADD COLUMN IF NOT EXISTS page_path text, ADD COLUMN IF NOT EXISTS language text`);
+  await db.execute(sql`WITH totals AS (
+    SELECT visit_date, MIN(id) AS keep_id, SUM(visit_count) AS total FROM visitor_stats GROUP BY visit_date HAVING COUNT(*) > 1
+  ), merged AS (
+    UPDATE visitor_stats SET visit_count = totals.total FROM totals WHERE visitor_stats.id = totals.keep_id RETURNING visitor_stats.id
+  ) DELETE FROM visitor_stats USING totals WHERE visitor_stats.visit_date = totals.visit_date AND visitor_stats.id <> totals.keep_id`);
+  await db.execute(sql`CREATE UNIQUE INDEX IF NOT EXISTS visitor_stats_date_unique ON visitor_stats(visit_date)`);
+  await db.execute(sql`CREATE INDEX IF NOT EXISTS visitor_details_recent_idx ON visitor_details(visited_at DESC, id DESC)`);
 }
 
 /**
@@ -69,10 +79,10 @@ export const trackVisit = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-const recordVisit = async (req: Request) => {
+export const recordVisit = async (req: Request, navigationPath?: string) => {
   try {
     // Only track visits to the main pages, not API calls or assets
-    const pagePath = req.originalUrl.split('?')[0];
+    const pagePath = navigationPath || req.originalUrl.split('?')[0];
     if (pagePath.startsWith('/api/') || pagePath.includes('.')) {
       return;
     }
@@ -103,43 +113,27 @@ const recordVisit = async (req: Request) => {
                                /[a-f0-9\-]+\.replit\.co/.test(host);
     
     // Skip tracking for development and internal traffic
-    if (process.env.NODE_ENV !== 'production' || isReplitDevelopment || ip === '::1' || pagePath === '/admin' || pagePath === '/healthz') {
+    if (process.env.NODE_ENV !== 'production' || isReplitDevelopment || ip === '::1' || pagePath.startsWith('/admin') || pagePath === '/healthz') {
       return;
     }
     
     // Get country information
-    await ensureLocationSchema();
     const { city, country, countryCode } = await getLocationFromIP(ip);
     
     // Extract referrer domain
     const referrerDomain = referrer === 'Direct' ? 'Direct' : extractDomain(referrer);
     
-    // Update daily visitor count
-    const existingRecord = await db
-      .select()
-      .from(visitorStats)
-      .where(eq(visitorStats.visitDate, today))
-      .limit(1);
+    // Atomic upsert prevents duplicate days and lost counts during concurrent visits.
+    await db.execute(sql`INSERT INTO visitor_stats (visit_date, visit_count) VALUES (${today}, 1)
+      ON CONFLICT (visit_date) DO UPDATE SET visit_count = visitor_stats.visit_count + 1, updated_at = NOW()`);
 
-    if (existingRecord.length > 0) {
-      await db
-        .update(visitorStats)
-        .set({
-          visitCount: sql`${visitorStats.visitCount} + 1`,
-          updatedAt: new Date()
-        })
-        .where(eq(visitorStats.visitDate, today));
-    } else {
-      await db.insert(visitorStats).values({
-        visitDate: today,
-        visitCount: 1,
-      });
-    }
-    
     // Store detailed visitor information
     await db.insert(visitorDetails).values({
       visitDate: today,
       city,
+      fullIp: isIP(ip) ? ip : null,
+      pagePath: pagePath.slice(0, 500),
+      language: /^\/(es|en|fr|de|nl|it)(?:\/|$)/.exec(pagePath)?.[1] || null,
       country,
       countryCode,
       referrer,
@@ -158,9 +152,8 @@ const recordVisit = async (req: Request) => {
 /**
  * Get visitor statistics for admin dashboard
  */
-export const getVisitorStats = async (): Promise<VisitorStatsData> => {
+export const getVisitorStats = async (search = "", page = 0): Promise<VisitorStatsData> => {
   try {
-    await ensureLocationSchema();
     const today = new Date();
     const currentWeekStart = new Date(today);
     currentWeekStart.setUTCDate(today.getUTCDate() - today.getUTCDay()); // Start of current week (Sunday)
@@ -276,20 +269,29 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
       percentage: Math.round((Number(row.visits) / totalDetailVisits) * 100)
     }));
 
+    const normalizedSearch = search.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/xabia/g, 'javea').trim();
+    const searchPattern = '%' + normalizedSearch.replace(/[\\%_]/g, '\\$&') + '%';
+    const locationFilter = normalizedSearch ? sql`replace(translate(lower(coalesce(${visitorDetails.city}, '') || ' ' || coalesce(${visitorDetails.country}, '') || ' ' || coalesce(${visitorDetails.countryCode}, '')), 'àáâäãåèéêëìíîïòóôöõùúûüçñ', 'aaaaaaeeeeiiiiooooouuuucn'), 'xabia', 'javea') LIKE ${searchPattern}` : undefined;
     const recentVisits = await db.select({
       id: visitorDetails.id,
       visitedAt: visitorDetails.visitedAt,
       city: visitorDetails.city,
+      fullIp: visitorDetails.fullIp,
+      pagePath: visitorDetails.pagePath,
+      language: visitorDetails.language,
+      userAgent: visitorDetails.userAgent,
       country: visitorDetails.country,
       countryCode: visitorDetails.countryCode,
       ip: visitorDetails.ip,
       source: visitorDetails.referrerDomain,
     }).from(visitorDetails)
+      .where(locationFilter)
       .orderBy(desc(visitorDetails.visitedAt), desc(visitorDetails.id))
-      .limit(100);
+      .limit(101).offset(page * 100);
 
     return {
-      recentVisits: await Promise.all(recentVisits.map(enrichHistoricalLocation)),
+      recentVisits: await Promise.all(recentVisits.slice(0, 100).map(enrichHistoricalLocation)),
+      hasMore: recentVisits.length > 100,
       totalVisits,
       currentWeekVisits,
       averageWeeklyVisits,

@@ -20,6 +20,9 @@ export default function IpBlockManagement() {
   }
   useEffect(() => {
     load().catch(err => setError(err.message)).finally(() => setLoading(false));
+    const refresh = () => { void load().catch(err => setError(err.message)); };
+    window.addEventListener('ip-blocks-changed', refresh);
+    return () => window.removeEventListener('ip-blocks-changed', refresh);
   }, []);
 
   async function change(method: 'POST' | 'DELETE', address: string) {
@@ -35,6 +38,7 @@ export default function IpBlockManagement() {
       }
       if (method === 'POST') setIp('');
       await load();
+      window.dispatchEvent(new Event('ip-blocks-changed'));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur de connexion.');
     } finally { setBusy(false); }

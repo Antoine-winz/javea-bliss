@@ -5,7 +5,7 @@ import { storage } from "./storage";
 import { bookingInquirySchema, insertPromotionalOfferSchema, insertGuestReviewSchema, insertDailyRateSchema } from "@shared/schema";
 import { getMinimumStayNights, getStayLengthNights, isValidBookingDate } from "@shared/booking-rules";
 import { calendarService } from "./calendar";
-import { trackVisit, getVisitorStats } from "./visitor-tracking";
+import { trackVisit, getVisitorStats, recordVisit } from "./visitor-tracking";
 import { getRatesForRange } from "./pricing";
 import { adminMiddleware, registerSalesRoutes } from "./sales-routes";
 
@@ -65,11 +65,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Add visitor tracking middleware
   app.use(trackVisit);
+  const navigationLimits = new Map<string, { count: number; until: number }>();
+  app.post('/api/visitor-navigation', (req, res) => {
+    const path = req.body?.path;
+    if (typeof path !== 'string' || path.length > 500 || !/^\/(es|en|fr|de|nl|it)(?:\/[a-z0-9-]*)*\/?$/.test(path)) {
+      return res.status(400).json({ message: 'Invalid page path' });
+    }
+    const key = req.ip || 'unknown';
+    const now = Date.now();
+    for (const [ip, entry] of navigationLimits) if (entry.until <= now) navigationLimits.delete(ip);
+    const entry = navigationLimits.get(key) || { count: 0, until: now + 60_000 };
+    if (entry.count >= 30 || (!navigationLimits.has(key) && navigationLimits.size >= 5000)) return res.sendStatus(429);
+    entry.count++;
+    navigationLimits.set(key, entry);
+    void recordVisit(req, path);
+    res.sendStatus(202);
+  });
 
   // Visitor statistics endpoint
-  app.get("/api/visitor-stats", adminMiddleware, async (_req, res) => {
+  app.get("/api/visitor-stats", adminMiddleware, async (req, res) => {
     try {
-      const stats = await getVisitorStats();
+      const search = typeof req.query.search === 'string' ? req.query.search.slice(0, 100) : '';
+      const page = Math.min(10000, Math.max(0, Number.parseInt(String(req.query.page || '0'), 10) || 0));
+      const stats = await getVisitorStats(search, page);
       res.json(stats);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch visitor stats" });

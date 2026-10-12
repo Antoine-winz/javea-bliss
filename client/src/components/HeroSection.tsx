@@ -1,8 +1,9 @@
+import { saleContent } from "@shared/sale-content";
 import { useLanguage } from "../contexts/LanguageContext";
 import heroImage from "@assets/Xabia_playa_la_Grava_7H9A3912_20171206.jpg";
 
 const HeroSection = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -58,6 +59,7 @@ const HeroSection = () => {
             className="flex flex-wrap items-center gap-4 hero-rise"
             style={{ '--rise-delay': '0.45s' } as React.CSSProperties}
           >
+            <a href={`/${language}/for-sale`} className="btn-on-dark">{saleContent[language].sale}</a>
             <button onClick={() => scrollToSection("booking")} className="btn-on-dark">
               {t('hero.bookButton')}
             </button>

@@ -22,12 +22,17 @@ interface VisitorStatsData {
     id: number;
     visitedAt: string | null;
     locationEstimatedFromMaskedIp?: boolean;
+    fullIp?: string | null;
+    pagePath?: string | null;
+    language?: string | null;
+    userAgent?: string | null;
     city: string | null;
     country: string | null;
     countryCode: string | null;
     ip: string | null;
     source: string | null;
   }>;
+  hasMore?: boolean;
   totalVisits: number;
   currentWeekVisits: number;
   averageWeeklyVisits: number;
@@ -49,14 +54,16 @@ interface VisitorStatsData {
   }>;
 }
 
-const normalizeLocationSearch = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/xabia/g, 'javea').trim();
 
-type VisitSortKey = 'visitedAt' | 'country' | 'city' | 'ip' | 'source';
+type VisitSortKey = 'visitedAt' | 'country' | 'city' | 'ip' | 'source' | 'pagePath' | 'language' | 'userAgent';
 const visitColumns: Array<{ key: VisitSortKey; label: string }> = [
   { key: 'visitedAt', label: 'Date et heure' },
   { key: 'country', label: 'Pays' },
   { key: 'city', label: 'Ville (estimée)' },
-  { key: 'ip', label: 'IP masquée' },
+  { key: 'ip', label: 'Adresse IP' },
+  { key: 'pagePath', label: 'Page visitée' },
+  { key: 'language', label: 'Langue' },
+  { key: 'userAgent', label: 'Navigateur / appareil' },
   { key: 'source', label: 'Source' },
 ];
 
@@ -65,10 +72,43 @@ export default function VisitorStats() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [sort, setSort] = useState<{ key: VisitSortKey; direction: 'asc' | 'desc' }>({ key: 'visitedAt', direction: 'desc' });
+  const [blockingIp, setBlockingIp] = useState<string | null>(null);
+  const [blockFeedback, setBlockFeedback] = useState('');
+  const [blockedIps, setBlockedIps] = useState<string[]>([]);
+  useEffect(() => {
+    let active = true;
+    const refresh = async () => {
+      try {
+        const response = await fetch('/api/admin/blocked-ips');
+        if (!response.ok) return;
+        const data = await response.json();
+        if (active) setBlockedIps(data.blocks.map((block: { ipAddress: string }) => block.ipAddress));
+      } catch { /* The action endpoint still reports failures to the user. */ }
+    };
+    void refresh();
+    window.addEventListener('ip-blocks-changed', refresh);
+    return () => { active = false; window.removeEventListener('ip-blocks-changed', refresh); };
+  }, []);
+  async function blockVisitor(ip: string) {
+    const removing = blockedIps.includes(ip);
+    setBlockingIp(ip);
+    setBlockFeedback('');
+    try {
+      const response = await fetch('/api/admin/blocked-ips', { method: removing ? 'DELETE' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ip }) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || 'Blocage impossible.');
+      setBlockedIps(previous => removing ? previous.filter(value => value !== ip) : [...previous, ip]);
+      setBlockFeedback(`Adresse ${ip} ${removing ? 'débloquée' : 'bloquée'}.`);
+      window.dispatchEvent(new Event('ip-blocks-changed'));
+    } catch (error) { setBlockFeedback(error instanceof Error ? error.message : 'Blocage impossible.'); }
+    finally { setBlockingIp(null); }
+  }
   const [locationSearch, setLocationSearch] = useState('');
-  const locationQuery = normalizeLocationSearch(locationSearch);
-  const sortedVisits = (stats?.recentVisits || []).filter(visit => !locationQuery || [visit.city, visit.country, visit.countryCode].some(value => value && value !== 'Unknown' && normalizeLocationSearch(value).includes(locationQuery))).slice().sort((a, b) => {
-    const left = a[sort.key], right = b[sort.key];
+  const [page, setPage] = useState(0);
+  const [serverSearch, setServerSearch] = useState('');
+  useEffect(() => { const timer = setTimeout(() => { setServerSearch(locationSearch); setPage(0); }, 300); return () => clearTimeout(timer); }, [locationSearch]);
+  const sortedVisits = (stats?.recentVisits || []).slice().sort((a, b) => {
+    const left = (sort.key === 'ip' ? a.fullIp || a.ip : a[sort.key]) ?? null, right = (sort.key === 'ip' ? b.fullIp || b.ip : b[sort.key]) ?? null;
     const missing = (value: string | null) => !value || value === 'Unknown';
     if (missing(left) || missing(right)) return Number(missing(left)) - Number(missing(right));
     const comparison = sort.key === 'visitedAt'
@@ -79,9 +119,10 @@ export default function VisitorStats() {
   });
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchStats = async () => {
       try {
-        const response = await fetch('/api/visitor-stats');
+        const response = await fetch(`/api/visitor-stats?search=${encodeURIComponent(serverSearch)}&page=${page}`, { signal: controller.signal });
         if (!response.ok) throw new Error('Failed to fetch stats');
         
         const data = await response.json();
@@ -89,6 +130,7 @@ export default function VisitorStats() {
         setError(false);
         setLoading(false);
       } catch (err) {
+        if (controller.signal.aborted) return;
         setError(true);
         setLoading(false);
       }
@@ -98,8 +140,8 @@ export default function VisitorStats() {
     
     // Refresh stats every 5 minutes
     const interval = setInterval(fetchStats, 5 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
+    return () => { clearInterval(interval); controller.abort(); };
+  }, [serverSearch, page]);
 
   if (loading) {
     return (
@@ -253,16 +295,22 @@ export default function VisitorStats() {
         <CardHeader>
           <CardTitle>Origine des dernières visites</CardTitle>
           <CardDescription>
-            Les 100 dernières visites enregistrées. Pays et ville estimés à partir de l’IP, conservée partiellement masquée.
+            Historique des visites, par pages de 100 résultats. Pays et ville estimés à partir de l’IP. Les anciennes adresses restent masquées.
             Une visite ne correspond pas forcément à une personne distincte. Un VPN ou un réseau mobile peut modifier la localisation affichée. Pour les anciennes visites, une estimation sur IP masquée est indiquée lorsqu’elle est disponible. Elle peut localiser un réseau ou un centre de données plutôt que le visiteur.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <a href="#ip-block-management" className="mb-4 inline-block text-sm underline">Bloquer ou débloquer une adresse IP</a>
+          {blockFeedback && <p role="status" className="mb-3 text-sm">{blockFeedback}</p>}
           <div className="mb-4 space-y-2">
             <label htmlFor="visitor-location-search" className="block text-sm font-medium">Rechercher un pays ou une ville</label>
             <Input id="visitor-location-search" type="search" value={locationSearch} onChange={event => setLocationSearch(event.target.value)} placeholder="Ex. Espagne, Dénia, Jávea…" className="max-w-md" />
-            <p className="text-sm text-muted-foreground" aria-live="polite">{sortedVisits.length} visite(s) affichée(s) sur les {stats.recentVisits?.length || 0} dernières visites chargées.</p>
+            <p className="text-sm text-muted-foreground" aria-live="polite">{sortedVisits.length} résultat(s) sur cette page. Recherche dans l’historique enregistré ; tri sur la page affichée.</p>
+          </div>
+          <div className="mb-4 flex items-center gap-4">
+            <button type="button" className="underline disabled:opacity-40" disabled={page === 0} onClick={() => setPage(value => value - 1)}>Précédent</button>
+            <span>Page {page + 1}</span>
+            <button type="button" className="underline disabled:opacity-40" disabled={!stats.hasMore} onClick={() => setPage(value => value + 1)}>Suivant</button>
           </div>
           {stats.recentVisits?.length ? <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -272,13 +320,18 @@ export default function VisitorStats() {
                     {column.label}<span aria-hidden="true">{sort.key === column.key ? (sort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
                   </button>
                 </th>)}
+                <th className="p-3">Action</th>
               </tr></thead>
-              <tbody>{sortedVisits.length === 0 && <tr><td colSpan={visitColumns.length} className="p-4 text-muted-foreground">Aucune visite ne correspond à cette recherche.</td></tr>}{sortedVisits.map(visit => <tr key={visit.id} className="border-b">
+              <tbody>{sortedVisits.length === 0 && <tr><td colSpan={visitColumns.length + 1} className="p-4 text-muted-foreground">Aucune visite ne correspond à cette recherche.</td></tr>}{sortedVisits.map(visit => <tr key={visit.id} className="border-b">
                 <td className="whitespace-nowrap p-3">{visit.visitedAt ? new Date(visit.visitedAt).toLocaleString('fr-FR', { timeZone: 'Europe/Madrid' }) : 'Non disponible'}</td>
                 <td className="p-3">{visit.country && visit.country !== 'Unknown' ? <>{getCountryFlag(visit.countryCode || 'XX')} {visit.country}</> : 'Non identifié'}</td>
                 <td className="p-3">{visit.city && visit.city !== 'Unknown' ? visit.city : 'Non identifiée'}{visit.locationEstimatedFromMaskedIp && <span className="block text-xs text-muted-foreground">Estimation sur IP masquée</span>}</td>
-                <td className="whitespace-nowrap p-3 font-mono">{visit.ip || 'Non disponible'}</td>
+                <td className="whitespace-nowrap p-3 font-mono">{visit.fullIp || visit.ip || 'Non disponible'}{!visit.fullIp && visit.ip && <span className="block font-sans text-xs text-muted-foreground">IP masquée</span>}</td>
+                <td className="p-3">{visit.pagePath || 'Non enregistrée'}</td>
+                <td className="p-3">{visit.language?.toUpperCase() || '—'}</td>
+                <td className="max-w-56 truncate p-3" title={visit.userAgent || ''}>{visit.userAgent || 'Non enregistré'}</td>
                 <td className="break-all p-3">{visit.source === 'Direct' ? 'Accès direct / source non transmise' : visit.source || 'Non identifiée'}</td>
+                <td className="p-3">{visit.fullIp ? <button type="button" className="text-sm underline disabled:opacity-50" disabled={blockingIp !== null} onClick={() => void blockVisitor(visit.fullIp!)}>{blockingIp === visit.fullIp ? 'En cours…' : blockedIps.includes(visit.fullIp) ? 'Bloquée — Débloquer' : 'Bloquer'}</button> : <span className="text-xs text-muted-foreground">IP complète indisponible</span>}</td>
               </tr>)}</tbody>
             </table>
           </div> : <p className="text-sm text-muted-foreground">Aucune visite enregistrée. Le suivi est actif sur le site en production ; les visites de la prévisualisation locale sont exclues.</p>}

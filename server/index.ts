@@ -7,6 +7,8 @@ import { setupVite, serveStatic, log } from "./vite";
 import { createIpBlocker } from "./ip-blocking";
 import { storage } from "./storage";
 
+import { initializeVisitorTracking } from './visitor-tracking';
+
 const app = express();
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
@@ -161,6 +163,7 @@ app.use((req, res, next) => {
 
 (async () => {
   try {
+    await initializeVisitorTracking();
     const server = await registerRoutes(app);
 
     app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
