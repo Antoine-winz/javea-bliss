@@ -48,10 +48,30 @@ interface VisitorStatsData {
   }>;
 }
 
+type VisitSortKey = 'visitedAt' | 'country' | 'city' | 'ip' | 'source';
+const visitColumns: Array<{ key: VisitSortKey; label: string }> = [
+  { key: 'visitedAt', label: 'Date et heure' },
+  { key: 'country', label: 'Pays' },
+  { key: 'city', label: 'Ville (estimée)' },
+  { key: 'ip', label: 'IP masquée' },
+  { key: 'source', label: 'Source' },
+];
+
 export default function VisitorStats() {
   const [stats, setStats] = useState<VisitorStatsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [sort, setSort] = useState<{ key: VisitSortKey; direction: 'asc' | 'desc' }>({ key: 'visitedAt', direction: 'desc' });
+  const sortedVisits = [...(stats?.recentVisits || [])].sort((a, b) => {
+    const left = a[sort.key], right = b[sort.key];
+    const missing = (value: string | null) => !value || value === 'Unknown';
+    if (missing(left) || missing(right)) return Number(missing(left)) - Number(missing(right));
+    const comparison = sort.key === 'visitedAt'
+      ? new Date(left!).getTime() - new Date(right!).getTime()
+      : (left === 'Direct' ? 'Accès direct / source non transmise' : left!).localeCompare(
+          right === 'Direct' ? 'Accès direct / source non transmise' : right!, 'fr', { numeric: true, sensitivity: 'base' });
+    return (sort.direction === 'asc' ? comparison : -comparison) || a.id - b.id;
+  });
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -237,10 +257,13 @@ export default function VisitorStats() {
           {stats.recentVisits?.length ? <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead><tr className="border-b text-left">
-                <th className="p-3">Date et heure</th><th className="p-3">Pays</th>
-                <th className="p-3">Ville (estimée)</th><th className="p-3">IP masquée</th><th className="p-3">Source</th>
+                {visitColumns.map(column => <th key={column.key} className="p-3" aria-sort={sort.key === column.key ? (sort.direction === 'asc' ? 'ascending' : 'descending') : 'none'}>
+                  <button type="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4" onClick={() => setSort(previous => ({ key: column.key, direction: previous.key === column.key && previous.direction === 'asc' ? 'desc' : 'asc' }))}>
+                    {column.label}<span aria-hidden="true">{sort.key === column.key ? (sort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
+                  </button>
+                </th>)}
               </tr></thead>
-              <tbody>{stats.recentVisits.map(visit => <tr key={visit.id} className="border-b">
+              <tbody>{sortedVisits.map(visit => <tr key={visit.id} className="border-b">
                 <td className="whitespace-nowrap p-3">{visit.visitedAt ? new Date(visit.visitedAt).toLocaleString('fr-FR', { timeZone: 'Europe/Madrid' }) : 'Non disponible'}</td>
                 <td className="p-3">{visit.country && visit.country !== 'Unknown' ? <>{getCountryFlag(visit.countryCode || 'XX')} {visit.country}</> : 'Non identifié'}</td>
                 <td className="p-3">{visit.city && visit.city !== 'Unknown' ? visit.city : 'Non identifiée'}{visit.locationEstimatedFromMaskedIp && <span className="block text-xs text-muted-foreground">Estimation sur IP masquée</span>}</td>
