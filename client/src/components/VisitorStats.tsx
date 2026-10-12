@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Users, TrendingUp, Calendar, Activity, Globe, ExternalLink } from 'lucide-react';
@@ -48,6 +49,8 @@ interface VisitorStatsData {
   }>;
 }
 
+const normalizeLocationSearch = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/xabia/g, 'javea').trim();
+
 type VisitSortKey = 'visitedAt' | 'country' | 'city' | 'ip' | 'source';
 const visitColumns: Array<{ key: VisitSortKey; label: string }> = [
   { key: 'visitedAt', label: 'Date et heure' },
@@ -62,7 +65,9 @@ export default function VisitorStats() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [sort, setSort] = useState<{ key: VisitSortKey; direction: 'asc' | 'desc' }>({ key: 'visitedAt', direction: 'desc' });
-  const sortedVisits = [...(stats?.recentVisits || [])].sort((a, b) => {
+  const [locationSearch, setLocationSearch] = useState('');
+  const locationQuery = normalizeLocationSearch(locationSearch);
+  const sortedVisits = (stats?.recentVisits || []).filter(visit => !locationQuery || [visit.city, visit.country, visit.countryCode].some(value => value && value !== 'Unknown' && normalizeLocationSearch(value).includes(locationQuery))).slice().sort((a, b) => {
     const left = a[sort.key], right = b[sort.key];
     const missing = (value: string | null) => !value || value === 'Unknown';
     if (missing(left) || missing(right)) return Number(missing(left)) - Number(missing(right));
@@ -254,6 +259,11 @@ export default function VisitorStats() {
         </CardHeader>
         <CardContent>
           <a href="#ip-block-management" className="mb-4 inline-block text-sm underline">Bloquer ou débloquer une adresse IP</a>
+          <div className="mb-4 space-y-2">
+            <label htmlFor="visitor-location-search" className="block text-sm font-medium">Rechercher un pays ou une ville</label>
+            <Input id="visitor-location-search" type="search" value={locationSearch} onChange={event => setLocationSearch(event.target.value)} placeholder="Ex. Espagne, Dénia, Jávea…" className="max-w-md" />
+            <p className="text-sm text-muted-foreground" aria-live="polite">{sortedVisits.length} visite(s) affichée(s) sur les {stats.recentVisits?.length || 0} dernières visites chargées.</p>
+          </div>
           {stats.recentVisits?.length ? <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead><tr className="border-b text-left">
@@ -263,7 +273,7 @@ export default function VisitorStats() {
                   </button>
                 </th>)}
               </tr></thead>
-              <tbody>{sortedVisits.map(visit => <tr key={visit.id} className="border-b">
+              <tbody>{sortedVisits.length === 0 && <tr><td colSpan={visitColumns.length} className="p-4 text-muted-foreground">Aucune visite ne correspond à cette recherche.</td></tr>}{sortedVisits.map(visit => <tr key={visit.id} className="border-b">
                 <td className="whitespace-nowrap p-3">{visit.visitedAt ? new Date(visit.visitedAt).toLocaleString('fr-FR', { timeZone: 'Europe/Madrid' }) : 'Non disponible'}</td>
                 <td className="p-3">{visit.country && visit.country !== 'Unknown' ? <>{getCountryFlag(visit.countryCode || 'XX')} {visit.country}</> : 'Non identifié'}</td>
                 <td className="p-3">{visit.city && visit.city !== 'Unknown' ? visit.city : 'Non identifiée'}{visit.locationEstimatedFromMaskedIp && <span className="block text-xs text-muted-foreground">Estimation sur IP masquée</span>}</td>
