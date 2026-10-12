@@ -40,7 +40,7 @@ export default function IpBlockManagement() {
     } finally { setBusy(false); }
   }
 
-  return <Card>
+  return <Card id="ip-block-management">
     <CardHeader>
       <CardTitle>Bloquer une adresse IP</CardTitle>
       <CardDescription>

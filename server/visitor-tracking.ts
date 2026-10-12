@@ -8,6 +8,7 @@ export interface VisitorStatsData {
   recentVisits: Array<{
     id: number;
     visitedAt: Date | null;
+    city: string | null;
     country: string | null;
     countryCode: string | null;
     ip: string | null;
@@ -34,38 +35,14 @@ export interface VisitorStatsData {
   }>;
 }
 
-/**
- * Get country information from IP address
- */
-const geoCache = new Map<string, { expires: number; location: { city: string; country: string; countryCode: string } }>();
+export { getLocationFromIP } from './visitor-location';
+import { getLocationFromIP } from './visitor-location';
 
-export async function getLocationFromIP(ip: string): Promise<{city: string, country: string, countryCode: string}> {
-  if (!isIP(ip) || ip === "unknown" || ip.includes("127.0.0.1") || ip === "::1") {
-    return { city: "Unknown", country: "Unknown", countryCode: "XX" };
-  }
-  const cached = geoCache.get(ip);
-  if (cached && cached.expires > Date.now()) return cached.location;
-  try {
-    // Use ipapi.co for IP geolocation (free tier: 1000 requests/day)
-    const response = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/json/`, { signal: AbortSignal.timeout(3000) });
-    if (!response.ok) throw new Error('IP lookup failed');
-    
-    const data = await response.json();
-    const location = {
-      city: data.city || 'Unknown',
-      country: data.country_name || 'Unknown',
-      countryCode: data.country_code || 'XX'
-    };
-    if (geoCache.size >= 1000) geoCache.delete(geoCache.keys().next().value!);
-    geoCache.set(ip, { expires: Date.now() + 60 * 60 * 1000, location });
-    return location;
-  } catch (error) {
-    return {
-      city: 'Unknown',
-      country: 'Unknown',
-      countryCode: 'XX'
-    };
-  }
+// Additive, idempotent migration for existing deployments. Retry after failure.
+let locationSchemaReady: Promise<unknown> | undefined;
+function ensureLocationSchema() {
+  return locationSchemaReady ??= db.execute(sql`ALTER TABLE visitor_details ADD COLUMN IF NOT EXISTS city text`)
+    .catch(error => { locationSchemaReady = undefined; throw error; });
 }
 
 /**
@@ -130,7 +107,8 @@ const recordVisit = async (req: Request) => {
     }
     
     // Get country information
-    const { country, countryCode } = await getLocationFromIP(ip);
+    await ensureLocationSchema();
+    const { city, country, countryCode } = await getLocationFromIP(ip);
     
     // Extract referrer domain
     const referrerDomain = referrer === 'Direct' ? 'Direct' : extractDomain(referrer);
@@ -160,6 +138,7 @@ const recordVisit = async (req: Request) => {
     // Store detailed visitor information
     await db.insert(visitorDetails).values({
       visitDate: today,
+      city,
       country,
       countryCode,
       referrer,
@@ -180,6 +159,7 @@ const recordVisit = async (req: Request) => {
  */
 export const getVisitorStats = async (): Promise<VisitorStatsData> => {
   try {
+    await ensureLocationSchema();
     const today = new Date();
     const currentWeekStart = new Date(today);
     currentWeekStart.setUTCDate(today.getUTCDate() - today.getUTCDay()); // Start of current week (Sunday)
@@ -298,6 +278,7 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
     const recentVisits = await db.select({
       id: visitorDetails.id,
       visitedAt: visitorDetails.visitedAt,
+      city: visitorDetails.city,
       country: visitorDetails.country,
       countryCode: visitorDetails.countryCode,
       ip: visitorDetails.ip,

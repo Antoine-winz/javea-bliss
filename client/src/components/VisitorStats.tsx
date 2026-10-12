@@ -20,6 +20,7 @@ interface VisitorStatsData {
   recentVisits?: Array<{
     id: number;
     visitedAt: string | null;
+    city: string | null;
     country: string | null;
     countryCode: string | null;
     ip: string | null;
@@ -226,20 +227,22 @@ export default function VisitorStats() {
         <CardHeader>
           <CardTitle>Origine des dernières visites</CardTitle>
           <CardDescription>
-            Les 100 dernières visites enregistrées. Pays estimé à partir de l’IP, partiellement masquée.
-            Une visite ne correspond pas forcément à une personne distincte. Un VPN peut modifier le pays affiché.
+            Les 100 dernières visites enregistrées. Pays et ville estimés à partir de l’IP, conservée partiellement masquée.
+            Une visite ne correspond pas forcément à une personne distincte. Un VPN ou un réseau mobile peut modifier la localisation affichée. La ville peut être indisponible, notamment pour les anciennes visites.
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <a href="#ip-block-management" className="mb-4 inline-block text-sm underline">Bloquer ou débloquer une adresse IP</a>
           {stats.recentVisits?.length ? <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead><tr className="border-b text-left">
                 <th className="p-3">Date et heure</th><th className="p-3">Pays</th>
-                <th className="p-3">IP masquée</th><th className="p-3">Source</th>
+                <th className="p-3">Ville (estimée)</th><th className="p-3">IP masquée</th><th className="p-3">Source</th>
               </tr></thead>
               <tbody>{stats.recentVisits.map(visit => <tr key={visit.id} className="border-b">
                 <td className="whitespace-nowrap p-3">{visit.visitedAt ? new Date(visit.visitedAt).toLocaleString('fr-FR', { timeZone: 'Europe/Madrid' }) : 'Non disponible'}</td>
                 <td className="p-3">{visit.country && visit.country !== 'Unknown' ? <>{getCountryFlag(visit.countryCode || 'XX')} {visit.country}</> : 'Non identifié'}</td>
+                <td className="p-3">{visit.city && visit.city !== 'Unknown' ? visit.city : 'Non identifiée'}</td>
                 <td className="whitespace-nowrap p-3 font-mono">{visit.ip || 'Non disponible'}</td>
                 <td className="break-all p-3">{visit.source === 'Direct' ? 'Accès direct / source non transmise' : visit.source || 'Non identifiée'}</td>
               </tr>)}</tbody>
