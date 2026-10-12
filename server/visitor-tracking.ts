@@ -8,6 +8,7 @@ export interface VisitorStatsData {
   recentVisits: Array<{
     id: number;
     visitedAt: Date | null;
+    locationEstimatedFromMaskedIp: boolean;
     city: string | null;
     country: string | null;
     countryCode: string | null;
@@ -36,7 +37,7 @@ export interface VisitorStatsData {
 }
 
 export { getLocationFromIP } from './visitor-location';
-import { getLocationFromIP } from './visitor-location';
+import { getLocationFromIP, enrichHistoricalLocation } from './visitor-location';
 
 // Additive, idempotent migration for existing deployments. Retry after failure.
 let locationSchemaReady: Promise<unknown> | undefined;
@@ -288,7 +289,7 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
       .limit(100);
 
     return {
-      recentVisits,
+      recentVisits: await Promise.all(recentVisits.map(enrichHistoricalLocation)),
       totalVisits,
       currentWeekVisits,
       averageWeeklyVisits,

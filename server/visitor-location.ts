@@ -20,3 +20,24 @@ export async function getLocationFromIP(value: string) {
     return { ...unknown };
   }
 }
+
+/** Enrich historical rows for display without overwriting their recorded location. */
+export async function enrichHistoricalLocation<T extends {
+  ip: string | null; city: string | null; country: string | null; countryCode: string | null;
+}>(visit: T) {
+  const missingCity = !visit.city || visit.city === 'Unknown';
+  const missingCountry = !visit.country || visit.country === 'Unknown';
+  if (!visit.ip || (!missingCity && !missingCountry)) return { ...visit, locationEstimatedFromMaskedIp: false };
+  const estimate = await getLocationFromIP(visit.ip);
+  // Do not combine a recorded country with a contradictory network estimate.
+  const compatible = missingCountry || visit.countryCode === estimate.countryCode;
+  const city = missingCity && compatible && estimate.city !== 'Unknown' ? estimate.city : visit.city;
+  const country = missingCountry && estimate.countryCode !== 'XX' ? estimate.country : visit.country;
+  return {
+    ...visit,
+    city,
+    country,
+    countryCode: missingCountry && estimate.countryCode !== 'XX' ? estimate.countryCode : visit.countryCode,
+    locationEstimatedFromMaskedIp: city !== visit.city || country !== visit.country,
+  };
+}

@@ -20,6 +20,7 @@ interface VisitorStatsData {
   recentVisits?: Array<{
     id: number;
     visitedAt: string | null;
+    locationEstimatedFromMaskedIp?: boolean;
     city: string | null;
     country: string | null;
     countryCode: string | null;
@@ -228,7 +229,7 @@ export default function VisitorStats() {
           <CardTitle>Origine des dernières visites</CardTitle>
           <CardDescription>
             Les 100 dernières visites enregistrées. Pays et ville estimés à partir de l’IP, conservée partiellement masquée.
-            Une visite ne correspond pas forcément à une personne distincte. Un VPN ou un réseau mobile peut modifier la localisation affichée. La ville peut être indisponible, notamment pour les anciennes visites.
+            Une visite ne correspond pas forcément à une personne distincte. Un VPN ou un réseau mobile peut modifier la localisation affichée. Pour les anciennes visites, une estimation sur IP masquée est indiquée lorsqu’elle est disponible. Elle peut localiser un réseau ou un centre de données plutôt que le visiteur.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -242,7 +243,7 @@ export default function VisitorStats() {
               <tbody>{stats.recentVisits.map(visit => <tr key={visit.id} className="border-b">
                 <td className="whitespace-nowrap p-3">{visit.visitedAt ? new Date(visit.visitedAt).toLocaleString('fr-FR', { timeZone: 'Europe/Madrid' }) : 'Non disponible'}</td>
                 <td className="p-3">{visit.country && visit.country !== 'Unknown' ? <>{getCountryFlag(visit.countryCode || 'XX')} {visit.country}</> : 'Non identifié'}</td>
-                <td className="p-3">{visit.city && visit.city !== 'Unknown' ? visit.city : 'Non identifiée'}</td>
+                <td className="p-3">{visit.city && visit.city !== 'Unknown' ? visit.city : 'Non identifiée'}{visit.locationEstimatedFromMaskedIp && <span className="block text-xs text-muted-foreground">Estimation sur IP masquée</span>}</td>
                 <td className="whitespace-nowrap p-3 font-mono">{visit.ip || 'Non disponible'}</td>
                 <td className="break-all p-3">{visit.source === 'Direct' ? 'Accès direct / source non transmise' : visit.source || 'Non identifiée'}</td>
               </tr>)}</tbody>
