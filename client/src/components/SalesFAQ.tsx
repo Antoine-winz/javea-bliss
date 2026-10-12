@@ -1,0 +1,140 @@
+import type { Language } from "@/contexts/LanguageContext";
+
+const content: Record<Language, { title: string; intro: string; items: [string, string][] }> = {
+  en: {
+    title: "Buying this apartment in Jávea",
+    intro: "Answers about Jávea Bliss, the apartment for sale near Arenal Beach on the Costa Blanca.",
+    items: [
+      ["Is the apartment sold turnkey?", "This apartment is sold turnkey, exactly as described in the rental listing."],
+      ["Where is the apartment for sale in Jávea?", "Jávea Bliss is on Avenida de Paris in El Arenal, Jávea / Xàbia, Alicante, on Spain’s Costa Blanca. Arenal Beach is approximately 250 metres away, with restaurants, cafés, shops and everyday services within walking distance."],
+      ["How large is the apartment and how many bedrooms does it have?", "The apartment has 80 m² of built area, two double bedrooms with fitted wardrobes and one bathroom. The layout includes an open-plan kitchen and living-dining room, a covered balcony and a separate laundry area. You can view the floor plan above."],
+      ["Has the apartment been renovated?", "Yes. The renovation includes new electrical installation, flooring, windows and ceiling insulation. The air-conditioning units in the living room and both bedrooms are also new. The fitted kitchen includes an induction hob, oven and dishwasher."],
+      ["Is there a lift and which floor is the apartment on?", "The apartment is on the first floor of a building with a lift. Please discuss any specific accessibility requirements with the owner before arranging your visit."],
+      ["Is the apartment sold furnished?", "The apartment is offered furnished and equipped. The furniture and household equipment included in the sale will be defined in the final agreed inventory."],
+      ["Is there private parking for owners?", "Owners have access to a private communal car park via an app, with access restricted to owners. This makes finding a space easier, although spaces are not individually allocated and availability is not guaranteed."],
+      ["What is the asking price?", "The asking price is €367,900. See the public Idealista listing for the latest advertised price, or contact the owner to confirm it before making an offer."],
+      ["How can I request the brochure or arrange a viewing?", "Use “Request the brochure and schedule a visit” on this page to send your details to the owner. Email verification gives access to a personalised brochure. You can also contact the owner through the public Idealista listing to arrange a viewing."],
+      ["Do you work with estate agents to sell Jávea Bliss?", "Yes. The owner welcomes collaboration with estate agents on a non-exclusive basis. The terms of collaboration are to be agreed directly with the owner."],
+      ["What commission is offered to estate agents?", "Agency fees and the terms of collaboration are to be agreed directly with the owner. Contact the owner to discuss your proposal."],
+      ["How can an estate agent obtain the sales brochure?", "Use “Request the brochure and schedule a visit”, select “Agency / representative” and enter your agency name and contact details. After verifying your email address, you can access the personalised brochure."],
+      ["Can an estate agent arrange a viewing with a buyer?", "Contact the owner to arrange a viewing with your client. Include your agency name, your client’s requirements and your preferred dates so that the visit can be coordinated."],
+    ],
+  },
+  fr: {
+    title: "Acheter cet appartement à Jávea",
+    intro: "Vos questions sur Jávea Bliss, l’appartement à vendre près de la plage de l’Arenal, sur la Costa Blanca.",
+    items: [
+      ["L’appartement est-il vendu clé en main ?", "Cet appartement est vendu clé en main, exactement comme dans le descriptif de la location."],
+      ["Où se trouve l’appartement à vendre à Jávea ?", "Jávea Bliss se situe Avenida de Paris, dans le quartier El Arenal à Jávea / Xàbia, province d’Alicante, sur la Costa Blanca en Espagne. La plage de l’Arenal est à environ 250 mètres. Restaurants, cafés, commerces et services du quotidien sont accessibles à pied."],
+      ["Quelle est la surface et combien y a-t-il de chambres ?", "L’appartement offre 80 m² construits, deux chambres doubles avec placards intégrés et une salle de bains. Il comprend une cuisine ouverte sur le séjour et la salle à manger, un balcon couvert et un espace buanderie séparé. Le plan est disponible ci-dessus."],
+      ["L’appartement a-t-il été rénové ?", "Oui. La rénovation comprend une installation électrique, des sols et des fenêtres neufs ainsi que l’isolation du plafond. Les climatiseurs du séjour et des deux chambres sont également neufs. La cuisine équipée dispose d’une plaque à induction, d’un four et d’un lave-vaisselle."],
+      ["À quel étage se trouve l’appartement ? Y a-t-il un ascenseur ?", "L’appartement se trouve au premier étage d’un immeuble avec ascenseur. Pour tout besoin particulier d’accessibilité, échangez avec le propriétaire avant d’organiser votre visite."],
+      ["L’appartement est-il vendu meublé ?", "L’appartement est proposé meublé et équipé. Le mobilier et les équipements inclus dans la vente seront précisés dans l’inventaire final convenu entre les parties."],
+      ["Y a-t-il un parking privé pour les propriétaires ?", "Les propriétaires ont accès à un parking privé collectif via une application. L’accès est réservé aux propriétaires, ce qui facilite le stationnement. Les places ne sont toutefois pas attribuées individuellement et leur disponibilité n’est pas garantie."],
+      ["Quel est le prix de vente demandé ?", "Le prix demandé est de 367 900 €. Consultez l’annonce publique sur Idealista pour le dernier prix affiché ou confirmez-le auprès du propriétaire avant de faire une offre."],
+      ["Comment recevoir la brochure et organiser une visite ?", "Utilisez le bouton « Demander la brochure et organiser une visite » pour transmettre vos coordonnées au propriétaire. La vérification de votre adresse e-mail permet d’accéder à une brochure personnalisée. Vous pouvez aussi contacter le propriétaire via l’annonce Idealista pour convenir d’une visite."],
+      ["Acceptez-vous de travailler avec des agences immobilières pour vendre Jávea Bliss ?", "Oui. Le propriétaire accepte de collaborer avec des agences immobilières sans exclusivité. Les conditions de collaboration sont à convenir directement avec le propriétaire."],
+      ["Quels sont les honoraires ou la commission pour les agences ?", "Les honoraires et les modalités de collaboration sont à convenir directement avec le propriétaire. Contactez-le pour lui présenter votre proposition."],
+      ["Comment une agence peut-elle obtenir la brochure de vente ?", "Utilisez « Demander la brochure et organiser une visite », sélectionnez « Agence / représentant » et indiquez le nom de votre agence ainsi que vos coordonnées. Après vérification de votre adresse e-mail, vous pourrez accéder à la brochure personnalisée."],
+      ["Une agence peut-elle organiser une visite avec un acquéreur ?", "Contactez le propriétaire pour organiser une visite avec votre client. Précisez le nom de votre agence, les critères de recherche de votre client et les dates souhaitées afin de coordonner la visite."],
+    ],
+  },
+  es: {
+    title: "Comprar este apartamento en Jávea",
+    intro: "Respuestas sobre Jávea Bliss, el apartamento en venta cerca de la playa del Arenal, en la Costa Blanca.",
+    items: [
+      ["¿Se vende el apartamento llave en mano?", "Este apartamento se vende llave en mano, exactamente como se describe en el anuncio de alquiler."],
+      ["¿Dónde está el apartamento en venta en Jávea?", "Jávea Bliss está en Avenida de Paris, en El Arenal, Jávea / Xàbia, Alicante, en la Costa Blanca. La playa del Arenal se encuentra a unos 250 metros. Restaurantes, cafeterías, comercios y servicios cotidianos están a poca distancia a pie."],
+      ["¿Qué superficie tiene y cuántos dormitorios hay?", "El apartamento tiene 80 m² construidos, dos dormitorios dobles con armarios empotrados y un baño. Incluye cocina abierta y salón-comedor, balcón cubierto y zona de lavandería independiente. Puede consultar el plano más arriba."],
+      ["¿Está reformado el apartamento?", "Sí. La reforma incluye instalación eléctrica, pavimento y ventanas nuevos, además de aislamiento del techo. Los equipos de aire acondicionado del salón y de ambos dormitorios también son nuevos. La cocina equipada dispone de placa de inducción, horno y lavavajillas."],
+      ["¿En qué planta está? ¿Hay ascensor?", "Se encuentra en la primera planta de un edificio con ascensor. Consulte con el propietario cualquier necesidad específica de accesibilidad antes de organizar la visita."],
+      ["¿Se vende amueblado?", "Se ofrece amueblado y equipado. El mobiliario y equipamiento incluidos en la venta se definirán en el inventario final acordado."],
+      ["¿Hay aparcamiento privado para los propietarios?", "Los propietarios tienen acceso mediante una aplicación a un aparcamiento privado comunitario, reservado exclusivamente a propietarios. Esto facilita encontrar una plaza, aunque las plazas no están asignadas individualmente y su disponibilidad no está garantizada."],
+      ["¿Cuál es el precio de venta?", "El precio solicitado es de 367.900 €. Consulte el anuncio público en Idealista para conocer el último precio anunciado o confírmelo con el propietario antes de presentar una oferta."],
+      ["¿Cómo puedo solicitar el folleto o concertar una visita?", "Utilice «Solicitar el folleto y concertar una visita» para enviar sus datos al propietario. La verificación del correo electrónico permite acceder al folleto personalizado. También puede contactar con el propietario mediante el anuncio de Idealista para organizar una visita."],
+      ["¿Aceptan colaborar con agencias inmobiliarias para vender Jávea Bliss?", "Sí. El propietario acepta colaborar con agencias inmobiliarias sin exclusividad. Las condiciones de colaboración se acordarán directamente con el propietario."],
+      ["¿Qué honorarios o comisión se ofrecen a las agencias?", "Los honorarios y las condiciones de colaboración se acordarán directamente con el propietario. Contacte con él para presentar su propuesta."],
+      ["¿Cómo puede una agencia obtener el folleto de venta?", "Utilice «Solicitar el folleto y concertar una visita», seleccione «Agencia / representante» e indique el nombre de su agencia y sus datos de contacto. Tras verificar su correo electrónico, podrá acceder al folleto personalizado."],
+      ["¿Puede una agencia organizar una visita con un comprador?", "Contacte con el propietario para organizar una visita con su cliente. Indique el nombre de su agencia, los criterios de búsqueda del cliente y las fechas deseadas para coordinar la visita."],
+    ],
+  },
+  de: {
+    title: "Diese Wohnung in Jávea kaufen",
+    intro: "Antworten zu Jávea Bliss, der Wohnung zum Verkauf nahe dem Arenal-Strand an der Costa Blanca.",
+    items: [
+      ["Wird die Wohnung schlüsselfertig verkauft?", "Diese Wohnung wird schlüsselfertig verkauft, genau wie im Mietinserat beschrieben."],
+      ["Wo liegt die Wohnung zum Verkauf in Jávea?", "Jávea Bliss liegt an der Avenida de Paris im Viertel El Arenal in Jávea / Xàbia, Alicante, an der spanischen Costa Blanca. Der Arenal-Strand ist etwa 250 Meter entfernt. Restaurants, Cafés, Geschäfte und Einrichtungen für den täglichen Bedarf sind zu Fuß erreichbar."],
+      ["Wie groß ist die Wohnung und wie viele Schlafzimmer hat sie?", "Die Wohnung hat 80 m² bebaute Fläche, zwei Doppelschlafzimmer mit Einbauschränken und ein Badezimmer. Zur Raumaufteilung gehören eine offene Küche mit Wohn- und Essbereich, ein überdachter Balkon und ein separater Waschbereich. Den Grundriss finden Sie oben."],
+      ["Wurde die Wohnung renoviert?", "Ja. Die Renovierung umfasst neue Elektroinstallation, Bodenbeläge und Fenster sowie eine Dämmung der Decke. Die Klimageräte im Wohnzimmer und in beiden Schlafzimmern sind ebenfalls neu. Die Einbauküche verfügt über Induktionskochfeld, Backofen und Geschirrspüler."],
+      ["In welchem Stock liegt die Wohnung? Gibt es einen Aufzug?", "Die Wohnung liegt im ersten Stock eines Gebäudes mit Aufzug. Besprechen Sie besondere Anforderungen an die Barrierefreiheit vor einer Besichtigung mit dem Eigentümer."],
+      ["Wird die Wohnung möbliert verkauft?", "Die Wohnung wird möbliert und ausgestattet angeboten. Welche Möbel und Haushaltsgeräte im Verkauf enthalten sind, wird im abschließend vereinbarten Inventar festgelegt."],
+      ["Gibt es private Parkmöglichkeiten für Eigentümer?", "Eigentümer haben über eine App Zugang zu einem privaten Gemeinschaftsparkplatz, der ausschließlich Eigentümern vorbehalten ist. Das erleichtert die Parkplatzsuche. Die Stellplätze sind jedoch nicht individuell zugewiesen und ihre Verfügbarkeit ist nicht garantiert."],
+      ["Wie hoch ist der Angebotspreis?", "Der Angebotspreis beträgt 367.900 €. Den zuletzt veröffentlichten Preis finden Sie im öffentlichen Idealista-Inserat. Bestätigen Sie ihn vor einem Angebot mit dem Eigentümer."],
+      ["Wie kann ich eine Broschüre anfordern oder eine Besichtigung vereinbaren?", "Über „Broschüre anfordern und Besichtigung vereinbaren“ senden Sie Ihre Angaben an den Eigentümer. Nach der E-Mail-Verifizierung erhalten Sie Zugang zur personalisierten Broschüre. Eine Besichtigung können Sie auch über das öffentliche Idealista-Inserat anfragen."],
+      ["Arbeiten Sie beim Verkauf von Jávea Bliss mit Immobilienmaklern zusammen?", "Ja. Der Eigentümer ist bereit, ohne Exklusivbindung mit Immobilienmaklern zusammenzuarbeiten. Die Bedingungen der Zusammenarbeit werden direkt mit dem Eigentümer vereinbart."],
+      ["Welche Provision erhalten Immobilienmakler?", "Die Maklervergütung und die Bedingungen der Zusammenarbeit werden direkt mit dem Eigentümer vereinbart. Kontaktieren Sie ihn, um Ihren Vorschlag zu besprechen."],
+      ["Wie erhält ein Immobilienmakler die Verkaufsbroschüre?", "Klicken Sie auf „Broschüre anfordern und Besichtigung vereinbaren“, wählen Sie die Option für Agenturen oder Vertreter und geben Sie den Namen Ihrer Agentur sowie Ihre Kontaktdaten an. Nach Bestätigung Ihrer E-Mail-Adresse erhalten Sie Zugang zur personalisierten Broschüre."],
+      ["Kann ein Immobilienmakler eine Besichtigung mit einem Kaufinteressenten vereinbaren?", "Kontaktieren Sie den Eigentümer, um eine Besichtigung mit Ihrem Kunden zu vereinbaren. Geben Sie den Namen Ihrer Agentur, die Suchkriterien Ihres Kunden und Ihre gewünschten Termine an, damit die Besichtigung abgestimmt werden kann."],
+    ],
+  },
+  nl: {
+    title: "Dit appartement in Jávea kopen",
+    intro: "Antwoorden over Jávea Bliss, het appartement te koop bij het Arenal-strand aan de Costa Blanca.",
+    items: [
+      ["Wordt het appartement instapklaar verkocht?", "Dit appartement wordt instapklaar verkocht, precies zoals beschreven in de verhuuradvertentie."],
+      ["Waar ligt het appartement te koop in Jávea?", "Jávea Bliss ligt aan Avenida de Paris in El Arenal, Jávea / Xàbia, Alicante, aan de Spaanse Costa Blanca. Het Arenal-strand ligt op ongeveer 250 meter. Restaurants, cafés, winkels en dagelijkse voorzieningen zijn te voet bereikbaar."],
+      ["Hoe groot is het appartement en hoeveel slaapkamers heeft het?", "Het appartement heeft 80 m² bebouwde oppervlakte, twee tweepersoonsslaapkamers met inbouwkasten en één badkamer. De indeling omvat een open keuken en woon-eetkamer, een overdekt balkon en een aparte wasruimte. De plattegrond staat hierboven."],
+      ["Is het appartement gerenoveerd?", "Ja. De renovatie omvat nieuwe elektrische installatie, vloeren en ramen, plus plafondisolatie. De airconditioning in de woonkamer en beide slaapkamers is eveneens nieuw. De ingerichte keuken heeft een inductiekookplaat, oven en vaatwasser."],
+      ["Op welke verdieping ligt het appartement? Is er een lift?", "Het appartement ligt op de eerste verdieping van een gebouw met lift. Bespreek specifieke toegankelijkheidswensen met de eigenaar voordat u een bezichtiging plant."],
+      ["Wordt het appartement gemeubileerd verkocht?", "Het appartement wordt gemeubileerd en uitgerust aangeboden. Welke meubels en huishoudelijke apparatuur bij de verkoop inbegrepen zijn, wordt vastgelegd in de definitief overeengekomen inventaris."],
+      ["Is er privéparkeergelegenheid voor eigenaren?", "Eigenaren hebben via een app toegang tot een gezamenlijk privéparkeerterrein dat uitsluitend voor eigenaren toegankelijk is. Dit maakt het makkelijker om een plek te vinden. De plaatsen zijn niet individueel toegewezen en beschikbaarheid is niet gegarandeerd."],
+      ["Wat is de vraagprijs?", "De vraagprijs is €367.900. Raadpleeg de openbare Idealista-advertentie voor de laatst gepubliceerde prijs of bevestig deze bij de eigenaar voordat u een bod doet."],
+      ["Hoe vraag ik de brochure aan of plan ik een bezichtiging?", "Gebruik „Brochure aanvragen en een bezichtiging plannen“ om uw gegevens naar de eigenaar te sturen. Na verificatie van uw e-mailadres krijgt u toegang tot een persoonlijke brochure. U kunt ook via de openbare Idealista-advertentie contact opnemen om een bezichtiging af te spreken."],
+      ["Werkt u samen met makelaars voor de verkoop van Jávea Bliss?", "Ja. De eigenaar staat open voor samenwerking met makelaars op niet-exclusieve basis. De voorwaarden worden rechtstreeks met de eigenaar afgesproken."],
+      ["Welke vergoeding of commissie ontvangen makelaars?", "De vergoeding en de voorwaarden voor de samenwerking worden rechtstreeks met de eigenaar afgesproken. Neem contact op om uw voorstel te bespreken."],
+      ["Hoe kan een makelaar de verkoopbrochure ontvangen?", "Gebruik “Brochure aanvragen en een bezichtiging plannen”, kies “Makelaar / vertegenwoordiger” en vul de naam van uw kantoor en uw contactgegevens in. Na verificatie van uw e-mailadres krijgt u toegang tot de persoonlijke brochure."],
+      ["Kan een makelaar een bezichtiging met een koper organiseren?", "Neem contact op met de eigenaar om een bezichtiging met uw klant af te spreken. Vermeld de naam van uw kantoor, de zoekcriteria van uw klant en de gewenste datums om de bezichtiging af te stemmen."],
+    ],
+  },
+  it: {
+    title: "Acquistare questo appartamento a Jávea",
+    intro: "Risposte su Jávea Bliss, l’appartamento in vendita vicino alla spiaggia dell’Arenal, sulla Costa Blanca.",
+    items: [
+      ["L’appartamento viene venduto chiavi in mano?", "Questo appartamento viene venduto chiavi in mano, esattamente come descritto nell’annuncio di affitto."],
+      ["Dove si trova l’appartamento in vendita a Jávea?", "Jávea Bliss si trova in Avenida de Paris, nel quartiere El Arenal a Jávea / Xàbia, Alicante, sulla Costa Blanca spagnola. La spiaggia dell’Arenal dista circa 250 metri. Ristoranti, caffè, negozi e servizi quotidiani sono raggiungibili a piedi."],
+      ["Qual è la superficie e quante camere ci sono?", "L’appartamento ha 80 m² costruiti, due camere matrimoniali con armadi a muro e un bagno. La disposizione comprende cucina aperta e soggiorno-pranzo, balcone coperto e lavanderia separata. La planimetria è disponibile qui sopra."],
+      ["L’appartamento è stato ristrutturato?", "Sì. La ristrutturazione comprende impianto elettrico, pavimenti e finestre nuovi, oltre all’isolamento del soffitto. Sono nuovi anche i climatizzatori del soggiorno e delle due camere. La cucina attrezzata include piano a induzione, forno e lavastoviglie."],
+      ["A quale piano si trova? C’è un ascensore?", "L’appartamento si trova al primo piano di un edificio con ascensore. Per esigenze specifiche di accessibilità, contatti il proprietario prima di organizzare una visita."],
+      ["L’appartamento viene venduto arredato?", "L’appartamento viene proposto arredato e attrezzato. I mobili e le dotazioni inclusi nella vendita saranno definiti nell’inventario finale concordato."],
+      ["È disponibile un parcheggio privato per i proprietari?", "I proprietari possono accedere tramite un’app a un parcheggio privato condominiale riservato esclusivamente ai proprietari. Questo facilita la ricerca di un posto, ma i posti non sono assegnati individualmente e la disponibilità non è garantita."],
+      ["Qual è il prezzo richiesto?", "Il prezzo richiesto è di 367.900 €. Consulti l’annuncio pubblico su Idealista per l’ultimo prezzo pubblicato oppure lo confermi con il proprietario prima di presentare un’offerta."],
+      ["Come posso richiedere la brochure o prenotare una visita?", "Utilizzi «Richiedi la brochure e prenota una visita» per inviare i suoi dati al proprietario. La verifica dell’indirizzo e-mail consente di accedere alla brochure personalizzata. Può anche contattare il proprietario tramite l’annuncio pubblico su Idealista per concordare una visita."],
+      ["Collaborate con agenzie immobiliari per la vendita di Jávea Bliss?", "Sì. Il proprietario è disponibile a collaborare con agenzie immobiliari senza esclusiva. Le condizioni di collaborazione saranno concordate direttamente con il proprietario."],
+      ["Quali compensi o provvigioni sono previsti per le agenzie?", "Il compenso e le condizioni di collaborazione saranno concordati direttamente con il proprietario. Lo contatti per presentare la sua proposta."],
+      ["Come può un’agenzia ottenere la brochure di vendita?", "Utilizzi «Richiedi la brochure e prenota una visita», selezioni «Agenzia / rappresentante» e inserisca il nome dell’agenzia e i suoi recapiti. Dopo la verifica dell’indirizzo e-mail potrà accedere alla brochure personalizzata."],
+      ["Un’agenzia può organizzare una visita con un acquirente?", "Contatti il proprietario per organizzare una visita con il suo cliente. Indichi il nome dell’agenzia, i criteri di ricerca del cliente e le date desiderate per concordare la visita."],
+    ],
+  },
+};
+
+export default function SalesFAQ({ language }: { language: Language }) {
+  const t = content[language];
+  return (
+    <section id="buyer-questions" aria-labelledby="buyer-questions-title" className="border-t border-[#c9c2b6] bg-[#f4f0e8] px-6 py-16 text-[#24352f] md:px-12 md:py-24">
+      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[.65fr_1fr] lg:gap-16">
+        <div>
+          <h2 id="buyer-questions-title" className="font-serif text-4xl leading-tight md:text-5xl">{t.title}</h2>
+          <p className="mt-6 text-sm leading-7 text-[#68756e]">{t.intro}</p>
+        </div>
+        <div className="divide-y divide-[#c9c2b6] border-y border-[#c9c2b6]">
+          {t.items.map(([question, answer]) => (
+            <article key={question} className="py-6">
+              <h3 className="font-serif text-xl leading-snug md:text-2xl">{question}</h3>
+              <p className="mt-3 text-sm leading-7 text-[#53635c]">{answer}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

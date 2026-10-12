@@ -1,7 +1,5 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import path from "path";
-import fs from "fs";
 import { z } from "zod";
 import { storage } from "./storage";
 import { bookingInquirySchema, insertPromotionalOfferSchema, insertGuestReviewSchema, insertDailyRateSchema } from "@shared/schema";
@@ -61,7 +59,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   registerSalesRoutes(app);
 
   // Keep old printed-flyer links working without presenting a 404.
-  app.get("/flyer.html", (req, res) => {
+  app.get("/flyer.html", (_req, res) => {
     res.redirect(301, "/flyer2.html");
   });
 
@@ -69,7 +67,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(trackVisit);
 
   // Visitor statistics endpoint
-  app.get("/api/visitor-stats", adminMiddleware, async (req, res) => {
+  app.get("/api/visitor-stats", adminMiddleware, async (_req, res) => {
     try {
       const stats = await getVisitorStats();
       res.json(stats);
@@ -80,7 +78,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Last minute booking offers endpoint
   // Get/set last-minute offers enabled state
-  app.get("/api/last-minute-offers/settings", (req, res) => {
+  app.get("/api/last-minute-offers/settings", (_req, res) => {
     res.json({ enabled: lastMinuteOffersEnabled });
   });
 
@@ -93,7 +91,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ enabled: lastMinuteOffersEnabled });
   });
 
-  app.get("/api/last-minute-offers", async (req, res) => {
+  app.get("/api/last-minute-offers", async (_req, res) => {
     try {
       // Return inactive immediately if owner has not enabled last-minute offers
       if (!lastMinuteOffersEnabled) {
@@ -277,7 +275,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get sync status
-  app.get("/api/calendar/sync-status", adminMiddleware, (req, res) => {
+  app.get("/api/calendar/sync-status", adminMiddleware, (_req, res) => {
     try {
       const status = calendarService.getSyncStatus();
       res.json(status);
@@ -290,7 +288,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get blocked dates
-  app.get("/api/calendar/blocked-dates", (req, res) => {
+  app.get("/api/calendar/blocked-dates", (_req, res) => {
     try {
       if (!calendarService.isReady()) return res.status(503).json({ message: "Calendar unavailable; please contact us to confirm your dates" });
       const blockedDates = calendarService.getBlockedDates();
@@ -311,7 +309,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Manual block routes
-  app.get("/api/calendar/manual-blocks", adminMiddleware, async (req, res) => {
+  app.get("/api/calendar/manual-blocks", adminMiddleware, async (_req, res) => {
     try {
       const blocks = await calendarService.getManualBlocks();
       res.json({ blocks });
@@ -346,7 +344,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get calendar events for cleaning schedule
-  app.get("/api/calendar/events", adminMiddleware, (req, res) => {
+  app.get("/api/calendar/events", adminMiddleware, (_req, res) => {
     try {
       const events = calendarService.getEvents();
       res.json({ 
@@ -362,7 +360,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get cleaning schedule with cleaning reminders
-  app.get("/api/calendar/cleaning-schedule", adminMiddleware, (req, res) => {
+  app.get("/api/calendar/cleaning-schedule", adminMiddleware, (_req, res) => {
     try {
       const schedule = calendarService.getCleaningSchedule();
       res.json(schedule);
@@ -466,7 +464,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/promotional-offers", async (req, res) => {
+  app.get("/api/promotional-offers", async (_req, res) => {
     try {
       const offers = await storage.getActivePromotionalOffers();
       res.json(offers);
@@ -553,7 +551,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Guest Reviews API routes
   
   // Get all reviews (admin)
-  app.get("/api/reviews", adminMiddleware, async (req, res) => {
+  app.get("/api/reviews", adminMiddleware, async (_req, res) => {
     try {
       const reviews = await storage.getAllGuestReviews();
       res.json(reviews);
@@ -564,7 +562,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get visible reviews (public)
-  app.get("/api/reviews/visible", async (req, res) => {
+  app.get("/api/reviews/visible", async (_req, res) => {
     try {
       const reviews = await storage.getVisibleGuestReviews();
       res.json(reviews);

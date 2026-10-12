@@ -4,6 +4,9 @@ import { sameOriginWrites } from "./security";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
+import { createIpBlocker } from "./ip-blocking";
+import { storage } from "./storage";
+
 const app = express();
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
@@ -29,6 +32,8 @@ app.get("/", (_req, res, next) => {
   }
   next();
 });
+
+app.use(createIpBlocker(() => storage.listBlockedIps()));
 
 // Serve static files from client/public (flyer.html, robots.txt, etc.)
 const publicPath = path.resolve(process.cwd(), "client", "public");

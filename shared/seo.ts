@@ -49,6 +49,30 @@ const homepageDescriptions: Record<Language, string> = {
   it: 'Appartamento a Jávea per 4 persone, a 250 m dalla spiaggia dell\'Arenal: 2 camere, aria condizionata, WiFi, parcheggio. Prenota direttamente, senza commissioni.',
 };
 
+export const saleTitles: Record<Language, string> = {
+  "en": "Apartment for sale in Jávea, Arenal | Jávea Bliss",
+  "fr": "Appartement à vendre à Jávea, Arenal | Jávea Bliss",
+  "es": "Apartamento en venta en Jávea, Arenal | Jávea Bliss",
+  "de": "Wohnung kaufen in Jávea, Arenal | Jávea Bliss",
+  "nl": "Appartement te koop in Jávea, Arenal | Jávea Bliss",
+  "it": "Appartamento in vendita a Jávea, Arenal | Jávea Bliss"
+};
+
+const saleDescriptions: Record<Language, string> = {
+  "en": "Renovated 2-bedroom apartment for sale in Jávea, Costa Blanca. 80 m², balcony and lift, approx. 250 m from Arenal Beach. €367,900. Arrange a viewing.",
+  "fr": "Appartement rénové à vendre à Jávea, Costa Blanca : 80 m², 2 chambres, balcon et ascenseur, à env. 250 m de l’Arenal. 367 900 €. Organisez une visite.",
+  "es": "Apartamento reformado en venta en Jávea, Costa Blanca. 80 m², 2 dormitorios, balcón y ascensor, a unos 250 m del Arenal. 367.900 €. Concierte una visita.",
+  "de": "Renovierte Wohnung zum Kauf in Jávea, Costa Blanca: 80 m², 2 Schlafzimmer, Balkon und Aufzug, ca. 250 m zum Arenal-Strand. 367.900 €. Besichtigung anfragen.",
+  "nl": "Gerenoveerd appartement te koop in Jávea, Costa Blanca: 80 m², 2 slaapkamers, balkon en lift, ca. 250 m van het Arenal-strand. €367.900. Plan een bezichtiging.",
+  "it": "Appartamento ristrutturato in vendita a Jávea, Costa Blanca: 80 m², 2 camere, balcone e ascensore, a circa 250 m dall’Arenal. 367.900 €. Prenota una visita."
+};
+
+export const saleHreflang = [
+  ...SUPPORTED_LANGUAGES.map(lang => ({ lang, href: `${BASE_URL}/${lang}/for-sale` })),
+  ...Object.entries({ "en-GB": "en", "de-DE": "de", "nl-NL": "nl", "fr-FR": "fr", "it-IT": "it", "de-CH": "de", "fr-CH": "fr", "it-CH": "it" }).map(([lang, page]) => ({ lang, href: `${BASE_URL}/${page}/for-sale` })),
+  { lang: "x-default", href: `${BASE_URL}/en/for-sale` },
+];
+
 const locales: Record<Language, string> = {
   en: 'en_GB', nl: 'nl_NL', fr: 'fr_FR', de: 'de_DE', es: 'es_ES', it: 'it_IT',
 };
@@ -113,7 +137,15 @@ const seoLandingPages: Record<string, { title: string; description: string }> = 
 export function getRouteSEO(urlPath: string): RouteSEO | null {
   const cleanPath = urlPath.split('?')[0].split('#')[0];
 
-  if (/^\/(?:en\/|nl\/|fr\/|it\/|de\/|es\/)?(?:for-sale|privacy-policy)\/?$/.test(cleanPath) || /^\/admin\/?$/.test(cleanPath)) {
+  const saleMatch = cleanPath.match(/^\/(?:(en|nl|fr|it|de|es)\/)?for-sale\/?$/);
+  if (saleMatch) {
+    const lang = (saleMatch[1] || 'en') as Language;
+    return { title: saleTitles[lang], description: saleDescriptions[lang],
+      canonical: `${BASE_URL}/${lang}/for-sale`, locale: locales[lang], lang,
+      hreflang: saleHreflang, noindex: false };
+  }
+
+  if (/^\/(?:en\/|nl\/|fr\/|it\/|de\/|es\/)?privacy-policy\/?$/.test(cleanPath) || /^\/admin\/?$/.test(cleanPath)) {
     const lang = (cleanPath.match(/^\/(en|nl|fr|it|de|es)\//)?.[1] || 'en') as Language;
     return {
       title: cleanPath.includes('privacy-policy') ? 'Privacy Policy | Jávea Bliss' : cleanPath.includes('admin') ? 'Administration | Jávea Bliss' : 'Private Property Presentation | Jávea Bliss',
@@ -183,6 +215,21 @@ export function getRouteSEO(urlPath: string): RouteSEO | null {
 
 export function getPageStructuredData(seo: RouteSEO): Record<string, unknown> | null {
   if (seo.noindex) return null;
+  if (seo.canonical.endsWith('/for-sale')) {
+    return { '@context': 'https://schema.org', '@graph': [
+      { '@type': 'Apartment', '@id': `${BASE_URL}/#sale-apartment`, name: 'Jávea Bliss',
+        description: seo.description, numberOfBedrooms: 2, numberOfBathroomsTotal: 1,
+        floorSize: { '@type': 'QuantitativeValue', value: 80, unitCode: 'MTK' }, floorLevel: '1',
+        address: { '@type': 'PostalAddress', addressLocality: 'Jávea / Xàbia', addressRegion: 'Alicante', addressCountry: 'ES' },
+        amenityFeature: ['Balcony', 'Lift', 'Air conditioning'].map(name => ({ '@type': 'LocationFeatureSpecification', name, value: true })) },
+      { '@type': 'RealEstateListing', '@id': seo.canonical, url: seo.canonical,
+        name: seo.title, description: seo.description, inLanguage: seo.lang,
+        mainEntity: { '@id': `${BASE_URL}/#sale-apartment` },
+        offers: { '@type': 'Offer', price: 367900, priceCurrency: 'EUR',
+          businessFunction: 'http://purl.org/goodrelations/v1#Sell', url: seo.canonical,
+          itemOffered: { '@id': `${BASE_URL}/#sale-apartment` } } }
+    ] };
+  }
   const property = {
     '@type': 'LodgingBusiness',
     '@id': `${BASE_URL}/#property`,
@@ -232,7 +279,6 @@ export function injectSEOIntoHTML(html: string, seo: RouteSEO): string {
     .map(h => `<link rel="alternate" hreflang="${h.lang}" href="${h.href}" />`)
     .join('\n    ');
 
-  const ogImage = seo.ogImage || `${BASE_URL}/og-hero.jpg`;
 
 
   const schema = getPageStructuredData(seo);

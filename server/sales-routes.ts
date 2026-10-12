@@ -9,6 +9,8 @@ import { z } from "zod";
 import { storage } from "./storage";
 import { getLocationFromIP } from "./visitor-tracking";
 
+import { normalizeIp,invalidateIpBlocks } from "./ip-blocking";
+
 const LANGUAGES = ["en", "fr", "es", "de", "nl", "it"] as const;
 type SalesLanguage = (typeof LANGUAGES)[number];
 const PRIVATE_BROCHURES = path.resolve(process.cwd(), "server/private/sales-brochures");
@@ -414,6 +416,9 @@ export function registerSalesRoutes(app: Express) {
   }));
 
   app.post("/api/sales/verify", safeAsync(async (req, res) => {
+    if (!allowRateLimit(`sales-verify-ip:${clientIp(req)}`, 20, 15 * 60 * 1000)) {
+      return genericError(res, 429, "RATE_LIMITED");
+    }
     const parsed = codeSchema.safeParse(req.body);
     if (!parsed.success) return genericError(res, 400, "INVALID_CODE");
     const email = parsed.data.email.toLowerCase();
@@ -529,6 +534,31 @@ export function registerSalesRoutes(app: Express) {
     res.json({ ok: true });
   });
 
+  app.get("/api/admin/blocked-ips", adminMiddleware, safeAsync(async (_req, res) => {
+    res.json({ blocks: await storage.listBlockedIps() });
+  }));
+
+  app.post("/api/admin/blocked-ips", adminMiddleware, safeAsync(async (req, res) => {
+    const ipAddress = normalizeIp(req.body?.ip);
+    if (!ipAddress) return res.status(400).json({ message: "Saisissez une adresse IPv4 ou IPv6 complète valide." });
+    if (ipAddress === normalizeIp(clientIp(req))) return res.status(400).json({ message: "Vous ne pouvez pas bloquer votre propre IP depuis cette session." });
+    await storage.blockSalesIp({ ipAddress });
+    invalidateIpBlocks();
+    res.json({ blocked: true });
+  }));
+
+  app.delete("/api/admin/blocked-ips", adminMiddleware, safeAsync(async (req, res) => {
+    const ipAddress = normalizeIp(req.body?.ip);
+    if (!ipAddress) return res.status(400).json({ message: "Adresse IP invalide." });
+    // Remove legacy spellings as well as the canonical IPv6 / mapped IPv4 form.
+    const blocks = await storage.listBlockedIps();
+    for (const block of blocks) {
+      if (normalizeIp(block.ipAddress) === ipAddress) await storage.unblockSalesIp(block.ipAddress);
+    }
+    invalidateIpBlocks();
+    res.json({ blocked: false });
+  }));
+
   app.get("/api/admin/sales-leads", adminMiddleware, safeAsync(async (req, res) => {
     const search = typeof req.query.search === "string" ? req.query.search.slice(0, 100) : undefined;
     const status = typeof req.query.status === "string" ? req.query.status.slice(0, 40) : undefined;
@@ -566,6 +596,7 @@ export function registerSalesRoutes(app: Express) {
     if (!lead) return res.status(404).json({ code: "NOT_FOUND", message: "Lead not found." });
     if (!lead.ipAddress) return res.status(400).json({ code: "IP_UNAVAILABLE", message: "No IP address is available for this enquiry." });
     await storage.blockSalesIp({ ipAddress: lead.ipAddress, city: lead.ipCity, country: lead.ipCountry });
+    invalidateIpBlocks();
     res.json({ blocked: true });
   }));
 
@@ -573,6 +604,7 @@ export function registerSalesRoutes(app: Express) {
     const lead = await storage.getSalesLeadById(Number(req.params.id));
     if (!lead) return res.status(404).json({ code: "NOT_FOUND", message: "Lead not found." });
     if (lead.ipAddress) await storage.unblockSalesIp(lead.ipAddress);
+    invalidateIpBlocks();
     res.json({ blocked: false });
   }));
 }

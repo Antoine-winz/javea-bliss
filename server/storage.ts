@@ -52,6 +52,7 @@ export interface IStorage {
   listSalesLeads(options?: { search?: string; status?: string; buyerType?: string }): Promise<SalesLead[]>;
   createSalesDownload(download: { leadId: number; language: string; reference: string }): Promise<SalesDownload>;
   getSalesDownloads(leadId: number): Promise<SalesDownload[]>;
+  listBlockedIps(): Promise<(typeof blockedSalesIps.$inferSelect)[]>;
   isSalesIpBlocked(ipAddress: string): Promise<boolean>;
   blockSalesIp(block: { ipAddress: string; city?: string | null; country?: string | null }): Promise<void>;
   unblockSalesIp(ipAddress: string): Promise<void>;
@@ -164,8 +165,8 @@ export class DatabaseStorage implements IStorage {
 
   async deleteGuestReview(id: number): Promise<boolean> {
     try {
-      const result = await db.delete(guestReviews).where(eq(guestReviews.id, id));
-      return true;
+      const deleted = await db.delete(guestReviews).where(eq(guestReviews.id, id)).returning({ id: guestReviews.id });
+      return deleted.length > 0;
     } catch (error) {
       console.error("Error deleting guest review:", error);
       return false;
@@ -342,6 +343,10 @@ export class DatabaseStorage implements IStorage {
         .where(eq(salesDownloads.leadId, leadId))
         .orderBy(desc(salesDownloads.downloadedAt))
     );
+  }
+
+  async listBlockedIps() {
+    return retryTransientNeonResult(() => db.select().from(blockedSalesIps).orderBy(desc(blockedSalesIps.blockedAt)));
   }
 
   async isSalesIpBlocked(ipAddress: string): Promise<boolean> {

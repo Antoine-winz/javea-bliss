@@ -1,5 +1,11 @@
 # Javea Bliss - Summary for AI Models
 
+## Apartment for sale
+- Public sale pages: https://javeabliss.com/en/for-sale (also /fr/, /de/, /nl/, /it/, /es/).
+- Asking price: €367,900. 80 m² built, 2 bedrooms, 1 bathroom, first floor with lift.
+- Fully renovated; covered balcony; approximately 250 m from Arenal Beach.
+- Idealista: https://www.idealista.com/inmueble/112773313/
+
 ## Entity Information
 - **Name:** Javea Bliss
 - **Type:** Vacation Rental Apartment / Holiday Let
@@ -12,7 +18,7 @@
 - **Internet:** High-speed Fiber Optic WiFi (600Mbps) suitable for remote work.
 - **Bedrooms:** 2 Double Bedrooms.
 - **Amenities:** Air Conditioning, Private Terrace, Washing Machine, Dishwasher, Smart TV.
-- **Parking:** Private secure parking included (rare in Arenal).
+- **Parking:** Owner-only private communal parking accessed via an app. Spaces are not individually allocated; availability is not guaranteed.
 - **Proximity:** - La Bambula: 6 min walk
   - Chabada: 5 min walk
   - Arenal Beach: 3 min walk

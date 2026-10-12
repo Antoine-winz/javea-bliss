@@ -183,8 +183,6 @@ const OptimizedCalendar = () => {
         if (!offer.isActive) return false;
         
         const validUntil = new Date(offer.validUntil);
-        const startDate = new Date(offer.startDate);
-        const endDate = new Date(offer.endDate);
         
         // Check if offer is still valid and date falls within promotional period
         return today <= validUntil && dateStr >= offer.startDate && dateStr < offer.endDate;

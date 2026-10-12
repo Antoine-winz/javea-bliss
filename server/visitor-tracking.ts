@@ -2,9 +2,17 @@ import { Request, Response, NextFunction } from 'express';
 import { isIP } from 'node:net';
 import { db } from './db';
 import { visitorStats, visitorDetails } from '@shared/schema';
-import { eq, and, gte, lte, desc, sql } from 'drizzle-orm';
+import { eq, and, gte, lte, lt, desc, sql } from 'drizzle-orm';
 
 export interface VisitorStatsData {
+  recentVisits: Array<{
+    id: number;
+    visitedAt: Date | null;
+    country: string | null;
+    countryCode: string | null;
+    ip: string | null;
+    source: string | null;
+  }>;
   totalVisits: number;
   currentWeekVisits: number;
   averageWeeklyVisits: number;
@@ -86,7 +94,8 @@ export const trackVisit = (req: Request, res: Response, next: NextFunction) => {
 const recordVisit = async (req: Request) => {
   try {
     // Only track visits to the main pages, not API calls or assets
-    if (req.path.startsWith('/api/') || req.path.includes('.')) {
+    const pagePath = req.originalUrl.split('?')[0];
+    if (pagePath.startsWith('/api/') || pagePath.includes('.')) {
       return;
     }
 
@@ -116,7 +125,7 @@ const recordVisit = async (req: Request) => {
                                /[a-f0-9\-]+\.replit\.co/.test(host);
     
     // Skip tracking for development and internal traffic
-    if (process.env.NODE_ENV !== 'production' || isReplitDevelopment || ip === '::1' || req.path === '/admin' || req.path === '/healthz') {
+    if (process.env.NODE_ENV !== 'production' || isReplitDevelopment || ip === '::1' || pagePath === '/admin' || pagePath === '/healthz') {
       return;
     }
     
@@ -173,11 +182,11 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
   try {
     const today = new Date();
     const currentWeekStart = new Date(today);
-    currentWeekStart.setDate(today.getDate() - today.getDay()); // Start of current week (Sunday)
-    currentWeekStart.setHours(0, 0, 0, 0);
+    currentWeekStart.setUTCDate(today.getUTCDate() - today.getUTCDay()); // Start of current week (Sunday)
+    currentWeekStart.setUTCHours(0, 0, 0, 0);
 
     const threeWeeksAgo = new Date(currentWeekStart);
-    threeWeeksAgo.setDate(currentWeekStart.getDate() - 21); // 3 weeks ago
+    threeWeeksAgo.setUTCDate(currentWeekStart.getUTCDate() - 21); // 3 weeks ago
 
     // Get total visits
     const totalVisitsResult = await db
@@ -186,12 +195,12 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
       })
       .from(visitorStats);
 
-    const totalVisits = totalVisitsResult[0]?.total || 0;
+    const totalVisits = Number(totalVisitsResult[0]?.total || 0);
 
     // Get current week visits
     const currentWeekEnd = new Date(currentWeekStart);
-    currentWeekEnd.setDate(currentWeekStart.getDate() + 6);
-    currentWeekEnd.setHours(23, 59, 59, 999);
+    currentWeekEnd.setUTCDate(currentWeekStart.getUTCDate() + 6);
+    currentWeekEnd.setUTCHours(23, 59, 59, 999);
 
     const currentWeekResult = await db
       .select({
@@ -203,7 +212,7 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
         lte(visitorStats.visitDate, currentWeekEnd.toISOString().split('T')[0])
       ));
 
-    const currentWeekVisits = currentWeekResult[0]?.total || 0;
+    const currentWeekVisits = Number(currentWeekResult[0]?.total || 0);
 
     // Get last 3 weeks data for average calculation
     const lastThreeWeeksResult = await db
@@ -213,10 +222,10 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
       .from(visitorStats)
       .where(and(
         gte(visitorStats.visitDate, threeWeeksAgo.toISOString().split('T')[0]),
-        lte(visitorStats.visitDate, currentWeekStart.toISOString().split('T')[0])
+        lt(visitorStats.visitDate, currentWeekStart.toISOString().split('T')[0])
       ));
 
-    const lastThreeWeeksVisits = lastThreeWeeksResult[0]?.total || 0;
+    const lastThreeWeeksVisits = Number(lastThreeWeeksResult[0]?.total || 0);
     const averageWeeklyVisits = Math.round(lastThreeWeeksVisits / 3);
 
     // Get all weekly data (no date filter, show full history)
@@ -233,7 +242,7 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
     weeklyData.forEach(row => {
       const date = new Date(row.visitDate);
       const weekStart = new Date(date);
-      weekStart.setDate(date.getDate() - date.getDay());
+      weekStart.setUTCDate(date.getUTCDate() - date.getUTCDay());
       const weekKey = weekStart.toISOString().split('T')[0];
       
       weeklyGroups[weekKey] = (weeklyGroups[weekKey] || 0) + (row.visitCount || 0);
@@ -271,12 +280,12 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
     // Get referrer statistics, all time
     const referrerStatsResult = await db
       .select({
-        referrer: visitorDetails.referrer,
+        referrer: visitorDetails.referrerDomain,
         domain: visitorDetails.referrerDomain,
         visits: sql<number>`COUNT(*)`
       })
       .from(visitorDetails)
-      .groupBy(visitorDetails.referrer, visitorDetails.referrerDomain)
+      .groupBy(visitorDetails.referrerDomain)
       .orderBy(desc(sql<number>`COUNT(*)`));
 
     const referrerStats = referrerStatsResult.map(row => ({
@@ -286,7 +295,19 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
       percentage: Math.round((Number(row.visits) / totalDetailVisits) * 100)
     }));
 
+    const recentVisits = await db.select({
+      id: visitorDetails.id,
+      visitedAt: visitorDetails.visitedAt,
+      country: visitorDetails.country,
+      countryCode: visitorDetails.countryCode,
+      ip: visitorDetails.ip,
+      source: visitorDetails.referrerDomain,
+    }).from(visitorDetails)
+      .orderBy(desc(visitorDetails.visitedAt), desc(visitorDetails.id))
+      .limit(100);
+
     return {
+      recentVisits,
       totalVisits,
       currentWeekVisits,
       averageWeeklyVisits,
@@ -296,14 +317,8 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
     };
   } catch (error) {
     console.error('Error getting visitor stats:', error);
-    return {
-      totalVisits: 0,
-      currentWeekVisits: 0,
-      averageWeeklyVisits: 0,
-      weeklyData: [],
-      countryStats: [],
-      referrerStats: []
-    };
+    throw error;
+
   }
 };
 
@@ -313,9 +328,9 @@ export const getVisitorStats = async (): Promise<VisitorStatsData> => {
 function formatWeekLabel(weekStart: string): string {
   const date = new Date(weekStart);
   const weekEnd = new Date(date);
-  weekEnd.setDate(date.getDate() + 6);
+  weekEnd.setUTCDate(date.getUTCDate() + 6);
   
-  const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+  const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', timeZone: 'UTC' };
   const start = date.toLocaleDateString('en-US', options);
   const end = weekEnd.toLocaleDateString('en-US', options);
   

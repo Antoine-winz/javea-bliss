@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
-import { useCalendarData, formatDateString, createDateSet, isPastDate, isCurrentMonth, getSeasonalRate } from "@/utils/calendarUtils";
+import { useCalendarData, formatDateString, createDateSet, isPastDate, isCurrentMonth } from "@/utils/calendarUtils";
 
 interface PromotionalCalendarProps {
   startDate: string;
@@ -74,19 +74,6 @@ const PromotionalCalendar = ({ startDate, endDate, discountedPrice, originalPric
   
   // Create Set for O(1) blocked date lookups
   const blockedDateSet = useMemo(() => createDateSet(blockedDates), [blockedDates]);
-  
-  // Calculate promotional period dates
-  const promotionalDates = useMemo(() => {
-    const dates = [];
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    
-    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-      dates.push(new Date(d));
-    }
-    
-    return dates;
-  }, [startDate, endDate]);
   
   // Use shared calendar data utility
   const calendarData = useCalendarData(currentDate);

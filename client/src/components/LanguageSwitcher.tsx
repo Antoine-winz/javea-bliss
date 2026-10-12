@@ -11,12 +11,12 @@ const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage();
 
   const languages: { code: Language; name: string; flag: string }[] = [
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
     { code: 'fr', name: 'Français', flag: '🇫🇷' },
     { code: 'it', name: 'Italiano', flag: '🇮🇹' },
     { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-    { code: 'es', name: 'Español', flag: '🇪🇸' },
   ];
 
   const currentLanguage = languages.find(lang => lang.code === language);

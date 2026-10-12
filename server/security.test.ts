@@ -21,7 +21,7 @@ test('admin APIs enforce authentication, valid sessions work, cross-origin write
       ['POST', '/api/calendar/sync'], ['POST', '/api/calendar/manual-block'],
       ['DELETE', '/api/calendar/manual-block/manual-test'], ['GET', '/api/calendar/events'],
       ['GET', '/api/calendar/sync-status'], ['GET', '/api/calendar/cleaning-schedule'],
-      ['GET', '/api/calendar/manual-blocks'], ['GET', '/api/visitor-stats'], ['GET', '/api/reviews'],
+      ['GET', '/api/admin/blocked-ips'], ['POST', '/api/admin/blocked-ips'], ['DELETE', '/api/admin/blocked-ips'], ['GET', '/api/calendar/manual-blocks'], ['GET', '/api/visitor-stats'], ['GET', '/api/reviews'],
       ['POST', '/api/reviews'], ['PUT', '/api/reviews/1'], ['DELETE', '/api/reviews/1'],
       ['POST', '/api/promotional-offers'], ['PUT', '/api/promotional-offers/1'], ['DELETE', '/api/promotional-offers/1'],
       ['POST', '/api/daily-rates/bulk'], ['DELETE', '/api/daily-rates'], ['POST', '/api/last-minute-offers/settings'],
@@ -34,6 +34,10 @@ test('admin APIs enforce authentication, valid sessions work, cross-origin write
     const cookie = login.headers.get('set-cookie')!.split(';')[0];
     const session = await fetch(base + '/api/admin/session', { headers: { Cookie: cookie } });
     assert.equal(session.status, 200);
+    const invalidIp = await fetch(base + '/api/admin/blocked-ips', { method: 'POST', headers: { Cookie: cookie, 'Content-Type': 'application/json' }, body: JSON.stringify({ ip: 'invalid' }) });
+    assert.equal(invalidIp.status, 400);
+    const selfIp = await fetch(base + '/api/admin/blocked-ips', { method: 'POST', headers: { Cookie: cookie, 'Content-Type': 'application/json' }, body: JSON.stringify({ ip: '127.0.0.1' }) });
+    assert.equal(selfIp.status, 400);
     const rejected = await fetch(base + '/api/last-minute-offers/settings', { method: 'POST', headers: { Cookie: cookie, Origin: 'https://untrusted.example', 'Content-Type': 'application/json' }, body: JSON.stringify({ enabled: true }) });
     assert.equal(rejected.status, 403);
     const accepted = await fetch(base + '/api/last-minute-offers/settings', { method: 'POST', headers: { Cookie: cookie, Origin: base, 'Content-Type': 'application/json' }, body: JSON.stringify({ enabled: false }) });

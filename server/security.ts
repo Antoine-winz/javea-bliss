@@ -6,7 +6,7 @@ export function sameOriginWrites(req: Request, res: Response, next: NextFunction
   const origin = req.get('Origin');
   if (origin) {
     try {
-      if (new URL(origin).host !== req.get('Host')) return res.status(403).json({ message: 'Cross-origin request rejected' });
+      if (new URL(origin).origin !== `${req.protocol}://${req.get('Host')}`) return res.status(403).json({ message: 'Cross-origin request rejected' });
     } catch {
       return res.status(403).json({ message: 'Invalid request origin' });
     }

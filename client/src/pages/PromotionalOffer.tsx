@@ -1,14 +1,14 @@
+import { sendBookingNotification } from "@/lib/booking-notification";
 import { useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, Clock, MapPin, Star, ArrowRight, Users, Waves, Heart, Wifi, Car, CheckCircle, Mail, Phone } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { Clock, MapPin, ArrowRight, Users, Waves, Heart, Wifi, Car, CheckCircle } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import PromotionalCalendar from "@/components/PromotionalCalendar";
 import { useEffect, useState, useMemo } from "react";
@@ -22,7 +22,6 @@ import { trackPromoInteraction } from "@/lib/analytics";
 
 const PromotionalOffer = () => {
   const params = useParams();
-  const { t } = useLanguage();
   const { toast } = useToast();
   const [timeLeft, setTimeLeft] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -113,20 +112,25 @@ const PromotionalOffer = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('/api/promotional-bookings', {
+      const inquiry = {
+        name: formData.fullName, email: formData.email, phone: formData.phoneNumber,
+        checkIn: formData.checkInDate, checkOut: formData.checkOutDate,
+        guests: formData.numberOfGuests as "1" | "2" | "3" | "4",
+        message: `${offer.title} — ${formData.additionalMessage}`, website: '',
+      };
+      const response = await fetch('/api/booking-inquiry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          offerId: offer.id,
-          offerTitle: offer.title,
-          promotionalPrice: offer.discountedPrice
-        }),
+        body: JSON.stringify(inquiry),
       });
 
-      if (!response.ok) throw new Error('Failed to submit booking');
+      if (!response.ok) {
+        const result = await response.json().catch(() => null);
+        throw new Error(result?.message || 'Failed to submit booking');
+      }
+      await sendBookingNotification(inquiry);
 
       toast({
         title: "Booking submitted successfully!",
@@ -146,7 +150,7 @@ const PromotionalOffer = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to submit booking. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to submit booking. Please try again.",
         variant: "destructive"
       });
     } finally {

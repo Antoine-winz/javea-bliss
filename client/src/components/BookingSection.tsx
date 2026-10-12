@@ -4,9 +4,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useLanguage } from "../contexts/LanguageContext";
-import emailjs from '@emailjs/browser';
+import { sendBookingNotification } from "@/lib/booking-notification";
 import { apiRequest } from "@/lib/queryClient";
 
 import {
@@ -51,7 +51,6 @@ const BookingSection = () => {
     isPromoActive?: boolean;
     cleaningFee?: number;
   } | null>(null);
-  const [promoOffer, setPromoOffer] = useState<any>(null);
   
   // Get URL parameters for promotional offers with error handling
   const [urlParams, setUrlParams] = useState<{
@@ -81,17 +80,6 @@ const BookingSection = () => {
   }, []);
 
 
-
-  // Fetch blocked dates from Airbnb calendar
-  const { data: blockedDatesData } = useQuery({
-    queryKey: ['/api/calendar/blocked-dates'],
-    queryFn: async () => {
-      const response = await fetch('/api/calendar/blocked-dates');
-      if (!response.ok) throw new Error('Calendar unavailable');
-      return response.json();
-    },
-    refetchInterval: 1000 * 60 * 60, // Refetch every hour
-  });
 
   const formSchema = z.object({
     name: z.string().min(2, t('form.nameRequired')),
@@ -221,31 +209,6 @@ const BookingSection = () => {
   
   // Default dates use the minimum stay unless overridden by promotional URL params
 
-  // Initialize EmailJS once when component mounts
-  useEffect(() => {
-    emailjs.init('_-f5oA_eoI9biq5jw');
-  }, []);
-
-  // Check for promotional discount from URL parameters
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const promoId = urlParams.get('promo');
-    
-    if (promoId) {
-      // Fetch promotional offer details
-      fetch(`/api/promotional-offers/${promoId}`)
-        .then(response => response.json())
-        .then(data => {
-          if (data && data.id) {
-            setPromoOffer(data);
-          }
-        })
-        .catch(() => {
-          // Silent error handling - promotional offers are optional
-        });
-    }
-  }, []);
-
   // Check availability for default dates when component mounts
   useEffect(() => {
     if (defaultDates.checkIn && defaultDates.checkOut) {
@@ -289,7 +252,7 @@ const BookingSection = () => {
 
     // Listen for promotional date selection from banner
     const handlePromotionalDateSelection = (event: CustomEvent) => {
-      const { startDate, endDate, discountedPrice, originalPrice, discountPercentage } = event.detail;
+      const { startDate, endDate } = event.detail;
       
       // Update form fields with promotional dates
       form.setValue('checkIn', startDate);
@@ -506,18 +469,7 @@ const BookingSection = () => {
 
       // Send the owner notification only after server validation succeeds.
       try {
-        const emailParams = {
-          from_name: data.name,
-          from_email: data.email,
-          phone: data.phone,
-          check_in: data.checkIn,
-          check_out: data.checkOut,
-          guests: data.guests,
-          message: data.message || 'No additional message',
-          reply_to: data.email
-        };
-
-        await emailjs.send('service_i65l3ak', 'template_3ju4pvr', emailParams, '_-f5oA_eoI9biq5jw');
+        await sendBookingNotification({ ...data, guests: data.guests as "1" | "2" | "3" | "4" });
       } catch (emailError: any) {
         // Fallback: Create mailto link for manual sending
         const emailBody = `
@@ -652,7 +604,6 @@ This inquiry was submitted through the Jávea Bliss website.
                             {...field} 
                             onChange={(e) => {
                               field.onChange(e);
-                              const checkInDate = new Date(e.target.value);
                               
                               const minCheckOutString = addNights(
                                 e.target.value,

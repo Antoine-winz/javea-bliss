@@ -1,3 +1,4 @@
+import IpBlockManagement from "@/components/IpBlockManagement";
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Lock, Settings, Calendar, RefreshCw, Clock, CheckCircle, LogOut, Copy, Check, BarChart3, Plus, Edit, Trash2, ExternalLink, Star, Eye, EyeOff, DollarSign, Ban, Zap, Users } from "lucide-react";
+import { Lock, Settings, Calendar, RefreshCw, Clock, CheckCircle, LogOut, Copy, BarChart3, Plus, Edit, Trash2, ExternalLink, DollarSign, Ban, Zap, Users } from "lucide-react";
 import VisitorStats from "@/components/VisitorStats";
 import CleaningSchedule from "@/components/CleaningSchedule";
 import ReviewsManagement from "@/components/ReviewsManagement";
@@ -15,7 +16,7 @@ import { Form, FormControl, FormItem, FormLabel, FormMessage } from "@/component
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { insertPromotionalOfferSchema, insertGuestReviewSchema } from "@shared/schema";
+import { insertPromotionalOfferSchema } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import SalesCRM from "@/components/SalesCRM";
 
@@ -42,27 +43,8 @@ interface PromotionalOffer {
   updatedAt: string;
 }
 
-interface GuestReview {
-  id: number;
-  guestName: string;
-  country?: string;
-  stayDate?: string;
-  rating: number;
-  reviewText: string;
-  language: string;
-  isVisible: boolean;
-  isVerified: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
 const promotionalOfferFormSchema = insertPromotionalOfferSchema.extend({
   validUntil: z.string().min(1, "Valid until date is required"),
-});
-
-const reviewFormSchema = insertGuestReviewSchema.extend({
-  rating: z.number().min(1).max(5),
-  reviewText: z.string().min(10, "Review must be at least 10 characters"),
 });
 
 // Language-specific text suggestions
@@ -600,7 +582,7 @@ const Admin = () => {
           </TabsList>
 
           <TabsContent value="stats">
-            <VisitorStats />
+            <div className="space-y-6"><IpBlockManagement /><VisitorStats /></div>
           </TabsContent>
 
           <TabsContent value="sales">

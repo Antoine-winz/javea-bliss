@@ -2,7 +2,7 @@ import { isStayAvailable } from '@shared/availability';
 import { isValidBookingDate } from '@shared/booking-rules';
 
 import { db } from './db';
-import { calendarSettings, calendarEvents, type CalendarEvent as DBCalendarEvent } from '@shared/schema';
+import { calendarSettings, calendarEvents } from '@shared/schema';
 import { eq, desc, notInArray, sql } from 'drizzle-orm';
 
 interface CalendarEvent {
@@ -169,6 +169,7 @@ export class CalendarService {
       
     } catch (error) {
       console.error('Failed to save calendar data to database:', error);
+      throw error;
     }
   }
 
@@ -458,7 +459,6 @@ export class CalendarService {
     // Generate cleaning reminders and schedule
     for (const period of bookingPeriods) {
       const firstBooking = period[0];
-      const lastBooking = period[period.length - 1];
       
       // Add cleaning reminder before first booking
       const cleaningDate = new Date(firstBooking.startDate);
@@ -599,9 +599,6 @@ export class CalendarService {
   setupDailySync(icalUrl: string): void {
     this.storedIcalUrl = icalUrl;
     
-    // Save settings to database
-    this.saveToDatabase();
-    
     // Clear existing interval if any
     if (this.dailySyncInterval) {
       clearInterval(this.dailySyncInterval);
@@ -609,6 +606,7 @@ export class CalendarService {
 
     // Start the robust daily sync timer
     this.startRobustDailySync();
+    void this.saveToDatabase().catch(error => console.error('Calendar settings were not saved:', error));
   }
 
   /**
@@ -633,24 +631,12 @@ export class CalendarService {
     }
 
     try {
-      // Get current time in CET timezone
       const now = new Date();
-      const cetTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Amsterdam" }));
-      
-      // Check if we're in the 2:00 AM CET hour (2:00-2:59 AM)
-      const currentHour = cetTime.getHours();
-      const currentMinutes = cetTime.getMinutes();
-      
-      if (currentHour === 2) {
-        // Check if we already synced today
-        const lastSync = this.calendar.lastUpdated;
-        const today = new Date(cetTime.toDateString());
-        const lastSyncDate = new Date(lastSync.toDateString());
-        
-        // Only sync if we haven't synced today yet
-        if (lastSyncDate < today) {
-          await this.performDailySync();
-        }
+      const hour = Number(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', hour: '2-digit', hourCycle: 'h23' }).format(now));
+      const dateFormat = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid', year: 'numeric', month: '2-digit', day: '2-digit' });
+      // Compare dates in the same timezone as the schedule, including DST.
+      if (hour === 2 && dateFormat.format(this.calendar.lastUpdated) !== dateFormat.format(now)) {
+        await this.performDailySync();
       }
     } catch (error) {
       console.error('Error checking daily sync time:', error);
@@ -686,7 +672,7 @@ export class CalendarService {
       this.dailySyncInterval = null;
       
       // Update database to reflect sync is stopped
-      this.saveToDatabase();
+      void this.saveToDatabase().catch(error => console.error('Calendar settings were not saved:', error));
     }
   }
 

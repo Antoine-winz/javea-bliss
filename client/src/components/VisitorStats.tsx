@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Users, TrendingUp, Calendar, Activity, Globe, ExternalLink } from 'lucide-react';
 
 // Country flag mapping
@@ -17,6 +17,14 @@ const getCountryFlag = (countryCode: string): string => {
 };
 
 interface VisitorStatsData {
+  recentVisits?: Array<{
+    id: number;
+    visitedAt: string | null;
+    country: string | null;
+    countryCode: string | null;
+    ip: string | null;
+    source: string | null;
+  }>;
   totalVisits: number;
   currentWeekVisits: number;
   averageWeeklyVisits: number;
@@ -51,6 +59,7 @@ export default function VisitorStats() {
         
         const data = await response.json();
         setStats(data);
+        setError(false);
         setLoading(false);
       } catch (err) {
         setError(true);
@@ -160,7 +169,7 @@ export default function VisitorStats() {
           <CardContent>
             {stats.countryStats && stats.countryStats.length > 0 ? (
               <div className="space-y-3">
-                {stats.countryStats.slice(0, 8).map((country, index) => (
+                {stats.countryStats.slice(0, 8).map((country) => (
                   <div key={country.countryCode} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="text-lg">{getCountryFlag(country.countryCode)}</span>
@@ -212,6 +221,32 @@ export default function VisitorStats() {
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Origine des dernières visites</CardTitle>
+          <CardDescription>
+            Les 100 dernières visites enregistrées. Pays estimé à partir de l’IP, partiellement masquée.
+            Une visite ne correspond pas forcément à une personne distincte. Un VPN peut modifier le pays affiché.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {stats.recentVisits?.length ? <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead><tr className="border-b text-left">
+                <th className="p-3">Date et heure</th><th className="p-3">Pays</th>
+                <th className="p-3">IP masquée</th><th className="p-3">Source</th>
+              </tr></thead>
+              <tbody>{stats.recentVisits.map(visit => <tr key={visit.id} className="border-b">
+                <td className="whitespace-nowrap p-3">{visit.visitedAt ? new Date(visit.visitedAt).toLocaleString('fr-FR', { timeZone: 'Europe/Madrid' }) : 'Non disponible'}</td>
+                <td className="p-3">{visit.country && visit.country !== 'Unknown' ? <>{getCountryFlag(visit.countryCode || 'XX')} {visit.country}</> : 'Non identifié'}</td>
+                <td className="whitespace-nowrap p-3 font-mono">{visit.ip || 'Non disponible'}</td>
+                <td className="break-all p-3">{visit.source === 'Direct' ? 'Accès direct / source non transmise' : visit.source || 'Non identifiée'}</td>
+              </tr>)}</tbody>
+            </table>
+          </div> : <p className="text-sm text-muted-foreground">Aucune visite enregistrée. Le suivi est actif sur le site en production ; les visites de la prévisualisation locale sont exclues.</p>}
+        </CardContent>
+      </Card>
 
       {/* Weekly Chart */}
       <Card>
@@ -288,7 +323,7 @@ export default function VisitorStats() {
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Daily Average (This Week):</span>
               <span className="text-sm font-bold text-blue-600">
-                {Math.round(stats.currentWeekVisits / 7)} visits/day
+                {Math.round(stats.currentWeekVisits / (new Date().getUTCDay() + 1))} visits/day
               </span>
             </div>
           </div>

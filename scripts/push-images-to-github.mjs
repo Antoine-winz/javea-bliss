@@ -99,12 +99,7 @@ const imageFiles = [
   "client/public/assets/optimized/small/Terasse1.3_1749116725138.jpeg",
   "client/public/assets/optimized/small/Terasse1.4_1749116725138.jpeg",
   "client/public/assets/optimized/small/TV1_1749116725138.jpeg",
-  "client/src/assets/images/IMG_2580.jpeg",
-  "client/src/assets/images/IMG_2581.jpeg",
-  "client/src/assets/images/IMG_2582.jpeg",
-  "client/src/assets/images/IMG_2583.jpeg",
   "client/src/assets/images/logo.png",
-  "client/src/assets/images/Xabia_playa_la_Grava_7H9A3912_20171206.jpg",
 ];
 
 async function ghProxy(endpoint, options = {}) {
