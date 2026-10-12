@@ -28,14 +28,14 @@ const HeroSection = () => {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to top, hsl(213 38% 8% / 0.85) 0%, hsl(213 38% 8% / 0.5) 32%, hsl(213 38% 8% / 0.15) 62%, transparent 100%)",
+            "linear-gradient(to top, hsl(213 38% 8% / 0.68) 0%, hsl(213 38% 8% / 0.34) 32%, hsl(213 38% 8% / 0.1) 62%, transparent 100%)",
         }}
       />
       <div
         className="absolute inset-0 hidden md:block"
         style={{
           background:
-            "linear-gradient(to right, hsl(213 38% 8% / 0.6) 0%, hsl(213 38% 8% / 0.3) 38%, transparent 68%)",
+            "linear-gradient(to right, hsl(213 38% 8% / 0.44) 0%, hsl(213 38% 8% / 0.2) 38%, transparent 68%)",
         }}
       />
 
