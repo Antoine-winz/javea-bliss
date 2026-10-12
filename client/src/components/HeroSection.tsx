@@ -1,5 +1,5 @@
 import { useLanguage } from "../contexts/LanguageContext";
-import heroImage from "@assets/73647865-5998-4464-83BC-A7A6CFC6E178_1_201_a_1791803447376.jpeg";
+import heroImage from "@assets/Xabia_playa_la_Grava_7H9A3912_20171206.jpg";
 
 const HeroSection = () => {
   const { t } = useLanguage();
@@ -15,12 +15,12 @@ const HeroSection = () => {
     <section id="home" className="relative min-h-[92vh] flex items-end overflow-hidden">
       <img
         src={heroImage}
-        alt="Bright living room with a sofa, coffee table, and balcony doors"
+        alt="La Grava beach in Jávea on the Costa Blanca"
         className="absolute inset-0 h-full w-full object-cover hero-drift"
         style={{ objectPosition: "center 65%" }}
         {...{ fetchpriority: "high" }}
-        width={1536}
-        height={2048}
+        width={2000}
+        height={1333}
       />
       {/* Two scrims: one lifting off the bottom edge, one from the left. Together they
           darken only the corner the type occupies, so the photograph keeps its light. */}
