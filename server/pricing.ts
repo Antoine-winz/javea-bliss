@@ -1,4 +1,4 @@
-import { storage } from "./storage";
+import type { DailyRate } from "@shared/schema";
 
 export interface PriceInfo {
   date: string;
@@ -48,8 +48,13 @@ function getDatesBetween(startDate: string, endDate: string): string[] {
   return dates;
 }
 
-export async function getRatesForRange(startDate: string, endDate: string, stayLength?: number): Promise<PriceInfo[]> {
-  const customRates = await storage.getRatesByDateRange(startDate, endDate);
+export async function getRatesForRange(startDate: string, endDate: string, stayLength?: number,
+  loadRates: (start: string, end: string) => Promise<DailyRate[]> = async (start, end) => {
+    const { storage } = await import("./storage");
+    return storage.getRatesByDateRange(start, end);
+  },
+): Promise<PriceInfo[]> {
+  const customRates = await loadRates(startDate, endDate);
   
   const customRateMap = new Map<string, number>();
   customRates.forEach(rate => {

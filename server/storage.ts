@@ -1,6 +1,6 @@
 import { type BookingInquiry, type InsertBookingInquiry, type PromotionalOffer, type InsertPromotionalOffer, promotionalOffers, bookingInquiries, guestReviews, type GuestReview, type InsertGuestReview, dailyRates, type DailyRate, type InsertDailyRate, salesLeads, salesDownloads, blockedSalesIps, type SalesLead, type SalesDownload } from "@shared/schema";
 import { db } from "./db";
-import { eq, gte, lte, lt, and, inArray, sql, asc, desc, ilike, or, type SQL } from "drizzle-orm";
+import { eq, gte, lte, lt, and, inArray, sql, desc, ilike, or, type SQL } from "drizzle-orm";
 
 async function retryTransientNeonResult<T>(operation: () => Promise<T>): Promise<T> {
   for (let attempt = 0; attempt < 4; attempt += 1) {
@@ -175,14 +175,18 @@ export class DatabaseStorage implements IStorage {
 
   async getRatesByDateRange(startDate: string, endDate: string): Promise<DailyRate[]> {
     try {
-      const rates = await db.select()
-        .from(dailyRates)
-        .where(and(
-          gte(dailyRates.date, startDate),
-          lte(dailyRates.date, endDate)
-        ))
-        .orderBy(asc(dailyRates.date));
-      return rates;
+      // An aggregate always returns one row, including when no overrides exist.
+      const [result] = await db.select({ items: sql<DailyRate[]>`
+        COALESCE(json_agg(json_build_object(
+          'id', ${dailyRates.id}, 'date', ${dailyRates.date}, 'rate', ${dailyRates.rate},
+          'createdAt', ${dailyRates.createdAt}, 'updatedAt', ${dailyRates.updatedAt}
+        ) ORDER BY ${dailyRates.date}), '[]'::json)` })
+        .from(dailyRates).where(and(gte(dailyRates.date, startDate), lte(dailyRates.date, endDate)));
+      if (!result || !Array.isArray(result.items)) throw new Error("Invalid daily rates result");
+      return result.items.map(row => ({ ...row,
+        createdAt: row.createdAt ? new Date(row.createdAt) : null,
+        updatedAt: row.updatedAt ? new Date(row.updatedAt) : null,
+      }));
     } catch (error) {
       console.error("Error fetching daily rates by date range:", error);
       throw error;
@@ -280,17 +284,15 @@ export class DatabaseStorage implements IStorage {
   }
 
   async claimSalesBrochureDownload(id: number, downloadedAt: Date): Promise<boolean> {
-    const claimed = await retryTransientNeonResult(() =>
-      db.update(salesLeads)
-        .set({ brochureDownloadedAt: downloadedAt, updatedAt: downloadedAt })
-        .where(and(
-          eq(salesLeads.id, id),
-          eq(salesLeads.verificationStatus, "verified"),
-          sql`${salesLeads.brochureDownloadedAt} IS NULL`,
-        ))
-        .returning({ id: salesLeads.id })
-    );
-    return claimed.length === 1;
+    // Keep the claim atomic; COUNT also returns a row when a competing request wins.
+    const result = await db.execute(sql`WITH claimed AS (
+      UPDATE ${salesLeads}
+      SET brochure_downloaded_at = ${downloadedAt}, updated_at = ${downloadedAt}
+      WHERE id = ${id} AND verification_status = 'verified' AND brochure_downloaded_at IS NULL
+      RETURNING id
+    ) SELECT COUNT(*)::int AS count FROM claimed`);
+    if (!result.rows[0]) throw new Error("Missing brochure claim result");
+    return Number(result.rows[0].count) === 1;
   }
 
   async releaseSalesBrochureDownload(id: number, downloadedAt: Date): Promise<void> {
@@ -346,7 +348,14 @@ export class DatabaseStorage implements IStorage {
   }
 
   async listBlockedIps() {
-    return retryTransientNeonResult(() => db.select().from(blockedSalesIps).orderBy(desc(blockedSalesIps.blockedAt)));
+    const [result] = await db.select({ items: sql<(typeof blockedSalesIps.$inferSelect)[]>`
+      COALESCE(json_agg(json_build_object(
+        'id', ${blockedSalesIps.id}, 'ipAddress', ${blockedSalesIps.ipAddress},
+        'city', ${blockedSalesIps.city}, 'country', ${blockedSalesIps.country},
+        'blockedAt', ${blockedSalesIps.blockedAt}
+      ) ORDER BY ${blockedSalesIps.blockedAt} DESC), '[]'::json)` }).from(blockedSalesIps);
+    if (!result || !Array.isArray(result.items)) throw new Error("Invalid IP block rules result");
+    return result.items.map(row => ({ ...row, blockedAt: row.blockedAt ? new Date(row.blockedAt) : null }));
   }
 
   async isSalesIpBlocked(ipAddress: string): Promise<boolean> {
