@@ -56,18 +56,12 @@ const HeroSection = () => {
           </p>
 
           <div
-            className="flex flex-wrap items-center gap-4 hero-rise"
+            className="flex flex-wrap items-center gap-x-8 gap-y-5 hero-rise"
             style={{ '--rise-delay': '0.45s' } as React.CSSProperties}
           >
             <a href={`/${language}/for-sale`} className="btn-on-dark">{saleContent[language].sale}</a>
-            <button onClick={() => scrollToSection("booking")} className="btn-on-dark">
+            <button onClick={() => scrollToSection("booking")} className="link-underline text-bone/90 hover:text-bone">
               {t('hero.bookButton')}
-            </button>
-            <button
-              onClick={() => scrollToSection("apartment")}
-              className="link-underline text-bone/90 hover:text-bone"
-            >
-              {t('hero.exploreButton')}
             </button>
           </div>
         </div>

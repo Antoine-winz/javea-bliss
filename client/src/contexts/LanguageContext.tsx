@@ -146,7 +146,7 @@ const translations = {
 
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
-    'hero.eyebrow': "Jávea · Costa Blanca, Spain",
+    'hero.eyebrow': "For sale · El Arenal · Costa Blanca",
     'band.caption': "The quiet side of the Arenal.",
     'apartment.eyebrow': "Where you stay",
     'amenities.eyebrow': "Inside",
@@ -155,8 +155,8 @@ const translations = {
     'testimonials.eyebrow': "Guest reviews",
     'rates.eyebrow': "Rates",
     'booking.eyebrow': "Enquire",
-    'hero.subtitle': 'Holiday Apartment near Arenal Beach',
-    'hero.tagline': "Two double bedrooms, a terrace over the canal, and the beach at the end of the street. Book direct from €130 a night.",
+    'hero.subtitle': "Your turnkey apartment in Jávea, near Arenal Beach",
+    'hero.tagline': "Renovated, furnished and fully equipped. Two double bedrooms, a covered balcony and the beach approximately 250 metres away. Direct sale by the owner.",
     'hero.bookButton': 'Book Your Stay',
     'hero.exploreButton': 'Explore the Apartment',
 
@@ -489,7 +489,7 @@ const translations = {
 
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
-    'hero.eyebrow': "Jávea · Costa Blanca, Spanje",
+    'hero.eyebrow': "Te koop · El Arenal · Costa Blanca",
     'band.caption': "De rustige kant van het Arenal.",
     'apartment.eyebrow': "Waar je verblijft",
     'amenities.eyebrow': "Binnen",
@@ -498,8 +498,8 @@ const translations = {
     'testimonials.eyebrow': "Beoordelingen",
     'rates.eyebrow': "Tarieven",
     'booking.eyebrow': "Aanvraag",
-    'hero.subtitle': 'Vakantieappartement bij het Arenal strand',
-    'hero.tagline': "Twee slaapkamers met tweepersoonsbedden, een terras boven het kanaal en het strand aan het eind van de straat. Boek direct bij de eigenaar vanaf €130 per nacht.",
+    'hero.subtitle': "Uw instapklare appartement in Jávea, bij het Arenal-strand",
+    'hero.tagline': "Gerenoveerd, gemeubileerd en volledig uitgerust. Twee tweepersoonsslaapkamers, een overdekt balkon en het strand op ongeveer 250 meter. Rechtstreeks van de eigenaar.",
     'hero.bookButton': 'Boek Je Verblijf',
     'hero.exploreButton': 'Bekijk het Appartement',
 
@@ -832,7 +832,7 @@ const translations = {
 
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
-    'hero.eyebrow': "Jávea · Costa Blanca, Espagne",
+    'hero.eyebrow': "À vendre · El Arenal · Costa Blanca",
     'band.caption': "Le côté calme de l'Arenal.",
     'apartment.eyebrow': "Votre logement",
     'amenities.eyebrow': "À l'intérieur",
@@ -841,8 +841,8 @@ const translations = {
     'testimonials.eyebrow': "Avis",
     'rates.eyebrow': "Tarifs",
     'booking.eyebrow': "Demande",
-    'hero.subtitle': 'Appartement de vacances près de la plage de l\'Arenal',
-    'hero.tagline': "Deux chambres doubles, une terrasse sur le canal et la plage à deux pas, au bout de la rue. Réservez en direct dès 130 € la nuit.",
+    'hero.subtitle': "Votre appartement clé en main à Jávea, près de l’Arenal",
+    'hero.tagline': "Rénové, meublé et entièrement équipé. Deux chambres doubles, un balcon couvert et la plage à environ 250 mètres. Vente directe du propriétaire.",
     'hero.bookButton': 'Réserver Votre Séjour',
     'hero.exploreButton': 'Découvrir l\'Appartement',
 
@@ -1175,7 +1175,7 @@ const translations = {
 
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
-    'hero.eyebrow': "Jávea · Costa Blanca, Spagna",
+    'hero.eyebrow': "In vendita · El Arenal · Costa Blanca",
     'band.caption': "Il lato tranquillo dell'Arenal.",
     'apartment.eyebrow': "Dove alloggi",
     'amenities.eyebrow': "Dentro",
@@ -1184,8 +1184,8 @@ const translations = {
     'testimonials.eyebrow': "Recensioni",
     'rates.eyebrow': "Tariffe",
     'booking.eyebrow': "Richiesta",
-    'hero.subtitle': 'Casa vacanze vicino alla spiaggia dell\'Arenal',
-    'hero.tagline': "Due camere matrimoniali, una terrazza sul canale e la spiaggia in fondo alla strada. Prenota direttamente da 130 € a notte.",
+    'hero.subtitle': "Il vostro appartamento chiavi in mano a Jávea, vicino all’Arenal",
+    'hero.tagline': "Ristrutturato, arredato e completamente attrezzato. Due camere matrimoniali, un balcone coperto e la spiaggia a circa 250 metri. Vendita diretta dal proprietario.",
     'hero.bookButton': 'Prenota il Tuo Soggiorno',
     'hero.exploreButton': 'Scopri l\'Appartamento',
 
@@ -1518,7 +1518,7 @@ const translations = {
 
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
-    'hero.eyebrow': "Jávea · Costa Blanca, Spanien",
+    'hero.eyebrow': "Zu verkaufen · El Arenal · Costa Blanca",
     'band.caption': "Die ruhige Seite des Arenal.",
     'apartment.eyebrow': "Ihr Zuhause auf Zeit",
     'amenities.eyebrow': "Innen",
@@ -1527,8 +1527,8 @@ const translations = {
     'testimonials.eyebrow': "Bewertungen",
     'rates.eyebrow': "Preise",
     'booking.eyebrow': "Anfrage",
-    'hero.subtitle': 'Ferienwohnung am Arenal-Strand',
-    'hero.tagline': "Zwei Schlafzimmer mit Doppelbett, eine Terrasse über dem Kanal, der Strand am Ende der Straße. Direkt buchen ab 130 € pro Nacht.",
+    'hero.subtitle': "Ihre bezugsfertige Wohnung in Jávea, nahe dem Arenal-Strand",
+    'hero.tagline': "Renoviert, möbliert und vollständig ausgestattet. Zwei Doppelschlafzimmer, ein überdachter Balkon und der Strand in etwa 250 Metern Entfernung. Direkt vom Eigentümer.",
     'hero.bookButton': 'Jetzt Buchen',
     'hero.exploreButton': 'Wohnung Ansehen',
 
@@ -1861,7 +1861,7 @@ const translations = {
 
     // Hero Section
     'hero.title': 'JÁVEA BLISS',
-    'hero.eyebrow': "Jávea · Costa Blanca, España",
+    'hero.eyebrow': "En venta · El Arenal · Costa Blanca",
     'band.caption': "El lado tranquilo del Arenal.",
     'apartment.eyebrow': "Dónde te alojas",
     'amenities.eyebrow': "Dentro",
@@ -1870,8 +1870,8 @@ const translations = {
     'testimonials.eyebrow': "Opiniones",
     'rates.eyebrow': "Tarifas",
     'booking.eyebrow': "Consulta",
-    'hero.subtitle': 'Apartamento junto a la Playa del Arenal',
-    'hero.tagline': "Dos habitaciones de matrimonio, una terraza sobre el canal y la playa a un paso, al final de la calle. Reserva directa desde 130 € la noche.",
+    'hero.subtitle': "Su apartamento llave en mano en Jávea, junto al Arenal",
+    'hero.tagline': "Reformado, amueblado y completamente equipado. Dos dormitorios dobles, balcón cubierto y la playa a unos 250 metros. Venta directa del propietario.",
     'hero.bookButton': 'Reserva Tu Estancia',
     'hero.exploreButton': 'Descubre el Apartamento',
 

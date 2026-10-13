@@ -13,7 +13,6 @@ import RatesSection from "@/components/RatesSection";
 import LongTermRentalPromo from "@/components/LongTermRentalPromo";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
-import IdealistaListing from "@/components/IdealistaListing";
 
 /*
   Order: photography sits directly under the hero and the essentials strip, photos are how a rental gets shortlisted. The long-stay offer appears once
@@ -25,7 +24,6 @@ const Home = () => {
       <Navigation />
       <PromotionalHeader />
       <HeroSection />
-      <IdealistaListing />
       <AtGlanceSection />
       <GallerySection />
       <ApartmentSection />
