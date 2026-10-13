@@ -348,14 +348,29 @@ export class DatabaseStorage implements IStorage {
   }
 
   async listBlockedIps() {
-    const [result] = await db.select({ items: sql<(typeof blockedSalesIps.$inferSelect)[]>`
-      COALESCE(json_agg(json_build_object(
-        'id', ${blockedSalesIps.id}, 'ipAddress', ${blockedSalesIps.ipAddress},
-        'city', ${blockedSalesIps.city}, 'country', ${blockedSalesIps.country},
-        'blockedAt', ${blockedSalesIps.blockedAt}
-      ) ORDER BY ${blockedSalesIps.blockedAt} DESC), '[]'::json)` }).from(blockedSalesIps);
-    if (!result || !Array.isArray(result.items)) throw new Error("Invalid IP block rules result");
-    return result.items.map(row => ({ ...row, blockedAt: row.blockedAt ? new Date(row.blockedAt) : null }));
+    type Rule = typeof blockedSalesIps.$inferSelect;
+    // The HTTP driver's empty rowset can be null. Aggregate into one row so an
+    // empty table is a valid [] without swallowing real database failures.
+    const [result] = await retryTransientNeonResult(() =>
+      db.select({
+        blocks: sql<Array<Omit<Rule, "blockedAt"> & { blockedAt: number | null }>>`
+          COALESCE(json_agg(json_build_object(
+            'id', ${blockedSalesIps.id},
+            'ipAddress', ${blockedSalesIps.ipAddress},
+            'city', ${blockedSalesIps.city},
+            'country', ${blockedSalesIps.country},
+            'blockedAt', EXTRACT(EPOCH FROM ${blockedSalesIps.blockedAt}) * 1000
+          ) ORDER BY ${blockedSalesIps.blockedAt} DESC), '[]'::json)
+        `,
+      }).from(blockedSalesIps)
+    );
+    if (!result || !Array.isArray(result.blocks)) {
+      throw new Error("Invalid database result for IP block rules");
+    }
+    return result.blocks.map((rule): Rule => ({
+      ...rule,
+      blockedAt: rule.blockedAt === null ? null : new Date(rule.blockedAt),
+    }));
   }
 
   async isSalesIpBlocked(ipAddress: string): Promise<boolean> {
