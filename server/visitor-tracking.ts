@@ -51,7 +51,10 @@ export async function initializeVisitorTracking() {
     SELECT visit_date, MIN(id) AS keep_id, SUM(visit_count) AS total FROM visitor_stats GROUP BY visit_date HAVING COUNT(*) > 1
   ), merged AS (
     UPDATE visitor_stats SET visit_count = totals.total FROM totals WHERE visitor_stats.id = totals.keep_id RETURNING visitor_stats.id
-  ) DELETE FROM visitor_stats USING totals WHERE visitor_stats.visit_date = totals.visit_date AND visitor_stats.id <> totals.keep_id`);
+  ), deleted AS (
+    DELETE FROM visitor_stats USING totals WHERE visitor_stats.visit_date = totals.visit_date AND visitor_stats.id <> totals.keep_id RETURNING visitor_stats.id
+  )
+  SELECT COUNT(*)::int AS deleted_count FROM deleted`);
   await db.execute(sql`CREATE UNIQUE INDEX IF NOT EXISTS visitor_stats_date_unique ON visitor_stats(visit_date)`);
   await db.execute(sql`CREATE INDEX IF NOT EXISTS visitor_details_recent_idx ON visitor_details(visited_at DESC, id DESC)`);
 }
