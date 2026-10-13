@@ -60,12 +60,12 @@ export const saleTitles: Record<Language, string> = {
 };
 
 const saleDescriptions: Record<Language, string> = {
-  "en": "Renovated 2-bedroom apartment for sale in Jávea, Costa Blanca. 80 m², balcony and lift, approx. 250 m from Arenal Beach. Arrange a viewing.",
-  "fr": "Appartement rénové à vendre à Jávea, Costa Blanca : 80 m², 2 chambres, balcon et ascenseur, à env. 250 m de l’Arenal. Organisez une visite.",
-  "es": "Apartamento reformado en venta en Jávea, Costa Blanca. 80 m², 2 dormitorios, balcón y ascensor, a unos 250 m del Arenal. Concierte una visita.",
-  "de": "Renovierte Wohnung zum Kauf in Jávea, Costa Blanca: 80 m², 2 Schlafzimmer, Balkon und Aufzug, ca. 250 m zum Arenal-Strand. Besichtigung anfragen.",
-  "nl": "Gerenoveerd appartement te koop in Jávea, Costa Blanca: 80 m², 2 slaapkamers, balkon en lift, ca. 250 m van het Arenal-strand. Plan een bezichtiging.",
-  "it": "Appartamento ristrutturato in vendita a Jávea, Costa Blanca: 80 m², 2 camere, balcone e ascensore, a circa 250 m dall’Arenal. Prenota una visita."
+  "en": "Renovated 2-bedroom apartment for sale in Jávea, Costa Blanca. 80 m², balcony and lift, approx. 250 m from Arenal Beach. See the Idealista listing for the asking price or request a private brochure.",
+  "fr": "Appartement rénové à vendre à Jávea, Costa Blanca : 80 m², 2 chambres, balcon et ascenseur, à env. 250 m de l’Arenal. Consultez Idealista pour le prix ou demandez une brochure privée.",
+  "es": "Apartamento reformado en venta en Jávea, Costa Blanca. 80 m², 2 dormitorios, balcón y ascensor, a unos 250 m del Arenal. Consulte Idealista para ver el precio o solicite un folleto privado.",
+  "de": "Renovierte Wohnung zum Kauf in Jávea, Costa Blanca: 80 m², 2 Schlafzimmer, Balkon und Aufzug, ca. 250 m zum Arenal-Strand. Den Kaufpreis finden Sie auf Idealista oder in der privaten Broschüre.",
+  "nl": "Gerenoveerd appartement te koop in Jávea, Costa Blanca: 80 m², 2 slaapkamers, balkon en lift, ca. 250 m van het Arenal-strand. Bekijk Idealista voor de vraagprijs of vraag de privébrochure aan.",
+  "it": "Appartamento ristrutturato in vendita a Jávea, Costa Blanca: 80 m², 2 camere, balcone e ascensore, a circa 250 m dall’Arenal. Consulti Idealista per il prezzo o richieda la brochure privata."
 };
 
 export const saleHreflang = [

@@ -12,6 +12,7 @@ test('all sale languages include visible inventory and complete FAQ before JavaS
   assert.equal((html.match(/<article /g) || []).length, salesFAQ[lang].items.length);
   assert.ok(html.includes(saleContent[lang].inventory));
   assert.ok(html.includes(`href="/${lang}/"`));
+   assert.doesNotMatch(html, /367[.,\s]?\s?900/);
   assert.ok(!html.includes('<div id="root"></div>'));
  }
  assert.ok(!injectSEOIntoHTML(template, getRouteSEO('/admin')!).includes('data-sale-initial'));
