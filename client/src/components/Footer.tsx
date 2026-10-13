@@ -15,7 +15,7 @@ const seoGuides = [
 ];
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -60,6 +60,14 @@ const Footer = () => {
                   </button>
                 </li>
               ))}
+              <li>
+                <Link
+                  href={`/${language}/for-sale`}
+                  className="text-bone/75 hover:text-brass transition-colors text-[0.9375rem]"
+                >
+                  {t('footer.saleInfo')}
+                </Link>
+              </li>
             </ul>
           </div>
 

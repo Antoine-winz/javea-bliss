@@ -228,6 +228,7 @@ const translations = {
     'footer.tagline': "A renovated two-bedroom holiday apartment on the Nou Fontana canal, one street back from Arenal Beach, Jávea.",
     'footer.rights': 'All rights reserved.',
     'footer.quickLinks': 'Quick Links',
+    'footer.saleInfo': 'More information about the sale',
     'footer.guides': 'Javea Guides',
 
     // Form validation
@@ -570,6 +571,7 @@ const translations = {
     'footer.tagline': "Een gerenoveerd vakantieappartement met twee slaapkamers aan het Nou Fontana-kanaal, één straat achter het Arenal strand, Jávea.",
     'footer.rights': 'Alle rechten voorbehouden.',
     'footer.quickLinks': 'Snelle Links',
+    'footer.saleInfo': 'Meer informatie over de verkoop',
     'footer.guides': 'Jávea-gidsen (in het Engels)',
 
     // Form validation
@@ -912,6 +914,7 @@ const translations = {
     'footer.tagline': "Appartement de vacances rénové de deux chambres, sur le canal Nou Fontana, à une rue de la plage de l'Arenal, Jávea.",
     'footer.rights': 'Tous droits réservés.',
     'footer.quickLinks': 'Liens Rapides',
+    'footer.saleInfo': 'Plus d’information sur la vente',
     'footer.guides': 'Guides Jávea (en anglais)',
 
     // Form validation
@@ -1254,6 +1257,7 @@ const translations = {
     'footer.tagline': "Casa vacanze a Jávea: un appartamento ristrutturato con due camere da letto sul canale Nou Fontana, a una strada dalla spiaggia dell'Arenal.",
     'footer.rights': 'Tutti i diritti riservati.',
     'footer.quickLinks': 'Link Rapidi',
+    'footer.saleInfo': 'Maggiori informazioni sulla vendita',
     'footer.guides': 'Guide su Jávea (in inglese)',
 
     // Form validation
@@ -1596,6 +1600,7 @@ const translations = {
     'footer.tagline': "Renovierte Ferienwohnung mit zwei Schlafzimmern am Nou-Fontana-Kanal, eine Straße hinter dem Arenal-Strand, Jávea.",
     'footer.rights': 'Alle Rechte vorbehalten.',
     'footer.quickLinks': 'Schnellzugriff',
+    'footer.saleInfo': 'Weitere Informationen zum Verkauf',
     'footer.guides': 'Jávea-Guides (auf Englisch)',
 
     // Form validation
@@ -1938,6 +1943,7 @@ const translations = {
     'footer.tagline': "Apartamento vacacional reformado de dos habitaciones, junto al canal de la Fontana y a una calle de la Playa del Arenal, en Jávea.",
     'footer.rights': 'Todos los derechos reservados.',
     'footer.quickLinks': 'Enlaces Rápidos',
+    'footer.saleInfo': 'Más información sobre la venta',
     'footer.guides': 'Guías de Jávea (en inglés)',
 
     // Form validation

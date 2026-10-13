@@ -51,21 +51,21 @@ const homepageDescriptions: Record<Language, string> = {
 };
 
 export const saleTitles: Record<Language, string> = {
-  "en": "Apartment for sale in Jávea, Arenal | Jávea Bliss",
-  "fr": "Appartement à vendre à Jávea, Arenal | Jávea Bliss",
-  "es": "Apartamento en venta en Jávea, Arenal | Jávea Bliss",
-  "de": "Wohnung kaufen in Jávea, Arenal | Jávea Bliss",
-  "nl": "Appartement te koop in Jávea, Arenal | Jávea Bliss",
-  "it": "Appartamento in vendita a Jávea, Arenal | Jávea Bliss"
+  "en": "Apartment for sale in Jávea/Xàbia, Arenal | Jávea Bliss",
+  "fr": "Appartement à vendre à Jávea/Xàbia, Arenal | Jávea Bliss",
+  "es": "Apartamento en venta en Jávea/Xàbia, Arenal | Jávea Bliss",
+  "de": "Wohnung kaufen in Jávea/Xàbia, Arenal | Jávea Bliss",
+  "nl": "Appartement te koop in Jávea/Xàbia, Arenal | Jávea Bliss",
+  "it": "Appartamento in vendita a Jávea/Xàbia, Arenal | Jávea Bliss"
 };
 
 const saleDescriptions: Record<Language, string> = {
-  "en": "Renovated 2-bedroom apartment for sale in Jávea, Costa Blanca. 80 m², balcony and lift, approx. 250 m from Arenal Beach. €367,900. Arrange a viewing.",
-  "fr": "Appartement rénové à vendre à Jávea, Costa Blanca : 80 m², 2 chambres, balcon et ascenseur, à env. 250 m de l’Arenal. 367 900 €. Organisez une visite.",
-  "es": "Apartamento reformado en venta en Jávea, Costa Blanca. 80 m², 2 dormitorios, balcón y ascensor, a unos 250 m del Arenal. 367.900 €. Concierte una visita.",
-  "de": "Renovierte Wohnung zum Kauf in Jávea, Costa Blanca: 80 m², 2 Schlafzimmer, Balkon und Aufzug, ca. 250 m zum Arenal-Strand. 367.900 €. Besichtigung anfragen.",
-  "nl": "Gerenoveerd appartement te koop in Jávea, Costa Blanca: 80 m², 2 slaapkamers, balkon en lift, ca. 250 m van het Arenal-strand. €367.900. Plan een bezichtiging.",
-  "it": "Appartamento ristrutturato in vendita a Jávea, Costa Blanca: 80 m², 2 camere, balcone e ascensore, a circa 250 m dall’Arenal. 367.900 €. Prenota una visita."
+  "en": "Renovated 2-bedroom apartment for sale in Jávea, Costa Blanca. 80 m², balcony and lift, approx. 250 m from Arenal Beach. Arrange a viewing.",
+  "fr": "Appartement rénové à vendre à Jávea, Costa Blanca : 80 m², 2 chambres, balcon et ascenseur, à env. 250 m de l’Arenal. Organisez une visite.",
+  "es": "Apartamento reformado en venta en Jávea, Costa Blanca. 80 m², 2 dormitorios, balcón y ascensor, a unos 250 m del Arenal. Concierte una visita.",
+  "de": "Renovierte Wohnung zum Kauf in Jávea, Costa Blanca: 80 m², 2 Schlafzimmer, Balkon und Aufzug, ca. 250 m zum Arenal-Strand. Besichtigung anfragen.",
+  "nl": "Gerenoveerd appartement te koop in Jávea, Costa Blanca: 80 m², 2 slaapkamers, balkon en lift, ca. 250 m van het Arenal-strand. Plan een bezichtiging.",
+  "it": "Appartamento ristrutturato in vendita a Jávea, Costa Blanca: 80 m², 2 camere, balcone e ascensore, a circa 250 m dall’Arenal. Prenota una visita."
 };
 
 export const saleHreflang = [
@@ -226,7 +226,7 @@ export function getPageStructuredData(seo: RouteSEO): Record<string, unknown> | 
       { '@type': 'RealEstateListing', '@id': seo.canonical, url: seo.canonical,
         name: seo.title, description: seo.description, inLanguage: seo.lang,
         mainEntity: { '@id': `${BASE_URL}/#sale-apartment` },
-        offers: { '@type': 'Offer', price: 367900, priceCurrency: 'EUR',
+        offers: { '@type': 'Offer',
           businessFunction: 'http://purl.org/goodrelations/v1#Sell', url: seo.canonical,
           itemOffered: { '@id': `${BASE_URL}/#sale-apartment` } } }
     ] };

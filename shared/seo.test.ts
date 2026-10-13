@@ -64,7 +64,7 @@ test('sale pages are indexable in every language with regional alternates and sa
     }
     const graph = JSON.parse(html.match(/data-schema="main">([\s\S]*?)<\/script>/)![1])['@graph'];
     const listing = graph.find((item: any) => item['@type'] === 'RealEstateListing');
-    assert.equal(listing.offers.price, 367900);
+    assert.equal(listing.offers.price, undefined);
     assert.equal(graph[0].numberOfBedrooms, 2);
     assert.equal(graph[0].floorSize.value, 80);
   }
