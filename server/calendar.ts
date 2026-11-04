@@ -1,4 +1,5 @@
 import { isStayAvailable } from '@shared/availability';
+import { RENTALS_ENABLED } from '@shared/site-access';
 import { isValidBookingDate } from '@shared/booking-rules';
 
 import { db } from './db';
@@ -37,7 +38,7 @@ export class CalendarService {
   private isSyncing: boolean = false;
 
   constructor() {
-    if (process.env.NODE_ENV === "test") return;
+    if (process.env.NODE_ENV === "test" || !RENTALS_ENABLED) return;
     // Defer async initialization to prevent unhandled rejections crashing the process
     setTimeout(() => this.initialize(), 0);
   }

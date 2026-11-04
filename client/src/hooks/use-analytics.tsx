@@ -11,7 +11,7 @@ export const useAnalytics = () => {
     if (location !== prevLocationRef.current) {
       trackPageView(location);
       // The first document load is already counted by the server middleware.
-      if (prevLocationRef.current !== null && /^\/(es|en|fr|de|nl|it)(?:\/|$)/.test(location)) {
+      if (import.meta.env.PROD && prevLocationRef.current !== null && /^\/(es|en|fr|de|nl|it)(?:\/|$)/.test(location)) {
         void fetch('/api/visitor-navigation', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path: location.split('?')[0] }), keepalive: true }).catch(() => {});
       }
       prevLocationRef.current = location;

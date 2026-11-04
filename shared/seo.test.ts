@@ -1,3 +1,4 @@
+import { RENTALS_ENABLED } from "./site-access";
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
@@ -13,13 +14,13 @@ test('all six languages deliver consistent metadata and inline structured data b
       assert.equal((html.match(/rel="canonical"/g) || []).length, 1);
       assert.equal((html.match(/application\/ld\+json/g) || []).length, 1);
       const schema = JSON.parse(html.match(/data-schema="main">([\s\S]*?)<\/script>/)![1]);
-      const page = schema['@graph'].find((item: any) => item['@type'] === 'WebPage');
+      const page = schema['@graph'].find((item: any) => item['@type'] === (RENTALS_ENABLED ? 'WebPage' : 'RealEstateListing'));
       assert.equal(page.inLanguage, lang);
       assert.equal(page.name, seo.title);
       assert.equal(page.description, seo.description);
       assert.equal(page.url, seo.canonical);
       assert.equal(schema['@graph'][0].address.streetAddress, undefined);
-      if (path.endsWith('/recommendations')) {
+      if (RENTALS_ENABLED && path.endsWith('/recommendations')) {
         assert.ok(seo.description.includes('La Fontana'));
         assert.ok(seo.description.includes('Ammos'));
         assert.equal(schema['@graph'].find((item: any) => item['@type'] === 'ItemList').itemListElement.length, 7);
@@ -38,8 +39,8 @@ test('privacy and administration pages retain private metadata', () => {
 });
 test('guide canonicals and alternates point to the guide, not the homepage', () => {
   const seo = getRouteSEO('/fr/recommendations')!;
-  assert.equal(seo.canonical, 'https://javeabliss.com/fr/recommendations');
-  assert.equal(seo.hreflang.find(link => link.lang === 'en')?.href, 'https://javeabliss.com/en/recommendations');
+  assert.equal(seo.canonical, RENTALS_ENABLED ? 'https://javeabliss.com/fr/recommendations' : 'https://javeabliss.com/fr/for-sale');
+  assert.equal(seo.hreflang.find(link => link.lang === 'en')?.href, RENTALS_ENABLED ? 'https://javeabliss.com/en/recommendations' : 'https://javeabliss.com/en/for-sale');
   assert.equal(seo.title.includes('2025'), false);
 });
 test('private server HTML does not inherit public indexing or language alternates', () => {

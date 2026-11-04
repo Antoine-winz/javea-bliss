@@ -60,7 +60,9 @@ async function main() {
   const { body } = await request('https://javeabliss.com/api/sales/session', { json: true });
   assert.deepEqual(body, { verified: false });
   await request('https://javeabliss.com/api/sales/brochure?lang=fr', { status: 401, json: true });
-  await request('https://javeabliss.com/api/calendar/blocked-dates', { json: true });
+  const { body: closedCalendar } = await request('https://javeabliss.com/api/calendar/blocked-dates', { status: 503, json: true });
+  assert.equal(closedCalendar.code, 'RENTALS_DISABLED');
+  await request('https://javeabliss.com/api/booking-inquiry', { status: 503, json: true });
   console.log('Production checks passed.');
 }
 

@@ -1,3 +1,4 @@
+import { RENTALS_ENABLED } from "./site-access";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { getRouteSEO, injectSEOIntoHTML } from './seo';
@@ -11,7 +12,7 @@ test('all sale languages include visible inventory and complete FAQ before JavaS
   assert.match(html, /<h1/);
   assert.equal((html.match(/<article /g) || []).length, salesFAQ[lang].items.length);
   assert.ok(html.includes(saleContent[lang].inventory));
-  assert.ok(html.includes(`href="/${lang}/"`));
+  assert.equal(html.includes(`href="/${lang}/"`), RENTALS_ENABLED);
    assert.doesNotMatch(html, /367[.,\s]?\s?900/);
   assert.ok(!html.includes('<div id="root"></div>'));
  }

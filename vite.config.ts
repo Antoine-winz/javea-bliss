@@ -1,3 +1,4 @@
+import { siteAccess } from "./server/site-access";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
@@ -7,6 +8,7 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 export default defineConfig({
   plugins: [
     react(),
+    { name: "site-access", configureServer(server) { server.middlewares.use(siteAccess); } },
     {
       name: "local-preview-calendar",
       apply: "serve",
@@ -36,6 +38,26 @@ export default defineConfig({
             res.setHeader("Content-Type", "application/json");
             res.end(JSON.stringify({ message: "Live calendar unavailable in preview" }));
           }
+        });
+      },
+    },
+    {
+      name: 'standalone-preview-api',
+      configureServer(server) {
+        if (server.config.server.middlewareMode) return;
+        server.middlewares.use((req, res, next) => {
+          const url = new URL(req.url || '/', 'http://localhost');
+          if (!url.pathname.startsWith('/api/')) return next();
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.setHeader('Cache-Control', 'no-store');
+          if (req.method === 'GET' && url.pathname === '/api/sales/session') {
+            res.end(JSON.stringify({ verified: false })); return;
+          }
+          if (req.method === 'GET' && url.pathname === '/api/admin/session') {
+            res.statusCode = 401; res.end(JSON.stringify({ authenticated: false })); return;
+          }
+          res.statusCode = 503;
+          res.end(JSON.stringify({ code: 'PREVIEW_API_UNAVAILABLE', message: 'The standalone preview has no connected application backend.' }));
         });
       },
     },

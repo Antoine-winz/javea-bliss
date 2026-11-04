@@ -8,8 +8,13 @@ declare global {
 
 // Initialize once; SPA navigation sends the page views.
 let initialized = false;
+function canTrack() {
+  return typeof window !== 'undefined' && import.meta.env.PROD
+    && !['localhost', '127.0.0.1', '[::1]', '::1'].includes(window.location.hostname)
+    && !window.location.pathname.startsWith('/admin');
+}
 export const initGA = () => {
-  if (initialized) return;
+  if (initialized || !canTrack()) return;
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-ZQ6FF9R1BQ';
   window.dataLayer = window.dataLayer || [];
   window.gtag = function () { window.dataLayer.push(arguments); };
@@ -24,14 +29,16 @@ export const initGA = () => {
 
 // Track page views - useful for single-page applications
 export const trackPageView = (url: string) => {
-  if (typeof window === 'undefined' || !window.gtag) return;
+  if (!canTrack() || !window.gtag) return;
   
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-ZQ6FF9R1BQ';
   if (!measurementId) return;
   
 
-  window.gtag('config', measurementId, {
-    page_path: url
+  window.gtag('event', 'page_view', {
+    send_to: measurementId,
+    page_location: new URL(url, window.location.origin).href,
+    page_title: document.title,
   });
 };
 
@@ -42,7 +49,7 @@ export const trackEvent = (
   label?: string, 
   value?: number
 ) => {
-  if (typeof window === 'undefined' || !window.gtag) return;
+  if (!canTrack() || !window.gtag) return;
   
   window.gtag('event', action, {
     event_category: category,

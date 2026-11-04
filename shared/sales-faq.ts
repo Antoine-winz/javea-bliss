@@ -1,4 +1,5 @@
 import { saleContent, type SaleLanguage } from "./sale-content";
+import { saleReason } from "./sale-story";
 export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; items: [string, string][] }> = {
   en: {
     title: "Buying this apartment in Jávea",
@@ -126,4 +127,6 @@ export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; item
 // Keep the turnkey promise identical in the visible FAQ and initial HTML.
 for (const language of Object.keys(salesFAQ) as SaleLanguage[]) {
   salesFAQ[language].items[0][1] = saleContent[language].inventory;
+  const reason = saleReason[language];
+  salesFAQ[language].items.splice(1, 0, [reason.question, reason.answer]);
 }

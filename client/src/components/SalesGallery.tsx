@@ -36,7 +36,7 @@ export default function SalesGallery({ language }: { language: SaleLanguage }) {
               <a href={src} target="_blank" rel="noopener noreferrer" aria-label={`${t.open} — ${t.captions[index]}`} className="group block overflow-hidden border border-[#c9c2b6] bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#24352f]">
                 <img src={src} alt={t.captions[index]} loading="lazy" decoding="async" className={index === photos.length - 1 ? 'mx-auto max-h-[720px] w-full object-contain p-4' : 'aspect-[4/3] w-full object-cover transition-transform duration-300 motion-safe:group-hover:scale-105'} width={index === photos.length - 1 ? 3933 : 1200} height={index === photos.length - 1 ? 4096 : 900} />
               </a>
-              <figcaption className="mt-3 text-sm leading-6"><span className="mr-3 text-[#94764f]">{String(index + 1).padStart(2, '0')}</span>{t.captions[index]}{index === photos.length - 1 && <p className="mt-1 text-[#68756e]">{t.note}</p>}</figcaption>
+              <figcaption className="mt-3 text-sm leading-6"><span className="mr-3 text-[#795b37]">{String(index + 1).padStart(2, '0')}</span>{t.captions[index]}{index === photos.length - 1 && <p className="mt-1 text-[#5b6b62]">{t.note}</p>}</figcaption>
             </figure>
           ))}
         </div>

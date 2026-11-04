@@ -1,9 +1,3 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useLanguage, Language } from "../contexts/LanguageContext";
 import { trackLanguageSwitch } from "@/lib/analytics";
 
@@ -19,38 +13,19 @@ const LanguageSwitcher = () => {
     { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
   ];
 
-  const currentLanguage = languages.find(lang => lang.code === language);
-
   return (
-    <DropdownMenu>
-      {/* Inherits colour from the nav so it works over the hero photo and on light
-          surfaces alike, hence no background or border of its own. */}
-      <DropdownMenuTrigger
-        className="inline-flex items-center gap-1.5 font-sans text-[0.8125rem] tracking-[0.12em] uppercase transition-opacity hover:opacity-70 focus-visible:outline-none"
-        aria-label="Change language"
-      >
-        <span className="text-base leading-none">{currentLanguage?.flag}</span>
-        <span className="hidden sm:inline">{currentLanguage?.code.toUpperCase()}</span>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-[160px] rounded-none border-ink/12 bg-bone p-0">
-        {languages.map((lang) => (
-          <DropdownMenuItem
-            key={lang.code}
-            onClick={() => {
-              trackLanguageSwitch(language, lang.code);
-              setLanguage(lang.code);
-            }}
-            className={`cursor-pointer rounded-none px-4 py-3 text-[0.875rem] focus:bg-sand ${
-              language === lang.code ? 'text-brass' : 'text-ink-soft'
-            }`}
-            data-testid={`lang-switch-${lang.code}`}
-          >
-            <span className="mr-3 text-base leading-none">{lang.flag}</span>
-            {lang.name}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <select
+      aria-label={({ fr: "Langue du site", en: "Website language", es: "Idioma del sitio", de: "Sprache der Website", nl: "Taal van de website", it: "Lingua del sito" })[language]}
+      value={language}
+      onChange={(event) => {
+        const next = event.target.value as Language;
+        trackLanguageSwitch(language, next);
+        setLanguage(next);
+      }}
+      className="min-h-11 max-w-[10rem] cursor-pointer rounded-none bg-transparent px-2 py-2 font-sans text-base font-medium text-inherit focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 md:text-sm"
+    >
+      {languages.map((lang) => <option key={lang.code} value={lang.code} className="bg-bone text-ink">{lang.flag} {lang.name}</option>)}
+    </select>
   );
 };
 

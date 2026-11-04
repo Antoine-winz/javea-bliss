@@ -47,7 +47,7 @@ export interface IStorage {
   getSalesLeadById(id: number): Promise<SalesLead | undefined>;
   upsertSalesLead(lead: typeof salesLeads.$inferInsert): Promise<SalesLead>;
   updateSalesLead(id: number, updates: Partial<typeof salesLeads.$inferInsert>): Promise<SalesLead | undefined>;
-  claimSalesBrochureDownload(id: number, downloadedAt: Date): Promise<boolean>;
+  claimSalesBrochureDownload(id: number, downloadedAt: Date, verifiedAt: Date): Promise<boolean>;
   releaseSalesBrochureDownload(id: number, downloadedAt: Date): Promise<void>;
   listSalesLeads(options?: { search?: string; status?: string; buyerType?: string }): Promise<SalesLead[]>;
   createSalesDownload(download: { leadId: number; language: string; reference: string }): Promise<SalesDownload>;
@@ -283,12 +283,12 @@ export class DatabaseStorage implements IStorage {
     return this.getSalesLeadById(id);
   }
 
-  async claimSalesBrochureDownload(id: number, downloadedAt: Date): Promise<boolean> {
+  async claimSalesBrochureDownload(id: number, downloadedAt: Date, verifiedAt: Date): Promise<boolean> {
     // Keep the claim atomic; COUNT also returns a row when a competing request wins.
     const result = await db.execute(sql`WITH claimed AS (
       UPDATE ${salesLeads}
       SET brochure_downloaded_at = ${downloadedAt}, updated_at = ${downloadedAt}
-      WHERE id = ${id} AND verification_status = 'verified' AND brochure_downloaded_at IS NULL
+      WHERE id = ${id} AND verification_status = 'verified' AND verified_at = ${verifiedAt} AND brochure_downloaded_at IS NULL
       RETURNING id
     ) SELECT COUNT(*)::int AS count FROM claimed`);
     if (!result.rows[0]) throw new Error("Missing brochure claim result");

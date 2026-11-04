@@ -87,6 +87,7 @@ const GallerySection = () => {
         >
           <LazyImage
             src={lead.src}
+            loading={expanded ? "eager" : "lazy"}
             alt={lead.alt}
             className="img-cover img-zoom"
             width={1600}
@@ -104,6 +105,7 @@ const GallerySection = () => {
             >
               <LazyImage
                 src={image.src}
+                loading={expanded ? "eager" : "lazy"}
                 alt={image.alt}
                 className="img-cover img-zoom"
                 width={800}

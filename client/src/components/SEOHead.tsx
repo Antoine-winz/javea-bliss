@@ -31,6 +31,7 @@ const SEOHead = ({
   const currentSEO = routeSEO || fallbackSEO;
   const effectiveTitle = title || currentSEO.title;
   const effectiveDescription = description || currentSEO.description;
+  const keywords = shouldNoindex ? '' : (currentSEO.keywords || []).join(', ');
 
   // Language-neutral path of the current page ('' for homepage), used for canonical + hreflang
   const pagePath = canonicalPath
@@ -59,6 +60,8 @@ const SEOHead = ({
       shouldNoindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
     );
     updateMeta('description', effectiveDescription);
+    if (keywords) updateMeta('keywords', keywords);
+    else document.querySelectorAll('meta[name="keywords"]').forEach(meta => meta.remove());
     updateMeta('theme-color', '#1e40af');
     document.querySelector('html')?.setAttribute('lang', currentSEO.lang);
 
@@ -116,7 +119,7 @@ const SEOHead = ({
       document.head.appendChild(schemaScript);
     }
     schemaScript.textContent = JSON.stringify(schema);
-  }, [language, location, canonicalUrl, shouldNoindex, effectiveTitle, effectiveDescription, image]);
+  }, [language, location, canonicalUrl, shouldNoindex, effectiveTitle, effectiveDescription, keywords, image]);
 
   return null;
 };

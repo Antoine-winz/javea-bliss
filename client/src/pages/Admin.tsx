@@ -1,3 +1,4 @@
+import { RENTALS_ENABLED } from "@shared/site-access";
 import IpBlockManagement from "@/components/IpBlockManagement";
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -183,6 +184,7 @@ const Admin = () => {
   // Last-minute offers toggle
   const { data: lastMinuteSettings, refetch: refetchLastMinuteSettings } = useQuery({
     queryKey: ['/api/last-minute-offers/settings'],
+    enabled: RENTALS_ENABLED && isAuthenticated,
     queryFn: async () => {
       const response = await fetch('/api/last-minute-offers/settings');
       if (!response.ok) throw new Error('Failed to fetch last-minute settings');
@@ -211,6 +213,7 @@ const Admin = () => {
   // Query to fetch promotional offers
   const { data: promotionalOffers, isLoading: offersLoading } = useQuery({
     queryKey: ['/api/promotional-offers'],
+    enabled: RENTALS_ENABLED && isAuthenticated,
     queryFn: async () => {
       const response = await fetch('/api/promotional-offers');
       if (!response.ok) throw new Error('Failed to fetch promotional offers');
@@ -221,7 +224,7 @@ const Admin = () => {
   // Manual date blocks query and mutations
   const { data: manualBlocksData, refetch: refetchManualBlocks } = useQuery({
     queryKey: ['/api/calendar/manual-blocks'],
-    enabled: isAuthenticated,
+    enabled: RENTALS_ENABLED && isAuthenticated,
     queryFn: async () => {
       const response = await fetch('/api/calendar/manual-blocks');
       if (!response.ok) throw new Error('Failed to fetch manual blocks');
@@ -396,7 +399,7 @@ const Admin = () => {
 
   // Fetch sync status
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && RENTALS_ENABLED) {
       fetchSyncStatus();
     }
   }, [isAuthenticated]);
@@ -518,14 +521,14 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="admin-page min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8 flex justify-between items-start">
+        <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Jávea Bliss Admin</h1>
-            <p className="text-gray-600">Manage your rental property and bookings</p>
+            <p className="text-gray-600">Manage your property sale and enquiries</p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Button 
               variant="outline" 
               onClick={() => window.open('/', '_blank')}
@@ -546,35 +549,35 @@ const Admin = () => {
         </div>
 
         <Tabs defaultValue="stats" className="space-y-6">
-          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 md:grid-cols-4 xl:grid-cols-8">
+          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 md:grid-cols-4 xl:grid-cols-3">
             <TabsTrigger value="stats" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               Visitor Stats
             </TabsTrigger>
-            <TabsTrigger value="calendar" className="flex items-center gap-2">
+            {RENTALS_ENABLED && <TabsTrigger value="calendar" className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               Calendar Sync
-            </TabsTrigger>
-            <TabsTrigger value="cleaning" className="flex items-center gap-2">
+            </TabsTrigger>}
+            {RENTALS_ENABLED && <TabsTrigger value="cleaning" className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
               Cleaning Schedule
-            </TabsTrigger>
+            </TabsTrigger>}
             <TabsTrigger value="reviews" className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4" />
               Reviews
             </TabsTrigger>
-            <TabsTrigger value="promotions" className="flex items-center gap-2">
+            {RENTALS_ENABLED && <TabsTrigger value="promotions" className="flex items-center gap-2">
               <Plus className="w-4 h-4" />
               Promotions
-            </TabsTrigger>
-            <TabsTrigger value="pricing" className="flex items-center gap-2">
+            </TabsTrigger>}
+            {RENTALS_ENABLED && <TabsTrigger value="pricing" className="flex items-center gap-2">
               <DollarSign className="w-4 h-4" />
               Pricing
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
+            </TabsTrigger>}
+            {RENTALS_ENABLED && <TabsTrigger value="settings" className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
               Settings
-            </TabsTrigger>
+            </TabsTrigger>}
             <TabsTrigger value="sales" className="flex items-center gap-2">
               <Users className="w-4 h-4" />
               Sales CRM
@@ -589,7 +592,7 @@ const Admin = () => {
             <SalesCRM />
           </TabsContent>
 
-          <TabsContent value="calendar">
+          {RENTALS_ENABLED && <TabsContent value="calendar">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -745,11 +748,11 @@ const Admin = () => {
                 )}
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent>}
 
-          <TabsContent value="cleaning">
+          {RENTALS_ENABLED && <TabsContent value="cleaning">
             <CleaningSchedule />
-          </TabsContent>
+          </TabsContent>}
 
           <TabsContent value="reviews">
             <Card>
@@ -768,7 +771,7 @@ const Admin = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="promotions">
+          {RENTALS_ENABLED && <TabsContent value="promotions">
             {/* Last-minute offers toggle */}
             <Card className="mb-4">
               <CardHeader>
@@ -1149,9 +1152,9 @@ const Admin = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent>}
 
-          <TabsContent value="pricing">
+          {RENTALS_ENABLED && <TabsContent value="pricing">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -1263,9 +1266,9 @@ const Admin = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent>}
 
-          <TabsContent value="settings">
+          {RENTALS_ENABLED && <TabsContent value="settings">
             <Card>
               <CardHeader>
                 <CardTitle>Property Settings</CardTitle>
@@ -1308,7 +1311,7 @@ const Admin = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent>}
         </Tabs>
       </div>
     </div>

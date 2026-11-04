@@ -13,7 +13,7 @@ import { normalizeIp,invalidateIpBlocks } from "./ip-blocking";
 
 const LANGUAGES = ["en", "fr", "es", "de", "nl", "it"] as const;
 type SalesLanguage = (typeof LANGUAGES)[number];
-const PRIVATE_BROCHURES = path.resolve(process.cwd(), "server/private/sales-brochures");
+const PRIVATE_BROCHURES = path.resolve(process.env.SALES_BROCHURES_DIR || path.join(process.cwd(), "server/private/sales-brochures"));
 const ACCESS_COOKIE = "jb_sales_access";
 const ADMIN_COOKIE = "jb_admin_session";
 const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
@@ -149,11 +149,13 @@ function clearCookie(res: Response, name: string) {
   res.setHeader("Set-Cookie", `${name}=; Max-Age=0; Path=/; HttpOnly; ${process.env.NODE_ENV === "production" ? "SameSite=None; Secure" : "SameSite=Lax"}`);
 }
 
-function accessLeadId(req: Request): number | null {
+async function accessLead(req: Request) {
   const authorization = req.headers.authorization;
   const bearerToken = authorization?.startsWith("Bearer ") ? authorization.slice(7) : undefined;
   const payload = readToken(bearerToken || getCookie(req, ACCESS_COOKIE));
-  return typeof payload?.leadId === "number" ? payload.leadId : null;
+  if (typeof payload?.leadId !== "number" || typeof payload.verifiedAt !== "number") return null;
+  const lead = await storage.getSalesLeadById(payload.leadId);
+  return lead?.verificationStatus === "verified" && lead.verifiedAt?.getTime() === payload.verifiedAt ? lead : null;
 }
 
 export function adminMiddleware(req: Request, res: Response, next: NextFunction) {
@@ -306,7 +308,14 @@ async function stampedBrochure(sourcePath: string, lead: NonNullable<Awaited<Ret
     timeStyle: "short",
     timeZone: "Europe/Madrid",
   }).format(new Date());
-  const stamp = `Private copy · ${lead.firstName} ${lead.lastName} · ${lead.email} · ${timestamp} · ${reference}`;
+  const glyphs = new Set(font.getCharacterSet());
+  const stamp = Array.from(`Private copy · ${lead.firstName} ${lead.lastName} · ${lead.email} · ${timestamp} · ${reference}`).map(character => {
+    if (glyphs.has(character.codePointAt(0)!)) return character;
+    const latin = character.normalize('NFKD').replace(/\p{M}/gu, '');
+    if (latin && Array.from(latin).every(value => glyphs.has(value.codePointAt(0)!))) return latin;
+    // Keep a traceable representation rather than failing the whole download.
+    return `[U+${character.codePointAt(0)!.toString(16).toUpperCase()}]`;
+  }).join('');
   for (const page of pdf.getPages()) {
     const { width } = page.getSize();
     const preferredFontSize = 6.5;
@@ -323,6 +332,7 @@ async function stampedBrochure(sourcePath: string, lead: NonNullable<Awaited<Ret
 }
 
 export function registerSalesRoutes(app: Express) {
+  app.use('/api/sales', (_req, res, next) => { res.setHeader('Cache-Control', 'no-store, private'); next(); });
   const cleanExpiredSalesData = async () => {
     try {
       const now = Date.now();
@@ -440,7 +450,7 @@ export function registerSalesRoutes(app: Express) {
       verificationCodeHash: null,
       verificationAttempts: 0,
     });
-    const accessToken = signToken({ leadId: lead.id, exp: Date.now() + SESSION_TTL_MS });
+    const accessToken = signToken({ leadId: lead.id, verifiedAt: verifiedAt.getTime(), exp: Date.now() + SESSION_TTL_MS });
     setCookie(res, ACCESS_COOKIE, accessToken, SESSION_TTL_MS);
     res.setHeader("X-Sales-Access-Token", accessToken);
     if (updated && !updated.ownerNotifiedAt) {
@@ -455,10 +465,8 @@ export function registerSalesRoutes(app: Express) {
   }));
 
   app.get("/api/sales/session", safeAsync(async (req, res) => {
-    const id = accessLeadId(req);
-    if (!id) return res.json({ verified: false });
-    const lead = await storage.getSalesLeadById(id);
-    if (!lead || lead.verificationStatus !== "verified") return res.json({ verified: false });
+    const lead = await accessLead(req);
+    if (!lead || lead.brochureDownloadedAt) return res.json({ verified: false });
     return res.json({ verified: true, lead: publicLead(lead) });
   }));
 
@@ -467,11 +475,10 @@ export function registerSalesRoutes(app: Express) {
     res.json({ ok: true });
   });
 
+  app.head('/api/sales/brochure', (_req, res) => { res.setHeader('Allow', 'GET'); res.sendStatus(405); });
   app.get("/api/sales/brochure", safeAsync(async (req, res) => {
-    const leadId = accessLeadId(req);
-    if (!leadId) return res.status(401).json({ code: "VERIFICATION_REQUIRED", message: "Verification required." });
-    const lead = await storage.getSalesLeadById(leadId);
-    if (!lead || lead.verificationStatus !== "verified") return res.status(401).json({ code: "VERIFICATION_REQUIRED", message: "Verification required." });
+    const lead = await accessLead(req);
+    if (!lead) return res.status(401).json({ code: "VERIFICATION_REQUIRED", message: "Verification required." });
     if (lead.brochureDownloadedAt) {
       clearCookie(res, ACCESS_COOKIE);
       return res.status(409).json({ code: "DOWNLOAD_ALREADY_USED", message: "A new registration is required for another copy." });
@@ -483,7 +490,7 @@ export function registerSalesRoutes(app: Express) {
       const reference = `JB-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
       const stamped = await stampedBrochure(sourcePath, lead, reference);
       const downloadedAt = new Date();
-      const claimed = await storage.claimSalesBrochureDownload(lead.id, downloadedAt);
+      const claimed = await storage.claimSalesBrochureDownload(lead.id, downloadedAt, lead.verifiedAt!);
       if (!claimed) {
         clearCookie(res, ACCESS_COOKIE);
         return res.status(409).json({ code: "DOWNLOAD_ALREADY_USED", message: "A new registration is required for another copy." });

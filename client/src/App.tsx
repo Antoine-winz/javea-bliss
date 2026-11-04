@@ -1,4 +1,5 @@
-import { Switch, Route } from "wouter";
+import { RENTALS_ENABLED, salesRedirect } from "@shared/site-access";
+import { Switch, Route, Redirect, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -34,8 +35,26 @@ const SEO_SLUGS = [
   'javea-3-day-itinerary',
 ];
 
+function SalesOnlyFallback() {
+  const [location] = useLocation();
+  const destination = salesRedirect(location);
+  return destination ? <Redirect to={destination} replace /> : <NotFound />;
+}
+
 function Router() {
   useAnalytics();
+  if (!RENTALS_ENABLED) return (
+    <Switch>
+      <Route path="/:language/for-sale">
+        {({ language }) => SUPPORTED_LANGUAGES.some(item => item === language) ? <SalesAccess /> : <NotFound />}
+      </Route>
+      {SUPPORTED_LANGUAGES.map(lang => <Route key={`${lang}-privacy`} path={`/${lang}/privacy-policy`} component={SalesPrivacy} />)}
+      <Route path="/for-sale" component={SalesAccess} />
+      <Route path="/privacy-policy" component={SalesPrivacy} />
+      <Route path="/admin" component={Admin} />
+      <Route component={SalesOnlyFallback} />
+    </Switch>
+  );
   
   return (
     <Switch>
