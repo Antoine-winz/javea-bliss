@@ -4,7 +4,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { lazy, Suspense, useEffect } from "react";
-import { initGA } from "./lib/analytics";
+import { ANALYTICS_CONSENT_KEY, syncAnalyticsConsent } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 
 import { LanguageProvider, SUPPORTED_LANGUAGES } from "@/contexts/LanguageContext";
@@ -108,10 +108,11 @@ function Router() {
 }
 
 function App() {
-  // Initialize Google Analytics when app loads
   useEffect(() => {
-    // Verify required environment variable is present
-    initGA();
+    syncAnalyticsConsent();
+    const sync = (event: StorageEvent) => { if (event.key === ANALYTICS_CONSENT_KEY || event.key === null) syncAnalyticsConsent(); };
+    window.addEventListener('storage', sync);
+    return () => window.removeEventListener('storage', sync);
   }, []);
 
   return (

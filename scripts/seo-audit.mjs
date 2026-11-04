@@ -18,6 +18,8 @@ for (const language of languages) {
   assert.equal(canonical.length, 1); assert.equal(attribute(canonical[0], 'href'), canonicalBase + path);
   assert.equal(html.match(/<html\b[^>]*lang="([^"]+)"/)?.[1], language);
   assert.ok(title && description); assert.ok(!meta(html, 'robots').includes('noindex'));
+  assert.ok(!response.headers.get('x-robots-tag')?.includes('noindex'));
+  assert.ok(meta(html, 'robots').includes('max-image-preview:large'));
   assert.equal(meta(html, 'og:title'), title); assert.equal(meta(html, 'og:description'), description); assert.equal(meta(html, 'og:url'), canonicalBase + path);
   assert.equal(meta(html, 'twitter:title'), title); assert.equal(meta(html, 'twitter:description'), description);
   assert.equal((html.match(/<h1\b/g) || []).length, 1);
@@ -40,10 +42,24 @@ for (const old of ['/flyer.html', '/flyer2.html', '/qr-download.html', '/en/wint
 }
 const sitemap = await (await fetch(base + '/sitemap.xml')).text(); const locations = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map(match => match[1]);
 assert.equal(locations.length, 6); for (const language of languages) assert.ok(locations.includes(`${canonicalBase}/${language}/for-sale`));
+assert.ok(sitemap.includes('http://www.sitemaps.org/schemas/sitemap/0.9'));
+for (const block of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+  assert.match(block[1], /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
+  for (const language of [...languages, 'x-default']) assert.ok(block[1].includes(`hreflang="${language}"`));
+}
 const robots = await (await fetch(base + '/robots.txt')).text(); assert.ok(robots.includes(`Sitemap: ${canonicalBase}/sitemap.xml`)); assert.doesNotMatch(robots, /Disallow:\s*\/$/m);
+const crawlerChecks = [];
+for (const bot of ['Googlebot', 'OAI-SearchBot', 'ChatGPT-User', 'GPTBot', 'Claude-SearchBot', 'Claude-User', 'ClaudeBot', 'Google-Extended']) {
+  assert.ok(robots.includes(`User-agent: ${bot}`), `Explicit crawl rule missing for ${bot}`);
+  const response = await fetch(base + '/fr/for-sale', { headers: { 'User-Agent': bot, Accept: 'text/html' } });
+  assert.equal(response.status, 200, `${bot}: public page must be accessible`);
+  const html = await response.text(); assert.ok(html.includes('data-sale-initial')); assert.ok(html.includes('80 m²')); assert.ok(!meta(html, 'robots').includes('noindex'));
+  crawlerChecks.push({ bot, status: response.status, initialHTML: true });
+}
+report.crawlers = crawlerChecks;
 const summary = await (await fetch(base + '/llms.txt')).text(); assert.doesNotMatch(summary, /€130|€210|Winter Lets|Renovation Stays/);
 const ogImage = await fetch(base + '/og-hero.jpg'); assert.equal(ogImage.status, 200); assert.ok(ogImage.headers.get('content-type').startsWith('image/'));
-const plan = await fetch(base + '/javeabliss-floor-plan-HD.png', { method: 'HEAD' }); assert.equal(plan.status, 200);
+const plan = await fetch(base + '/javeabliss-floor-plan-bathroom.jpg?v=2', { method: 'HEAD' }); assert.equal(plan.status, 200);
 report.assets = { floorPlanBytes: Number(plan.headers.get('content-length')), sharingImageBytes: Number(ogImage.headers.get('content-length')) };
 report.checks = ['Six indexable sale pages', 'Localized sale keywords', 'Reciprocal hreflang and x-default', 'One H1 per page', 'Matching Open Graph and Twitter metadata', 'Sale-only structured data', 'Six-URL sale sitemap', 'Crawl rules and assistant summary', 'Rental routes redirected', 'Privacy excluded from indexing', 'Sharing image available'];
 await mkdir('output', { recursive: true }); await writeFile('output/seo-audit.json', JSON.stringify(report, null, 2));

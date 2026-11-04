@@ -302,7 +302,7 @@ export function injectSEOIntoHTML(html: string, seo: RouteSEO): string {
     .replace(/<script[^>]*data-schema="main"[^>]*>[\s\S]*?<\/script>/g, '')
     .replace(/<meta\b[^>]*name=["']keywords["'][^>]*>\s*/gi, '')
     .replace('</head>', `${keywordTag}${schemaTag}\n  </head>`)
-    .replace(/<meta name="robots"[^>]*>/, `<meta name="robots" content="${seo.noindex ? 'noindex, nofollow' : 'index, follow'}" />`)
+    .replace(/<meta name="robots"[^>]*>/, `<meta name="robots" content="${seo.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}" />`)
     .replace(/<html lang="[^"]*"/, `<html lang="${seo.lang}"`)
     .replace(
       /<title>[^<]*<\/title>/,

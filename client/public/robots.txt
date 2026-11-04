@@ -1,17 +1,18 @@
+# Public sale information is available to search engines and AI assistants.
 User-agent: *
-Allow: /
-
-# EXPLICITLY ALLOW AI CRAWLERS
+User-agent: Googlebot
+User-agent: bingbot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
 User-agent: GPTBot
-Allow: /
-
+User-agent: Claude-SearchBot
+User-agent: Claude-User
 User-agent: ClaudeBot
-Allow: /
-
 User-agent: Google-Extended
 Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /private/
+Disallow: /server/
 
 Sitemap: https://javeabliss.com/sitemap.xml

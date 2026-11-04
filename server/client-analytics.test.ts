@@ -8,7 +8,8 @@ test('local previews and admin pages do not send analytics; public navigation se
   const result = await build({ entryPoints: ['client/src/lib/analytics.ts'], bundle: true, write: false, format: 'esm', platform: 'node', define: { 'import.meta.env.PROD': 'true', 'import.meta.env.VITE_GA_MEASUREMENT_ID': '"G-LOCALTEST"' } });
   const oldWindow = (globalThis as any).window; const oldDocument = (globalThis as any).document;
   const scripts: unknown[] = [];
-  const fakeWindow: any = { location: { hostname: '127.0.0.1', pathname: '/fr/for-sale', origin: 'http://127.0.0.1:5173' }, dataLayer: [] };
+  const choices = new Map<string, string>();
+  const fakeWindow: any = { location: { hostname: '127.0.0.1', pathname: '/fr/for-sale', origin: 'http://127.0.0.1:5173' }, dataLayer: [], localStorage: { getItem: (key: string) => choices.get(key) || null, setItem: (key: string, value: string) => choices.set(key, value) } };
   (globalThis as any).window = fakeWindow;
   (globalThis as any).document = { title: 'Appartement à vendre', createElement: () => ({}), head: { appendChild: (script: unknown) => scripts.push(script) } };
   try {
@@ -16,12 +17,19 @@ test('local previews and admin pages do not send analytics; public navigation se
     analytics.initGA(); analytics.trackPageView('/fr/for-sale'); assert.equal(scripts.length, 0);
     fakeWindow.location = { hostname: 'javeabliss.com', pathname: '/admin', origin: 'https://javeabliss.com' };
     analytics.initGA(); assert.equal(scripts.length, 0);
-    fakeWindow.location.pathname = '/fr/for-sale'; analytics.initGA(); analytics.initGA(); assert.equal(scripts.length, 1);
+    fakeWindow.location.pathname = '/fr/for-sale'; analytics.initGA(); analytics.trackPageView('/fr/for-sale'); assert.equal(scripts.length, 0, 'public visits do not load Google without consent');
+    analytics.setAnalyticsConsent('accepted'); analytics.initGA(); assert.equal(scripts.length, 1);
+    assert.equal(analytics.getAnalyticsConsent(), 'accepted');
     analytics.trackPageView('/fr/for-sale');
     const commands = fakeWindow.dataLayer.map((entry: any) => Array.from(entry));
     const view = commands.find((entry: any[]) => entry[0] === 'event' && entry[1] === 'page_view');
     assert.equal(view[2].page_location, 'https://javeabliss.com/fr/for-sale'); assert.equal(view[2].page_title, 'Appartement à vendre');
     const count = fakeWindow.dataLayer.length; fakeWindow.location.pathname = '/admin'; analytics.trackPageView('/admin'); analytics.trackEvent('test'); assert.equal(fakeWindow.dataLayer.length, count);
+    fakeWindow.location.pathname = '/fr/for-sale'; analytics.setAnalyticsConsent('declined');
+    assert.equal(fakeWindow['ga-disable-G-LOCALTEST'], true);
+    analytics.trackPageView('/fr/for-sale'); analytics.trackEvent('test'); assert.equal(fakeWindow.dataLayer.length, count, 'withdrawal stops further events');
+    choices.set(analytics.ANALYTICS_CONSENT_KEY, JSON.stringify({ choice: 'accepted', expiresAt: Date.now() - 1 }));
+    assert.equal(analytics.getAnalyticsConsent(), null); analytics.trackPageView('/fr/for-sale'); assert.equal(fakeWindow.dataLayer.length, count);
   } finally { (globalThis as any).window = oldWindow; (globalThis as any).document = oldDocument; }
 });
 

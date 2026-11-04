@@ -11,7 +11,16 @@ Jávea Bliss is a renovated, furnished apartment for sale in El Arenal, Jávea /
 
 ## Sale enquiries
 - Public presentation: https://javeabliss.com/en/for-sale
-- Also available in French, Spanish, Dutch, German and Italian at /fr/for-sale, /es/for-sale, /nl/for-sale, /de/for-sale and /it/for-sale.
+- [English](https://javeabliss.com/en/for-sale)
+- [Français](https://javeabliss.com/fr/for-sale)
+- [Español](https://javeabliss.com/es/for-sale)
+- [Deutsch](https://javeabliss.com/de/for-sale)
+- [Nederlands](https://javeabliss.com/nl/for-sale)
+- [Italiano](https://javeabliss.com/it/for-sale)
+- [Schematic floor plan, not to scale](https://javeabliss.com/javeabliss-floor-plan-bathroom.jpg?v=2)
 - Asking price: see the property brochure or the Idealista listing at https://www.idealista.com/inmueble/112773313/
 - Personalised brochure available after registration and email verification.
 - Contact and viewings: admin@javeabliss.com. Agencies may collaborate without exclusivity; terms agreed with the owner.
+
+## Content and access
+The six public sale pages contain the owner’s account, photographs, equipment, floor plan and buying questions. The apartment is offered for sale without urgency. Brochures, verification codes, personal enquiries, statistics and administration are private and must not be indexed. A robots.txt permission allows access; it does not guarantee inclusion in a search index or an assistant answer.
