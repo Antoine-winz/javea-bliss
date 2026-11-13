@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<!-- The six sale pages are the only indexable pages. Generated list: keep it in
+     step with shared/seo.ts (saleHreflang) and client/public/robots.txt. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://javeabliss.com/en/for-sale</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/for-sale" />
     <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/for-sale" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/for-sale" />
@@ -10,10 +14,12 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/for-sale" />
     <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/for-sale" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/en/for-sale" />
+    <image:image><image:loc>https://javeabliss.com/og-hero.jpg</image:loc></image:image>
+    <image:image><image:loc>https://javeabliss.com/javeabliss-floor-plan-bathroom.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://javeabliss.com/nl/for-sale</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/for-sale" />
     <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/for-sale" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/for-sale" />
@@ -21,10 +27,12 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/for-sale" />
     <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/for-sale" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/en/for-sale" />
+    <image:image><image:loc>https://javeabliss.com/og-hero.jpg</image:loc></image:image>
+    <image:image><image:loc>https://javeabliss.com/javeabliss-floor-plan-bathroom.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://javeabliss.com/fr/for-sale</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/for-sale" />
     <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/for-sale" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/for-sale" />
@@ -32,10 +40,12 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/for-sale" />
     <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/for-sale" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/en/for-sale" />
+    <image:image><image:loc>https://javeabliss.com/og-hero.jpg</image:loc></image:image>
+    <image:image><image:loc>https://javeabliss.com/javeabliss-floor-plan-bathroom.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://javeabliss.com/it/for-sale</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/for-sale" />
     <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/for-sale" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/for-sale" />
@@ -43,10 +53,12 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/for-sale" />
     <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/for-sale" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/en/for-sale" />
+    <image:image><image:loc>https://javeabliss.com/og-hero.jpg</image:loc></image:image>
+    <image:image><image:loc>https://javeabliss.com/javeabliss-floor-plan-bathroom.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://javeabliss.com/de/for-sale</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/for-sale" />
     <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/for-sale" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/for-sale" />
@@ -54,10 +66,12 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/for-sale" />
     <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/for-sale" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/en/for-sale" />
+    <image:image><image:loc>https://javeabliss.com/og-hero.jpg</image:loc></image:image>
+    <image:image><image:loc>https://javeabliss.com/javeabliss-floor-plan-bathroom.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://javeabliss.com/es/for-sale</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://javeabliss.com/en/for-sale" />
     <xhtml:link rel="alternate" hreflang="nl" href="https://javeabliss.com/nl/for-sale" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://javeabliss.com/fr/for-sale" />
@@ -65,5 +79,7 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://javeabliss.com/de/for-sale" />
     <xhtml:link rel="alternate" hreflang="es" href="https://javeabliss.com/es/for-sale" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://javeabliss.com/en/for-sale" />
+    <image:image><image:loc>https://javeabliss.com/og-hero.jpg</image:loc></image:image>
+    <image:image><image:loc>https://javeabliss.com/javeabliss-floor-plan-bathroom.jpg</image:loc></image:image>
   </url>
 </urlset>

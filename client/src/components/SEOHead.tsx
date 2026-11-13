@@ -27,7 +27,8 @@ const SEOHead = ({
   const routeSEO = getRouteSEO(location);
   const shouldNoindex = noindex || routeSEO?.noindex || !isKnownPublicRoute(location);
 
-  const fallbackSEO = getRouteSEO(`/${language}/`)!;
+  // The sale page is the only indexable page, so it is also the fallback.
+  const fallbackSEO = getRouteSEO(`/${language}/for-sale`)!;
   const currentSEO = routeSEO || fallbackSEO;
   const effectiveTitle = title || currentSEO.title;
   const effectiveDescription = description || currentSEO.description;

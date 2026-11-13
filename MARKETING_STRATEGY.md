@@ -1,6 +1,21 @@
 # Comprehensive Digital Marketing Strategy - Jávea Bliss
 ## Increase Traffic & Visibility Across EU Countries (2025)
 
+> ⚠️ **Document historique — ne plus appliquer tel quel (note du 13.11.2026).**
+>
+> Ce plan a été écrit pour la **location saisonnière**. La location est terminée :
+> le site sert uniquement à **vendre** l'appartement. Tout ce qui suit et qui parle
+> de réservations, de tarifs à la nuit, d'OTA (Airbnb, Booking), de séjours
+> d'hiver ou de balisage `VacationRental` ne s'applique plus et ne doit pas être
+> remis en place : le balisage `LodgingBusiness` a justement été retiré du site
+> parce qu'il annonçait un hébergement de vacances à Google.
+>
+> Pour le référencement en cours, voir `seo_strategy.md`,
+> `docs/seo-keyword-map.md` et `SEO-OPTIMIZATION-REPORT.md`.
+>
+> Reste utilisable ici : la méthode (hreflang, contenu par marché, suivi Search
+> Console) et la connaissance des marchés (UK, NL, DE, FR, BE, CH).
+
 ---
 
 ## 🎯 **Strategic Goals**

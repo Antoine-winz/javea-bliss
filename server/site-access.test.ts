@@ -23,14 +23,15 @@ test('sales-only access blocks old rental entry points while sale and admin auth
     for (const lang of ['en', 'fr', 'es', 'nl', 'de', 'it']) {
       for (const old of [`/${lang}/`, `/${lang}/recommendations`, `/${lang}/promo/1`, `/${lang}/promotional-offer/1`, `/${lang}/social-media/1`]) {
         const response = await fetch(base + old + '?utm_source=agency', { redirect: 'manual' });
-        assert.equal(response.status, 302, old);
+        // Permanent: the rental pages are gone, so search engines must drop them.
+        assert.equal(response.status, 301, old);
         assert.equal(response.headers.get('location'), `/${lang}/for-sale?utm_source=agency`);
       }
       assert.equal((await fetch(`${base}/${lang}/for-sale`)).status, 200);
       assert.equal((await fetch(`${base}/${lang}/privacy-policy`)).status, 200);
     }
     for (const old of ['/flyer.html', '/flyer2.html', '/%66lyer2.html', '/qr-download.html', '/en/winter-rental-javea/', '/recommendations', '/promo/2']) {
-      assert.equal((await fetch(base + old, { redirect: 'manual' })).status, 302, old);
+      assert.equal((await fetch(base + old, { redirect: 'manual' })).status, 301, old);
     }
     for (const endpoint of ['/api/booking-inquiry', '/API/BOOKING-INQUIRY', '/api/calendar/blocked-dates', '/api/calendar/check-availability', '/api/pricing', '/api/promotional-offers/1', '/api/last-minute-offers', '/api/daily-rates/bulk']) {
       for (const method of ['GET', 'POST', 'PUT', 'DELETE']) {
@@ -57,9 +58,16 @@ test('sales-only access blocks old rental entry points while sale and admin auth
     assert.equal(salesRedirect('/unrelated-page'), null);
     for (const [url, destination] of [['/for-sale', '/en/for-sale'], ['/fr/for-sale/', '/fr/for-sale'], ['/FR/FOR-SALE', '/fr/for-sale'], ['/privacy-policy', '/en/privacy-policy']]) {
       const response = await fetch(base + url, { redirect: 'manual' });
-      assert.equal(response.status, 302); assert.equal(response.headers.get('location'), destination);
+      assert.equal(response.status, 301); assert.equal(response.headers.get('location'), destination);
     }
+    // The root answer varies by cookie and Accept-Language, so it stays temporary.
     const preferred = await fetch(base + '/', { redirect: 'manual', headers: { Cookie: 'preferredLanguage=fr', 'Accept-Language': 'en' } });
+    assert.equal(preferred.status, 302);
     assert.equal(preferred.headers.get('location'), '/fr/for-sale');
+    // The old site's ?lang= links still reach the right language.
+    const legacy = await fetch(base + '/?lang=es', { redirect: 'manual', headers: { 'Accept-Language': 'en' } });
+    assert.equal(legacy.headers.get('location'), '/es/for-sale');
+    const legacyWithCampaign = await fetch(base + '/?lang=de&utm_source=flyer', { redirect: 'manual' });
+    assert.equal(legacyWithCampaign.headers.get('location'), '/de/for-sale?utm_source=flyer');
   } finally { await new Promise<void>(resolve => server.close(() => resolve())); }
 });

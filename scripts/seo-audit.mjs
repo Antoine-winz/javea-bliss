@@ -33,12 +33,12 @@ for (const language of languages) {
   const privacy = await (await fetch(`${base}/${language}/privacy-policy`)).text(); assert.ok(meta(privacy, 'robots').includes('noindex')); assert.ok(!tags(privacy, 'link').some(tag => attribute(tag, 'hreflang'))); assert.equal(meta(privacy, 'keywords'), undefined);
   report.pages.push({ language, title, titleLength: title.length, description, descriptionLength: description.length, keywords, canonical: attribute(canonical[0], 'href'), alternates: alternates.length, structuredData: 'Apartment + RealEstateListing', privacyNoindex: true });
   for (const old of [`/${language}/`, `/${language}/recommendations`, `/${language}/promo/1`, `/${language}/social-media/1`, `/${language}/for-sale/`]) {
-    const redirected = await fetch(base + old, { redirect: 'manual' }); assert.equal(redirected.status, 302, old); assert.equal(redirected.headers.get('location'), path);
+    const redirected = await fetch(base + old, { redirect: 'manual' }); assert.equal(redirected.status, 301, old); assert.equal(redirected.headers.get('location'), path);
     report.redirects.push({ from: old, status: redirected.status, to: path });
   }
 }
 for (const old of ['/flyer.html', '/flyer2.html', '/qr-download.html', '/en/winter-rental-javea/', '/en/javea-3-day-itinerary/', '/for-sale']) {
-  const response = await fetch(base + old, { redirect: 'manual' }); assert.equal(response.status, 302, old); report.redirects.push({ from: old, status: response.status, to: response.headers.get('location') });
+  const response = await fetch(base + old, { redirect: 'manual' }); assert.equal(response.status, 301, old); report.redirects.push({ from: old, status: response.status, to: response.headers.get('location') });
 }
 const sitemap = await (await fetch(base + '/sitemap.xml')).text(); const locations = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map(match => match[1]);
 assert.equal(locations.length, 6); for (const language of languages) assert.ok(locations.includes(`${canonicalBase}/${language}/for-sale`));

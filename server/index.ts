@@ -1,4 +1,5 @@
 import { siteAccess } from "./site-access";
+import { rootProbe } from "./root-probe";
 import express, { type Request, Response, NextFunction } from "express";
 import path from "path";
 import { sameOriginWrites } from "./security";
@@ -20,21 +21,10 @@ app.get("/healthz", (_req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-// Lightweight root health probe, returns 200 immediately so deployment
-// healthchecks pass even before the full app is wired up. Registered ahead of
-// the language redirect below, which must never intercept a probe: a 302 here
-// fails the deploy.
-app.get("/", (_req, res, next) => {
-  // Only intercept in production for the healthcheck probe (no Accept: text/html)
-  if (
-    process.env.NODE_ENV === "production" &&
-    !(_req.headers["accept"] || "").includes("text/html")
-  ) {
-    res.status(200).send("OK");
-    return;
-  }
-  next();
-});
+// Root health probe, crawler redirect and www fallthrough — see root-probe.ts.
+// Registered ahead of the language redirect below, which must never intercept
+// a deployment probe: a 302 here fails the deploy.
+app.get("/", rootProbe);
 
 app.use(createIpBlocker(() => storage.listBlockedIps()));
 

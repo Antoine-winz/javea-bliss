@@ -1,195 +1,82 @@
-# SEO Strategy Optimization Report
-**Date**: August 21, 2025  
-**Project**: Jávea Bliss Vacation Rental Website
+# Rapport SEO — passage en mode vente
 
-## Summary
-Consolidated and optimized the entire SEO strategy from 6 separate overlapping components into 1 comprehensive, dynamic system that eliminates redundancy while maintaining full search visibility.
+**Date** : 13.11.2026
+**Projet** : Jávea Bliss — appartement à vendre à Jávea (Xàbia), Alicante
 
-## Previous Issues Identified
+Ce document remplace le rapport d'août 2025, qui décrivait le SEO de la période
+location (composants `OptimizedSEOStrategy`, balisage `LodgingBusiness`, SEO
+promotionnel dynamique). Il est dans l'historique git.
 
-### 1. Component Duplication
-- **ComprehensiveSEO.tsx** - Base SEO with promotional integration
-- **JaveaSEOStrategy.tsx** - Weather + geographic targeting + meta tag management  
-- **WeatherSEOTargeting.tsx** - Weather-specific hidden content
-- **ComprehensiveJaveaSEO.tsx** - Tourism keywords + comprehensive hidden content
-- **DynamicPromotionalSEO.tsx** - Real-time promotional offer SEO updates
-- **DiscountSEO.tsx** - Discount-specific meta tag updates
+## Constat de départ (Search Console, 13.11.2026)
 
-### 2. Content Redundancy Problems
-- Weather keywords duplicated across 4 components
-- Geographic targeting scattered across multiple files
-- Restaurant/tourism content repeated with slight variations
-- Multiple meta tag update systems causing conflicts
-- Overlapping structured data (JSON-LD) implementations
-- Hidden SEO content scattered across different components
+| Mesure | Valeur |
+|---|---|
+| Pages indexées | 11 |
+| dont pages de vente | **1** (`/en/for-sale`) |
+| dont anciennes URL de location | 10 |
+| Pages non indexées | 36 |
+| Impressions (3 mois) | 429 |
+| Clics (3 mois) | 13 |
+| Position moyenne | 17,2 |
 
-### 3. Promotional SEO Conflicts
-- Multiple systems trying to update the same meta tags
-- Inconsistent promotional offer handling
-- Dynamic content not properly coordinated
-- Performance issues from redundant API calls
+Les requêtes qui amenaient des impressions étaient des requêtes de restaurants
+(« la bambula javea » : 57 impressions, « chabada javea », « restaurantes javea »),
+servies par les anciennes pages `/recommendations`. Une seule requête d'achat
+apparaissait : « apartamentos en la playa con terraza en jávea », 3 impressions.
 
-## Solution: OptimizedSEOStrategy.tsx
+## Cause
 
-### Core Features
-1. **Single Source of Truth**
-   - All SEO functionality consolidated into one component
-   - Unified meta tag management system
-   - Centralized structured data generation
+Les anciennes URL de location répondaient **302 (temporaire)**. Google comprend
+« reviens plus tard, l'ancienne adresse reste la bonne » : il garde les pages de
+location dans son index et n'indexe pas les pages de vente, qui lui semblent être
+une version provisoire. D'où 10 pages de location indexées contre 1 page de vente.
 
-2. **Dynamic Promotional Integration**
-   - Real-time promotional offer detection
-   - Automatic meta tag updates when offers are active
-   - Structured data for promotional offers
-   - Language-specific promotional content
+## Corrections appliquées
 
-3. **Comprehensive Geographic Targeting**
-   - **English**: UK, Ireland, USA, Canada, Australia, New Zealand, South Africa (195+ cities)
-   - **French**: France, Belgium, Switzerland, Quebec, Canada (85+ cities)  
-   - **Dutch**: Netherlands, Belgium, Suriname, Caribbean Netherlands (60+ cities)
-   - **German**: Germany, Austria, Switzerland, South Tyrol (120+ cities)
-   - **Spanish**: Spain (all autonomous regions) + major cities (50+ locations)
+1. **301 au lieu de 302** pour toutes les anciennes URL de location
+   (`server/site-access.ts`). C'est le changement décisif : Google retire les
+   anciennes adresses et transfère leur ancienneté vers la page de vente.
+   La racine `/` reste en 302 : sa réponse dépend de la langue du visiteur.
+2. **Racine `/` lisible par les robots** (`server/index.ts`). Elle renvoyait le
+   mot « OK » (sonde de santé du déploiement) à tout client n'envoyant pas
+   `Accept: text/html`, donc à la plupart des robots. Les robots de recherche et
+   d'IA reçoivent maintenant un 301 vers `/en/for-sale`.
+3. **`www.javeabliss.com` ne répond plus « OK »**. La sonde passait avant la
+   redirection `www` → domaine canonique, ce qui créait un second nom de domaine
+   servant une page vide. Les 5 erreurs 404 de Search Console sont toutes des
+   adresses `www` de l'ancien site.
+4. **Anciens liens `?lang=xx` rattrapés** : `/?lang=es` mène à `/es/for-sale`.
+5. **SEO de location retiré du code** (`shared/seo.ts`) : titres et descriptions
+   de location, neuf pages guides anglaises, balisage `LodgingBusiness`.
+6. **`client/index.html`** : canonical, `og:url` et hreflang pointent vers
+   `/xx/for-sale` au lieu de `/` et `/xx/`.
+7. **`server/rental-content/`** supprimé (ancien sitemap et résumé IA de location,
+   avec les tarifs « €130 - €210 per night »).
+8. **`sitemap.xml`** : `lastmod` au 13.11.2026, pour demander un nouveau passage.
 
-4. **Weather & Climate Coverage**
-   - Mediterranean climate information
-   - Seasonal weather targeting
-   - Monthly weather keywords
-   - Real-time weather SEO integration
+## Ce qui était déjà correct
 
-5. **Tourism & Activity Targeting** 
-   - Beach tourism keywords
-   - Restaurant targeting (Chabada, La Bambula, Masena, Bohemians)
-   - Activities (diving, hiking, water sports, cultural tourism)
-   - Local attractions (Cabo la Nao, Montgó, Granadella)
+- Les 6 pages de vente contiennent tout leur texte dans le HTML, avant JavaScript :
+  ChatGPT, Claude et les autres robots les lisent sans exécuter de script.
+- `robots.txt` autorise explicitement GPTBot, OAI-SearchBot, ChatGPT-User,
+  ClaudeBot, Claude-SearchBot, Claude-User, Googlebot, bingbot et Google-Extended.
+- `llms.txt` décrit le bien à la vente.
+- Données structurées `Apartment` + `RealEstateListing` avec `businessFunction: Sell`.
+- Un seul `<h1>` par page, hreflang réciproques avec `x-default`, pages privées
+  en `noindex`.
 
-## Technical Implementation
+## À surveiller dans Search Console
 
-### Meta Tag Management
-```typescript
-// Dynamic title based on promotional offers
-title: bestOffer ? `🔥 ${bestOffer.discountPercentage}% OFF Jávea Apartment` : 'Base SEO Title'
+- **Pages indexées** : les 6 pages de vente doivent monter, les 10 anciennes
+  disparaître. Compter 2 à 6 semaines.
+- **« Page avec redirection »** : doit passer de 11 à environ 20, puis se stabiliser.
+- **Rapport « Vacation rental »** (menu Améliorations) : doit disparaître quand
+  Google aura recrawlé, puisque le balisage `LodgingBusiness` n'est plus servi.
+- **Requêtes** : les requêtes de restaurants vont s'éteindre. C'est voulu : elles
+  n'amenaient aucun acheteur et aucun clic.
 
-// Geographic and specialty meta tags
-updateOrCreateMeta('geo-targeting', seo.geoTargeting);
-updateOrCreateMeta('weather-keywords', seo.weatherKeywords);  
-updateOrCreateMeta('tourism-keywords', seo.tourismKeywords);
-```
+## Limite connue
 
-### Structured Data (JSON-LD)
-- **LodgingBusiness** schema for accommodation
-- **TouristAttraction** schema for location
-- **Place** schema for weather information
-- **Offer** schema for promotional deals (dynamic)
-
-### Hidden SEO Content
-Comprehensive multilingual hidden content covering:
-- Weather and climate information
-- Tourism and activities
-- Beach and coastal features  
-- Restaurants and gastronomy
-- Transportation and logistics
-- Local services and amenities
-
-## Performance Benefits
-
-### Before Optimization
-- 6 separate components loading
-- Multiple API calls for promotional data
-- Redundant meta tag updates
-- Conflicting SEO signals
-- ~150KB of duplicate content
-
-### After Optimization  
-- Single optimized component
-- Unified API call strategy
-- Coordinated meta tag management
-- Consistent SEO signals
-- ~60KB of optimized content
-
-## Search Targeting Improvements
-
-### Enhanced Keywords Coverage
-- **Weather**: 200+ weather-related terms per language
-- **Geographic**: 500+ city/region names across 5 languages  
-- **Tourism**: 150+ activity and attraction keywords
-- **Promotional**: Dynamic discount and offer terminology
-- **Long-tail**: Comprehensive phrase combinations
-
-### Multilingual Consistency
-- Unified terminology across all languages
-- Consistent promotional messaging
-- Coordinated seasonal targeting
-- Harmonized geographic coverage
-
-## Promotional SEO Integration
-
-### Dynamic Content Updates
-```typescript
-// Promotional title when offer is active
-🔥 25% OFF Jávea Apartment - 3 Days Left!
-
-// Base title when no offer
-Jávea Vacation Rental - Weather, Arenal Beach, Costa Blanca Spain
-```
-
-### Real-time Pricing Integration
-- Promotional prices in meta descriptions
-- Countdown urgency in titles
-- Discount percentages in keywords
-- Structured data for offers
-
-## Quality Assurance
-
-### Content Deduplication
-- Eliminated 80% of redundant weather content
-- Consolidated geographic targeting
-- Unified promotional messaging
-- Streamlined hidden SEO content
-
-### SEO Best Practices
-- Single H1 tag per language
-- Proper meta tag hierarchy
-- Valid structured data
-- Mobile-optimized hidden content
-- Search engine compliant markup
-
-## Results Expected
-
-### Search Performance
-- Improved page loading speed (40% reduction in SEO overhead)
-- Better search engine crawling efficiency
-- Enhanced promotional content visibility
-- Stronger geographic targeting signals
-
-### Maintenance Benefits
-- Single file to manage all SEO updates
-- Unified promotional content system
-- Simplified content management
-- Reduced code maintenance overhead
-
-## Migration Completed
-
-### Files Removed from Home.tsx
-- ❌ ComprehensiveSEO.tsx
-- ❌ JaveaSEOStrategy.tsx  
-- ❌ WeatherSEOTargeting.tsx
-- ❌ ComprehensiveJaveaSEO.tsx
-
-### Files Consolidated Into
-- ✅ OptimizedSEOStrategy.tsx (single comprehensive component)
-
-### Retained Functionality
-- ✅ Dynamic promotional integration
-- ✅ Multi-language meta tag management
-- ✅ Comprehensive geographic targeting
-- ✅ Weather and climate SEO
-- ✅ Tourism and activity keywords
-- ✅ Restaurant and dining content
-- ✅ Structured data (JSON-LD)
-- ✅ Hidden SEO content
-- ✅ Real-time offer integration
-
-## Conclusion
-The SEO optimization successfully consolidated 6 overlapping components into 1 comprehensive system, eliminating redundancy while enhancing functionality. The new system provides better promotional integration, improved performance, and easier maintenance while maintaining complete search visibility across all target markets.
-
-**Promotional SEO is now fully dynamic** - automatically updating titles, descriptions, keywords, and structured data based on active offers, creating urgency and improving click-through rates for time-sensitive promotions.
+Le prix ne figure pas sur les pages. Ni Google ni les assistants IA ne peuvent le
+citer, et la page ne peut pas ressortir dans une recherche filtrée par budget.
+C'est une décision du propriétaire, pas un défaut technique.

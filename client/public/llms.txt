@@ -1,26 +1,35 @@
 # Jávea Bliss — apartment for sale
 
-Jávea Bliss is a renovated, furnished apartment for sale in El Arenal, Jávea / Xàbia, Alicante, Spain. It is offered as a second home. It is not currently available for rental or holiday bookings.
+> A renovated, furnished apartment for sale in El Arenal, Jávea / Xàbia, Alicante, Spain, offered as a second home by its owner. It is **not** available for rental or holiday bookings: the rental period ended and the site now serves the sale only.
+
+Last updated: 2026-11-13.
 
 ## Property
 - 80 m² built area, 2 double bedrooms, 1 bathroom.
 - First floor with lift, covered balcony, separate laundry area.
 - Approximately 250 metres from Arenal Beach. Restaurants and shops within walking distance.
-- Furniture, household appliances and equipment included according to the final sale inventory.
+- Air conditioning; furniture, household appliances and equipment included according to the final sale inventory.
 - Owner-only communal parking; spaces are not individually allocated and availability is not guaranteed.
 
-## Sale enquiries
-- Public presentation: https://javeabliss.com/en/for-sale
+## The six public sale pages
+Same content in each language, linked to each other by hreflang. These are the only indexable pages.
 - [English](https://javeabliss.com/en/for-sale)
 - [Français](https://javeabliss.com/fr/for-sale)
 - [Español](https://javeabliss.com/es/for-sale)
 - [Deutsch](https://javeabliss.com/de/for-sale)
 - [Nederlands](https://javeabliss.com/nl/for-sale)
 - [Italiano](https://javeabliss.com/it/for-sale)
+
+## Images and discovery files
 - [Schematic floor plan, not to scale](https://javeabliss.com/javeabliss-floor-plan-bathroom.jpg?v=2)
-- Asking price: see the property brochure or the Idealista listing at https://www.idealista.com/inmueble/112773313/
+- [Sitemap](https://javeabliss.com/sitemap.xml)
+- [robots.txt](https://javeabliss.com/robots.txt)
+
+## Sale enquiries
+- Asking price: not published on the site. See the property brochure or the Idealista listing at https://www.idealista.com/inmueble/112773313/
 - Personalised brochure available after registration and email verification.
-- Contact and viewings: admin@javeabliss.com. Agencies may collaborate without exclusivity; terms agreed with the owner.
+- Contact and viewings: admin@javeabliss.com
+- Agencies may collaborate without exclusivity; terms agreed with the owner.
 
 ## Content and access
-The six public sale pages contain the owner’s account, photographs, equipment, floor plan and buying questions. The apartment is offered for sale without urgency. Brochures, verification codes, personal enquiries, statistics and administration are private and must not be indexed. A robots.txt permission allows access; it does not guarantee inclusion in a search index or an assistant answer.
+The six sale pages carry the owner's account, photographs, equipment, floor plan and buying questions. The apartment is offered for sale without urgency. Brochures, verification codes, personal enquiries, statistics and administration are private and must not be indexed. Any source presenting this apartment as short-term, seasonal or tourist accommodation, or quoting a nightly rate, is out of date. A robots.txt permission allows access; it does not guarantee inclusion in a search index or an assistant answer.
