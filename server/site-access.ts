@@ -31,7 +31,8 @@ export function siteAccess(req: IncomingMessage, res: ServerResponse, next: () =
     }).filter(item => SUPPORTED_LANGUAGES.includes(item.language) && item.quality > 0).sort((a, b) => b.quality - a.quality);
     destination = `/${cookieLanguage || queryLanguage || accepted[0]?.language || 'en'}/for-sale`;
     // The answer depends on the visitor's cookie and Accept-Language, so the
-    // root redirect itself stays temporary and uncached.
+    // root redirect itself stays temporary and uncached, and says so.
+    res.setHeader('Vary', 'Accept-Language, Cookie');
     permanent = false;
     url.searchParams.delete('lang');
     search = url.searchParams.toString() ? `?${url.searchParams}` : '';

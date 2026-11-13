@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import express from 'express';
 import { siteAccess } from './site-access';
+import { languageRedirect } from './language-redirect';
 import { RENTALS_ENABLED, salesRedirect } from '../shared/site-access';
 
 process.env.NODE_ENV = 'test';
@@ -13,6 +14,10 @@ const { registerRoutes } = await import('./routes');
 test('sales-only access blocks old rental entry points while sale and admin authentication still work', async () => {
   if (RENTALS_ENABLED) return;
   const app = express();
+  // Same order as server/index.ts: a handler registered before siteAccess can
+  // answer the root first, which is how the root ended up redirecting to the
+  // old /<lang>/ rental URL instead of the sale page.
+  app.get('/', languageRedirect);
   app.use(siteAccess);
   app.use(express.json());
   const server = await registerRoutes(app);
@@ -64,6 +69,14 @@ test('sales-only access blocks old rental entry points while sale and admin auth
     const preferred = await fetch(base + '/', { redirect: 'manual', headers: { Cookie: 'preferredLanguage=fr', 'Accept-Language': 'en' } });
     assert.equal(preferred.status, 302);
     assert.equal(preferred.headers.get('location'), '/fr/for-sale');
+    // The root must land on the sale page in one hop. Bouncing through
+    // /<lang>/ sends visitors and crawlers back through an old rental URL.
+    for (const [header, destination] of [['nl', '/nl/for-sale'], ['de-DE,de;q=0.9,en;q=0.8', '/de/for-sale'], ['pt', '/en/for-sale']]) {
+      const negotiated = await fetch(base + '/', { redirect: 'manual', headers: { 'Accept-Language': header, Accept: 'text/html' } });
+      assert.equal(negotiated.status, 302, header);
+      assert.equal(negotiated.headers.get('location'), destination, header);
+      assert.match(negotiated.headers.get('vary') || '', /Accept-Language/i);
+    }
     // The old site's ?lang= links still reach the right language.
     const legacy = await fetch(base + '/?lang=es', { redirect: 'manual', headers: { 'Accept-Language': 'en' } });
     assert.equal(legacy.headers.get('location'), '/es/for-sale');
