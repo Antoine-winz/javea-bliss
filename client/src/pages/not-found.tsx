@@ -14,7 +14,7 @@ export default function NotFound() {
           <p className="mt-4 text-sm text-gray-600">
             This page could not be found.
           </p>
-          <a href="/" className="link-underline mt-6 inline-block">Return to Jávea Bliss</a>
+          <a href="/en/for-sale" className="link-underline mt-6 inline-block">Return to Jávea Bliss</a>
         </CardContent>
       </Card>
     </div>

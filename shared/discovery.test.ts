@@ -84,6 +84,17 @@ test('robots.txt opens the sale pages to every search engine and AI assistant', 
   }
 });
 
+test('the public sale pages never link back to the old rental homepages', () => {
+  if (RENTALS_ENABLED) return;
+  // Every internal link to / or /<lang>/ costs a crawler a redirect and keeps
+  // the old rental URLs alive in Google's link graph.
+  for (const page of ['pages/SalesAccess.tsx', 'pages/SalesPrivacy.tsx', 'pages/not-found.tsx']) {
+    const source = readFileSync(new URL(`../client/src/${page}`, import.meta.url), 'utf8');
+    assert.doesNotMatch(source, /href=["{]["'`]?\/["'`]?[}"]/, `${page} links to the bare root`);
+    assert.doesNotMatch(source, /href=\{[^}]*`\/\$\{lang\}\/`/, `${page} links to /<lang>/`);
+  }
+});
+
 test('llms.txt describes the sale, never a rental, and links every language', () => {
   if (RENTALS_ENABLED) return;
   const summary = publicFile('llms.txt');
