@@ -1,5 +1,16 @@
 import { saleContent, type SaleLanguage } from "./sale-content";
 import { saleReason } from "./sale-story";
+import { RENTALS_ENABLED } from "./site-access";
+
+// Direct FAQ answer for the sale: the turnkey section keeps the longer story.
+const turnkeyAnswer: Record<SaleLanguage, string> = {
+  en: "Yes. The furniture, beds, appliances, crockery, kitchen utensils, household linen, towels and beach equipment are included in the sale. Once you have the keys, you only need to bring your suitcase.",
+  fr: "Oui. Le mobilier, les lits, l’électroménager, la vaisselle, les ustensiles de cuisine, le linge de maison, les serviettes et les équipements de plage sont inclus dans la vente. À la remise des clés, il suffit de poser ses valises.",
+  es: "Sí. El mobiliario, las camas, los electrodomésticos, la vajilla, los utensilios de cocina, la ropa de hogar, las toallas y el equipamiento de playa están incluidos en la venta. Tras la entrega de las llaves, solo hace falta traer la maleta.",
+  de: "Ja. Möbel, Betten, Haushaltsgeräte, Geschirr, Küchenutensilien, Haushaltswäsche, Handtücher und Strandausstattung sind im Verkauf inbegriffen. Nach der Schlüsselübergabe müssen Sie nur noch den Koffer mitbringen.",
+  nl: "Ja. Meubels, bedden, huishoudelijke apparaten, servies, keukengerei, huishoudlinnen, handdoeken en stranduitrusting zijn bij de verkoop inbegrepen. Na de sleuteloverdracht hoeft u alleen uw koffer mee te nemen.",
+  it: "Sì. Mobili, letti, elettrodomestici, stoviglie, utensili da cucina, biancheria per la casa, asciugamani e attrezzatura da spiaggia sono inclusi nella vendita. Alla consegna delle chiavi basta portare la valigia.",
+};
 export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; items: [string, string][] }> = {
   en: {
     title: "Buying this apartment in Jávea",
@@ -13,7 +24,7 @@ export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; item
       ["Is there a lift and which floor is the apartment on?", "The apartment is on the first floor of a building with a lift. Please discuss any specific accessibility requirements with the owner before arranging your visit."],
       ["Is the apartment sold furnished?", "The apartment is offered furnished and equipped. The furniture and household equipment included in the sale will be defined in the final agreed inventory."],
       ["Is there private parking for owners?", "Owners have access to a private communal car park via an app, with access restricted to owners. This makes finding a space easier, although spaces are not individually allocated and availability is not guaranteed."],
-      ["What is the asking price?", "The asking price is available in the downloadable property brochure and on the Idealista listing."],
+      ["What is the asking price?", "The asking price is in the personalised brochure and on the Idealista listing."],
       ["How can I request the brochure or arrange a viewing?", "Use “Request the brochure and schedule a visit” on this page to send your details to the owner. Email verification gives access to a personalised brochure. You can also contact the owner through the public Idealista listing to arrange a viewing."],
       ["Do you work with estate agents to sell Jávea Bliss?", "Yes. The owner welcomes collaboration with estate agents on a non-exclusive basis. The terms of collaboration are to be agreed directly with the owner."],
       ["What commission is offered to estate agents?", "Agency fees and the terms of collaboration are to be agreed directly with the owner. Contact the owner to discuss your proposal."],
@@ -33,7 +44,7 @@ export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; item
       ["À quel étage se trouve l’appartement ? Y a-t-il un ascenseur ?", "L’appartement se trouve au premier étage d’un immeuble avec ascenseur. Pour tout besoin particulier d’accessibilité, échangez avec le propriétaire avant d’organiser votre visite."],
       ["L’appartement est-il vendu meublé ?", "L’appartement est proposé meublé et équipé. Le mobilier et les équipements inclus dans la vente seront précisés dans l’inventaire final convenu entre les parties."],
       ["Y a-t-il un parking privé pour les propriétaires ?", "Les propriétaires ont accès à un parking privé collectif via une application. L’accès est réservé aux propriétaires, ce qui facilite le stationnement. Les places ne sont toutefois pas attribuées individuellement et leur disponibilité n’est pas garantie."],
-      ["Quel est le prix de vente demandé ?", "Le prix de vente est indiqué dans la fiche du bien à télécharger et sur l’annonce Idealista."],
+      ["Quel est le prix de vente demandé ?", "Le prix de vente figure dans la brochure personnalisée et sur l’annonce Idealista."],
       ["Comment recevoir la brochure et organiser une visite ?", "Utilisez le bouton « Demander la brochure et organiser une visite » pour transmettre vos coordonnées au propriétaire. La vérification de votre adresse e-mail permet d’accéder à une brochure personnalisée. Vous pouvez aussi contacter le propriétaire via l’annonce Idealista pour convenir d’une visite."],
       ["Acceptez-vous de travailler avec des agences immobilières pour vendre Jávea Bliss ?", "Oui. Le propriétaire accepte de collaborer avec des agences immobilières sans exclusivité. Les conditions de collaboration sont à convenir directement avec le propriétaire."],
       ["Quels sont les honoraires ou la commission pour les agences ?", "Les honoraires et les modalités de collaboration sont à convenir directement avec le propriétaire. Contactez-le pour lui présenter votre proposition."],
@@ -53,7 +64,7 @@ export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; item
       ["¿En qué planta está? ¿Hay ascensor?", "Se encuentra en la primera planta de un edificio con ascensor. Consulte con el propietario cualquier necesidad específica de accesibilidad antes de organizar la visita."],
       ["¿Se vende amueblado?", "Se ofrece amueblado y equipado. El mobiliario y equipamiento incluidos en la venta se definirán en el inventario final acordado."],
       ["¿Hay aparcamiento privado para los propietarios?", "Los propietarios tienen acceso mediante una aplicación a un aparcamiento privado comunitario, reservado exclusivamente a propietarios. Esto facilita encontrar una plaza, aunque las plazas no están asignadas individualmente y su disponibilidad no está garantizada."],
-      ["¿Cuál es el precio de venta?", "El precio de venta figura en la ficha del inmueble para descargar y en el anuncio de Idealista."],
+      ["¿Cuál es el precio de venta?", "El precio de venta figura en el folleto personalizado y en el anuncio de Idealista."],
       ["¿Cómo puedo solicitar el folleto o concertar una visita?", "Utilice «Solicitar el folleto y concertar una visita» para enviar sus datos al propietario. La verificación del correo electrónico permite acceder al folleto personalizado. También puede contactar con el propietario mediante el anuncio de Idealista para organizar una visita."],
       ["¿Aceptan colaborar con agencias inmobiliarias para vender Jávea Bliss?", "Sí. El propietario acepta colaborar con agencias inmobiliarias sin exclusividad. Las condiciones de colaboración se acordarán directamente con el propietario."],
       ["¿Qué honorarios o comisión se ofrecen a las agencias?", "Los honorarios y las condiciones de colaboración se acordarán directamente con el propietario. Contacte con él para presentar su propuesta."],
@@ -73,7 +84,7 @@ export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; item
       ["In welchem Stock liegt die Wohnung? Gibt es einen Aufzug?", "Die Wohnung liegt im ersten Stock eines Gebäudes mit Aufzug. Besprechen Sie besondere Anforderungen an die Barrierefreiheit vor einer Besichtigung mit dem Eigentümer."],
       ["Wird die Wohnung möbliert verkauft?", "Die Wohnung wird möbliert und ausgestattet angeboten. Welche Möbel und Haushaltsgeräte im Verkauf enthalten sind, wird im abschließend vereinbarten Inventar festgelegt."],
       ["Gibt es private Parkmöglichkeiten für Eigentümer?", "Eigentümer haben über eine App Zugang zu einem privaten Gemeinschaftsparkplatz, der ausschließlich Eigentümern vorbehalten ist. Das erleichtert die Parkplatzsuche. Die Stellplätze sind jedoch nicht individuell zugewiesen und ihre Verfügbarkeit ist nicht garantiert."],
-      ["Wie hoch ist der Angebotspreis?", "Den Verkaufspreis finden Sie im Exposé zum Herunterladen und im Idealista-Inserat."],
+      ["Wie hoch ist der Angebotspreis?", "Den Verkaufspreis finden Sie in der personalisierten Broschüre und im Idealista-Inserat."],
       ["Wie kann ich eine Broschüre anfordern oder eine Besichtigung vereinbaren?", "Über „Broschüre anfordern und Besichtigung vereinbaren“ senden Sie Ihre Angaben an den Eigentümer. Nach der E-Mail-Verifizierung erhalten Sie Zugang zur personalisierten Broschüre. Eine Besichtigung können Sie auch über das öffentliche Idealista-Inserat anfragen."],
       ["Arbeiten Sie beim Verkauf von Jávea Bliss mit Immobilienmaklern zusammen?", "Ja. Der Eigentümer ist bereit, ohne Exklusivbindung mit Immobilienmaklern zusammenzuarbeiten. Die Bedingungen der Zusammenarbeit werden direkt mit dem Eigentümer vereinbart."],
       ["Welche Provision erhalten Immobilienmakler?", "Die Maklervergütung und die Bedingungen der Zusammenarbeit werden direkt mit dem Eigentümer vereinbart. Kontaktieren Sie ihn, um Ihren Vorschlag zu besprechen."],
@@ -93,7 +104,7 @@ export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; item
       ["Op welke verdieping ligt het appartement? Is er een lift?", "Het appartement ligt op de eerste verdieping van een gebouw met lift. Bespreek specifieke toegankelijkheidswensen met de eigenaar voordat u een bezichtiging plant."],
       ["Wordt het appartement gemeubileerd verkocht?", "Het appartement wordt gemeubileerd en uitgerust aangeboden. Welke meubels en huishoudelijke apparatuur bij de verkoop inbegrepen zijn, wordt vastgelegd in de definitief overeengekomen inventaris."],
       ["Is er privéparkeergelegenheid voor eigenaren?", "Eigenaren hebben via een app toegang tot een gezamenlijk privéparkeerterrein dat uitsluitend voor eigenaren toegankelijk is. Dit maakt het makkelijker om een plek te vinden. De plaatsen zijn niet individueel toegewezen en beschikbaarheid is niet gegarandeerd."],
-      ["Wat is de vraagprijs?", "De vraagprijs staat in de downloadbare woningbrochure en in de Idealista-advertentie."],
+      ["Wat is de vraagprijs?", "De vraagprijs staat in de persoonlijke brochure en in de Idealista-advertentie."],
       ["Hoe vraag ik de brochure aan of plan ik een bezichtiging?", "Gebruik „Brochure aanvragen en een bezichtiging plannen“ om uw gegevens naar de eigenaar te sturen. Na verificatie van uw e-mailadres krijgt u toegang tot een persoonlijke brochure. U kunt ook via de openbare Idealista-advertentie contact opnemen om een bezichtiging af te spreken."],
       ["Werkt u samen met makelaars voor de verkoop van Jávea Bliss?", "Ja. De eigenaar staat open voor samenwerking met makelaars op niet-exclusieve basis. De voorwaarden worden rechtstreeks met de eigenaar afgesproken."],
       ["Welke vergoeding of commissie ontvangen makelaars?", "De vergoeding en de voorwaarden voor de samenwerking worden rechtstreeks met de eigenaar afgesproken. Neem contact op om uw voorstel te bespreken."],
@@ -113,7 +124,7 @@ export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; item
       ["A quale piano si trova? C’è un ascensore?", "L’appartamento si trova al primo piano di un edificio con ascensore. Per esigenze specifiche di accessibilità, contatti il proprietario prima di organizzare una visita."],
       ["L’appartamento viene venduto arredato?", "L’appartamento viene proposto arredato e attrezzato. I mobili e le dotazioni inclusi nella vendita saranno definiti nell’inventario finale concordato."],
       ["È disponibile un parcheggio privato per i proprietari?", "I proprietari possono accedere tramite un’app a un parcheggio privato condominiale riservato esclusivamente ai proprietari. Questo facilita la ricerca di un posto, ma i posti non sono assegnati individualmente e la disponibilità non è garantita."],
-      ["Qual è il prezzo richiesto?", "Il prezzo di vendita è indicato nella scheda dell’immobile da scaricare e nell’annuncio su Idealista."],
+      ["Qual è il prezzo richiesto?", "Il prezzo di vendita è indicato nella brochure personalizzata e nell’annuncio su Idealista."],
       ["Come posso richiedere la brochure o prenotare una visita?", "Utilizzi «Richiedi la brochure e prenota una visita» per inviare i suoi dati al proprietario. La verifica dell’indirizzo e-mail consente di accedere alla brochure personalizzata. Può anche contattare il proprietario tramite l’annuncio pubblico su Idealista per concordare una visita."],
       ["Collaborate con agenzie immobiliari per la vendita di Jávea Bliss?", "Sì. Il proprietario è disponibile a collaborare con agenzie immobiliari senza esclusiva. Le condizioni di collaborazione saranno concordate direttamente con il proprietario."],
       ["Quali compensi o provvigioni sono previsti per le agenzie?", "Il compenso e le condizioni di collaborazione saranno concordati direttamente con il proprietario. Lo contatti per presentare la sua proposta."],
@@ -124,9 +135,9 @@ export const salesFAQ: Record<SaleLanguage, { title: string; intro: string; item
 };
 
 
-// Keep the turnkey promise identical in the visible FAQ and initial HTML.
+// The visible FAQ and the initial HTML both read salesFAQ, so they stay identical.
 for (const language of Object.keys(salesFAQ) as SaleLanguage[]) {
-  salesFAQ[language].items[0][1] = saleContent[language].inventory;
+  salesFAQ[language].items[0][1] = RENTALS_ENABLED ? saleContent[language].inventory : turnkeyAnswer[language];
   const reason = saleReason[language];
   salesFAQ[language].items.splice(1, 0, [reason.question, reason.answer]);
 }
